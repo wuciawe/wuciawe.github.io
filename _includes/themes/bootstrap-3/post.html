@@ -6,18 +6,18 @@
   <div class="row">
     <div class="col-md-9 post-full">
       {% unless page.categories == empty %}
-        Categories: 
+        
         <ul class="tag_box inline">
-          <li><i class="glyphicon-open"></i></li>
+          <li><i class="glyphicon-open"></i>Categories: </li>
           {% assign categories_list = page.categories %}
           {% include JB/categories_list %}
         </ul>
       {% endunless %}  
 
       {% unless page.tags == empty %}
-        Tags: 
+        
         <ul class="tag_box inline">
-          <li><i class="glyphicon-tags"></i></li>
+          <li><i class="glyphicon-tags"></i>Tags: </li>
           {% assign tags_list = page.tags %}
           {% include JB/tags_list %}
         </ul>
@@ -36,7 +36,8 @@
   
   <div class="row">
     <div class="col-md-12">
-    <ul class="pagination">
+      <hr>
+      <ul class="pagination">
         {% if page.previous %}
           <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&laquo; Previous</a></li>
         {% else %}
@@ -49,6 +50,7 @@
           <li class="next disabled"><a>Next &rarr;</a>
         {% endif %}
       </ul>
+      <hr>
       {% include JB/comments %}
     </div>
   </div>
