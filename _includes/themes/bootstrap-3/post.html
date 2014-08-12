@@ -17,7 +17,7 @@
           {% unless page.categories == empty %}
             <i class="glyphicon glyphicon-folder-open"></i>
             <span>Categories:</span>
-            <ul class="tag_box">
+            <ul class="list-group">
             {% assign categories_list = page.categories %}
             {% include JB/categories_list %}
             </ul>
