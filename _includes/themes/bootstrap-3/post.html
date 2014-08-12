@@ -5,30 +5,30 @@
 
   <div class="row">
     <div class="col-md-9 post-full">
-      {% unless page.categories == empty %}
-        
-        <ul class="tag_box">
-          <li><i class="glyphicon glyphicon-folder-open"></i>Categories: </li>
-          {% assign categories_list = page.categories %}
-          {% include JB/categories_list %}
-        </ul>
-      {% endunless %}  
-
-      {% unless page.tags == empty %}
-        
-        <ul class="tag_box">
-          <li><i class="glyphicon glyphicon-tags"></i>Tags: </li>
-          {% assign tags_list = page.tags %}
-          {% include JB/tags_list %}
-        </ul>
-      {% endunless %}
-      
       {{ content }}
     </div>
     
     <div class="col-md-3">
       <div class="date">
         <span>{{ page.date | date_to_long_string }}</span>
+      </div>
+      <div class="categories">
+          {% unless page.categories == empty %}
+          <ul class="tag_box">
+              <i class="glyphicon glyphicon-folder-open"></i>Categories:
+              {% assign categories_list = page.categories %}
+              {% include JB/categories_list %}
+          </ul>
+          {% endunless %}
+      </div>
+      <div class="tags">
+          {% unless page.tags == empty %}
+          <ul class="tag_box">
+              <i class="glyphicon glyphicon-tags"></i>Tags:
+              {% assign tags_list = page.tags %}
+              {% include JB/tags_list %}
+          </ul>
+          {% endunless %}
       </div>
     </div>
   
