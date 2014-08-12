@@ -23,7 +23,6 @@ Usage:
 {% if site.JB.pages_list.provider == "custom" %}
   {% include custom/pages_list %}
 {% else %}
-  {% pages_list = pages_list.sort{|node| node.priority} %}
   {% for node in pages_list %}
     {% if node.title != null %}
       {% if group == null or group == node.group %}
