@@ -22,14 +22,11 @@ Usage:
 {% else %}
   {% if tags_list.first[0] == null %}
     {% for tag in tags_list %} 
-      <li class="list-group-item">
+      <a class="list-group-item" href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
         <i class="glyphicon glyphicon-tag"></i>
-        <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
           {{ tag }}
           <span class="badge badge-success pull-right">{{ site.tags[tag].size }}</span>
-        </a>
-
-      </li>
+      </a>
     {% endfor %}
   {% else %}
     {% for tag in tags_list %} 
