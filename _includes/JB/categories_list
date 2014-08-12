@@ -22,13 +22,11 @@ Usage:
 {% else %}
   {% if categories_list.first[0] == null %}
     {% for category in categories_list %}
-      <li class="list-group-item">
+      <a class="list-group-item" href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
         <i class="glyphicon glyphicon-folder-close"></i>
-        <a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
           {{ category }}
           <span class="badge badge-success pull-right">{{ site.categories[category].size }}</span>
-        </a>
-      </li>
+      </a>
     {% endfor %}
   {% else %}
     {% for category in categories_list %} 
