@@ -7,8 +7,8 @@
     <div class="col-md-9 post-full">
       {% unless page.categories == empty %}
         
-        <ul class="tag_box inline">
-          <li><i class="glyphicon glyphicon-open"></i>Categories: </li>
+        <ul class="tag_box">
+          <li><i class="glyphicon glyphicon-folder-open"></i>Categories: </li>
           {% assign categories_list = page.categories %}
           {% include JB/categories_list %}
         </ul>
@@ -16,7 +16,7 @@
 
       {% unless page.tags == empty %}
         
-        <ul class="tag_box inline">
+        <ul class="tag_box">
           <li><i class="glyphicon glyphicon-tags"></i>Tags: </li>
           {% assign tags_list = page.tags %}
           {% include JB/tags_list %}

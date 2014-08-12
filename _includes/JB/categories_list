@@ -23,7 +23,7 @@ Usage:
   {% if categories_list.first[0] == null %}
     {% for category in categories_list %}
       <li>
-        <i class="glyphicon glyphicon-white glyphicon-folder-close"></i>
+        <i class="glyphicon glyphicon-folder-close"></i>
         <a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
           {{ category | join: "/" }}
           <span class="badge badge-success">{{ site.categories[category].size }}</span>
