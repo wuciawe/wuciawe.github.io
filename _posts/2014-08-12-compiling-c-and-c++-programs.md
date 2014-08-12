@@ -28,6 +28,8 @@ source.o with some system libraries to produce the file program "executable".In 
 two-stage process of compiling and linking, but the stages are done transparently, and the intermediate file "source.o"
 is deleted in the process.
 
+<!-- more -->
+
 # Compiling a program with multiple source files
 
 {% highlight console %}
