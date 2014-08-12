@@ -55,7 +55,7 @@ g++ source1.o source2.o -o executable
 
 The source1.cc does not need to be recompiled. When there are numerous source files, and a change is only made to one
 of them, the time savings can be significant. This process, though somewhat complicated, is generally handled
-automatically by a [makefile].
+automatically by a [makefile]({%post_url 2014-08-12-the-use-of-makefile%}).
 
 # Frequently used compilation options
 
