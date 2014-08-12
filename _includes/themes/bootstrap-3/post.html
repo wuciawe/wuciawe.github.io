@@ -27,7 +27,7 @@
           {% unless page.tags == empty %}
             <i class="glyphicon glyphicon-tags"></i>
             <span>Tags:</span>
-            <ul>
+            <ul class="list-group">
             {% assign tags_list = page.tags %}
             {% include JB/tags_list %}
             </ul>

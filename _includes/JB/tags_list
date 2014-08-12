@@ -22,7 +22,7 @@ Usage:
 {% else %}
   {% if tags_list.first[0] == null %}
     {% for tag in tags_list %} 
-      <li>
+      <li class="list-group-item">
         <i class="glyphicon glyphicon-tags"></i>
         <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
           {{ tag }}
