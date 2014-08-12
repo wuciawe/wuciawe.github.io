@@ -25,7 +25,7 @@ Usage:
       <li class="list-group-item">
         <i class="glyphicon glyphicon-folder-close"></i>
         <a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
-          {{ category | join: "/" }}
+          {{ category }}
           <span class="badge badge-success pull-right">{{ site.categories[category].size }}</span>
         </a>
       </li>
@@ -33,7 +33,7 @@ Usage:
   {% else %}
     {% for category in categories_list %} 
     	<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
-    		{{ category[0] | join: "/" }} <span>{{ category[1].size }}</span>
+    		{{ category[0] }} <span class="badge badge-success">{{ category[1].size }}</span>
     	</a></li>
     {% endfor %}
   {% endif %}
