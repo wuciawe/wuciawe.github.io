@@ -14,8 +14,9 @@
       </div>
       <div class="categories">
           {% unless page.categories == empty %}
+          <i class="glyphicon glyphicon-folder-open"></i>Categories:
           <ul class="tag_box">
-              <i class="glyphicon glyphicon-folder-open"></i>Categories:
+
               {% assign categories_list = page.categories %}
               {% include JB/categories_list %}
           </ul>
@@ -23,8 +24,9 @@
       </div>
       <div class="tags">
           {% unless page.tags == empty %}
+          <i class="glyphicon glyphicon-tags"></i>Tags:
           <ul class="tag_box">
-              <i class="glyphicon glyphicon-tags"></i>Tags:
+
               {% assign tags_list = page.tags %}
               {% include JB/tags_list %}
           </ul>
