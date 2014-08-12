@@ -23,12 +23,12 @@ Usage:
   {% if tags_list.first[0] == null %}
     {% for tag in tags_list %} 
       <li>
-        <i class="glyphicon glyphicon-tags">
-          <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
-            {{ tag }}
-            <span class="badge badge-success>{{ site.tags[tag].size }}</span>
-          </a>
-        </i>
+        <i class="glyphicon glyphicon-tags"></i>
+        <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
+          {{ tag }}
+          <span class="badge badge-success>{{ site.tags[tag].size }}</span>
+        </a>
+
       </li>
     {% endfor %}
   {% else %}
