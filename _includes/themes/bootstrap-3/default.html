@@ -64,10 +64,11 @@
             <ul class="nav navbar-nav">
               {% assign group = 'navigation' %}
               {% assign pages_list = site.pages %}
-              <li><a href="{{BASE_PATH}}/about.html">About me</a></li>
-              {% include JB/pages_list %}
+
+              <!--{% include JB/pages_list %}-->
+                <li><a href="{{BASE_PATH}}/about.html">About Me</a></li>
               <li class="dropdown">
-	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact <b class="caret"></b></a>
+	        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Me<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
 	            <li><a href="mailto:{{site.author.email}}"><i class="fa fa-envelope fa-lg fa-fw"></i> Email</a></li>
 	            <li><a target="blank" href="http://vn.linkedin.com/in/{{site.author.linkedin}}"><i class="fa fa-linkedin-square fa-lg fa-fw"></i> Linkedin</a></li>
