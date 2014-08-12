@@ -21,8 +21,8 @@ title: The Blog
             {{post.date | date: "%d %B %Y"}}
             </span>
 
-            &nbsp; &nbsp; &nbsp;
-
+        </p>
+        <p>
             <i class="glyphicon glyphicon-folder-close"></i>
             {% for category in post.categories %}
             <a href="/categories.html#{{ category }}-ref" style="color:darkgreen">
@@ -30,7 +30,8 @@ title: The Blog
             </a>
             &nbsp; &nbsp;
             {% endfor %}
-
+        </p>
+        <p>
             <i class="glyphicon glyphicon-tags"></i>
             {% for tag in post.tags %}
             <a href="/tags.html#{{ tag }}-ref" style="color:darkgreen">
