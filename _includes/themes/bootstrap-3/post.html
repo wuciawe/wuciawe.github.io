@@ -9,31 +9,28 @@
     </div>
     
     <div class="col-md-3">
-      <div class="date">
-        <span>{{ page.date | date_to_long_string }}</span>
-      </div>
-      <div class="categories">
+
+        <i class="glyphicon glyphicon-calendar"></i><span>{{ page.date | date_to_long_string }}</span>
+
           {% unless page.categories == empty %}
-          <i class="glyphicon glyphicon-folder-open"></i>Categories:
+          <i class="glyphicon glyphicon-folder-open"></i><span>Categories:</span>
           <ul class="tag_box">
 
               {% assign categories_list = page.categories %}
               {% include JB/categories_list %}
           </ul>
           {% endunless %}
-      </div>
-      <div class="tags">
+
           {% unless page.tags == empty %}
-          <i class="glyphicon glyphicon-tags"></i>Tags:
+          <i class="glyphicon glyphicon-tags"></i><span>Tags:</span>
           <ul class="tag_box">
 
               {% assign tags_list = page.tags %}
               {% include JB/tags_list %}
           </ul>
           {% endunless %}
+
       </div>
-    </div>
-  
   </div>
   
   <div class="row">

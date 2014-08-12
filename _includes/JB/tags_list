@@ -25,7 +25,7 @@ Usage:
       <li>
         <i class="glyphicon glyphicon-tags"></i>
         <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
-          {{ tag }}
+          {{ tag | join: "/" }}
           <span class="badge badge-success>{{ site.tags[tag].size }}</span>
         </a>
       </li>
