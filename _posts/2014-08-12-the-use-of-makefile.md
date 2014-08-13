@@ -103,13 +103,53 @@ OBJ = main.o source1.o source2.o
 all: executable
 
 executable: $(OBJ)
-    $(CC) -o $@ $^
+    $(CC) $^ -o $@
 
 %.o: %.cc $(DEPS)
-    $(CC) $(CFLAGS) $@ $<
+    $(CC) $(CFLAGS) $< -o $@
 {% endhighlight %}
 
-In the example, we create macro DEPS and OBJ. DEPS is the set of .h files on which the .c files depend. OBJ is the list
-of object files. %.o means file ending in the .o suffix, %.cc is in similar case. $@ says to put the output of the
-compilcation in the file named on the left side fo the :, while $^ represents the right side of :. $< is the first item
-in the dependencies list.
+In this example, we create macro `DEPS` and `OBJ`. `DEPS` is the set of .h files on which the .c files depend. `OBJ` is
+the list of object files. `%.o` means file ending in the .o suffix, `%.cc` is in similar case. `$@` says to put the
+output of the compilcation in the file named on the left side of the `:`, while `$^` represents the right side of `:`.
+`$<` is the first item in the dependencies list.
+
+## Last example
+
+{% highlight make %}
+IDIR = ../include
+CC = g++
+CFLAGS = -c -Wall -I$(IDIR)
+
+ODIR = obj
+
+LDIR = ../lib
+LIBS = -lm
+LDFLAGS =
+
+_DEPS = header.h
+DEPS = $(patsubst %, $(IDIR)/%, $(_DEPS))
+
+SOURCES = main.cc source1.cc source2.cc
+_OBJECTS = $(SOURCES:.cc=.o)
+OBJECTS = $(patsubst %, $(ODIR)/%, $(_OBJ))
+
+EXECUTABLE = executable
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS)
+    $(CC) $(LDFLAGS) $^ -o $@ $(LIBS)
+
+$(ODIR)/%.o: %.cc $(DEPS)
+    $(CC) $(CFLAGS) $< -o $@
+
+.PHONY: clean
+
+clean:
+    rm -rf $(ODIR)/*.o *~ $(IDIR)/*~ $(EXECUTABLE)
+{% endhighlight %}
+
+In this example, the MakeFile should be located in the src directory. Note that it also includes a rule for cleaning up
+your source and object directories if you type **make clean**. The `.PHONY` rule keeps make from doing something with a
+file named clean.
