@@ -225,4 +225,5 @@ check-syntax:
 In this method, we also use the **include** directive to tell GNU Make to suspend reading the current MakeFile and read
 one or more MakeFiles before continuing.
 
-To simply ignore a missing MakeFile with no error message, use the **-include** directive instead of **include**.
+To simply ignore a missing MakeFile with no error message, use the **-include** directive instead of **include**
+directive.
