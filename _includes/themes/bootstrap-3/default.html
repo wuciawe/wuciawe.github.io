@@ -48,15 +48,24 @@
           title="Sitewide RSS Feed">
     <!--<script src="{{ ASSET_PATH }}/js/custom.js"></script>-->
     <script type="text/javascript">
-        function addBlankTargetForLinks () {
-            $('a[href^="http"]').each(function(){
-                $(this).attr('target', '_blank');
-            });
-        }
+        (function($){
+            // Open external links in new window
+            var externalLinks = function(){
+                var host = location.host;
 
-        $(document).bind('DOMNodeInserted', function(event) {
-            addBlankTargetForLinks();
-        });
+                $('body').on('click', 'a', function(e){
+                    var href = this.href,
+                            link = href.replace(/https?:\/\/([^\/]+)(.*)/, '$1');
+
+                    if (link != '' && link != host && !$(this).hasClass('fancybox')){
+                        window.open(href);
+                        e.preventDefault();
+                    }
+                });
+            };
+
+            externalLinks(); // Delete or comment this line to disable opening external links in new window
+        })(jQuery);
     </script>
 </head>
 
