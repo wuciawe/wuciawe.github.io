@@ -46,27 +46,8 @@
           title="Sitewide ATOM Feed">
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate"
           title="Sitewide RSS Feed">
-    <!--<script src="{{ ASSET_PATH }}/js/custom.js"></script>-->
-    <script type="text/javascript">
-        (function($){
-            // Open external links in new window
-            var externalLinks = function(){
-                var host = location.host;
+    <script src="{{ ASSET_PATH }}/js/custom.js"></script>
 
-                $('body').on('click', 'a', function(e){
-                    var href = this.href,
-                            link = href.replace(/https?:\/\/([^\/]+)(.*)/, '$1');
-
-                    if (link != '' && link != host && !$(this).hasClass('fancybox')){
-                        window.open(href);
-                        e.preventDefault();
-                    }
-                });
-            };
-
-            externalLinks(); // Delete or comment this line to disable opening external links in new window
-        })(jQuery);
-    </script>
 </head>
 
 <body>
