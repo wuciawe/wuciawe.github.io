@@ -48,7 +48,15 @@
           title="Sitewide RSS Feed">
     <!--<script src="{{ ASSET_PATH }}/js/custom.js"></script>-->
     <script type="text/javascript">
+        function addBlankTargetForLinks () {
+            $('a[href^="http"]').each(function(){
+                $(this).attr('target', '_blank');
+            });
+        }
 
+        $(document).bind('DOMNodeInserted', function(event) {
+            addBlankTargetForLinks();
+        });
     </script>
 </head>
 
