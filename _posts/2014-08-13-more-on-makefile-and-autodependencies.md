@@ -140,22 +140,29 @@ $(sort list)
 * `$@` The file name of the target of the rule. If the target is an archive member, then `$@` is the name of the archive
 file. In [a pattern rule](http://www.gnu.org/software/make/manual/make.html#Pattern-Intro) that has multiple targets,
 `$@` is the name of whichever target caused the rule's recipe to be run.
+
 * `$%` The target member name, when the target is an archive member. `$%` is empty when the target is not an archive
 member.
+
 * `$<` The name of the first prerequisite. If the target got its recipe from
 [an implicit rule](http://www.gnu.org/software/make/manual/make.html#Implicit-Rules), this will be the first
-prerequisite added by the implicit rule
+prerequisite added by the implicit rule.
+
 * `$?` The names of all the prerequisites that are newer than the target, with spaces between them. For prerequisites
 which are archive members, only the named member is used.
+
 * `$^` The names of all the prerequisites, with spaces between them. For prerequisites which are archive members, only
 the named member is used. A target has only one prerequisite on each other file it depends on, no matter how many times
 each file is listed as a prerequisite. So if you list a prerequisite more than once for a target, the value of `$^`
 contains just one copy of the name. This list does not contain any of the order-only prerequisites; for those see the
 `$|` variable, below.
+
 * `$+` This is like `$^`, but prerequisites listed more than once are duplicated in the order they were listed in the
 MakeFile. This is primarily useful for use in linking commands where it is meaningful to repeat library file names in a
 particular order.
+
 * `$|` The names of all the order-only prerequisites, with spaces between them.
+
 <ul><li><p><code>$*</code> The stem with which <a href="http://www.gnu.org/software/make/manual/make.html#Pattern-Match">an implicit rule</a> matches.
   If the target is <strong>dir/a.foo.b</strong> and <code>the target pattern</code> is <strong>a.%.b</strong> then <code>the stem</code> is <strong>dir/foo</strong>. The stem is
   useful for constructing names of related files. In a static pattern rule, the stem is part of the file name that
