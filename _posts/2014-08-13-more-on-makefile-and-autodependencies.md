@@ -177,6 +177,8 @@ using `$*` except in implicit rules or static pattern rules.
  If the target name in an explicit rule does not end with a recognized suffix, `$*` is set to the empty string for that
 rule.
 
+* abc
+
 For directory and file of automatic variables, see
 [here](http://www.gnu.org/software/make/manual/make.html#Automatic-Variables).
 
