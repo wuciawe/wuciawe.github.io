@@ -151,5 +151,5 @@ clean:
 {% endhighlight %}
 
 In this example, the MakeFile should be located in the src directory. Note that it also includes a rule for cleaning up
-your source and object directories if you type **make clean**. The `.PHONY` rule keeps make from doing something with a
-file named clean.
+your source, object directories and the executable if you type **make clean**. The `.PHONY` rule keeps make from doing
+something with a file named clean.
