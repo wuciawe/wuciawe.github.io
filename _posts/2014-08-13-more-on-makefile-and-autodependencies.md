@@ -171,7 +171,7 @@ particular order.</li>
 </ul>
 
 For directory and file of automatic variables, see
-[here](http://www.gnu.org/software/make/manual/make.html#Automatic-Variables).
+[here](http://www.gnu.org/software/make/manual/make.html#Automatic-Variables){:target="_blank"}.
 
 # Autodependencies
 
