@@ -178,7 +178,13 @@ should generally avoid using `$*` except in implicit rules or static pattern rul
 * If the target name in an explicit rule does not end with a recognized suffix, `$*` is set to the empty string for that
 rule.
 
-  extra paragraph
++ extra paragraph
+
+> djske
+
+# akdjlse
+
++ sjkeal
 
 For directory and file of automatic variables, see
 [here](http://www.gnu.org/software/make/manual/make.html#Automatic-Variables){:target="_blank"}.
