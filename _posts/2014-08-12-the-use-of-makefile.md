@@ -153,3 +153,6 @@ clean:
 In this example, the MakeFile should be located in the src directory. Note that it also includes a rule for cleaning up
 your source, object directories and the executable if you type **make clean**. The `.PHONY` rule keeps make from doing
 something with a file named clean.
+
+Until now, you know basic usage of MakeFile. For advanced usage, check this post:
+[More On Makefile And Autodependencies]({%post_url 2014-08-13-more-on-makefile-and-autodependencies%}).
