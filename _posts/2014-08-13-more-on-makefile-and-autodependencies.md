@@ -163,6 +163,9 @@ particular order.
 
 - `$|` The names of all the order-only prerequisites, with spaces between them.
 
++ djskke
+> dkske
+
 - `$*` The stem with which
 [an implicit rule](http://www.gnu.org/software/make/manual/make.html#Pattern-Match){:target="_blank"} matches. If the
 target is **dir/a.foo.b** and `the target pattern` is **a.%.b** then `the stem` is **dir/foo**. The stem is useful for
