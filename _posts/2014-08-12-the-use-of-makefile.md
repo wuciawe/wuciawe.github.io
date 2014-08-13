@@ -35,3 +35,31 @@ make -f theMakeFile
 
 <!-- more -->
 
+## Organizing the project on dependencies
+
+When a program contains numerous source files, if you still recompile the whole program every time you modify some
+source file, it will cost much time. To avoid that, you can make the use of different targets to organize the program
+correctly according to the dependency relationship between source files. Now the MakeFile will take care of the process
+of compiling and update the program by recompiling things modified or to be modified.
+
+For example:
+
+{% highlight make %}
+all: executable
+
+executable: main.o source1.o source2.o
+    g++ main.o source1.o source2.o -o executable
+
+main.o: main.cc
+    g++ -c main.cc
+
+source1.o: source1.cc
+    g++ -c source1.cc
+
+source2.o: source2.cc
+    g++ -c source2.cc
+{% endhighlight %}
+
+In the example, the target `all` has only dependencies, but no commands. In order for **make** to execute correctly, it
+has to meet all the dependencies of the called target (in this case `all`). Each of the dependencies are searched
+through all the targets available and executed if found.
