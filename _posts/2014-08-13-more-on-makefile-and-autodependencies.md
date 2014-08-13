@@ -6,9 +6,9 @@ tags : [c++, compile, makefile]
 {% include JB/setup %}
 
 In the post [The Use Of Makefile]({%post_url 2014-08-12-the-use-of-makefile%}), I've described the basic usage of
-makefile. You will be happy with it in most cases, but sometimes you still feel uncomfortable with dealing with
+MakeFile. You will be happy with it in most cases, but sometimes you still feel uncomfortable with dealing with
 complicated dependencies relationship of source files. In this post, I will introduce a way to generate dependencies
-automatically with Makefile. Before that, let's see more about MakeFile.
+automatically with MakeFile. Before that, let's see more about MakeFile.
 
 # More On MakeFile
 
@@ -62,7 +62,7 @@ boutput loutput: text
     generate $< -$(subst output,,$@) > $@
 {% endhighlight %}
 
-This is equivalent with the following one:
+This is equivalent to the following one:
 
 {% highlight make %}
 boutput: text
@@ -110,36 +110,28 @@ When the **generate** command is run, `$*` will expand to the stem.
 ## Functions
 
 {% highlight make %}
-# Performs a textual replacement on the text text: each occurrence of from is replaced by to. The result is substituted
-for the function call.
+# Performs a textual replacement on the text text: each occurrence of from is replaced by to. The result is substituted for the function call.
 $(subst from,to,text)
 
-# Finds whitespace-separated words in text that match pattern and replaces them with replacement. Here pattern may
-contain a `%` which acts as a wildcard, matching any number of any characters within a word. If replacement also
-contains a `%`, the `%` is replaced by the text that matched the `%` in pattern. Only the first `%` in the pattern and
-replacement is treated this way; any subsequent `%` is unchanged.
+# Finds whitespace-separated words in text that match pattern and replaces them with replacement. Here pattern may contain a `%` which acts as a wildcard, matching any number of any characters within a word. If replacement also contains a `%`, the `%` is replaced by the text that matched the `%` in pattern. Only the first `%` in the pattern and replacement is treated this way; any subsequent `%` is unchanged.
 $(patsubst pattern,replacement,text)
 # for example
 $(patsubst %.c,%.o,x.c.c bar.c)
 # results in x.c.o bar.o
 
-# Removes leading and trailing whitespace from string and replaces each internal sequence of one or more whitespace
-characters with a single space.
+# Removes leading and trailing whitespace from string and replaces each internal sequence of one or more whitespace characters with a single space.
 $(strip string)
 
 # Searches in for an occurrence of find. If it occurs, the value is find; otherwise, the value is empty.
 $(findstring find,in)
 
-# Returns all whitespace-separated words in text that do match any of the pattern words, removing any words that do not
-match. The patterns are written using `%`, just like the patterns used in the patsubst function above.
+# Returns all whitespace-separated words in text that do match any of the pattern words, removing any words that do not match. The patterns are written using `%`, just like the patterns used in the patsubst function above.
 $(filter pattern...,text)
 
-# Returns all whitespace-separated words in text that do not match any of the pattern words, removing the words that do
-match one or more. This is the exact opposite of the filter function.
+# Returns all whitespace-separated words in text that do not match any of the pattern words, removing the words that do match one or more. This is the exact opposite of the filter function.
 $(filter-out pattern...,text)
 
-# Sorts the words of list in lexical order, removing duplicate words. The output is a list of words separated by single
-spaces.
+# Sorts the words of list in lexical order, removing duplicate words. The output is a list of words separated by single spaces.
 $(sort list)
 {% endhighlight %}
 
@@ -175,13 +167,11 @@ particular order.
 If the target is **dir/a.foo.b** and `the target pattern` is **a.%.b** then `the stem` is **dir/foo**. The stem is
 useful for constructing names of related files. In a static pattern rule, the stem is part of the file name that
 matched the `%` in the target pattern.
-
 In an explicit rule, there is no stem; so `$*` cannot be determined in that way. Instead, if the target name ends with
 [a recognized suffix](http://www.gnu.org/software/make/manual/make.html#Suffix-Rules), `$*` is set to the target name
-minus the suffix. For example, if the target name is ‘foo.c’, then ‘$*’ is set to ‘foo’, since ‘.c’ is a suffix. GNU
+minus the suffix. For example, if the target name is ‘foo.c’, then `$*` is set to ‘foo’, since ‘.c’ is a suffix. GNU
 Make does this bizarre thing only for compatibility with other implementations of make. You should generally avoid
 using `$*` except in implicit rules or static pattern rules.
-
 If the target name in an explicit rule does not end with a recognized suffix, `$*` is set to the empty string for that
 rule.
 
