@@ -8,9 +8,9 @@ tags : [c++, compile]
 `gcc` is the "GNU" C compiler, and `g++` is the "GNU C++ compiler, while `cc` and `CC` are the Sun C and C++ compilers
 also available on Sun workstations. Below are several examples that show how to use g++ to compile C++ programs.
 
-# Compiling a single source file
+## Compiling a single source file
 
-{% highlight bash %}
+{% highlight console %}
 g++ source.cc -o executable
 {% endhighlight %}
 
@@ -30,7 +30,7 @@ is deleted in the process.
 
 <!-- more -->
 
-# Compiling a program with multiple source files
+## Compiling a program with multiple source files
 
 {% highlight console %}
 g++ source1.cc source2.cc -o executable
@@ -59,7 +59,7 @@ The source1.cc does not need to be recompiled. When there are numerous source fi
 of them, the time savings can be significant. This process, though somewhat complicated, is generally handled
 automatically by a [makefile]({%post_url 2014-08-12-the-use-of-makefile%}).
 
-# Frequently used compilation options
+## Frequently used compilation options
 
 C and C++ compilers allow for many options for how to compile a program, and the examples below demonstrate how to use
 many of the more commonly used options. In most cases options can be combined, although it is generally not useful to

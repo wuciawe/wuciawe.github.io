@@ -10,9 +10,9 @@ MakeFile. You will be happy with it in most cases, but sometimes you still feel 
 complicated dependencies relationship of source files. In this post, I will introduce a way to generate dependencies
 automatically with MakeFile. Before that, let's see more about MakeFile.
 
-# More On MakeFile
+## More On MakeFile
 
-## VPATH and vpath
+### VPATH and vpath
 
 The `VPATH` is a list of directories to be searched for missing source files (actually for missing prerequisites: they
 don't have to be source files, but VPATH and vpath are best only used for source files). The list can be separated by
@@ -55,7 +55,7 @@ vpath pattern
 vpath
 {% endhighlight %}
 
-## Multiple targets
+### Multiple targets
 
 {% highlight make %}
 boutput loutput: text
@@ -71,7 +71,7 @@ loutput: text
     generate text -l > loutput
 {% endhighlight %}
 
-## Static pattern rules
+### Static pattern rules
 
 Following is the syntax of a static pattern rule:
 
@@ -107,7 +107,7 @@ boutput loutput: %output: text
 
 When the **generate** command is run, `$*` will expand to the stem.
 
-## Functions
+### Functions
 
 {% highlight make %}
 # Performs a textual replacement on the text text: each occurrence of from is replaced by to. The result is substituted for the function call.
@@ -135,7 +135,7 @@ $(filter-out pattern...,text)
 $(sort list)
 {% endhighlight %}
 
-## Automatic variables
+### Automatic variables
 
 -   `$@` The file name of the target of the rule. If the target is an archive member, then `$@` is the name of the archive
 file. In [a pattern rule](http://www.gnu.org/software/make/manual/make.html#Pattern-Intro){:target="_blank"} that has
@@ -181,7 +181,7 @@ rule.
 For directory and file of automatic variables, see
 [here](http://www.gnu.org/software/make/manual/make.html#Automatic-Variables){:target="_blank"}.
 
-# Autodependencies
+## Autodependencies
 
 The dependencies of the source files can be decided by the included header files of every source file, and compilers
 support listing include files as follows:
@@ -228,3 +228,6 @@ one or more MakeFiles before continuing.
 
 To simply ignore a missing MakeFile with no error message, use the **-include** directive instead of **include**
 directive.
+
+It is also possible to automatically generate the dependencies between source files with 
+[makedepend](https://www.google.com/#q=makedepend){:target="_blank"}.

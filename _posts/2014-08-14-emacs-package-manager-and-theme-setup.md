@@ -42,6 +42,9 @@ For complete list of keys, call `describe-mode` with `Ctrl+h m`.
 
 I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-solarized).
 
-1. Install the **color-theme-solarized** with the emacs package managder.
-2. Add **(load-theme 'solarized-dark t)** into `.emacs`.
-3. Reload the init file with `M-x eval-region RET`.
+*   Install the **color-theme-solarized** with the emacs package managder.
+*   Add following code into `.emacs`.
+{% highlight cl %}
+(load-theme 'solarized-dark t)
+{% endhighlight %}
+*   Reload the init file with `M-x eval-region RET`.

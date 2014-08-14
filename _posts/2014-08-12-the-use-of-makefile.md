@@ -11,7 +11,7 @@ the situation where the program contains lots of source files and the dependence
 complicated, using compile commands directly to maintain the program becomes quite impractical and `MakeFile` is on
 need.
 
-# The Basic MakeFile
+## The Basic MakeFile
 
 The basic makefile is composed of:
 
@@ -35,7 +35,7 @@ make -f theMakeFile
 
 <!-- more -->
 
-## Organizing the project on dependencies
+### Organizing the project on dependencies
 
 When a program contains numerous source files, if you still recompile the whole program every time you modify some
 source file, it will cost much time. To avoid that, you can make the use of different targets to organize the program
@@ -64,7 +64,7 @@ In the example, the target `all` has only dependencies, but no commands. In orde
 has to meet all the dependencies of the called target (in this case `all`). Each of the dependencies are searched
 through all the targets available and executed if found.
 
-## Using variables and comments
+### Using variables and comments
 
 You can also use variables when writing Makefiles. It comes in handy in situations where you want to change the
 compiler, or the compiler options.
@@ -91,7 +91,7 @@ source1.o: source1.cc
 source2.o: source2.cc
 {% endhighlight %}
 
-## Simple macros
+### Simple macros
 
 {% highlight make %}
 CC = g++
@@ -113,7 +113,7 @@ the list of object files. `%.o` means file ending in the .o suffix, `%.cc` is in
 output of the compilcation in the file named on the left side of the `:`, while `$^` represents the right side of `:`.
 `$<` is the first item in the dependencies list.
 
-## Last example
+### Last example
 
 {% highlight make %}
 IDIR = ../include
