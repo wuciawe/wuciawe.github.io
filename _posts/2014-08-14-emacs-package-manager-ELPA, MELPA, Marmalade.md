@@ -9,13 +9,6 @@ tags : [emacs, package manager]
 
 Add the following into the Emacs configuration file `.emacs`:
 
-``` ruby
-require 'redcarpet'
-markdown = Redcarpet.new("Hello World!")
-puts markdown.to_html
-```
-
-    
 ~~~ cl
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)

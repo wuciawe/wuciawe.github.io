@@ -15,10 +15,10 @@ need.
 
 The basic makefile is composed of:
 
-{% highlight make %}
+~~~ make
 target: dependencies
     command
-{% endhighlight %}
+~~~
 
 When you finish writing the MakeFile, you can use following basic command to compile the program:
 
