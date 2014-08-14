@@ -9,7 +9,7 @@ tags : [emacs, package manager]
 
 Add the following into the Emacs configuration file `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos %}
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
@@ -20,6 +20,6 @@ Add the following into the Emacs configuration file `.emacs`:
                   ))
   (add-to-list 'package-archives source t))
 (package-initialize)
-{% endhighlight linenos %}
+{% endhighlight %}
 
 <!-- more -->
