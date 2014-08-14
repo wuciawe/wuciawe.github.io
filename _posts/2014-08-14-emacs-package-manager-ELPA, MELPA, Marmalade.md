@@ -9,7 +9,7 @@ tags : [emacs, package manager]
 
 Add the following into the Emacs configuration file `.emacs`:
 
-~~~ cl
+~~~ lisp
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
