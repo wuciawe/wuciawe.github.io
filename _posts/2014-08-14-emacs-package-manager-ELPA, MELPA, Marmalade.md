@@ -9,7 +9,11 @@ tags : [emacs, package manager]
 
 Add the following into the Emacs configuration file `.emacs`:
 
-``` cl
+    ```ruby
+    # ...ruby code
+    ```
+    
+```cl
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
