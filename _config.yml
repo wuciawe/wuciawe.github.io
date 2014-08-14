@@ -6,9 +6,9 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 paginate: 10
 pygments: true
 safe: true
-markdown: redcarpet
+#markdown: redcarpet
 
-#markdown: kramdown
+markdown: kramdown
 #kramdown:
 #  input: GFM
 # Themes are encouraged to use these universal variables 

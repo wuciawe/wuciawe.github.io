@@ -16,7 +16,7 @@ puts markdown.to_html
 ```
 
     
-```cl
+~~~ cl
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
@@ -27,6 +27,6 @@ puts markdown.to_html
                   ))
   (add-to-list 'package-archives source t))
 (package-initialize)
-```
+~~~
 
 <!-- more -->
