@@ -1,0 +1,47 @@
+---
+layout: post
+category : [emacs]
+tags : [emacs, package manager]
+---
+{% include JB/setup %}
+
+## Load Emacs package manager
+
+Add the following into the Emacs configuration file `.emacs`:
+
+{% highlight cl %}
+;;; Emacs is not a package manager, and here we load its package manager!
+(require 'package)
+(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+                  ("elpa" . "http://tromey.com/elpa/")
+                  ;; TODO: Maybe, use this after emacs24 is released
+                  ;; (development versions of packages)
+                  ("melpa" . "http://melpa.milkbox.net/packages/")
+                  ))
+    (add-to-list 'package-archives source t))
+(package-initialize)
+{% endhighlight %}
+
+Start Emacs and press `M-x` type **list-packages**, move cursor to the line, press `enter` click **Install** to install 
+the package you want.
+
+<!-- more -->
+
+In the `package-menu-mode`, there are some useful shotkeys:
+
+-   `enter` Describe the package under cursor. (describe-package)
+-   `i` Mark for installation. (package-menu-mark-install)
+-   `u` Unmark. (package-menu-mark-unmark)
+-   `d` Mark for deletion (removal of a installed package). (package-menu-mark-delete)
+-   `x` Execute (start install/uninstall of marked items). (package-menu-execute)
+-   `r` Refresh the list from server. (package-menu-refresh)
+
+For complete list of keys, call `describe-mode` with `Ctrl+h m`.
+
+## Setup dark theme
+
+I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-solarized).
+
+1. Install the **color-theme-solarized** with the emacs package managder.
+2. Add **(load-theme 'solarized-dark t)** into `.emacs`.
+3. Reload the init file with `M-x eval-region RET`.

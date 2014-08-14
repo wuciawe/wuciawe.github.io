@@ -10,18 +10,18 @@ also available on Sun workstations. Below are several examples that show how to 
 
 # Compiling a single source file
 
-~~~
+{% highlight bash %}
 g++ source.cc -o executable
-~~~
+{% endhighlight %}
 
 This command compiles source.c into an executable program named executable which you can run with **./ executable**.
 
 Alternatively, you can also compile it with following two commands:
 
-~~~ bash
+{% highlight console %}
 g++ -c source.cc
 g++ source.o -o executable
-~~~
+{% endhighlight %}
 
 This time the two-step method first `compiles` source.cc into a machine code file named "source.o" and then `links`
 source.o with some system libraries to produce the file program "executable".In fact the first method also does this
