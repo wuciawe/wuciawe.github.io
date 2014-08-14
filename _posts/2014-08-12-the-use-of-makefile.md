@@ -69,7 +69,7 @@ through all the targets available and executed if found.
 You can also use variables when writing Makefiles. It comes in handy in situations where you want to change the
 compiler, or the compiler options.
 
-{% highlight make %}
+~~~ make
 #Now we define some constants CC and CFLAGS.
 #CC specifies which compiler to use
 #CFLAGS is the list of flags to pass to the compilation command.
@@ -90,7 +90,7 @@ source1.o: source1.cc
 
 source2.o: source2.cc
     $(CC) $(CFLAGS) source2.cc
-{% endhighlight %}
+~~~
 
 ## Simple macros
 
