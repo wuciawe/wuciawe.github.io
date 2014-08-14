@@ -44,7 +44,7 @@ of compiling and update the program by recompiling things modified or to be modi
 
 For example:
 
-{% highlight make %}
+~~~ make
 all: executable
 
 executable: main.o source1.o source2.o
@@ -58,7 +58,7 @@ source1.o: source1.cc
 
 source2.o: source2.cc
     g++ -c source2.cc
-{% endhighlight %}
+~~~
 
 In the example, the target `all` has only dependencies, but no commands. In order for **make** to execute correctly, it
 has to meet all the dependencies of the called target (in this case `all`). Each of the dependencies are searched
