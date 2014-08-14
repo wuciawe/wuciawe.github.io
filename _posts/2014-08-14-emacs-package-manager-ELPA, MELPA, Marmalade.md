@@ -13,6 +13,10 @@ Add the following into the Emacs configuration file `.emacs`:
     # ...ruby code
     ```
     
+```ruby
+# ...ruby code
+```
+    
 ```cl
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
