@@ -5,7 +5,18 @@
 
 jQuery.noConflict();
 jQuery(document).ready(function(){
-    var backToTopTxt = "▲", backToTopEle = jQuery('<div class="backToTop"></div>').appendTo(jQuery("body")).text(backToTopTxt).attr("title","Back to top").click(function() {
+//    var backToTopTxt = "▲", backToTopEle = jQuery('<div class="backToTop col-sm-offset-10 pull-right"></div>').appendTo(jQuery("body")).text(backToTopTxt).attr("title","Back to top").click(function() {
+//        jQuery("html, body").animate({ scrollTop: 0 }, 120);
+//    }), backToTopFun = function() {
+//        var st = jQuery(document).scrollTop(), winh = jQuery(window).height();
+//        (st > 200)? backToTopEle.show(): backToTopEle.hide();
+//        //IE6下的定位
+//        if (!window.XMLHttpRequest) {
+//            backToTopEle.css("top", st + winh - 166);
+//        }
+//    };
+
+    var backToTopEle = jQuery('<div class="backToTop col-sm-offset-10 pull-right"><img src="/assets/image/backtotop.png"></div>').appendTo(jQuery("body")).click(function() {
         jQuery("html, body").animate({ scrollTop: 0 }, 120);
     }), backToTopFun = function() {
         var st = jQuery(document).scrollTop(), winh = jQuery(window).height();
