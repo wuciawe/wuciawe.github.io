@@ -87,7 +87,7 @@
             },
             // The css used by the default player. This is is dynamically injected into a `<style>` tag in the top of the head.
             css: '\
-        .audiojs audio { /*position: absolute; left: -1px; */} \
+        .audiojs audio { position: absolute; left: -1px; } \
         .audiojs { /*width: 460px;*/ height: 36px; /*background: #ff0000;*/ /*margin-left: 50px !important;*/ padding:0 !important;/*float:none*/; overflow: hidden; font-family: monospace; font-size: 12px; \
           /*background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #444), color-stop(0.5, #555), color-stop(0.51, #444), color-stop(1, #444)); */\
           /*background-image: -moz-linear-gradient(center top, #444 0%, #555 50%, #444 51%, #444 100%); */\
