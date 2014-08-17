@@ -6,8 +6,8 @@ jQuery.noConflict();
 jQuery(document).ready(function(){
 
     var vWindow = jQuery(window);
-    var vBody = jQuery('body');
-    var vNav = jQuery('nav');
+    //var vBody = jQuery('body');
+    //var vNav = jQuery('nav');
     var vSearch = jQuery('#search-form');
 
     var backToTopEle = jQuery('.backToTop');
@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
 
     backToTopEle.hide();
     vWindow.bind("scroll", backToTopFun);
-    jQuery('div.main a,div.pic a').attr('target', '_blank');
+    //jQuery('div.main a,div.pic a').attr('target', '_blank');
 
     //vWindow.resize(function () {
     //    vBody.css('padding-top', parseInt(vNav.css("height"))+10);
