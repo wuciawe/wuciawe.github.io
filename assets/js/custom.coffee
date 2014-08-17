@@ -1,5 +1,7 @@
 ---
 ---
+
+#
 (($) ->
   vWindow = $(window)
 
@@ -30,5 +32,5 @@
     query = document.getElementById "google-search"
     queryString = "http://google.com/search?q=#{query.value}%20site:wuciawe.github.io"
     window.open queryString
-
 ) jQuery
+

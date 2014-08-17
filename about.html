@@ -169,56 +169,16 @@ priority: 3
             <!--</div>-->
         <!--</div>-->
 
-        <div class="panel panel-primary">
+        <div class="panel panel-primary"  ng-app="skillsApp">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-bookmark"></i>
                 Skills & Expertise
             </div>
-            <div class="panel-body">
+            <div class="panel-body" ng-controller="skillsController">
                 <ul style="list-style: none; padding: 0">
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        Scala
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        C++
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        Java
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        Git
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        CSS
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        Javascript
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        SQL
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        HTML
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        .Net
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        Unix/Linux
-                    </li>
-                    <li>
-                        <i class="glyphicon glyphicon-check"></i>
-                        ...
+                    <li ng-repeat="skill in skills">
+                        <i class="fa fa-check"></i>
+                        <[skill]>
                     </li>
                 </ul>
             </div>
