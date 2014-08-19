@@ -47,7 +47,6 @@
           title="Sitewide RSS Feed">
     <script src="{{ ASSET_PATH }}/js/angular.min.js"></script>
     <script src="{{ ASSET_PATH }}/js/ng-script.js"></script>
-
 </head>
 
 <body>
@@ -106,13 +105,13 @@
 <footer style="text-align: center">
     <div class="container">
         <p><i class="glyphicon glyphicon-copyright-mark"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
-            with help from <a href="http://jekyllbootstrap.com" target="_blank"
-                              title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+            with help from <a href="http://zhangwenli.com" target="_blank">zhangwenli's blog</a>,
+            <a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>
             and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
         </p>
     </div>
 </footer>
-<div class="backToTop col-xs-offset-10 col-md-offset-9 pull-right">
+<div class="backToTop col-xs-offset-10 col-md-offset-9 pull-right" style="display: none">
     <img src="/assets/image/backtotop.png">
 </div>
 <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
@@ -121,6 +120,7 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="{{ ASSET_PATH }}/js/custom.js"></script>
+<script src="{{ ASSET_PATH }}/js/jCorner.min.js"></script>
 
 {% include JB/analytics %}
 </body>

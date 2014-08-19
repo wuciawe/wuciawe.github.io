@@ -1,6 +1,3 @@
----
----
-
 class InterpolateProvider
   constructor: ($interpolateProvider) ->
     $interpolateProvider.startSymbol '<['
