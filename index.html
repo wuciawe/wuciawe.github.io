@@ -81,9 +81,15 @@ title: The Blog
 
         <!-- previous page link -->
         {% if paginator.previous_page %}
-        <li>
-            <a href="/page{{paginator.previous_page}}"><i class="fa fa-angle-left fa-lg"></i> </a>
-        </li>
+            {% if paginator.previous_page == 1 %}
+                <li>
+                    <a href="/index.html"><i class="fa fa-angle-left fa-lg"></i> </a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="/page{{paginator.previous_page}}"><i class="fa fa-angle-left fa-lg"></i> </a>
+                </li>
+            {% endif %}
         {% else %}
         <li class="disabled">
             <a href="#"><i class="fa fa-angle-left fa-lg"></i></a>
