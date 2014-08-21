@@ -9,11 +9,6 @@ tags: [design pattern, object oriented, structural pattern]
 > Structural patterns are concerned with how classes and objects are composed to form larger structures. Structural 
 > class patterns use inheritance to compose interfaces or implementations.
 
-In this post, I'll talk about `Class Structural`( [Adapter](#adapter) ) and `Object Structural`( [Adapter](#adapter), 
-[Bridge](#bridge), [Composite](#composite), [Decorator](#decorator) ). [In next post]({% post_url 2014-08-21-design-pattern-part-3 %}), 
-I'll talk about the other three `Object Structural` patterns( [Facade]( {% post_url 2014-08-21-design-pattern-part-3 %}#facade ), 
-[Flyweight]({% post_url 2014-08-21-design-pattern-part-3 %}#flyweight), [Proxy]({% post_url 2014-08-21-design-pattern-part-3 %}#proxy) ).
-
 <!-- more -->
 
 ## Class Structural
@@ -27,11 +22,21 @@ I'll talk about the other three `Object Structural` patterns( [Facade]( {% post_
 Convert the interface of a class into another interface clients expect. Adapter lets classes work together that could 
 not otherwise because of incompatible interfaces.
 
+#### Applicability
+
+Use the Adapter pattern when
+
+-   you want to use an existing class, and its interface does not match the one you need.
+-   you want to create a reusable class that cooperates with unrelated or unforeseen classes, that is, classes that 
+don’t necessarily have compatible interfaces.
+-   (object adapter only) you need to use several existing subclasses, but it’s impractical to adapt their interface by 
+subclassing every one. An object adapter can adapt the interface of its parent class.
+
 #### Examples
 
-`Class Adapter` – This form uses inheritance and extends the source interface.
+Class Adapter – This form uses inheritance and extends the source interface.
 
-`Object Adapter` – This form uses composition and adapter contains the source object.
+Object Adapter – This form uses composition and adapter contains the source object.
 
 {% highlight java %}
 class rLine {
@@ -109,19 +114,19 @@ Here are other issues to consider when using the Adapter pattern:
 
 #### Related Patterns
 
-[Bridge](#bridge) has a structure similar to an object adapter, but Bridge has a different intent: It is meant to separate an 
+Bridge has a structure similar to an object adapter, but Bridge has a different intent: It is meant to separate an 
 interface from its implementation so that they can be varied easily and independently. An adapter is meant to change 
 the interface of an existing object.
 
-[Decorator](#decorator) enhances another object without changing its interface. A decorator is thus more transparent to the 
+Decorator enhances another object without changing its interface. A decorator is thus more transparent to the 
 application than an adapter is. As a consequence, Decorator supports recursive composition, which isn’t possible with 
 pure adapters.
 
-[Proxy]({% post_url 2014-08-21-design-pattern-part-3 %}#proxy) defines a representative or surrogate for another object and does not change its interface.
+Proxy defines a representative or surrogate for another object and does not change its interface.
 
 ## Object Structural
 
-### Adapter
+### Addapter
 
 > also Class Structural
 
@@ -132,6 +137,25 @@ pure adapters.
 #### Intent
 
 Decouple an abstraction from its implementation so that the two can vary independently.
+
+#### Applicability
+
+Use the Bridge pattern when
+
+-   you want to avoid a permanent binding between an abstraction and its implementation. This might be the case, for 
+example, when the implementation must be selected or switched at run-time.
+-   both the abstractions and their implementations should be extensible by subclassing. In this case, the Bridge 
+pattern lets you combine the different abstractions and implementations and extend them independently.
+-   changes in the implementation of an abstraction should have no impact on clients; that is, their code should not 
+have to be recompiled.
+-   (C++) you want to hide the implementation of an abstraction completely from clients. In C++ the representation of a 
+class is visible in the class interface.
+-   you have a proliferation of classes as shown earlier in the first Motivation diagram. Such a class hierarchy 
+indicates the need for splitting an object into two parts. Rumbaugh uses the term ”nested general izations” to refer to 
+such class hierarchies.
+-   you want to share an implementation among multiple objects( perhaps using reference counting), and this fact should 
+be hidden from the client. A simple example is Coplien’s String class, in which multiple objects can share the same 
+string representation( StringRep).
 
 #### Examples
 
@@ -218,9 +242,9 @@ The Bridge pattern has the following consequences:
 
 #### Related Patterns
 
-An [Abstract Factory]({% post_url 2014-08-20-design-pattern-part-1 %}#abstract-factory) can create and configure a particular Bridge.
+An Abstract Factory can create and configure a particular Bridge.
 
-The [Adapter](#adapter) pattern is geared toward making unrelated classes work together. It is usually applied to systems after 
+The Adapter pattern is geared toward making unrelated classes work together. It is usually applied to systems after 
 they’re designed. Bridge, on the other hand, is used up-front in a design to let abstractions and implementations vary 
 independently.
 
@@ -228,8 +252,16 @@ independently.
 
 #### Intent
 
-Compose objects into tree strictures to represent part-whole hierarchies. Composite lets clients treat individual 
+Compose objects into tree stractures to represent part-whole hierarchies. Compaosite lets clients treat individual 
 objects and compositions of objects uniformly.
+
+#### Applicability
+
+Use the Composite pattern when
+
+-   you want to represent part-whole hierarchies of objects.
+-   you want clients to be able to ignore the difference between compositions of objects and individual objects. 
+Clients will treat all objects in the composite structure uniformly.
 
 #### Examples
 
@@ -319,17 +351,17 @@ instead.
 
 #### Related Patterns
 
-Often the component-parent link is used for a [Chain of Responsibility]({% post_url 2014-08-21-design-pattern-part-4 %}#chain-of-responsibility).
+Often the component-parent link is used for a Chain of Responsibility.
 
-[Decorator](#decorator) is often used with Composite. When decorators and composites are sued together, they will usually have a 
+Decorator is often used with Composite. When decorators and composites are sued together, they will usually have a 
 common parent class. So decorators will have to support the Component interface with operations like Add, Remove, and 
 GetChild.
 
-[Flyweight]({% post_url 2014-08-21-design-pattern-part-3 %}#flyweight) lets you share components, but they can no longer refer to their parents.
+Flyweight lets you share components, but they can no longer refer to their parents.
 
-[Iterator]({% post_url 2014-08-21-design-pattern-part-4 %}#iterator) can be used to traverse composites.
+Iterator can be used to traverse composites.
 
-[Visitor]({% post_url 2014-08-21-design-pattern-part-5 %}#visitor) localizes operations and behavior that would otherwise be distributed across Composite and Leaf classes.
+Visitor localizes operations and behavior that would otherwise be distributed across Composite and Leaf classes.
 
 ### Decorator
 
@@ -339,6 +371,17 @@ GetChild.
 
 Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing 
 for extending functionality.
+
+#### Applicability
+
+Use Decorator
+
+-   to add responsibilities to individual objects dynamically and transparently, that is, without affecting other 
+objects.
+-   for responsibilities that can be withdrawn.
+-   when extension by subclassing is impractical. Sometimes a large number of independent extensions are possible and 
+would produce an explosion of subclasses to support every combination. Or a class definition may be hidden or otherwise 
+unavailable for subclassing.
 
 #### Examples
 
@@ -423,11 +466,11 @@ The Decorator pattern has at least two key benefits and two liabilities:
 
 #### Related Patterns
 
-[Adapter](#adapter): A decorator is different from an adapter in that a decorator only changes an object’s responsibilities, not 
+Adapter: A decorator is different from an adapter in that a decorator only changes an object’s responsibilities, not 
 its interface; an adapter will give an object a completely new interface.
 
-[Composite](#composite): A decorator can be viewed as a degenerate composite with only one component. However, a decorator adds 
+Composite: A decorator can be viewed as a degenerate composite with only one component. However, a decorator adds 
 additional responsibilities—it isn’t intended for object aggregation.
 
-[Strategy]({% post_url 2014-08-21-design-pattern-part-5 %}#strategy): A decorator lets you change the skin of an object; a strategy lets you change the guts. These are two 
+Strategy: A decorator lets you change the skin of an object; a strategy lets you change the guts. These are two 
 alternative ways of changing an object.

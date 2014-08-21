@@ -10,8 +10,7 @@ tags: [design pattern, object oriented, creational pattern]
 > are created, composed, and represented. A `class creational pattern` uses inheritance to vary the class that’s 
 > instantiated, whereas an `object creational pattern` will delegate instantiation to another object.
 
-In this post, I'll talk about both `class creational pattern`( [Factory Method](factory-method) ) and `object creational pattern`( 
-[Abstract Factory](#abstract-factory), [Builder](#builder), [Prototype](#prototype), [Singleton](#singleton) ).
+In this post, I'll talk about both `class creational pattern` and `object creational pattern`.
 
 <!-- more -->
 
@@ -25,6 +24,16 @@ In this post, I'll talk about both `class creational pattern`( [Factory Method](
 
 Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
 
+#### Applicability
+
+Use the Abstract Factory pattern when:
+
+-   a system should be independent of how its products are created, composed and represented.
+-   a system should be configured with one of multiple families of products.
+-   a family of related product objects is designed to be used together, and you need to enforce this constraint.
+-   you want to provide a class library of products, and you want to reveal just their interfaces, not their 
+implementations.
+
 #### Examples
 
 Multiple examples can be found [here](http://stackoverflow.com/questions/2280170/why-do-we-need-abstract-factory-design-pattern).
@@ -32,15 +41,15 @@ Multiple examples can be found [here](http://stackoverflow.com/questions/2280170
 Following is an example from [stackoverflow](http://stackoverflow.com/questions/1943576/is-there-a-pattern-for-initializing-objects-created-via-a-di-container/1945023#1945023):
 
 {% highlight java %}
-interface IMyIntf {
+public interface IMyIntf {
     public String getRunTimeParam();
 }
 
-interface IMyIntfFactory {
+public interface IMyIntfFactory {
     IMyIntf Create(String runTimeParam) throws Exception;
 }
 
-class MyIntf implements IMyIntf {
+public class MyIntf implements IMyIntf {
     public String getRunTimeParam() {
         return runTimeParam;
     }
@@ -56,17 +65,9 @@ class MyIntf implements IMyIntf {
 
 }
 
-class MyIntfFactory implements IMyIntfFactory {
+public class MyIntfFactory implements IMyIntfFactory {
     public MyIntf Create(String runTimeParam) throws Exception {
         return new MyIntf(runTimeParam);
-    }
-}
-
-public class Main{
-    public static void main(String[] args) throws Exception {
-        MyIntfFactory factory = new MyIntfFactory();
-        IMyIntf intf = factory.Create("parameter");
-        System.out.println(intf.getRunTimeParam());
     }
 }
 {% endhighlight %}
@@ -88,10 +89,10 @@ The Abstract Factory pattern has the following benefits and liabilities:
 
 #### Related Patterns
 
-AbstractFactory classes are often implemented with factory methods ([Factory Method](#factory-method)), but they can also be implemented 
-using [Prototype](#prototype).
+AbstractFactory classes are often implemented with factory methods (Factory Method), but they can also be implemented 
+using Prototype.
 
-A concrete factory is often a singleton([Singleton](#singleton)).
+A concrete factory is often a singleton(Singleton).
 
 ### Builder
 
@@ -99,6 +100,14 @@ A concrete factory is often a singleton([Singleton](#singleton)).
 
 Separate the construction of a complex object from its representation so that the same construction process can create 
 different representations.
+
+#### Applicability
+
+Use the Builder pattern when
+
+-   the algorithm for creating a complex object should be independent of the parts that make up the object and how 
+they’re assembled.
+-   the construction process must allow different representations for the object that’s constructed.
 
 #### Examples
 
@@ -157,22 +166,33 @@ Here are key consequences of the Builder pattern:
 
 #### Related Patterns
 
-[Abstract Factory](#abstract-factory) is similar to Builder in that it too may construct complex objects. The primary difference is that the 
+Abstract Factory is similar to Builder in that it too may construct complex objects. The primary difference is that the 
 Builder pattern focuses on constructing a complex object step by step. Abstract Factory’s emphasis is on families of 
 product objects( either simple or complex). Builder returns the product as a final step, but as far as the Abstract 
 Factory pattern is concerned, the product gets returned immediately.
 
-A [Composite]({% post_url 2014-08-20-design-pattern-part-2 %}#composite) is what the builder often builds.
+A Composite is what the builder often builds.
 
 ### Prototype
 
-> A `prototype` is a template of any object before the actual object is constructed. Prototype design pattern is used in 
+> A prototype is a template of any object before the actual object is constructed. Prototype design pattern is used in 
 > scenarios where application needs to create a number of instances of a class, which has almost same state or differs 
 > very little.
 
 #### Intent
 
 Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.
+
+#### Applicability
+
+Use the Prototype pattern when a system should be independent of how its products are created, composed, and 
+represented; and
+
+-   when the classes to instantiate are specified at run-time, for example, by dynamic loading; or
+-   to avoid building a class hierarchy of factories that parallels the class hierarchy of products; or
+-   when instances of a class can have on of only a few different combinations of state. It may be more convenient to 
+install a corresponding number of prototypes and clone them rather than instantiating the class manually, each time 
+with the appropriate state.
 
 #### Examples
 
@@ -226,7 +246,8 @@ Album album = PrototypeFactory.getInstance(ModelType.ALBUM);
 #### Consequences
 
 Prototype has many of the same consequences that Abstract Factory and Builder have: It hides the concrete product 
-classes from the client. Moreover, these patterns let a client work with application-specific classes without modification.
+classes from the client, thereby reducing the number of names clients know about. Moreover, these patterns let a client 
+work with application-specific classes without modification.
 
 Additional benefits of the Prototype pattern are listed below:
 
@@ -236,25 +257,32 @@ Additional benefits of the Prototype pattern are listed below:
 -   Reduced subclassing.
 -   Configuring an application with classes dynamically.
 
-The main liability of the Prototype pattern is that each subclass of Prototype `must` implement the Clone operation, 
+The main liability of the Prototype pattern is that each subclass of Prototype must implement the Clone operation, 
 which may be difficult. For example, adding Clone is difficult when the classes under consideration already exist. 
 Implementing Clone can be difficult when their internals include objects that don’t support copying or have circular 
 references.
 
 #### Related Patterns
 
-Prototype and [Abstract Factory](#abstract-factory) are competing patterns in some ways. They can 
+Prototype and Abstract Factory are competing patterns in some ways, as we discuss at the end of this chapter. They can 
 also be used together, however. An Abstract Factory might store a set of prototypes from which to clone and return 
 product objects.
 
-Designs that make heavy use of the [Composite]({% post_url 2014-08-20-design-pattern-part-2 %}#composite) and 
-[Decorator]({% post_url 2014-08-20-design-pattern-part-2 %}#decorator) patterns often can benefit from Prototype as well.
+Designs that make heavy use of the Composite and Decorator patterns often can benefit from Prototype as well.
 
 ### Singleton
 
 #### Intent
 
 Ensure a class only has one instance, and provide a global point of access to it.
+
+#### Applicability
+
+Use the Singleton pattern when
+
+-   there must be exactly one instance of a class, and it must be accessible to clients from a well-known access point.
+-   when the sole instance should be extensible by subclassing, and clients should be able to use an extended instance 
+without modifying their code.
 
 #### Examples
 
@@ -356,7 +384,7 @@ The Singleton pattern has several benefits:
 
 #### Related Patterns
 
-Many patterns can be implemented using the Singleton pattern. See [Abstract Factory](#abstract-factory), [Builder](#builder), and [Prototype](#prototype).
+Many patterns can be implemented using the Singleton pattern. See Abstract Factory, Builder, and Prototype.
 
 ## Class Creational
 
@@ -368,6 +396,15 @@ Many patterns can be implemented using the Singleton pattern. See [Abstract Fact
 
 Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a 
 class defer instantiation to subclasses.
+
+#### Applicability
+
+Use the Factory Method pattern when
+
+-   a class can’t anticipate the class of objects it must create.
+-   a class wants its subclasses to specify the objects it creates.
+-   classes delegate responsibility to one of several helper subclasses, and you want to localize the knowledge of 
+which helper subclass is the delegate.
 
 #### Examples
 
@@ -409,9 +446,11 @@ Here are two additional consequences of the Factory Method pattern:
 
 #### Related Patterns
 
-[Abstract Factory](#abstract-factory) is often implemented with factory methods.
+Abstract Factory is often implemented with factory methods. The Motivation example in the Abstract Factory pattern 
+illustrates Factory Method as well.
 
-Factory methods are usually called within [Template Methods]({% post_url 2014-08-21-design-pattern-part-5 %}#template-method). 
+Factory methods are usually called within Template Methods. In the document example above, NewDocument is a template 
+method.
 
-[Prototypes](#prototype) don’t require subclassing Creator. However, they often require an Initialize operation on the Product class. 
+Prototypes don’t require subclassing Creator. However, they often require an Initialize operation on the Product class. 
 Creator uses Initialize to initialize the object. Factory Method doesn’t require such an operation.
