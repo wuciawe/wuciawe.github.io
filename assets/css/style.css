@@ -1,17 +1,17 @@
 body {
     /*background-color: #22C3AA;*/
     /*overflow-x: hidden;*/
-    font-family: 'Lato-Light', Arial, 'Microsoft YaHei', sarif;
+    font-family: 'Lato-Light', Arial, 'Microsoft YaHei', 'Droid Sans', sarif;
     font-weight: 400;
     font-size: 2em;
 }
 
 .post-text{
-    font-family: 'Lato', Arial, 'Microsoft YaHei', sarif;
+    font-family: 'Lato', Arial, 'Microsoft YaHei', 'Droid Sans', sarif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Delicious-Roman', Arial, 'Microsoft YaHei', sarif;
+    font-family: 'Delicious-Roman', Arial, 'Microsoft YaHei', 'Droid Sans', sarif;
     font-weight: 900;
     /*margin: 0.5em 0;*/
     text-shadow: 1px 1px #efefef, 2px 2px #AEE2D9;

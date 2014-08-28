@@ -161,7 +161,7 @@ title: The Blog
                         <hr>
 
                         <!-- post content -->
-                        <div class="post-content-truncate">
+                        <div class="post-content-truncate post-text">
                             {% if post.content contains "<!-- more -->" %}
                             {{ post.content | split:"<!-- more -->" | first % }}
                             {% else %}
