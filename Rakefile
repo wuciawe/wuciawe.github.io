@@ -73,6 +73,7 @@ task :post do
   end
 end # task :post
 
+
 # Usage: rake page name="page.html"
 # You can also specify a sub-directory path.
 # If you don't specify a file extention we create an index.html at the path specified
@@ -98,7 +99,7 @@ task :page do
   end
 end # task :page
 
-# Usage: rake page name="page.html"
+# Usage: rake page name="shotsview.html"
 # You can also specify a sub-directory path.
 # If you don't specify a file extention we create an index.html at the path specified
 desc "Create a new page."

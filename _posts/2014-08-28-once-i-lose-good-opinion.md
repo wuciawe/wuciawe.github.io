@@ -2,6 +2,6 @@
 layout: shot
 category: 
 tags: 
-shotContent: "我能承受尊重 也就經得起風言"
+shotContent: Once I lose good opinion, it's lost forever.
 ---
 {% include JB/setup %}
