@@ -1,23 +1,49 @@
-/* Custom container */
-
-/* Replaced with normal container and standard footer */
-/*.container-narrow {
-  margin: 0 auto;
-  max-width: 700px; }
-
-.container-narrow > hr {
-  margin: 30px 0; }
-*/
-
-/* Replaced with standard BS3 Navbar */
-/*.navbar .nav {
-  float: right; }*/
-
-/* Jekyll Bootstrap Colors */
-h1, h2, h3, h4 {
-  /*color: #f22430;*/
-  color: #000000;
+body {
+    /*background-color: #22C3AA;*/
+    /*overflow-x: hidden;*/
+    font-family: 'Lato-Light', Arial, 'Microsoft YaHei', sarif;
+    font-weight: 400;
+    font-size: 2em;
 }
+
+.post-text{
+    font-family: 'Lato', Arial, 'Microsoft YaHei', sarif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Delicious-Roman', Arial, 'Microsoft YaHei', sarif;
+    font-weight: 900;
+    /*margin: 0.5em 0;*/
+    text-shadow: 1px 1px #efefef, 2px 2px #AEE2D9;
+}
+
+h1 {
+    /*padding: 1em 80px 0 80px;*/
+    font-size: 1.5em;
+    /*margin: 1.5em -80px 0.5em -80px;*/
+    text-shadow: 2px 2px #efefef, 4px 4px #ccc;
+    box-sizing: border-box;
+    /*border-top: 3px dashed #22C3AA;*/
+    color: #22C3AA;
+    position: relative;
+    overflow: visible;
+}
+
+@font-face {
+    font-family: 'Delicious-Roman';
+    src: url('/assets/font/Delicious-Roman.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('/assets/font/Lato-Light.ttf');
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('/assets/font/Lato-Regular.ttf');
+}
+
 #footer {
   background-color: #fdcd60;
 }
