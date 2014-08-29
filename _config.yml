@@ -6,7 +6,7 @@ exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 paginate: 10
 highlighter: pygments
 safe: true
-lsi: true
+#lsi: true
 #markdown: redcarpet
 
 markdown: kramdown
