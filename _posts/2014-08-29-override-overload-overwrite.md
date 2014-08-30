@@ -49,6 +49,9 @@ polymorphic behavior.
 -   the same function signature
 -   the return type conforms covariance
 
+In Java, when you override a method, you could add `@Override` annotation on that method, this will let the compiler to 
+help you check out whether you actually override a method or just mistake or misspell something. 
+
 `overload`: function overloading means:
 
 -   the same range (in the same class)
@@ -58,3 +61,17 @@ polymorphic behavior.
 ## In Scala
 
 Similar case with Java, but no restrictions on `Operator Overloading`.
+
+Scala provides `override` keyword for the use of `@Overrride` annotation in Java.
+
+## Summation
+
+The concept `overwrite` introduced in C++ is really a result of using `virtural` keyword.
+
+While in Java and Scala, `override` is enabled by default. And Java provides`@Override` annotation and Scala provides 
+`override` keyword to help avoid some common bugs at compile time. `override` makes polymorphism very powerful.
+
+`overload` is a concept in the case of different functions sharing the same function name. I think this case takes no 
+difference with the case that you declare different functions with different function names. Because only function name 
+can not determine the function signature or function type. While functions are picked by their functions signature, and 
+`override` is a mechanism based on function signature restricted by function type.
