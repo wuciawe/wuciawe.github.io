@@ -36,6 +36,8 @@ Daydream is a rap made by 宋嶽庭. Below are the song and its lyrics.
 
 我一直走但不知道要走到什麼時候
 
+<!-- more -->
+
 day dream 睜開我的眼睛 視線好模糊
 
 什麼都看不清楚
