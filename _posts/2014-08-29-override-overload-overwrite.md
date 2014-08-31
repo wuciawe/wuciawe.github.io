@@ -62,14 +62,15 @@ help you check out whether you actually override a method or just mistake or mis
 
 Similar case with Java, but no restrictions on `Operator Overloading`.
 
-Scala provides `override` keyword for the use of `@Overrride` annotation in Java.
+Scala provides `override` modifier for the use of `@Overrride` annotation in Java, different from the case in Java, using 
+`override` modifier is not optional.
 
 ## Summation
 
 The concept `overwrite` introduced in C++ is really a result of using `virtural` keyword.
 
-While in Java and Scala, `override` is enabled by default. And Java provides`@Override` annotation and Scala provides 
-`override` keyword to help avoid some common bugs at compile time. `override` makes polymorphism very powerful.
+While in Java and Scala, `override` is enabled by default. And Java provides`@Override` annotation(`optional`) and Scala provides 
+`override` modifier(`must`) to help avoid some common bugs at compile time. `override` makes polymorphism very powerful.
 
 `overload` is a concept in the case of different functions sharing the same function name. I think this case takes no 
 difference with the case that you declare different functions with different function names. Because only function name 
