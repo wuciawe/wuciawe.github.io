@@ -21,7 +21,7 @@ Usage:
   {% include custom/tags_list %}
 {% else %}
   {% if tags_list.first[0] == null %}
-    {% for tag in tags_list %} 
+    {% for tag in tags_list %}
       <a class="list-group-item" href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag }}-ref">
         <i class="fa fa-tag"></i>
           {{ tag }}
@@ -29,8 +29,16 @@ Usage:
       </a>
     {% endfor %}
   {% else %}
-    {% for tag in tags_list %} 
-    	<li><a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tag[0] }}-ref">{{ tag[0] }} <span>{{ tag[1].size }}</span></a></li>
+    {% capture tags %}
+      {% for tag in tags_list %}
+        {{ tag[1].size | append: '_' | append: tag[0] | replace: ' ', '&#32;' }}
+      {% endfor %}
+    {% endcapture %}
+    {% assign sortedtags = tags | split:' ' | sort %}
+    {% for tag in sortedtags %}
+      {% assign rtag = tag | split:'_' %}
+      {% assign tagName = rtag.last | replace: '&#32;', ' ' %}
+      <li><a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tagName }}-ref">{{ tagName }} <span>{{ rtag.first }}</span></a></li>
     {% endfor %}
   {% endif %}
 {% endif %}
