@@ -31,17 +31,17 @@ h1 {
 
 @font-face {
     font-family: 'Delicious-Roman';
-    src: url('/assets/font/Delicious-Roman.otf') format('opentype');
+    src: url('/assets/fonts/Delicious-Roman.otf') format('opentype');
 }
 
 @font-face {
     font-family: 'Lato-Light';
-    src: url('/assets/font/Lato-Light.ttf');
+    src: url('/assets/fonts/Lato-Light.ttf');
 }
 
 @font-face {
     font-family: 'Lato';
-    src: url('/assets/font/Lato-Regular.ttf');
+    src: url('/assets/fonts/Lato-Regular.ttf');
 }
 
 #footer {
