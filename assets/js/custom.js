@@ -26,7 +26,7 @@
     backToTopEle.hide();
     vWindow.bind("scroll", backToTopFun);
     stickyElement = $('.stickyel');
-    bottomElement = $('.stickyfoot');
+    bottomElement = $('footer');
     parentElement = stickyElement.parent();
     if (stickyElement.length > 0) {
       stickyElement.each(function() {
