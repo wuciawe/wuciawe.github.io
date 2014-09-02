@@ -8,35 +8,32 @@
       {{ content }}
     </div>
     
-    <div class="col-md-3 hidden-sm">
-        <div class="row stickyel affix">
-            <div class="col-xs-12">
-                <p>
-                    <i class="fa fa-calendar"></i>
-                    <span>{{ page.date | date_to_long_string }}</span>
-                </p>
-                <p>
-                    {% unless page.categories == empty %}
-                    <i class="fa fa-folder-open-o"></i>
-                    <span>Categories:</span>
-                <ul class="list-group" style="font-size: 0.8em;">
+    <div class="col-md-3 hidden-sm post-sidebar">
+        <ul class="nav stickyel affix-top">
+            <li><span><i class="fa fa-calendar"></i>
+                {{ page.date | date_to_long_string }}</span>
+            </li>
+            <li>
+                {% unless page.categories == empty %}
+                <span><i class="fa fa-folder-open-o"></i>
+                Categories:</span>
+                <ul class="nav">
                     {% assign categories_list = page.categories %}
                     {% include JB/categories_list %}
                 </ul>
                 {% endunless %}
-                </p>
-                <p>
-                    {% unless page.tags == empty %}
-                    <i class="fa fa-tags"></i>
-                    <span>Tags:</span>
-                <ul class="list-group" style="font-size: 0.8em;">
+            </li>
+            <li>
+                {% unless page.tags == empty %}
+                <span><i class="fa fa-tags"></i>
+                Tags:</span>
+                <ul class="nav">
                     {% assign tags_list = page.tags %}
                     {% include JB/tags_list %}
                 </ul>
                 {% endunless %}
-                </p>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
   </div>
   
@@ -57,7 +54,7 @@
         {% endif %}
       </ul>
       <hr>
-      {% include JB/comments %}
+      <!--{% include JB/comments %}-->
     </div>
   </div>
   
