@@ -3,13 +3,11 @@
 {% else %}
   {% for shot in shots_collate  %}{% if shot.layout == 'shot' %}
     <div class="row">
-      <div class="col-md-6">
-        <div class="alert alert-warning" role="alert">
+      <div class="col-md-6 shot-item">
           <h2>{{ shot.shotContent }}</h2>
           <div class="pull-right">
             <small>{{ shot.date | date: "%B %e, %Y" }}</small>
           </div>
-        </div>
       </div>
     </div>
   {% endif %}{% endfor %}

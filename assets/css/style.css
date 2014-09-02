@@ -71,6 +71,19 @@ h1 {
     font-weight: bold;
 }
 
+.list-item-ul{
+    list-style-type: none;
+}
+.list-item-ul a{
+    text-decoration: none;
+    color: inherit;
+}
+.list-item-ul a:hover{
+    color: #563d7c;
+    border-left: 2px solid rgba(255, 44, 44, 0.4);
+    /*border-bottom: 2px solid rgba(255, 44, 44, 0.4);*/
+}
+
 /* tag_box */
 .tag_box {
     list-style: none;
@@ -93,7 +106,7 @@ h1 {
 .tag_box a {
     padding: 3px 6px;
     margin: 2px;
-    background: #eee;
+    background: transparent;
     color: #555;
     border-radius: 3px;
     text-decoration: none;
@@ -106,7 +119,7 @@ h1 {
 }
 
 .tag_box a:hover {
-    background-color: #e5e5e5;
+    background-color: rgba(205, 73, 255, 0.3);
 }
 
 .tag_box a.active {
@@ -180,9 +193,10 @@ h1 {
     padding-left: 15px;
 }
 
-.post-sidebar .nav .nav > li > a .badge{
-    color: #563d7c;
-    background-color: #f0ad4e;
+.post-sidebar .nav .nav > li > a .ic{
+    color: rgba(255, 44, 44, 0.4);
+    background-color: transparent;
+    margin-right: 5px;
 }
 
 
@@ -197,22 +211,22 @@ h1 {
 }
 
 .post-sidebar .nav > li > span {
-    color: #563d7c;
+    /*color: #563d7c;*/
     text-decoration: none;
-    background-color: transparent;
+    /*background-color: transparent;*/
+}
+
+.post-sidebar .nav .nav > li > a{
+    color: inherit;
 }
 
 .post-sidebar .nav .nav > li > a:hover {
-    color: #563d7c;
+    /*color: #563d7c;*/
     text-decoration: none;
-    background-color: transparent;
-    border-left: 2px solid #563d7c;
+    background-color: rgba(205, 73, 255, 0.3);
+    /*border-left: 2px solid #563d7c;*/
 }
 
-.post-sidebar .nav .nav > li > a:hover .badge{
-    color: #f0ad4e;
-    background-color: #563d7c;
-}
 
 /* all active links */
 .bs-docs-sidebar .nav > .active > a,
@@ -236,4 +250,61 @@ h1 {
 /* show active nested list */
 .bs-docs-sidebar .nav > .active > ul.nav {
     display: block;
+}
+
+.post-row {
+    margin-bottom: 1.5em;
+}
+.post-row > div {
+    padding: 10px 5px 10px 3%;
+    border-right: 1px dotted #ccc;
+}
+
+.post-row > .post-i:hover{
+    background-color: rgba(205, 73, 255, 0.3);
+}
+
+.post-row > .shot-i:hover{
+    background-color: #FFFACD;
+}
+
+.post-row > .post-i > a{
+    color: #333;
+}
+
+.post-row   a:hover{
+    text-decoration: none;
+}
+
+.post-row > div p{
+    font-size: 0.8em;
+}
+
+.pagination>li>a{
+    color: rgba(255, 44, 44, 0.4);
+}
+
+.pagination>li>a:hover{
+    color: rgba(255, 44, 44, 0.4);
+}
+
+.pagination>.active>span{
+    background-color: rgba(255, 44, 44, 0.4);
+    border-color: rgba(255, 44, 44, 0.4);
+}
+
+.pagination>.active>span:hover{
+    background-color: rgba(255, 44, 44, 0.4);
+    border-color: rgba(255, 44, 44, 0.4);
+}
+
+.shot-item{
+    /*border: 6px rgba(255, 44, 44, 0.4);*/
+    background-color: #FFFACD;
+    margin-bottom: 10px;
+}
+
+.shot-item:hover{
+    background-color: rgba(255, 44, 44, 0.4);
+    /*border-color: #FFFACD;*/
 }

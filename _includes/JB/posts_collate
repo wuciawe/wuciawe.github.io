@@ -35,7 +35,7 @@ Usage:
       {% assign last_month = this_month %}
       <h2 id='{{ this_year }}'>{{this_year}}</h2>
       <h3 id='{{ this_year | append: this_month }}'>{{this_month}}</h3>
-      <ul>
+      <ul class="list-item-ul">
     {% else %}
       {% if this_year != last_year %}
         {% assign last_year = this_year %}
@@ -43,18 +43,18 @@ Usage:
         </ul>
         <h2 id='{{ this_year }}'>{{this_year}}</h2>
         <h3 id='{{ this_year | append: this_month }}'>{{this_month}}</h3>
-        <ul>
+        <ul class="list-item-ul">
       {% else %}
         {% if this_month != last_month %}
           {% assign last_month = this_month %}
           </ul>
           <h3 id='{{ this_year | append: this_month }}'>{{ this_month }}</h3>
-          <ul>
+          <ul class="list-item-ul">
         {% endif %}
       {% endif %}
     {% endif %}
 
-    <li><span>{{ post.date | date: "%B %e, %Y" }}</span> &raquo; <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></li>
+    <a href="{{ BASE_PATH }}{{ post.url }}"><li><span>{{ post.date | date: "%B %e, %Y" }}</span> &raquo; {{ post.title }}</a></li>
 
   {% endif %}{% endfor %}
   {% if !begin_all %}
