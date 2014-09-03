@@ -86,7 +86,7 @@ title: The Blog
             {% endif %}
             {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
             {% if post.layout == 'shot' %}
-            <div class="col-md-4 col-sm-12 shot-i">
+            <div class="col-md-4 col-sm-12 shot-i post-i">
                 <h4 class="post-title">
                     {{ post.shotContent }}
                 </h4>
@@ -100,8 +100,8 @@ title: The Blog
                 </p>
             </div>
             {% else %}
-            <div class="col-md-4 col-sm-12 post-i">
-                <a href="{{ post.url }}">
+            <a href="{{ post.url }}" style="display: block">
+                <div class="col-md-4 col-sm-12 post-i">
                     <h4 class="post-title">{{post.title}}</h4>
                     <p>
                         {% capture infotext %}{{ post.infotext }}{% endcapture %}
@@ -111,8 +111,8 @@ title: The Blog
                         {{ infotext }}
                         {% endif %}
                     </p>
-                </a>
-            </div>
+                 </div>
+             </a>
             {% endif %}
             {% endfor %}
         </div>

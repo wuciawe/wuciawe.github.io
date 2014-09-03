@@ -3,6 +3,7 @@ layout: post
 tagline: Behavioral Patterns
 category: [design pattern, object oriented]
 tags: [design pattern, object oriented, behavioral pattern]
+infotext: 'A short summary of Behavioral Pattern. In this post, it includes Object Behavioral: State, Strategy and Visitor; Class Behavioral: Template Method.'
 ---
 {% include JB/setup %}
 

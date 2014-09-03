@@ -1,4 +1,4 @@
-.post-row > .post-i{
+.post-row > a > .post-i{
     margin-bottom: 20px;
     background-color: rgba(205, 73, 255, 0.3);
 }

@@ -2,6 +2,7 @@
 layout: post
 category : [C++]
 tags : [c++, compile]
+infotext: 'The simple way to compile cc files with g++ command.'
 ---
 {% include JB/setup %}
 

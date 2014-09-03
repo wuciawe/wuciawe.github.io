@@ -2,6 +2,7 @@
 layout: post
 category: [object oriented]
 tags: [object oriented, c++, java, scala]
+infotext: 'A short summary and simple comparison on Override, Overload and Overwrite in C++, Java and Scala.'
 ---
 {% include JB/setup %}
 

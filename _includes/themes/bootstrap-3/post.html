@@ -42,9 +42,9 @@
       <hr>
       <ul class="pagination">
         {% if page.previous %}
-          <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}"><i class="fa fa-angle-left fa-lg"></i> Previous</a></li>
+          <li class="prev"><a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}"><i class="fa fa-angle-left fa-lg"></i> Prev</a></li>
         {% else %}
-          <li class="prev disabled"><a>Previous</a></li>
+          <li class="prev disabled"><a>Prev</a></li>
         {% endif %}
           <li><a href="{{ BASE_PATH }}{{ site.JB.archive_path }}">Archive</a></li>
         {% if page.next %}

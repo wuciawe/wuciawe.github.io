@@ -2,6 +2,7 @@
 layout: post
 category: [music]
 tags: [rap]
+infotext: 'Rap song made by 宋嶽庭, about lovely child dream and the reality.'
 ---
 {% include JB/setup %}
 

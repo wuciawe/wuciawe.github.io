@@ -136,7 +136,7 @@ footer a:hover{
 .list-item-ul a:hover{
     color: #563d7c;
     border-left: 2px solid rgba(255, 44, 44, 0.4);
-    /*border-bottom: 2px solid rgba(255, 44, 44, 0.4);*/
+    padding-left: 3px;
 }
 
 /* tag_box */
@@ -310,12 +310,16 @@ footer a:hover{
 .post-row {
     margin-bottom: 1.5em;
 }
-.post-row > div {
+.post-row .post-i {
     padding: 10px 5px 10px 3%;
     border-right: 1px dotted #ccc;
 }
 
-.post-row > .post-i:hover{
+.post-row > a:hover{
+    text-decoration: none;
+}
+
+.post-row > a:hover > .post-i{
     background-color: rgba(205, 73, 255, 0.3);
 }
 
@@ -323,15 +327,11 @@ footer a:hover{
     background-color: #FFFACD;
 }
 
-.post-row > .post-i > a{
+.post-row > a{
     color: #333;
 }
 
-.post-row   a:hover{
-    text-decoration: none;
-}
-
-.post-row > div p{
+.post-row .post-i > p{
     font-size: 0.8em;
 }
 

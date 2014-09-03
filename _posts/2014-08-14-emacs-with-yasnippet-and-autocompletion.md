@@ -2,6 +2,7 @@
 layout: post
 category: [emacs]
 tags: [emacs, yasnippet, autocompletion, c++]
+infotext: 'Simple steps to setup Emacs with Yasnippet and Autocomplete.'
 ---
 {% include JB/setup %}
 

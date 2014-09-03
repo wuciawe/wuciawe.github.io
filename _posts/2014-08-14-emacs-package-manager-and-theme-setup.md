@@ -2,6 +2,7 @@
 layout: post
 category : [emacs]
 tags : [emacs, package manager]
+infotext: 'A very simple tutorial on using Package Manager in Emacs.'
 ---
 {% include JB/setup %}
 

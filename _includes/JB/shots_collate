@@ -12,7 +12,7 @@
         <div class="row post-row">
             {% endif %}
             {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
-            <div class="col-md-4 col-sm-12 shot-i">
+            <div class="col-md-4 col-sm-12 shot-i post-i">
                 <h4 class="post-title">
                     {{ shot.shotContent }}
                 </h4>

@@ -3,6 +3,7 @@ layout: post
 tagline: Creational Patterns
 category: [design pattern, object oriented]
 tags: [design pattern, object oriented, creational pattern]
+infotext: 'A short summary of Creational Pattern. In this post, it includes Class Creational: Factory Method; Object Creational: Abstract Factory, Builder, Prototype and Singleton.'
 ---
 {% include JB/setup %}
 

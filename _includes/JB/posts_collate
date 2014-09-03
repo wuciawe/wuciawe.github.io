@@ -54,7 +54,7 @@ Usage:
       {% endif %}
     {% endif %}
 
-    <a href="{{ BASE_PATH }}{{ post.url }}"><li><span>{{ post.date | date: "%B %e, %Y" }}</span> &raquo; {{ post.title }}</a></li>
+    <li><a href="{{ BASE_PATH }}{{ post.url }}"><span>{{ post.date | date: "%B %e, %Y" }}</span> &raquo; {{ post.title }}</a></li>
 
   {% endif %}{% endfor %}
   {% if !begin_all %}

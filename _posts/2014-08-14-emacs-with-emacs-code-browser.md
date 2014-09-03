@@ -2,6 +2,7 @@
 layout: post
 category : [emacs]
 tags : [emacs, ecb]
+infotext: 'Emacs Code Browser, which makes Emacs like an IDE.'
 ---
 {% include JB/setup %}
 

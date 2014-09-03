@@ -2,6 +2,7 @@
 layout: post
 category : [C++]
 tags : [c++, compile, makefile]
+infotext: 'Advanced usages of MakeFile, with an auto-dependence-generating MakeFile template in the last.'
 ---
 {% include JB/setup %}
 

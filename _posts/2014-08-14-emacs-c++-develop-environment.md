@@ -2,6 +2,7 @@
 layout: post
 category: [emacs]
 tags: [emacs, c++, environment]
+infotext: 'Steps to setup Emacs as an C++ IDE.'
 ---
 {% include JB/setup %}
 

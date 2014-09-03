@@ -3,6 +3,7 @@ layout: post
 tagline: Structural Patterns
 category: [design pattern, object oriented]
 tags: [design pattern, object oriented, structural pattern]
+infotext: 'A short summary of Structural Pattern. In this post, it includes Class Structural: Adapter; Object Structural: Adapter, Bridge, Composite and Decorator.'
 ---
 {% include JB/setup %}
 

@@ -2,6 +2,7 @@
 layout: post
 category : [C++]
 tags : [c++, compile, makefile]
+infotext: 'Very basic usages of MakeFile, enough to use with simple projects.'
 ---
 {% include JB/setup %}
 
