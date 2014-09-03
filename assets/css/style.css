@@ -100,28 +100,32 @@ footer a:hover{
     color: #FFFACD;
 }
 
+.post-text > p{
+    margin-bottom: 1em;
+}
+
 /* posts index */
-.post > h3.title {
-    position: relative;
-    padding-top: 10px;
-}
+/*.post > h3.title {*/
+    /*position: relative;*/
+    /*padding-top: 10px;*/
+/*}*/
 
-.post > h3.title span.date {
-    position: absolute;
-    right: 0;
-    font-size: 0.9em;
-}
+/*.post > h3.title span.date {*/
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*font-size: 0.9em;*/
+/*}*/
 
-.post > .more {
-    margin: 10px 0;
-    text-align: left;
-}
+/*.post > .more {*/
+    /*margin: 10px 0;*/
+    /*text-align: left;*/
+/*}*/
 
 /* post-full*/
-.post-full .date {
-    margin-bottom: 20px;
-    font-weight: bold;
-}
+/*.post-full .date {*/
+    /*margin-bottom: 20px;*/
+    /*font-weight: bold;*/
+/*}*/
 
 .list-item-ul{
     list-style-type: none;
