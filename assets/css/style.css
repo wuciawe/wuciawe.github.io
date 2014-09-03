@@ -44,8 +44,60 @@ h1 {
     src: url('/assets/fonts/Lato-Regular.ttf');
 }
 
-#footer {
-    background-color: #fdcd60;
+header{
+    background-color: #333;
+}
+header .navbar-toggle>.icon-bar{
+    background-color: #fff;
+}
+header a{
+    color: #fff;
+}
+
+header .nav>li:hover,
+header .nav>li.active{
+    background-color: #fff;
+}
+
+header .nav>li:hover a,
+header .nav>li.active a{
+    color: #333;
+}
+
+footer {
+    text-align: center;
+    background-color: #333;
+    color: #fff;
+}
+
+footer #contacts{
+    text-align: left;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+footer ul{
+    padding-bottom: 10px;
+    float: left;
+    list-style: none;
+    font-size: 0.9em;
+}
+
+footer #details{
+    font-size: 0.8em;
+}
+footer span{
+    margin-right: 10px;
+    text-align: right;
+    display: inline-block;
+    width: 120px;
+}
+footer ul a{
+    color: #fff;
+}
+footer a:hover{
+    text-decoration: none;
+    color: #FFFACD;
 }
 
 /* posts index */
@@ -73,6 +125,9 @@ h1 {
 
 .list-item-ul{
     list-style-type: none;
+}
+.list-item-ul>li{
+    margin-top: 10px;
 }
 .list-item-ul a{
     text-decoration: none;

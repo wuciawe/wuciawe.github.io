@@ -1,15 +1,28 @@
 {% if site.JB.shots_collate.provider == "custom" %}
   {% include custom/shots_collate %}
 {% else %}
-  {% for shot in shots_collate  %}{% if shot.layout == 'shot' %}
-    <div class="row">
-      <div class="col-md-6 shot-item">
-          <h2>{{ shot.shotContent }}</h2>
-          <div class="pull-right">
-            <small>{{ shot.date | date: "%B %e, %Y" }}</small>
-          </div>
-      </div>
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <div class="row post-row">
+            {% assign acc = 0 %}
+            {% for shot in shots_collate %}{% if shot.layout == 'shot' %}
+            {% assign res = acc | modulo: 3 %}
+            {% if res < 1 and acc != 0 %}
+        </div>
+        <div class="row post-row">
+            {% endif %}
+            {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
+            <div class="col-md-4 col-sm-12 shot-i">
+                <h4 class="post-title">
+                    {{ shot.shotContent }}
+                </h4>
+                <div class="pull-right">
+                            <small>{{ shot.date | date: "%B %e, %Y" }}</small>
+                          </div>
+            </div>
+            {% endif %}{% endfor %}
+        </div>
     </div>
-  {% endif %}{% endfor %}
+</div>
 {% endif %}
 {% assign shots_collate = nil %}

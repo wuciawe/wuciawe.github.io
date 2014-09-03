@@ -1,0 +1,14 @@
+.post-row > .post-i{
+    margin-bottom: 20px;
+    background-color: rgba(205, 73, 255, 0.3);
+}
+
+.post-row > .shot-i{
+    margin-bottom: 20px;
+    background-color: #FFFACD;
+}
+
+.list-item-ul a{
+    padding-left: 3px;
+    border-left: 2px solid rgba(255, 44, 44, 0.4);
+}
