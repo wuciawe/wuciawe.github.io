@@ -8,7 +8,7 @@
       {{ content }}
     </div>
     
-    <div class="col-md-3 hidden-sm post-sidebar">
+    <div class="col-md-3 hidden-xs hidden-sm post-sidebar">
         <ul class="nav stickyel affix-top">
             <li><span><i class="fa fa-calendar"></i>
                 {{ page.date | date_to_long_string }}</span>
@@ -54,7 +54,7 @@
         {% endif %}
       </ul>
       <hr>
-      <!--{% include JB/comments %}-->
+      {% include JB/comments %}
     </div>
   </div>
   
