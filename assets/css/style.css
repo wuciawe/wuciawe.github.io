@@ -36,12 +36,12 @@ h1 {
 
 @font-face {
     font-family: 'Lato-Light';
-    src: url('/assets/fonts/Lato-Light.ttf');
+    src: url('/assets/fonts/Lato-Light.woff') format('woff');
 }
 
 @font-face {
     font-family: 'Lato';
-    src: url('/assets/fonts/Lato-Regular.ttf');
+    src: url('/assets/fonts/Lato-Regular.woff') format('woff');
 }
 
 header{
