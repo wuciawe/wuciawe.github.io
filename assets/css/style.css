@@ -154,7 +154,7 @@ footer a:hover{
 }
 
 .tag_box li {
-    margin: 2px;
+    margin: 5px 3px 5px 2px;
 }
 
 .tag_box li i {
@@ -167,7 +167,7 @@ footer a:hover{
 
 .tag_box a {
     padding: 3px 6px;
-    margin: 2px;
+    margin: 0;
     background: transparent;
     color: #555;
     border-radius: 3px;
@@ -331,7 +331,7 @@ footer a:hover{
 }
 
 .post-row > .shot-i:hover{
-    background-color: #FFFACD;
+    background-color: rgba(255, 255, 6, 0.5);
 }
 
 .post-row > a{
@@ -362,7 +362,8 @@ footer a:hover{
 
 .shot-item{
     /*border: 6px rgba(255, 44, 44, 0.4);*/
-    background-color: #FFFACD;
+    /*background-color: #FFFACD;*/
+    background-color: rgba(255, 255, 6, 0.5);
     margin-bottom: 10px;
 }
 
