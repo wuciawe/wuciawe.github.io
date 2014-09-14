@@ -2,7 +2,7 @@
 layout: post
 category: [java]
 tags: [java, jvm, garbage collecion]
-infotext: ''
+infotext: 'Basic concepts about memory management in JVM, very brief overview'
 ---
 {% include JB/setup %}
 
