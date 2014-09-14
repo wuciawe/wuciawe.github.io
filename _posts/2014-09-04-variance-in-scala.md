@@ -80,7 +80,7 @@ We have a superclass Animal and it's subclass Bird, a function f1 with type (Ani
 with type (Bird) => Any. Since Any is the super class of String and the return value should be covariant, and Bird 
 is the subclass of Animal and arguments should be contravariant, f2 can hold the value of f1 as f1.type conforms to f2.type.
 
-Let's what's really happened with f2. When we call f2 with argument of type Bird, a Bird instance is sent to f1, and f1 
+Let's see what's really happened with f2. When we call f2 with argument of type Bird, a Bird instance is sent to f1, and f1 
 requires argument of type Animal and all the operations in f1 is on an instance of Animal, which means operations in f1 
 are always valid with Bird and f1 requires less than f2. When f2 finishes it's work and return the result, what we expect 
 is an instance of Any, while the real returned valued by f1 is an instance of type String, which is also an instance of 
