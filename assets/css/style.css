@@ -3,11 +3,15 @@ body {
     /*overflow-x: hidden;*/
     font-family: 'Lato-Light', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
     font-weight: 400;
-    font-size: 2em !important;
+    font-size: 2em;
+    color: #333;
 }
 
 .post-text {
     font-family: 'Lato', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
+    text-align: 'justify';
+    font-size: 0.8em;
+    word-wrap: break-word;
 }
 
 h1, h2, h3, h4, h5, h6 {
