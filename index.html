@@ -90,7 +90,7 @@ title: The Blog
                 <h4 class="post-title">
                     {{ post.shotContent }}
                 </h4>
-                <p>
+                <p style="color: #999;">
                     {% capture infotext %}{{ post.infotext }}{% endcapture %}
                     {% if infotext.size == 0 %}
                     Take a shot of tequila!
@@ -103,7 +103,7 @@ title: The Blog
             <a href="{{ post.url }}" style="display: block">
                 <div class="col-md-4 col-sm-12 post-i">
                     <h4 class="post-title">{{post.title}}</h4>
-                    <p>
+                    <p style="color: #999;">
                         {% capture infotext %}{{ post.infotext }}{% endcapture %}
                         {% if infotext.size == 0 %}
                         Take a shot of tequila!
