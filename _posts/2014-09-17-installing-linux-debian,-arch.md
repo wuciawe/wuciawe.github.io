@@ -76,4 +76,105 @@ So far, it's the very basic using guide and configuration for Debian.
 
 ## Arch Linux
 
+First of all, boot up from the installation media, and choose **Boot Arch Linux**.
+
+After booting, check the internet connection with
+
+{% highlight console %}
+ping -c 3 www.google.com
+{% endhighlight %}
+
+Then we will create the disk partitions:
+
+{% highlight console %}
+fdisk -l # list the drivers and partitions
+cgdisk /dev/sda # create partitions on /dev/sda
+{% endhighlight %}
+
+The Hex code 8300 is for Linux Filesystem, and 8200 is for swap.
+
+I choose first partition with 30G and 8300 Hex code for `/`, and second one with 4G and 8200 Hex code for `swap`, and 
+remaining disk space with 8300 Hex code for `/home`.
+
+After that, format these partitions with:
+
+{% highlight console %}
+mkfs.ext4 /dev/sda1
+mkfs.ext4 /dev/sda3
+mkswap /dev/sda2
+swapon /dev/sda2
+{% endhighlight %}
+
+And mount them:
+
+{% highlight console %}
+mount /dev/sda1 /mnt
+mkdir /mnt/home
+mount /dev/sda3 /mnt/home
+{% endhighlight %}
+
+Adjusting mirrorlist:
+
+{% highlight console %}
+nano /etc/pacman.d/mirrorlist
+{% endhighlight %}
+
+Here is a list of nano shortcuts:
+
+{% highlight console %}
+Alt + 6 copy line
+Ctrl + K cut line
+Ctrl + U paste line
+Ctrl + W search word
+Ctrl + O save
+Ctrl + X exit
+{% endhighlight %}
+
+After that, install the base system:
+
+{% highlight console %}
+pacstrap /mnt base base-devel
+{% endhighlight %}
+
+And generate fastab:
+
+{% highlight console %}
+genfstab /mnt >> /mnt/etc/fstab
+{% endhighlight %}
+
+Run **chroot** check in to the newly installed system
+
+{% highlight console %}
+arch-chroot /mnt
+passwd # set the root password
+{% endhighlight %}
+
+Some configurations:
+
+{% highlight console %}
+echo arch > /etc/hostname
+ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+date
+{% endhighlight %}
+
+And
+
+{% highlight console %}
+mkinitcpio -p linux # create initial ramdisk environment
+pacman -S gptfdisk # install and set syslinux
+pacman -S syslinux
+syslinux-install_update -i -a -m
+nano /boot/syslinux/syslinux.cfg
+{% endhighlight %}
+
+Replace the line **APPEND root=/dev/sda3 rw** with **APPEND root=/dev/sda1 rw**.
+
+And
+
+{% highlight console %}
+exit
+umount -R /mnt
+reboot
+{% endhighlight %}
+
 Coming soon...
