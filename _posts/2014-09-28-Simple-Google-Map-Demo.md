@@ -15,13 +15,7 @@ on his work, I make a very simple demo which can plot several trajectories on Go
 [This demo](https://github.com/wuciawe/GoogleMapDemo) is very easy to use. Just open the index.html, you will get:
 
 {% raw %}
-<iframe src="http://wuciawe.github.io/GoogleMapDemo/" width=100% height=100%>
-{% endraw %}
-{% raw %}
-  <p>Your browser does not support iframes.</p>
-  {% endraw %}
-{% raw %}
-</iframe>
+<iframe src="http://wuciawe.github.io/GoogleMapDemo/" width=100% height=100%><p>Your browser does not support iframes.</p></iframe>
 {% endraw %}
 
 {{md  readme }}
