@@ -16,10 +16,12 @@ on his work, I make a very simple demo which can plot several trajectories on Go
 
 {% raw %}
 <iframe src="http://wuciawe.github.io/GoogleMapDemo/" width=100% height=100%>
+{% endraw %}
+{% raw %}
   <p>Your browser does not support iframes.</p>
+  {% endraw %}
+{% raw %}
 </iframe>
 {% endraw %}
 
-{% raw %}
 {{md  readme }}
-{% endraw %}
