@@ -13,8 +13,9 @@ on his work, I make a very simple demo which can plot several trajectories on Go
 
 [This demo](https://github.com/wuciawe/GoogleMapDemo) is very easy to use. Just open the index.html, you will get:
 
+[Full Page](http://wuciawe.github.io/GoogleMapDemo/){:target="_blank"}
 {::nomarkdown}
-    <iframe src="http://wuciawe.github.io/GoogleMapDemo/" width=100% height=100%>
+    <iframe src="http://wuciawe.github.io/GoogleMapDemo/" width=100% height=1075px>
         <p>
             Your browser does not support iframes.
         </p>
