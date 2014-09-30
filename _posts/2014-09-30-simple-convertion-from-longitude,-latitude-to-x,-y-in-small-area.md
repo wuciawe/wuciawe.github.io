@@ -18,11 +18,11 @@ When the area is small, you can use a very simple [equirectangular projection](h
 approximate the projection. If you use the horizontal axis `x` to map longitude, and the vertical axis `y` to map latitude, 
 then you can use the following formula to approximate the projection:
 
--   \\( x = r lng cos(lat_0) \\)
--   \\( y = r lat \\)
+-   \\( x = r\phi cos(\psi_0) \\)
+-   \\( y = r\psi \\)
 
-Note that: the `lng`s and the `lat`s are both in radian, and the \\( lat_0 \\) is the average value of `lat`s, and `r` 
-denotes the radius of the Earth, which is about 6371km..
+Note that: the \\( \phi \\) denotes longitude and the \\( \psi \\) denotes the latitude, they are both in radian, and 
+the \\( \psi_0 \\) is the average value of latitudes, and \\( r \\) denotes the radius of the Earth, which is about 6371km..
 
 Applying this simple map projection with the gps data of Shanghai, it proves to be a good approximation. For example, 
 computing the distance between (121.05E, 30.73N) and (121.05E, 31.447N) by using this method gives the result 79.7km, while 
