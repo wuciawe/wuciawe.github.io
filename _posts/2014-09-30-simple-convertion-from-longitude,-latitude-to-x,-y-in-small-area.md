@@ -18,7 +18,7 @@ When the area is small, you can use a very simple [equirectangular projection](h
 approximate the projection. If you use the horizontal axis `x` to map longitude, and the vertical axis `y` to map latitude, 
 then you can use the following formula to approximate the projection:
 
-    $$x = r/lamda cos(/phi_0)$$
-    $$y = r/phi$$
+-   $$x = r/lamda cos(/phi_0)$$
+-   $$y = r/phi$$
 
 Note that 
