@@ -18,7 +18,7 @@ When the area is small, you can use a very simple [equirectangular projection](h
 approximate the projection. If you use the horizontal axis `x` to map longitude, and the vertical axis `y` to map latitude, 
 then you can use the following formula to approximate the projection:
 
--   \\( x = r\phi cos(\psi_0) \\)
+-   \\( x = r\phi \cos(\psi_0) \\)
 -   \\( y = r\psi \\)
 
 Note that: the \\( \phi \\) denotes longitude and the \\( \psi \\) denotes the latitude, they are both in radian, and 
@@ -29,3 +29,8 @@ computing the distance between (121.05E, 30.73N) and (121.05E, 31.447N) by using
 querying that from the [website](http://www.daftlogic.com/projects-google-maps-distance-calculator.htm){:target="_blank"} 
 gives 80.5km. That means the loss of the distance along the latitude across the whole Shanghai is almost 1%, which is 
 good enough for approximation.
+
+Another thing might be useful is to make some shift by adding 0.0044 in longitude and minus 0.00205 in latitude, which can 
+help align the gps data on the google map. Although the raw gps data aligns satellite view perfectly, the map does not 
+align the satellite view for some unfathomable reason. So to align gps data with the map in Shanghai, you need to do the 
+above shifting.
