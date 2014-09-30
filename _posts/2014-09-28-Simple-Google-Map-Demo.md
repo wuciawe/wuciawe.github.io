@@ -1,7 +1,7 @@
 ---
 layout: post
 category: [demo]
-tags: [google map]
+tags: [google map, gps]
 infotext: 'A very simple demo to plot trajectories with google map'
 ---
 
