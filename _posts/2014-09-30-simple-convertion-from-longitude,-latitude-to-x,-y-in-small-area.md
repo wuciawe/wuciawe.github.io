@@ -18,10 +18,10 @@ When the area is small, you can use a very simple [equirectangular projection](h
 approximate the projection. If you use the horizontal axis `x` to map longitude, and the vertical axis `y` to map latitude, 
 then you can use the following formula to approximate the projection:
 
--   \\( x = r \dot lng cos(lat_0) \\)
--   \\( y = r \dot lat \\)
+-   {% m %} x = r lng cos(lat_0) {% em %}
+-   {% m %} y = r lat {% em %}
 
-Note that: the `lng`s and the `lat`s are both in radian, and the \\( lat_0 \\) is the average value of `lat`s, and `r` 
+Note that: the `lng`s and the `lat`s are both in radian, and the {% m %} lat_0 {% em %} is the average value of `lat`s, and `r` 
 denotes the radius of the Earth.
 
 Applying this simple map projection with the gps data of Shanghai, it proves to be a good approximation. For example, 
