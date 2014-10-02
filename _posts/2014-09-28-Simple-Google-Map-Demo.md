@@ -4,6 +4,8 @@ category: [demo]
 tags: [google map, gps]
 infotext: 'A very simple demo to plot trajectories with google map'
 ---
+{% include JB/setup %}
+
 
 These days I have some work on gps trajectories. I'd like to view those gps data on the map, so as to check whether some 
 assumptions can make sense. After a little bit of searching, I find this work on github: essoduke/jQuery-tinyMap. Based 

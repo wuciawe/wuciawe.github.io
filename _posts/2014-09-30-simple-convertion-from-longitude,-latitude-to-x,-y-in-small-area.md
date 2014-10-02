@@ -4,6 +4,7 @@ category: [transform]
 tags: [gps]
 infotext: 'equirectangular projection for small area, very simple convertion from the longitude and latitude into x-y coordinates'
 ---
+{% include JB/setup %}
 
 Given the GPS data with longitude and latitude, it is very common to determine the distance for location information of these 
 data.In order to do that, you need first transform those gps data into x-y plane. It is always not so simple to achieve 
@@ -30,7 +31,7 @@ querying that from the [website](http://www.daftlogic.com/projects-google-maps-d
 gives 80.5km. That means the loss of the distance along the latitude across the whole Shanghai is almost 1%, which is 
 good enough for approximation.
 
-Another thing might be useful is to do some shift by adding 0.0044 in longitude and minus 0.00205 in latitude, which can 
-help align the gps data on the google map. Although the raw gps data aligns satellite view perfectly, the map does not 
+Another thing might be useful is to make some shift by adding 0.0044 degree in longitude and minus 0.00205 degree in latitude, which can 
+helps align the gps data on the google map. Although the raw gps data aligns satellite view perfectly, the map does not 
 align the satellite view for some unfathomable reason. So to align gps data with the map in Shanghai, you need to do the 
 above shifting.
