@@ -2,7 +2,7 @@
 layout: post
 category: [scala, functional programming]
 tags: [scala, case class, pattern matching, functional programming, option]
-infotext: 'A shot summary of Case Classes, Pattern Matching and Option type in Scala.'
+infotext: 'A short summary of Case Classes, Pattern Matching and Option type in Scala.'
 ---
 {% include JB/setup %}
 

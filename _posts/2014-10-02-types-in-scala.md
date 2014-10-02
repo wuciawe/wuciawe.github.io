@@ -2,7 +2,7 @@
 layout: post
 category: [scala, object oriented]
 tags: [scala, object oriented]
-infotext: 'A shot summary of Case Classes, Pattern Matching and Option type in Scala.'
+infotext: 'About the type system of Scala'
 ---
 {% include JB/setup %}
 
