@@ -25,7 +25,7 @@ Usage:
 {% else %}
   {% assign pages_list = (pages_list | sort: 'priority') %}
   {% for node in pages_list%}
-    {% if node.title != null %}
+    {% if node.title != null and node.priority != 3 %}
       {% if group == null or group == node.group %}
       	{% if page.url == node.url %}
       	<li class="active"><a href="{{ BASE_PATH }}{{node.url}}" class="active">{{node.title}}</a></li>

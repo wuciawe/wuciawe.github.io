@@ -10,6 +10,9 @@ For some unfathomable reason, I have to use laptop with OS Win8. Everything brea
 to use a virtual OS over Win8 on very restricted hardware as 4G RAM in total and low-voltage CPU. I tried to install
 Ubuntu 14.10 but it seems requiring too much. So I choose to install Debian or Arch instead.
 
+So far, I setup dual boot of win7 and Arch Linux on another laptop. I think Arch is really great with its `pacman` and 
+its `wiki`.
+
 <!-- more -->
 
 ## Debian Linux
@@ -76,7 +79,13 @@ So far, it's the very basic using guide and configuration for Debian.
 
 ## Arch Linux
 
-First of all, boot up from the installation media, and choose **Boot Arch Linux**.
+In this part, I will show the way I followed to setup the dual booting of win7 and Arch Linux, with laptop already installed 
+the Win7.
+
+First of all, I shrink the disk space occupied by win7 and use `GParted` to reformat the remaining disk space for Arch Linux. 
+And I only created one ex4 for `/`, one swap and one vfat for sharing files between win7 and arch.
+
+Then, boot up from the installation media, and choose **Boot Arch Linux**.
 
 After booting, check the internet connection with
 
@@ -84,7 +93,7 @@ After booting, check the internet connection with
 ping -c 3 www.google.com
 {% endhighlight %}
 
-Then we will create the disk partitions:
+Then we will create the disk partitions ( Since I have already created disk partitions with GParted, this step is no longer necessary here. ):
 
 {% highlight console %}
 fdisk -l # list the drivers and partitions
@@ -104,6 +113,8 @@ mkfs.ext4 /dev/sda3
 mkswap /dev/sda2
 swapon /dev/sda2
 {% endhighlight %}
+
+`Notice`: even with GParted, the above command `swapon /dev/sdax` is still necessary to plug swap on. 
 
 And mount them:
 
@@ -169,7 +180,21 @@ nano /boot/syslinux/syslinux.cfg
 
 Replace the line **APPEND root=/dev/sda3 rw** with **APPEND root=/dev/sda1 rw**.
 
-And
+After that, we will need to install grub to make the dual booting.
+
+{% highlight console %}
+pacman -S grub
+grub-install --recheck /dev/sda
+{% endhighlight %}
+
+`Notice`: do not use sdax.
+
+Then,
+
+{% highlight console %}
+pacman -S os-prober
+grub-mkconfig -o /boot/grub/grub.cfg
+{% endhighlight %}
 
 {% highlight console %}
 exit
@@ -177,4 +202,14 @@ umount -R /mnt
 reboot
 {% endhighlight %}
 
-Coming soon...
+At this point, we have installed the Arch Linux with Win7. Now let's add a new user account:
+
+{% highlight console %}
+useradd -m -g users -G wheel -s /bin/bash newUser
+{% endhighlight %}
+
+Enjoy Arch Linux.
+
+In the version of Arch Linux I installed, it uses `systemctl` for system and service management, it's great. But at the 
+same time, I found that most online tutorial is out of date, which does not cover `systemctl` at all. While the `ArchWiki` is 
+really marvelous, as it is always updated. You can find solutions for most problems you meet at `ArchWiki`.
