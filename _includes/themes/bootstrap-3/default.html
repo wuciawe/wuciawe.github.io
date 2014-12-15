@@ -71,19 +71,20 @@
                 {% assign group = 'navigation' %}
                 {% assign pages_list = site.pages %}
                 {% include JB/pages_list %}
-                <!--<li class="dropdown">-->
-                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact Me<b class="caret"></b></a>-->
-                <!--<ul class="dropdown-menu">-->
-                <!--<li><a href="mailto:{{site.author.email}}"><i class="fa fa-envelope fa-lg fa-fw"></i> Email</a>-->
-                <!--</li>-->
-                <!--<li><a target="blank" href="http://lnkd.in/{{site.author.linkedin}}">-->
-                <!--<i class="fa fa-linkedin-square fa-lg fa-fw"></i> Linkedin</a></li>-->
-                <!--<li><a target="blank" href="https://github.com/{{site.author.github}}">-->
-                <!--<i class="fa fa-github-square fa-lg fa-fw"></i> Github</a></li>-->
-                <!--<li><a target="blank" href="http://stackoverflow.com/users/{{site.author.stackoverflow}}">-->
-                <!--<i class="fa fa-stack-overflow fa-lg fa-fw"></i> Stack Overflow</a></li>-->
-                <!--</ul>-->
-                <!--</li>-->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Links<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a target="_blank" href="http://truongtx.me/">Trường TX blog</a></li>
+                        <li><a target="_blank" href="http://zhangwenli.com/">Zhang Wen Li blog</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">SubSites<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a target="_blank" href="/GoogleMapDemo">Google Map Demo</a></li>
+                        <li><a target="_blank" href="/poets">詩詞</a></li>
+                    </ul>
+                </li>
             </ul>
             <!--<form class="nav navbar-form navbar-right" role="search" id="search-form">-->
             <!--<div class="form-group has-feedback">-->
@@ -122,8 +123,8 @@
             <li><span>Stack Overflow: </span><a target="blank" href="http://stackoverflow.com/users/{{site.author.stackoverflow}}">{{site.author.stackoverflow}}</a></li>
         </ul>
     </div>
-    <p><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
-        with help from <a href="http://zhangwenli.com" target="_blank">zhangwenli</a>,
+    <p class="pull-right"><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
+        powered with
         <a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>
         and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
     </p>
