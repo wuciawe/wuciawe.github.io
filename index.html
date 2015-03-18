@@ -2,278 +2,146 @@
 layout: default
 title: The Blog
 ---
-<!--<div class="row" style="margin-bottom: 20px">-->
-    <!--<div class="col-md-12">-->
-        <!--<div class="jumbotron" style="position: relative !important; padding-bottom: 30px !important; padding-top: 30px !important;">-->
-            <!--<div class="row">-->
-                <!--<div class="col-xs-4 col-md-2">-->
-                    <!--<img src="{{BASE_PATH}}/files/about/ava.jpg" class="img-responsive">-->
-                <!--</div>-->
-                <!--<div class="col-xs-8 col-md-10">-->
-                    <!--<p>-->
-                        <!--胡嘉偉-->
-                        <!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
-                        <!--<button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal">-->
-                            <!--Details-->
-                        <!--</button>-->
-                    <!--</p>-->
-
-                    <!--<p>-->
-                        <!--<small>Currently a student at SJTU</small>-->
-                    <!--</p>-->
-
-                    <!--<p>-->
-                        <!--<small>Major on Maching Learning and Data Mining</small>-->
-                    <!--</p>-->
-
-                <!--</div>-->
+rest!
+<!--&lt;!&ndash; Modal &ndash;&gt;-->
+<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">-->
+    <!--<div class="modal-dialog">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span-->
+                        <!--class="sr-only">Close</span></button>-->
+                <!--<h4 class="modal-title" id="myModalLabel">-->
+                    <!--<i class="fa fa-leaf"></i>-->
+                    <!--Summary-->
+                <!--</h4>-->
             <!--</div>-->
-            <!--<div class="jCorner" style="width: 80px; height: 40px; position: absolute; bottom: 0; right: 0;">-->
-                <!--<div class="jCorner_left"-->
-                     <!--style="border-width: 0 0 40px 40px; width: 0; height: 0; border-style: solid; border-color: transparent transparent #999 transparent; opacity: 0.6; float: left; z-index: 10;"></div>-->
-                <!--<div class="jCorner_square"-->
-                     <!--style="border-width: 0 0 40px 40px; border-color: transparent transparent #fff transparent; width: 0px; height: 0px; border-style: solid; float: left;"></div>-->
-                <!--<div class="jCorner_right"-->
-                     <!--style="border-width: 40px 40px 0 0; left: 40px; top: -40px; width: 0px; height: 0px; border-style: solid; border-color: #ccc transparent transparent transparent; position: relative; opacity: 0.6; float: left; z-index: 10;"></div>-->
+            <!--<div class="modal-body">-->
+                <!--<p> I'm a currently an IT student.</p>-->
+
+                <!--<p> Usually, I like researching about algorithms and new programming languages in my free time.-->
+                    <!--Sometimes, I will also crawl websites for interests or collecting useful data.-->
+                    <!--In this blog, I will summarize my personal experience, what I have done as well as how I solve-->
+                    <!--difficult problems. I hope this blog may be helpful for solving problems and recording useful-->
+                    <!--programming templates and language characteristics.-->
+                <!--</p>-->
+
+                <!--<p>-->
+                    <!--And I will make some blogs about <a href="http://en.wikipedia.org/wiki/Wu_Chinese" target="_blank">吳語</a>,-->
+                    <!--a very-->
+                    <!--beautiful language spoken in Shanghai, Jiangsu province and Zhejiang province. It is a traditional-->
+                    <!--language with long history.-->
+                <!--</p>-->
             <!--</div>-->
         <!--</div>-->
     <!--</div>-->
 <!--</div>-->
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">
-                    <i class="fa fa-leaf"></i>
-                    Summary
-                </h4>
-            </div>
-            <div class="modal-body">
-                <p> I'm a currently an IT student.</p>
-
-                <p> Usually, I like researching about algorithms and new programming languages in my free time.
-                    Sometimes, I will also crawl websites for interests or collecting useful data.
-                    In this blog, I will summarize my personal experience, what I have done as well as how I solve
-                    difficult problems. I hope this blog may be helpful for solving problems and recording useful
-                    programming templates and language characteristics.
-                </p>
-
-                <p>
-                    And I will make some blogs about <a href="http://en.wikipedia.org/wiki/Wu_Chinese" target="_blank">吳語</a>,
-                    a very
-                    beautiful language spoken in Shanghai, Jiangsu province and Zhejiang province. It is a traditional
-                    language with long history.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-<h1 style="text-align: center">Posts & Shots</h1>
-<div class="row" style="margin-top: 20px">
-    <div class="col-md-12">
-        <div class="row post-row">
-            <!-- post preview -->
-            {% assign acc = 0 %}
-            {% for post in paginator.posts %}
-            {% assign res = acc | modulo: 3 %}
-            {% if res < 1 and acc != 0 %}
-        </div>
-        <div class="row post-row">
-            {% endif %}
-            {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
-            {% if post.layout == 'shot' %}
-            <div class="col-md-4 col-sm-12 shot-i post-i">
-                <h4 class="post-title">
-                    {{ post.shotContent }}
-                </h4>
-                <p style="color: #999;">
-                    {% capture infotext %}{{ post.infotext }}{% endcapture %}
-                    {% if infotext.size == 0 %}
-                    Take a shot of tequila!
-                    {% else %}
-                    {{ infotext }}
-                    {% endif %}
-                </p>
-            </div>
-            {% else %}
-            <a href="{{ post.url }}" style="display: block">
-                <div class="col-md-4 col-sm-12 post-i">
-                    <h4 class="post-title">{{post.title}}</h4>
-                    <p style="color: #999;">
-                        {% capture infotext %}{{ post.infotext }}{% endcapture %}
-                        {% if infotext.size == 0 %}
-                        Take a shot of tequila!
-                        {% else %}
-                        {{ infotext }}
-                        {% endif %}
-                    </p>
-                 </div>
-             </a>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-    <!-- pagination section -->
-    <div style="text-align:center;">
-        <ul class="pagination pagination-lg">
-            <!-- first page link -->
-            {% if paginator.previous_page %}
-            <li>
-                <a href="/index.html"><i class="fa fa-angle-double-left fa-lg"></i> </a>
-            </li>
-            {% else %}
-            <li class="disabled">
-                <a href="#"><i class="fa fa-angle-double-left fa-lg"></i> </a>
-            </li>
-            {% endif %}
-
-            <!-- previous page link -->
-            {% if paginator.previous_page %}
-            {% if paginator.previous_page == 1 %}
-            <li>
-                <a href="/index.html"><i class="fa fa-angle-left fa-lg"></i> </a>
-            </li>
-            {% else %}
-            <li>
-                <a href="/page{{paginator.previous_page}}"><i class="fa fa-angle-left fa-lg"></i> </a>
-            </li>
-            {% endif %}
-            {% else %}
-            <li class="disabled">
-                <a href="#"><i class="fa fa-angle-left fa-lg"></i></a>
-            </li>
-            {% endif %}
-
-            <!-- current page -->
-            <li class="active">
-	  <span class="page_number ">{{paginator.page}} /
-                    {{paginator.total_pages}}</span>
-            </li>
-
-            <!-- next page link -->
-            {% if paginator.next_page %}
-            <li>
-                <a href="/page{{paginator.next_page}}"><i class="fa fa-angle-right fa-lg"></i> </a>
-            </li>
-            {% else %}
-            <li class="disabled">
-                <a href="#"><i class="fa fa-angle-right fa-lg"></i> </a>
-            </li>
-            {% endif %}
-
-            <!-- last page link -->
-            {% if paginator.next_page %}
-            <li>
-                <a href="/page{{ paginator.total_pages }}"><i class="fa fa-angle-double-right fa-lg"></i> </a>
-            </li>
-            {% else %}
-            <li class="disabled">
-                <a href="#"><i class="fa fa-angle-double-right fa-lg"></i> </a>
-            </li>
-            {% endif %}
-        </ul>
-    </div>
-</div>
-
-
-<!--<div class="col-md-3 col-sm-4 hidden-md hidden-lg">-->
-<!--<div class="panel panel-primary">-->
-<!--<div class="panel-heading">-->
-<!--<i class="fa fa-user"></i>-->
-<!--Personal Details-->
+<!--<h1 style="text-align: center">Posts & Shots</h1>-->
+<!--<div class="row" style="margin-top: 20px">-->
+    <!--<div class="col-md-12">-->
+        <!--<div class="row post-row">-->
+            <!--&lt;!&ndash; post preview &ndash;&gt;-->
+            <!--{% assign acc = 0 %}-->
+            <!--{% for post in paginator.posts %}-->
+            <!--{% assign res = acc | modulo: 3 %}-->
+            <!--{% if res < 1 and acc != 0 %}-->
+        <!--</div>-->
+        <!--<div class="row post-row">-->
+            <!--{% endif %}-->
+            <!--{% capture acc %}{{ acc | plus:1 }}{% endcapture %}-->
+            <!--{% if post.layout == 'shot' %}-->
+            <!--<div class="col-md-4 col-sm-12 shot-i post-i">-->
+                <!--<h4 class="post-title">-->
+                    <!--{{ post.shotContent }}-->
+                <!--</h4>-->
+                <!--<p style="color: #999;">-->
+                    <!--{% capture infotext %}{{ post.infotext }}{% endcapture %}-->
+                    <!--{% if infotext.size == 0 %}-->
+                    <!--Take a shot of tequila!-->
+                    <!--{% else %}-->
+                    <!--{{ infotext }}-->
+                    <!--{% endif %}-->
+                <!--</p>-->
+            <!--</div>-->
+            <!--{% else %}-->
+            <!--<a href="{{ post.url }}" style="display: block">-->
+                <!--<div class="col-md-4 col-sm-12 post-i">-->
+                    <!--<h4 class="post-title">{{post.title}}</h4>-->
+                    <!--<p style="color: #999;">-->
+                        <!--{% capture infotext %}{{ post.infotext }}{% endcapture %}-->
+                        <!--{% if infotext.size == 0 %}-->
+                        <!--Take a shot of tequila!-->
+                        <!--{% else %}-->
+                        <!--{{ infotext }}-->
+                        <!--{% endif %}-->
+                    <!--</p>-->
+                 <!--</div>-->
+             <!--</a>-->
+            <!--{% endif %}-->
+            <!--{% endfor %}-->
+        <!--</div>-->
+    <!--</div>-->
 <!--</div>-->
-<!--<div class="panel-body">-->
-<!--<p>-->
-<!--<i class="fa fa-credit-card fa-fw"></i>-->
-<!--胡嘉偉-->
-<!--</p>-->
 
-<!--<p>-->
-<!--<i class="fa fa-gift fa-fw"></i>-->
-<!--Apr 20th 1991-->
-<!--</p>-->
 
-<!--<p>-->
-<!--<i class="fa fa-info-circle fa-fw"></i>-->
-<!--中國上海-->
-<!--</p>-->
+<!--<div class="row">-->
+    <!--&lt;!&ndash; pagination section &ndash;&gt;-->
+    <!--<div style="text-align:center;">-->
+        <!--<ul class="pagination pagination-lg">-->
+            <!--&lt;!&ndash; first page link &ndash;&gt;-->
+            <!--{% if paginator.previous_page %}-->
+            <!--<li>-->
+                <!--<a href="/index.html"><i class="fa fa-angle-double-left fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% else %}-->
+            <!--<li class="disabled">-->
+                <!--<a href="#"><i class="fa fa-angle-double-left fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% endif %}-->
 
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-primary">-->
-<!--<div class="panel-heading">-->
-<!--<i class="fa fa-book"></i>-->
-<!--Education-->
-<!--</div>-->
-<!--<div class="panel-body">-->
-<!--<table style="width:100%">-->
-<!--<tr>-->
-<!--<td>-->
-<!--<p><strong>SJTU</strong><br/>-->
-<!--Master's degree-->
-<!--<br/>-->
-<!--Image Processing-->
-<!--<br/>-->
-<!--2013 - 2016 <small>(expected)</small>-->
-<!--</p>-->
+            <!--&lt;!&ndash; previous page link &ndash;&gt;-->
+            <!--{% if paginator.previous_page %}-->
+            <!--{% if paginator.previous_page == 1 %}-->
+            <!--<li>-->
+                <!--<a href="/index.html"><i class="fa fa-angle-left fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% else %}-->
+            <!--<li>-->
+                <!--<a href="/page{{paginator.previous_page}}"><i class="fa fa-angle-left fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% endif %}-->
+            <!--{% else %}-->
+            <!--<li class="disabled">-->
+                <!--<a href="#"><i class="fa fa-angle-left fa-lg"></i></a>-->
+            <!--</li>-->
+            <!--{% endif %}-->
 
-<!--</td>-->
+            <!--&lt;!&ndash; current page &ndash;&gt;-->
+            <!--<li class="active">-->
+	  <!--<span class="page_number ">{{paginator.page}} /-->
+                    <!--{{paginator.total_pages}}</span>-->
+            <!--</li>-->
 
-<!--</tr>-->
-<!--</table>-->
+            <!--&lt;!&ndash; next page link &ndash;&gt;-->
+            <!--{% if paginator.next_page %}-->
+            <!--<li>-->
+                <!--<a href="/page{{paginator.next_page}}"><i class="fa fa-angle-right fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% else %}-->
+            <!--<li class="disabled">-->
+                <!--<a href="#"><i class="fa fa-angle-right fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% endif %}-->
 
-<!--<table style="width:100%">-->
-<!--<tr>-->
-<!--<td>-->
-<!--<p><strong>SJTU</strong><br/>-->
-<!--Bachelor's degree-->
-<!--<br/>-->
-<!--Electrical Engineering-->
-<!--<br/>-->
-<!--2009 - 2013-->
-<!--</p>-->
-
-<!--</td>-->
-
-<!--</tr>-->
-<!--</table>-->
-
-<!--<table style="width:100%">-->
-<!--<tr>-->
-<!--<td>-->
-<!--<p><strong>Nan Yang</strong><br/>-->
-<!--High school-->
-<!--<br/>-->
-<!--2006 - 2009-->
-<!--</p>-->
-
-<!--</td>-->
-
-<!--</tr>-->
-<!--</table>-->
-
-<!--</div>-->
-<!--</div>-->
-<!--<div class="panel panel-primary" ng-app="skillsApp">-->
-<!--<div class="panel-heading">-->
-<!--<i class="fa fa-bookmark"></i>-->
-<!--Skills & Expertise-->
-<!--</div>-->
-<!--<div class="panel-body" ng-controller="skillsController">-->
-<!--<ul style="list-style: none; padding: 0">-->
-<!--<li ng-repeat="skill in skills">-->
-<!--<i class="fa fa-check"></i>-->
-<!--<[skill]>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
+            <!--&lt;!&ndash; last page link &ndash;&gt;-->
+            <!--{% if paginator.next_page %}-->
+            <!--<li>-->
+                <!--<a href="/page{{ paginator.total_pages }}"><i class="fa fa-angle-double-right fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% else %}-->
+            <!--<li class="disabled">-->
+                <!--<a href="#"><i class="fa fa-angle-double-right fa-lg"></i> </a>-->
+            <!--</li>-->
+            <!--{% endif %}-->
+        <!--</ul>-->
+    <!--</div>-->
 <!--</div>-->
