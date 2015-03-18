@@ -1,0 +1,147 @@
+---
+layout: default
+title: The Blog
+---
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <i class="fa fa-leaf"></i>
+                    Summary
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p> I'm a currently an IT student.</p>
+
+                <p> Usually, I like researching about algorithms and new programming languages in my free time.
+                    Sometimes, I will also crawl websites for interests or collecting useful data.
+                    In this blog, I will summarize my personal experience, what I have done as well as how I solve
+                    difficult problems. I hope this blog may be helpful for solving problems and recording useful
+                    programming templates and language characteristics.
+                </p>
+
+                <p>
+                    And I will make some blogs about <a href="http://en.wikipedia.org/wiki/Wu_Chinese" target="_blank">吳語</a>,
+                    a very
+                    beautiful language spoken in Shanghai, Jiangsu province and Zhejiang province. It is a traditional
+                    language with long history.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<h1 style="text-align: center">Posts & Shots</h1>
+<div class="row" style="margin-top: 20px">
+    <div class="col-md-12">
+        <div class="row post-row">
+            <!-- post preview -->
+            {% assign acc = 0 %}
+            {% for post in paginator.posts %}
+            {% assign res = acc | modulo: 3 %}
+            {% if res < 1 and acc != 0 %}
+        </div>
+        <div class="row post-row">
+            {% endif %}
+            {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
+            {% if post.layout == 'shot' %}
+            <div class="col-md-4 col-sm-12 shot-i post-i">
+                <h4 class="post-title">
+                    {{ post.shotContent }}
+                </h4>
+                <p style="color: #999;">
+                    {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                    {% if infotext.size == 0 %}
+                    Take a shot of tequila!
+                    {% else %}
+                    {{ infotext }}
+                    {% endif %}
+                </p>
+            </div>
+            {% else %}
+            <a href="{{ post.url }}" style="display: block">
+                <div class="col-md-4 col-sm-12 post-i">
+                    <h4 class="post-title">{{post.title}}</h4>
+                    <p style="color: #999;">
+                        {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                        {% if infotext.size == 0 %}
+                        Take a shot of tequila!
+                        {% else %}
+                        {{ infotext }}
+                        {% endif %}
+                    </p>
+                 </div>
+             </a>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <!-- pagination section -->
+    <div style="text-align:center;">
+        <ul class="pagination pagination-lg">
+            <!-- first page link -->
+            {% if paginator.previous_page %}
+            <li>
+                <a href="/index.html"><i class="fa fa-angle-double-left fa-lg"></i> </a>
+            </li>
+            {% else %}
+            <li class="disabled">
+                <a href="#"><i class="fa fa-angle-double-left fa-lg"></i> </a>
+            </li>
+            {% endif %}
+
+            <!-- previous page link -->
+            {% if paginator.previous_page %}
+            {% if paginator.previous_page == 1 %}
+            <li>
+                <a href="/index.html"><i class="fa fa-angle-left fa-lg"></i> </a>
+            </li>
+            {% else %}
+            <li>
+                <a href="/page{{paginator.previous_page}}"><i class="fa fa-angle-left fa-lg"></i> </a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li class="disabled">
+                <a href="#"><i class="fa fa-angle-left fa-lg"></i></a>
+            </li>
+            {% endif %}
+
+            <!-- current page -->
+            <li class="active">
+	  <span class="page_number ">{{paginator.page}} /
+                    {{paginator.total_pages}}</span>
+            </li>
+
+            <!-- next page link -->
+            {% if paginator.next_page %}
+            <li>
+                <a href="/page{{paginator.next_page}}"><i class="fa fa-angle-right fa-lg"></i> </a>
+            </li>
+            {% else %}
+            <li class="disabled">
+                <a href="#"><i class="fa fa-angle-right fa-lg"></i> </a>
+            </li>
+            {% endif %}
+
+            <!-- last page link -->
+            {% if paginator.next_page %}
+            <li>
+                <a href="/page{{ paginator.total_pages }}"><i class="fa fa-angle-double-right fa-lg"></i> </a>
+            </li>
+            {% else %}
+            <li class="disabled">
+                <a href="#"><i class="fa fa-angle-double-right fa-lg"></i> </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
