@@ -42,28 +42,27 @@ title: The Blog
             <!-- post preview -->
             {% assign acc = 0 %}
             {% for post in paginator.posts %}
-            {% if post.layout == 'post' %}
             {% assign res = acc | modulo: 3 %}
             {% if res < 1 and acc != 0 %}
         </div>
         <div class="row post-row">
             {% endif %}
             {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
-            <!--{% if post.layout == 'shot' %}-->
-            <!--<div class="col-md-4 col-sm-12 shot-i post-i">-->
-                <!--<h4 class="post-title">-->
-                    <!--{{ post.shotContent }}-->
-                <!--</h4>-->
-                <!--<p style="color: #999;">-->
-                    <!--{% capture infotext %}{{ post.infotext }}{% endcapture %}-->
-                    <!--{% if infotext.size == 0 %}-->
-                    <!--Take a shot of tequila!-->
-                    <!--{% else %}-->
-                    <!--{{ infotext }}-->
-                    <!--{% endif %}-->
-                <!--</p>-->
-            <!--</div>-->
-            <!--{% else %}-->
+            {% if post.layout == 'shot' %}
+            <div class="col-md-4 col-sm-12 shot-i post-i">
+                <h4 class="post-title">
+                    {{ post.shotContent }}
+                </h4>
+                <p style="color: #999;">
+                    {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                    {% if infotext.size == 0 %}
+                    Take a shot of tequila!
+                    {% else %}
+                    {{ infotext }}
+                    {% endif %}
+                </p>
+            </div>
+            {% else %}
             <a href="{{ post.url }}" style="display: block">
                 <div class="col-md-4 col-sm-12 post-i">
                     <h4 class="post-title">{{post.title}}</h4>
@@ -77,7 +76,6 @@ title: The Blog
                     </p>
                  </div>
              </a>
-            <!--{% endif %}-->
             {% endif %}
             {% endfor %}
         </div>
