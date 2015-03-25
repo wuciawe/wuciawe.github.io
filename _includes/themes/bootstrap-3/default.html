@@ -19,7 +19,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="{{ ASSET_PATH }}/css/bootstrap-theme.min.css">
     <!-- Custom styles -->
-    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ ASSET_PATH }}/css/style.min.css?body=1" rel="stylesheet" type="text/css" media="all">
 
     <!-- pygments -->
     <link rel="stylesheet" href="{{ASSET_PATH}}/css/pygments.css">
@@ -27,7 +27,7 @@
     <link href="{{ ASSET_PATH }}/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" media="all" href="{{ASSET_PATH}}/css/solarized-dark.css?body=1">
-    <link rel="stylesheet" media="only screen and (max-width: 992px)" href="{{ASSET_PATH}}/css/small-screen.css">
+    <link rel="stylesheet" media="only screen and (max-width: 992px)" href="{{ASSET_PATH}}/css/small-screen.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -48,7 +48,7 @@
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate"
           title="Sitewide RSS Feed">
     <script src="{{ ASSET_PATH }}/js/angular.min.js"></script>
-    <script src="{{ ASSET_PATH }}/js/ng-script.js"></script>
+    <script src="{{ ASSET_PATH }}/js/ng-script.min.js"></script>
 </head>
 
 <body {{ page.withspy | '' }} >
@@ -144,7 +144,7 @@
 <script src="{{ ASSET_PATH }}/js/jquery-1.11.1.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="{{ ASSET_PATH }}/js/bootstrap.min.js"></script>
-<script src="{{ ASSET_PATH }}/js/custom.js"></script>
+<script src="{{ ASSET_PATH }}/js/custom.min.js"></script>
 <script src="{{ ASSET_PATH }}/js/jCorner.min.js"></script>
 
 {% include JB/analytics %}
