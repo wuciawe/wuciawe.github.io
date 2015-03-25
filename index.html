@@ -50,17 +50,17 @@ title: The Blog
             {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
             {% if post.layout == 'shot' %}
             <div class="col-md-4 col-sm-12 shot-i post-i">
-                <h4 class="post-title">
-                    {{ post.shotContent }}
-                </h4>
-                <p style="color: #999;">
-                    {% capture infotext %}{{ post.infotext }}{% endcapture %}
-                    {% if infotext.size == 0 %}
-                    Take a shot of tequila!
-                    {% else %}
-                    {{ infotext }}
-                    {% endif %}
-                </p>
+                <!--<h4 class="post-title">-->
+                    <!--{{ post.shotContent }}-->
+                <!--</h4>-->
+                <!--<p style="color: #999;">-->
+                    <!--{% capture infotext %}{{ post.infotext }}{% endcapture %}-->
+                    <!--{% if infotext.size == 0 %}-->
+                    <!--Take a shot of tequila!-->
+                    <!--{% else %}-->
+                    <!--{{ infotext }}-->
+                    <!--{% endif %}-->
+                <!--</p>-->
             </div>
             {% else %}
             <a href="{{ post.url }}" style="display: block">
