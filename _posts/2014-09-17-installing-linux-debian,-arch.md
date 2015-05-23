@@ -98,20 +98,22 @@ Then we will create the disk partitions ( Since I have already created disk part
 {% highlight console %}
 fdisk -l # list the drivers and partitions
 cgdisk /dev/sda # create partitions on /dev/sda
+cfdisk /dev/sda # another tool for partition
 {% endhighlight %}
 
-The Hex code 8300 is for Linux Filesystem, and 8200 is for swap.
+For cgdisk, the Hex code 8300 is for Linux Filesystem, and 8200 is for swap.
 
-I choose first partition with 30G and 8300 Hex code for `/`, and second one with 4G and 8200 Hex code for `swap`, and 
+I choose first partition with 200M for boot, and second one with 30G and 8300 Hex code for `/`, and third one with 4G and 8200 Hex code for `swap`, and 
 remaining disk space with 8300 Hex code for `/home`.
 
 After that, format these partitions with:
 
 {% highlight console %}
-mkfs.ext4 /dev/sda1
-mkfs.ext4 /dev/sda3
-mkswap /dev/sda2
-swapon /dev/sda2
+mkfs.ext2 /dev/sda1
+mkfs.ext4 /dev/sda2
+mkfs.ext4 /dev/sda4
+mkswap /dev/sda3
+swapon /dev/sda3
 {% endhighlight %}
 
 `Notice`: even with GParted, the above command `swapon /dev/sdax` is still necessary to plug swap on. 
@@ -119,9 +121,11 @@ swapon /dev/sda2
 And mount them:
 
 {% highlight console %}
-mount /dev/sda1 /mnt
-mkdir /mnt/home
-mount /dev/sda3 /mnt/home
+mount /dev/sda2 /mnt
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+mkdir -p /mnt/home
+mount /dev/sda4 /mnt/home
 {% endhighlight %}
 
 Adjusting mirrorlist:
@@ -139,6 +143,13 @@ Ctrl + U paste line
 Ctrl + W search word
 Ctrl + O save
 Ctrl + X exit
+{% endhighlight %}
+
+or, you can rank mirrorlist automatically:
+
+{%highlight console %}
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+rankmirrors -n 50 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 {% endhighlight %}
 
 After that, install the base system:
@@ -166,6 +177,8 @@ Some configurations:
 echo arch > /etc/hostname
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 date
+nano /etc/locale.gen
+locale-gen
 {% endhighlight %}
 
 And
@@ -213,3 +226,31 @@ Enjoy Arch Linux.
 In the version of Arch Linux I installed, it uses `systemctl` for system and service management, it's great. But at the 
 same time, I found that most online tutorial is out of date, which does not cover `systemctl` at all. While the `ArchWiki` is 
 really marvelous, as it is always updated. You can find solutions for most problems you meet at `ArchWiki`.
+
+
+Install yaourt & packer
+
+edit /etc/pacman.conf by appending:
+
+{% highlight console %}
+[multilib]
+Include = /etc/pacman.d/mirrorlist
+
+[archlinuxfr]
+SigLevel = Optional TrustAll 
+Server = http://repo.archlinux.fr/$arch
+{% endhighlight %}
+
+{% highlight console %}
+pacman -Syy
+pacman -S yaourt customizepkg rsync
+yaourt packer
+{% endhighlight %}
+
+Login screen and window manager
+
+{% highlight console %}
+packer -S slim slim-themes archlinux-themes-slim
+packer -S awesome rlwrap feh xscreensaver
+{% endhighlight %}
+
