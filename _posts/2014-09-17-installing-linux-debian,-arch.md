@@ -93,6 +93,13 @@ After booting, check the internet connection with
 ping -c 3 www.google.com
 {% endhighlight %}
 
+If it fails with `Network is unreachable`, try following:
+
+{% highlight console %}
+ip link
+dhcpcd ???{current device name}
+{% endhighlight %}
+
 Then we will create the disk partitions ( Since I have already created disk partitions with GParted, this step is no longer necessary here. ):
 
 {% highlight console %}
@@ -103,13 +110,13 @@ cfdisk /dev/sda # another tool for partition
 
 For cgdisk, the Hex code 8300 is for Linux Filesystem, and 8200 is for swap.
 
-I choose first partition with 200M for boot, and second one with 30G and 8300 Hex code for `/`, and third one with 4G and 8200 Hex code for `swap`, and 
+I choose first partition with 512M for boot, and second one with 30G and 8300 Hex code for `/`, and third one with 4G and 8200 Hex code for `swap`, and 
 remaining disk space with 8300 Hex code for `/home`.
 
 After that, format these partitions with:
 
 {% highlight console %}
-mkfs.ext2 /dev/sda1
+mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2
 mkfs.ext4 /dev/sda4
 mkswap /dev/sda3
@@ -155,13 +162,13 @@ rankmirrors -n 50 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 After that, install the base system:
 
 {% highlight console %}
-pacstrap /mnt base base-devel
+pacstrap -i /mnt base base-devel
 {% endhighlight %}
 
 And generate fastab:
 
 {% highlight console %}
-genfstab /mnt >> /mnt/etc/fstab
+genfstab -U -p /mnt >> /mnt/etc/fstab
 {% endhighlight %}
 
 Run **chroot** check in to the newly installed system
@@ -176,12 +183,28 @@ Some configurations:
 {% highlight console %}
 echo arch > /etc/hostname
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+pacman -S ntp
+... # edit ntp.conf
+systemctl enable ntpd.service
 date
 nano /etc/locale.gen
 locale-gen
+hwclock --systohc --utc
+
+ip link # to list the interfacenames
+system enable dhcpcd@interfacename.service
 {% endhighlight %}
 
-And
+And for UEFI:
+
+{% highlight console%}
+pacman -S grub efibootmgr
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch_grub --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+{% endhighlight %}
+
+
+and old one:
 
 {% highlight console %}
 mkinitcpio -p linux # create initial ramdisk environment
@@ -247,10 +270,20 @@ pacman -S yaourt customizepkg rsync
 yaourt packer
 {% endhighlight %}
 
-Login screen and window manager
+Sound, X, Login screen and window manager
 
 {% highlight console %}
-packer -S slim slim-themes archlinux-themes-slim
-packer -S awesome rlwrap feh xscreensaver
+yaourt -S alsa-utils
+pacman -S xorg-server xorg-xinit xorg-utils xorg-server-utils
+pacman -S xorg-twm xorg-xclock xterm
+yaourt -S slim slim-themes archlinux-themes-slim
+yaourt -S awesome rlwrap vicious dex feh xscreensaver
+systemctl enable slim.service
 {% endhighlight %}
 
+`/etc/slim.conf` and `xinitrc`
+
+
+{% highlight console %}
+useradd -m -G users,audio,lp,optical,storage,video,wheel,power -s /bin/bash username
+{% endhighlight %}
