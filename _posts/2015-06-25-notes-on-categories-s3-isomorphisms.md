@@ -32,12 +32,12 @@ Two important things:
 The `determination` (or `extension`) problem: Given f and h as shown, what are 
 all g, if any, for which h = g◦f.
 
-![determination diagram](files/2015-06-25-notes-on-categories-s3/determination-diagram.png)
+![determination diagram](/files/2015-06-25-notes-on-categories-s3/determination-diagram.png)
 
 The `choice` (or `lifting`) problem: Give g and h as shown, what are all f, if 
 any, for which h = g◦f.
 
-![choice diagram](files/2015-06-25-notes-on-categories-s3/choice-diagram.png)
+![choice diagram](/files/2015-06-25-notes-on-categories-s3/choice-diagram.png)
 
 In the determination problem and the choice problem, when h is an identity map, 
 they turn out to be retraction problem and section problem.

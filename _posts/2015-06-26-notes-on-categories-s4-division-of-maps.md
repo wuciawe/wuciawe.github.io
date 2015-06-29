@@ -26,7 +26,7 @@ If f has an inverse, we say f is an isomorphism, or invertible map.
 The process of the following maps by a particular isomorphism is itself a 
 reversible process.
 
-![isomorphism](files/2015-06-26-notes-on-categories-s4/isomorphism.png)
+![isomorphism](/files/2015-06-26-notes-on-categories-s4/isomorphism.png)
 
 ### Other Stuffs
 

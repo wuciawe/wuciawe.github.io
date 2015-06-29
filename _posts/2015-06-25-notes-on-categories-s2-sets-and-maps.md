@@ -12,7 +12,7 @@ In this category, an `object` is a finite set or collection. (Usually the order
 of elements in the set is not important.) We scatter the elements in the set as 
 following picture. The picture, labeled or not, is called an internal diagram.
 
-![internal diagram](files/2015-06-25-notes-on-categories-s2/internal-diagram.png)
+![internal diagram](/files/2015-06-25-notes-on-categories-s2/internal-diagram.png)
 
 In this category, a `map` `f` consists of three things:
 
@@ -27,7 +27,7 @@ codomain. `b` is denoted by `f◦a`.
 Following is the internal diagram of map. For any map, there is an arrow leaving 
 from each element in the domain to a corresponding element in the codomain.
 
-![internal diagram of map](files/2015-06-25-notes-on-categories-s2/internal-diagram-map.png)
+![internal diagram of map](/files/2015-06-25-notes-on-categories-s2/internal-diagram-map.png)
 
 An `endomap` is the map where the domain and the codomain are the same object.
 
@@ -36,7 +36,7 @@ The `identity map` is a special `endomap` where for any `a` in the domain, we ha
 Following is the external diagram which is useful when the exact details of the maps 
 are temporarily irrelevant or we have several objects and maps.
 
-![external diagram](files/2015-06-25-notes-on-categories-s2/external-map.png))
+![external diagram](/files/2015-06-25-notes-on-categories-s2/external-map.png))
 
 The `composition of maps` combines two maps to obtain a third map.
 
