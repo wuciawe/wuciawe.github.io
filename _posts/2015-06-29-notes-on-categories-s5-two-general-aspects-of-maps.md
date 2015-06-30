@@ -54,3 +54,10 @@ In the objective, we strive to have as clear an image as possible of reality, as
 independent of our particular thoughts; in the subjective we strive to know as clearly as possible the laws 
 of thinking in itself, arriving at laws of grammar, of pure logic, of algebra, etc.
 
+### Uses of isomorphisms
+
+A principle use of isomorphisms is to give coordinate systems. And there are two fundamental errors to avoid. 
+The first abuse is to assume that an isomorphism of sets A -> X means that some additional structure that 
+A has will be meaningful in X. The second abuse involves one object A and two objects X and Y coordinatized 
+by A. For example, adding two objects such as the distances and the masses. It only appeared to make sense 
+they are separately identified with the object numbers, by choosing a unit of measurement for each.
