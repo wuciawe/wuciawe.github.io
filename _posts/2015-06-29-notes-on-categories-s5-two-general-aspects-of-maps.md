@@ -4,6 +4,7 @@ category: [math]
 tags: [math, category]
 infotext: 'Introdution to Categories, you can view maps as the sorting of the domain by a property or the naming of the codomain'
 ---
+{% include JB/setup %}
 
 ### Sorting of the domain by a property
 
