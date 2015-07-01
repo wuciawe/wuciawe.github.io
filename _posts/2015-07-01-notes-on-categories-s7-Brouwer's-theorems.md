@@ -2,7 +2,7 @@
 layout: post
 category: [math]
 tags: [math, category]
-infotext: 'Introdution to Categories, Brouwer's theorems'
+infotext: "Introdution to Categories, Brouwer's theorems"
 ---
 {% include JB/setup %}
 
