@@ -4,7 +4,7 @@ category: [math]
 tags: [math, category]
 infotext: "Introdution to Categories, uniqueness of products and definition of sum, and some examples of universal constructions."
 ---
-{% include JMB/setup %}
+{% include JB/setup %}
 
 ### The terminal object as an identity for multiplication
 
