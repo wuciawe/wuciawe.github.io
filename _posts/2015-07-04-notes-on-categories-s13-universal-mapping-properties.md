@@ -4,7 +4,7 @@ category: [math]
 tags: [math, category]
 infotext: "Introdution to Categories, universal mapping properties."
 ---
-{% include JMB/setup %}
+{% include JB/setup %}
 
 An example of universal mapping property appearing 
 in the definition of terminal object: 1 is terminal 
