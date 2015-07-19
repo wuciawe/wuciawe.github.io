@@ -50,16 +50,21 @@
     }
     unifyHeights = function() {
       return $('.post-row').each(function() {
-        var as, childs, maxHeight;
+        var as, childs, maxHeight, maxWidth;
         maxHeight = 0;
+        maxWidth = 0;
         as = $(this).children('a');
         as.each(function() {
           return $(this).children('.col-md-4').each(function() {
             return $(this).children('.front').each(function() {
-              var height;
+              var height, width;
               height = $(this).outerHeight();
               if (height > maxHeight) {
-                return maxHeight = height;
+                maxHeight = height;
+              }
+              width = $(this).outerWidth();
+              if (width > maxWidth) {
+                return maxWidth = width;
               }
             });
           });
@@ -67,25 +72,41 @@
         childs = $(this).children('.col-md-4');
         childs.each(function() {
           return $(this).children('.front').each(function() {
-            var height;
+            var height, width;
             height = $(this).outerHeight();
             if (height > maxHeight) {
-              return maxHeight = height;
+              maxHeight = height;
+            }
+            width = $(this).outerWidth();
+            if (width > maxWidth) {
+              return maxWidth = width;
             }
           });
         });
-        childs.css('height', maxHeight);
+        childs.css({
+          'height': maxHeight,
+          'width': maxWidth
+        });
         as.each(function() {
-          return $(this).children('.col-md-4').css('height', maxHeight);
+          return $(this).children('.col-md-4').css({
+            'height': maxHeight,
+            'width': maxWidth
+          });
         });
         childs.each(function() {
-          $(this).children('.card').css('height', maxHeight);
+          $(this).children('.card').css({
+            'height': maxHeight,
+            'width': maxWidth
+          });
           $(this).children('.front').css('transform', "translateZ(" + (maxHeight / 2) + "px) rotateX(0deg)");
           return $(this).children('.back').css('transform', "translateY(" + (maxHeight / 2) + "px) rotateX(-90deg)");
         });
         return as.each(function() {
           return $(this).children('.col-md-4').each(function() {
-            $(this).children('.card').css('height', maxHeight);
+            $(this).children('.card').css({
+              'height': maxHeight,
+              'width': maxWidth
+            });
             $(this).children('.front').css('transform', "translateZ(" + (maxHeight / 2) + "px) rotateX(0deg)");
             return $(this).children('.back').css('transform', "translateY(" + (maxHeight / 2) + "px) rotateX(-90deg)");
           });
