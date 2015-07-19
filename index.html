@@ -35,8 +35,9 @@ title: The Blog
         </div>
     </div>
 </div>
-<h1 style="text-align: center">Posts & Shots</h1>
-<div class="row" style="margin-top: 20px">
+<h1 class="page-title">Posts & Shots</h1>
+
+<div class="row" style="margin-top: 20px" ng-app="skillsApp" ng-controller="skillsController">
     <div class="col-md-12">
         <div class="row post-row">
             <!-- post preview -->
@@ -49,24 +50,13 @@ title: The Blog
             {% endif %}
             {% capture acc %}{{ acc | plus:1 }}{% endcapture %}
             {% if post.layout == 'shot' %}
-            <div class="col-md-4 col-sm-12 shot-i post-i">
-                <h4 class="post-title">
-                    {{ post.shotContent }}
-                </h4>
-                <p style="color: #999;">
-                    {% capture infotext %}{{ post.infotext }}{% endcapture %}
-                    {% if infotext.size == 0 %}
-                    Take a shot of tequila!
-                    {% else %}
-                    {{ infotext }}
-                    {% endif %}
-                </p>
-            </div>
-            {% else %}
-            <a href="{{ post.url }}" style="display: block">
-                <div class="col-md-4 col-sm-12 post-i">
-                    <h4 class="post-title">{{post.title}}</h4>
-                    <p style="color: #999;">
+            <!--<div class="col-md-4 col-sm-12 shot-i post-i" hover-class="flipped">-->
+            <div class="col-md-4 col-sm-12" data-hover-class="flipped">
+                <div class="shot-i card front">
+                    <h4 class="post-title">
+                        {{ post.shotContent }}
+                    </h4>
+                    <p>
                         {% capture infotext %}{{ post.infotext }}{% endcapture %}
                         {% if infotext.size == 0 %}
                         Take a shot of tequila!
@@ -74,6 +64,47 @@ title: The Blog
                         {{ infotext }}
                         {% endif %}
                     </p>
+                </div>
+                <div class="shot-i card back">
+                    <h4 class="post-title">
+                        {{ post.shotContent }}
+                    </h4>
+                    <p>
+                        {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                        {% if infotext.size == 0 %}
+                        Take a shot of tequila!
+                        {% else %}
+                        {{ infotext }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+            {% else %}
+            <a href="{{ post.url }}" style="display: block">
+                <!--<div class="col-md-4 col-sm-12 post-i" hover-class="flipped">-->
+                <div class="col-md-4 col-sm-12" hover-class="flipped">
+                    <div class="post-i card front">
+                        <h4 class="post-title">{{post.title}}</h4>
+                        <p>
+                            {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                            {% if infotext.size == 0 %}
+                            Take a shot of tequila!
+                            {% else %}
+                            {{ infotext }}
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="post-i card back">
+                        <h4 class="post-title">{{post.title}}</h4>
+                        <p>
+                            {% capture infotext %}{{ post.infotext }}{% endcapture %}
+                            {% if infotext.size == 0 %}
+                            Take a shot of tequila!
+                            {% else %}
+                            {{ infotext }}
+                            {% endif %}
+                        </p>
+                    </div>
                  </div>
              </a>
             {% endif %}

@@ -1,10 +1,19 @@
 body {
-    /*background-color: #22C3AA;*/
-    /*overflow-x: hidden;*/
     font-family: 'Lato-Light', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
     font-weight: 400;
     font-size: 2em;
-    /*color: #999;*/
+}
+
+.page-title {
+    text-align: center;
+    font-family: 'Delicious-Roman', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
+    font-weight: 900;
+    text-shadow: 1px 1px #efefef, 2px 2px #AEE2D9;
+}
+
+.post-title {
+    font-family: 'Lato-Light', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
+    font-weight: 900;
 }
 
 .post-text {
@@ -16,15 +25,13 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Delicious-Roman', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
     font-weight: 900;
-    /*margin: 0.5em 0;*/
-    text-shadow: 1px 1px #efefef, 2px 2px #AEE2D9;
 }
 
 h1 {
     /*padding: 1em 80px 0 80px;*/
     font-size: 1.5em;
     /*margin: 1.5em -80px 0.5em -80px;*/
-    text-shadow: 1px 1px #eee, 2px 2px #AEE2D9;
+    /*text-shadow: 1px 1px #eee, 2px 2px #AEE2D9;*/
     box-sizing: border-box;
     /*border-top: 3px dashed #22C3AA;*/
     /*color: #333;*/
@@ -109,29 +116,6 @@ footer a:hover{
 .post-text > p{
     margin-bottom: 1em;
 }
-
-/* posts index */
-/*.post > h3.title {*/
-    /*position: relative;*/
-    /*padding-top: 10px;*/
-/*}*/
-
-/*.post > h3.title span.date {*/
-    /*position: absolute;*/
-    /*right: 0;*/
-    /*font-size: 0.9em;*/
-/*}*/
-
-/*.post > .more {*/
-    /*margin: 10px 0;*/
-    /*text-align: left;*/
-/*}*/
-
-/* post-full*/
-/*.post-full .date {*/
-    /*margin-bottom: 20px;*/
-    /*font-weight: bold;*/
-/*}*/
 
 .list-item-ul{
     list-style-type: none;
@@ -320,7 +304,7 @@ footer a:hover{
 .post-row {
     margin-bottom: 1.5em;
 }
-.post-row .post-i {
+.post-row .card {
     padding: 10px 5px 10px 3%;
     border-right: 1px dotted #ccc;
 }
@@ -329,20 +313,29 @@ footer a:hover{
     text-decoration: none;
 }
 
-.post-row > a:hover > .post-i{
-    background-color: rgba(205, 73, 255, 0.3);
+.post-row > a:hover .post-i{
+    /*background-color: rgba(205, 73, 255, 0.3);*/
 }
 
-.post-row > .shot-i:hover{
-    background-color: rgba(255, 44, 44, 0.2); /*rgba(255, 255, 6, 0.5);*/
+.post-row .shot-i:hover{
+    /*background-color: rgba(255, 44, 44, 0.2); /!*rgba(255, 255, 6, 0.5);*!/*/
 }
 
 .post-row > a{
     color: #333;
 }
 
-.post-row .post-i > p{
+.post-row .card > p{
+    color: #999;
     font-size: 0.8em;
+}
+
+.post-row .flipped .back > p{
+    color: rgba(227, 189, 34, 1);
+    font-size: 0.8em;
+    font-weight: bold;
+    text-shadow: -2px 0 #efefef, 0 2px #efefef, 2px 0 #efefef, 0 -2px #efefef;
+    /*text-shadow: 4px 4px #efefef, 4px 4px #AEE2D9;*/
 }
 
 .pagination>li>a{
@@ -373,4 +366,48 @@ footer a:hover{
 .shot-item:hover{
     background-color: rgba(255, 44, 44, 0.4);
     /*border-color: #FFFACD;*/
+}
+
+.card {
+    perspective: 500px;
+    transform-style: preserve-3d;
+    position: relative;
+    background-color: rgba(215, 217, 225, 0.4);
+}
+
+.flipped .post-i.back{
+    background-color: rgba(205, 73, 255, 0.3);
+}
+
+.flipped .shot-i.back{
+    background-color: rgba(255, 44, 44, 0.3);
+}
+
+.card {
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    position: absolute;
+}
+
+.front {
+    z-index: 2;
+}
+
+.back {
+    z-index: 1;
+}
+
+.flipped .front {
+    z-index: 1;
+}
+
+.flipped .back {
+    z-index: 2;
 }

@@ -59,18 +59,59 @@
       maxHeight = 0
       as = $(this).children 'a'
       as.each ->
-        $(this).children '.post-i'
+        $(this).children '.col-md-4'
+        .each ->
+          $(this).children '.front'
           .each ->
             height = $(this).outerHeight()
             maxHeight = height if height > maxHeight
-      childs = $(this).children '.post-i'
+      childs = $(this).children '.col-md-4'
       childs.each ->
-        height = $(this).outerHeight()
-        maxHeight = height if height > maxHeight
+        $(this).children '.front'
+        .each ->
+          height = $(this).outerHeight()
+          maxHeight = height if height > maxHeight
       childs.css 'height', maxHeight
       as.each ->
-        $(this).children '.post-i'
+        $(this).children '.col-md-4'
+        .css 'height', maxHeight
+      childs.each ->
+        $(this).children '.card'
+        .css 'height', maxHeight
+        $(this).children '.front'
+        .css 'transform', "translateZ(#{maxHeight / 2}px) rotateX(0deg)"
+        $(this).children '.back'
+        .css 'transform', "translateY(#{maxHeight / 2}px) rotateX(-90deg)"
+      as.each ->
+        $(this).children '.col-md-4'
+        .each ->
+          $(this).children '.card'
           .css 'height', maxHeight
+          $(this).children '.front'
+          .css 'transform', "translateZ(#{maxHeight / 2}px) rotateX(0deg)"
+          $(this).children '.back'
+          .css 'transform', "translateY(#{maxHeight / 2}px) rotateX(-90deg)"
+
+#    $('.post-row').each ->
+#      maxHeight = 0
+#      as = $(this).children 'a'
+#      as.each ->
+#        $(this).children '.post-i'
+#          .each ->
+#            $(this).children '.front'
+#              .each ->
+#                height = $(this).outerHeight()
+#                maxHeight = height if height > maxHeight
+#      childs = $(this).children '.post-i'
+#      childs.each ->
+#        $(this).children '.front'
+#          .each ->
+#            height = $(this).outerHeight()
+#            maxHeight = height if height > maxHeight
+#      childs.css 'height', maxHeight
+#      as.each ->
+#        $(this).children '.post-i'
+#          .css 'height', maxHeight
 
   unifyHeights()
 ) jQuery
