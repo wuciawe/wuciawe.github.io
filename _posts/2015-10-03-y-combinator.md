@@ -6,7 +6,7 @@ infotext: 'some stuff for Y Combinator'
 ---
 {% include JB/setup %}
 
-Inspired by this [article](http://mvanier.livejournal.com/2897.html), I finally figure out that a `Y Combinator` is, and 
+Inspired by this [article](http://mvanier.livejournal.com/2897.html){:target="_blank"}, I finally figure out that a `Y Combinator` is, and 
 decide to write this post which covers my understanding on Y Combinator (implicit recursive function call and 
 explicit type recursion) and examples in Scheme and Scala.
 
@@ -28,6 +28,8 @@ say:
 {% highlight scm %}
 (Y f) = (f (Y f))
 {% endhighlight %}
+
+Y Combinator directly computes out the fix-point of `f`.
 
 ### Example of factorial function in Scheme
 
