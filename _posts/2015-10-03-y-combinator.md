@@ -29,6 +29,8 @@ say:
 (Y f) = (f (Y f))
 {% endhighlight %}
 
+Y Combinator directly computes out the fix-point of `f`.
+
 ### Example of factorial function in Scheme
 
 First, we define a almost-factorial function as:
