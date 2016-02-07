@@ -1,6 +1,6 @@
 ---
 layout: post
-category: [c++, java, scala]
+category: [C++, java, scala]
 tags: [c++, java, scala, keywords]
 infotext: "An incomplete list of keywords of c++, java and scala."
 ---

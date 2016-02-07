@@ -6,7 +6,7 @@ infotext: 'Very basic usages of MakeFile, enough to use with simple projects.'
 ---
 {% include JB/setup %}
 
-In the post [Compiling C and C++ Programs]({%post_url 2014-08-12-compiling-c-and-c++-programs%}), I've described how to
+In the post [Compiling C and C++ Programs]({%post_url 2014-08-12-compiling-c-and-cpp-programs%}), I've described how to
 compiling C and C++ programs with commands **gcc** and **g++** respectively. It's enough with simple programs. But in
 the situation where the program contains lots of source files and the dependence between the source files are
 complicated, using compile commands directly to maintain the program becomes quite impractical and `MakeFile` is on
