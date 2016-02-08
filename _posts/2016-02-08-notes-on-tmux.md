@@ -6,7 +6,7 @@ infotext: 'notes on using tmux'
 ---
 {% include JB/setup %}
 
-`tmux` is a `t`erminal `mu`ltiple`x`r. As most (I mean all) people around me use `vim`, and I failed to install `awesome wm` (dependency issues, manully compiling `xcb` simply crashes my x11 env) and I didn't want to try to exchange `Caps` with `Ctrl` for the virtual machine, I decide to use `tmux` with `vim`, where `tmux` for tiling windows mangement.
+`tmux` is a `t`erminal `mu`ltiple`x`r. As most (I mean all) people around me use `vim`, and I failed to install `awesome wm` (dependency issues, manually compiling `xcb` simply crashes my x11 env) and I didn't want to try to exchange `Caps` with `Ctrl` for the virtual machine, I decide to use `tmux` with `vim`, where `tmux` for tiling windows management.
 
 Following is the configuration and explanations:
 
@@ -32,7 +32,7 @@ The `bind` is short for `bind-key`.
 
 Create sessions:
 
-    tmux # create annonymous session
+    tmux # create anonymous session
     tmux new-session -s <s-name> # create named session
     tmux new -s <s-name> # create named session
     tmux new [-s <s-name>] -d # create a session and then detach
@@ -101,7 +101,7 @@ To share window between different sessions, type `link-window -t <t-s-name>:<t-w
 
 ### Panes
 
-To split the window vertically, press `PREFIX` `%`. And to split the window horizantually, press `PREFIX` `"`.
+To split the window vertically, press `PREFIX` `%`. And to split the window horizontally, press `PREFIX` `"`.
 
     # set new split key combination
     bind \ split-window -h
@@ -137,13 +137,13 @@ To rotate the panes, press `PREFIX` `}` to rotate clockwise, and press `PREFIX` 
 
 To change the pane layout, press `PREFIX` `Space`.
 
-To close the current pane, type `exit` or press `PREIFX` `x`.
+To close the current pane, type `exit` or press `PREFIX` `x`.
 
 To synchronize the pane input or not, type `setw synchronize-panes [on|off]` in the prompt.
 
 ### Transfer between Window and Pane
 
-To break the pane into a seperate window, press `PREFIX` `!`.
+To break the pane into a separate window, press `PREFIX` `!`.
 
 To convert a window into a pane in another window, type `join-pane -s <source-window> -t <target-window>` in the prompt. (It looks like only the single pane window work???)
 
@@ -173,7 +173,7 @@ To paste the last copied buffer into the current buffer, press `PREFIX` `]` or t
 
 To save the last copied buffer to a file, type `save-buffer <path to file>` in prompt.
 
-To paste specific copied buffer to the current buffer, press `PREFIX` `=` or type `choose-buffer` in promt and then select one by its id number.
+To paste specific copied buffer to the current buffer, press `PREFIX` `=` or type `choose-buffer` in prompt and then select one by its id number.
 
 To paste between programs, `xclip` is required. And add following into the configuration (not tested yet):
 
@@ -205,7 +205,7 @@ Other configurations:
     # long display time
     set -g display-time 2000
 
-    # make the current window the first wiindow
+    # make the current window the first window
     bind T swap-window -t 1
 
     # automatically rename window
