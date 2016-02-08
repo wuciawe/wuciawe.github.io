@@ -32,7 +32,7 @@ The `bind` is short for `bind-key`.
 
 Create sessions:
 
-    tmux # create annoymous session
+    tmux # create annonymous session
     tmux new-session -s <s-name> # create named session
     tmux new -s <s-name> # create named session
     tmux new [-s <s-name>] -d # create a session and then detach
@@ -107,7 +107,7 @@ To split the window vertically, press `PREFIX` `%`. And to split the window hori
     bind \ split-window -h
     bind - split-window -v
 
-To focus the panes cyclinicly, press `PREFIX` `o`. `PREFIX` with `UP`, `DOWN`, `LEFT`, and `RIGHT` is to move to the pane in certain direction.
+To focus the panes cyclically, press `PREFIX` `o`. `PREFIX` with `UP`, `DOWN`, `LEFT`, and `RIGHT` is to move to the pane in certain direction.
 
     # use C-h and C-l to cycle through panes
     bind -r C-h select-window -t :-
