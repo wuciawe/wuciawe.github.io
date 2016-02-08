@@ -1,6 +1,6 @@
 ---
 layout: post
-category: [git]
+category: [tools]
 tags: [git]
 infotext: 'notes on using git'
 ---
@@ -61,6 +61,8 @@ Each level overrides values in the previous level.
     git clone <bundle> <repo> # unbundle
     git clone --recursive <url> # automatically initialize and update each submodule
 
+`How to retrieve all remote branches`: Once you `git clone` a remote repo, it will sync the `master` branch by default. To see how to retrieve all remote branches, click [here]( #syncbranches )
+
 ## Saving changes (staging and committing)
 
 ### git add
@@ -101,6 +103,15 @@ git status works on working directory and staging area.
 
  `~` syntax: make relative reference, i.e. HEAD~1 refers to the parent of current commit
 
+### git diff
+
+    git diff HEAD # HEAD points to the most recent commit
+    git diff --staged # see the difference of just staged
+    git diff <b1>..<b2> -- path # see difference of path between <b1> and <b2>, that are revision references, default is current branch
+    git diff --name-status ... # show condensed info
+
+Actually, with `urxvt` and `zsh`, `<Tab>` helps a lot.
+
 ## Checkout
 
     git checkout <branch> # recover <branch>
@@ -111,7 +122,7 @@ git status works on working directory and staging area.
 
 ### git checkout
 
-syntax same as above
+syntax same as [above]( #checkout )
 
 ### git revert
 
@@ -131,6 +142,7 @@ syntax same as above
 `git reset <commit>` will abort commits after <commit>.
 
 `ACTUALLY` `git revert` and `git reset` both do not affect the untracked files, both are like an operation of moving pointer between snapshots.
+
 ### git clean
 
     git clean # remove untracked files from working directory
@@ -165,7 +177,7 @@ The primary reason for rebasing is to maintain a linear project history.
 ### git remote
 
     git remote [-v] # list the remote repos, -v flag for displaying remote repo address
-    git remote <name> <url> # create a new remote connection
+    git remote add <name> <url> # create a new remote connection
     git remote rm <name> # remove remote connection to <name>
     git remote rename <oldName> <newName> # rename the remote repo
 
@@ -185,10 +197,26 @@ Fetched content is represented as a remote branch, no effect on local working.
     git pull <remote> # fetch the <remote>'s copy of current branch and merge it into local copy
     git pull --rebase <remote> # use rebase
 
-## git stash
+#### syncBranches
+
+Following codes show how to create local branches for all remote tracking branches:
+
+    # sol 1
+    for b in `git branch -r | grep -v -- '->'`; do git branch --track ${b##origin/} $b; done
+    
+    # sol 2, ?, not tested yet, seems more robust?
+    git branch -r | grep -v -- ' -> ' | while read remote; do git branch --track "${remote#origin/}" "$remote" 2>&1 | grep -v ' already exists'; done
+
+### git stash
 
     git stash # temporary save uncommited stuff
     git stash apply # restore stashed stuff
+
+By default, `git stash` will only stash those indexed files, which means you need to `git add` untracked files first to make them into staged area, then stash them.
+
+Since version `1.7.7`, you could use following flag to include stashing untracked files:
+
+    git stash -u
 
 ### git push
 
@@ -196,7 +224,9 @@ Fetched content is represented as a remote branch, no effect on local working.
     git push <remote> --all # push all the local branches to <remote>
     git push <remote> --tags # --tags flag sends local tags to <remote>
 
-## git branch
+## Branch
+
+### git branch
 
     git branch # list all branches
     git branch <branch> # create a <branch> branch
@@ -206,7 +236,7 @@ Fetched content is represented as a remote branch, no effect on local working.
 
     git checkout -b <newBranch> [<oneBranch>] # create and checkout <newBranch>, based on current branch or <oneBranch>
 
-## git merge
+### git merge
 
     git merge <branch> # merge <branch> into current branch
     git merge --no-ff <branch> # always generate a merge commit
@@ -215,11 +245,9 @@ Fetched content is represented as a remote branch, no effect on local working.
 
 `3-way merge` is of two branch tips and their common ancestor. It may encounter conflicts.
 
-## git diff
+### git rebase
 
-    git diff HEAD # HEAD points to the most recent commit
-    git diff --staged # see the difference of just staged
-    git diff <b1>..<b2> -- path # see difference of path between <b1> and <b2>, that are revision references, default is current branch
+Also, `git rebase` can be used for merging branches. Syntax see [above]( #git-rebase )
 
 ## git help
 
