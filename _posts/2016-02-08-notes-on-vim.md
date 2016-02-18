@@ -91,21 +91,21 @@ infotext: 'notes on using vim'
 
 ### Edit
 
-- `i`: start inserting at current carnet position
+- `i`: start inserting at current caret position
 - `I`: insert at head of the current line
-- `a`: append after the current carnet position
+- `a`: append after the current caret position
 - `A`: append after the end of current line
-- `o`: open a blank line below carnet
-- `O`: open a blank line above carnet
+- `o`: open a blank line below caret
+- `O`: open a blank line above caret
 - `c`: change text
   - `c``<num>``w|b`: change \<num> words, forward or backward
   - `c``0|$`: change to the head or end of the line
   - `c``c`: change the whole line
-- `C`: change from current carnet position to the end of line
-- `r`: replace current carnet position character, no need to press `ESC` after typing
+- `C`: change from current caret position to the end of line
+- `r`: replace current caret position character, no need to press `ESC` after typing
 - `R`: replace in `overstrike mode`
-- `s`: substitute current carnet position character
-  - `<num>``s`: substitute \<num> characters from current carnet position
+- `s`: substitute current caret position character
+  - `<num>``s`: substitute \<num> characters from current caret position
 - `S`: substitute the entire line
   - `<num>``S`: substitute \<num> line
 - `~`: change case
@@ -117,18 +117,18 @@ infotext: 'notes on using vim'
 
 ### Delete
 
-- `d`: delete current carnet position character
+- `d`: delete current caret position character
   - `d``<num>``<action>`: delete \<num> movement actions
   - `d``d`: delete the entire line
 - `D`: delete to the end of the line
-- `x`: delete current carnet position character
+- `x`: delete current caret position character
 
 ### Paste
 
-- `p`: paste after current carnet position
+- `p`: paste after current caret position
   - `"``<num>``p`: paste from buffer \<num>
   - `"``<name>``p`: paste from a named buffer
-- `P`: paste before current carnet position
+- `P`: paste before current caret position
 
 ### Yank
 
