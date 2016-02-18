@@ -19,7 +19,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="{{ ASSET_PATH }}/css/bootstrap-theme.min.css">
     <!-- Custom styles -->
-    <link href="{{ ASSET_PATH }}/css/style.min.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="{{ ASSET_PATH }}/css/common.min.css?body=1" rel="stylesheet" type="text/css" media="all">
 
     <!-- pygments -->
     <link rel="stylesheet" href="{{ASSET_PATH}}/css/pygments.css">
@@ -27,7 +27,8 @@
     <link href="{{ ASSET_PATH }}/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" media="all" href="{{ASSET_PATH}}/css/solarized-dark.css?body=1">
-    <link rel="stylesheet" media="only screen and (max-width: 992px)" href="{{ASSET_PATH}}/css/small-screen.min.css">
+    <link rel="stylesheet" media="only screen and (max-width: 991px)" href="{{ASSET_PATH}}/css/small-screen.min.css">
+    <link rel="stylesheet" media="only screen and (min-width: 992px)" href="{{ASSET_PATH}}/css/middle-screen.min.css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -51,7 +52,7 @@
     <script src="{{ ASSET_PATH }}/js/ng-script.min.js"></script>
 </head>
 
-<body {{ page.withspy | '' }} >
+<body {{ page.withspy | '' }}  data-ng-app="blogApp">
 <header class="navbar navbar-static-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -108,18 +109,18 @@
     {{ content }}
 </div>
 
-<footer>
+<footer data-ng-controller="footerController">
 <div class="container">
     <div id="contacts">
-        <ul style="padding-top: 20px;">
+        <ul style="padding-top: 20px;" data-ng-show="isMiddle()">
             <li><img src="{{BASE_PATH}}/files/about/ava.jpg" class="img-circle" style="width: 100px"></li>
         </ul>
-        <ul style="padding-top: 35px;">
+        <ul style="padding-top: 35px;" data-ng-show="isMiddle()">
             <li>Hi! I'm 嘉偉</li>
             <li><small>Currently a student at SJTU</small></li>
             <li><small>Major on Machine Learning and Data Mining</small></li>
         </ul>
-        <ul id="details" style="padding-top: 30px;">
+        <ul id="details">
             <li><span>Email: </span><a href="mailto:{{site.author.email}}">{{site.author.email}}</a>
             </li>
             <li><span>Linkedin: </span><a target="blank" href="http://lnkd.in/{{site.author.linkedin}}">{{site.author.linkedin}}</a></li>
@@ -127,7 +128,7 @@
             <!--<li><span>Stack Overflow: </span><a target="blank" href="http://stackoverflow.com/users/{{site.author.stackoverflow}}">{{site.author.stackoverflow}}</a></li>-->
         </ul>
     </div>
-    <p class="pull-right"><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
+    <p class="pull-right" data-ng-show="isMiddle()"><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
         powered with
         <a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>
         and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
