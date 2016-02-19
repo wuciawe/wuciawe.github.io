@@ -58,7 +58,7 @@ header .nav>li.active a{
 .post-row .card p{
     color: #999;
     font-size: 1.4em;
-    font-weight: 800;
+    font-weight: 600;
 }
 
 .post-row .card[lang="cn"] p{
