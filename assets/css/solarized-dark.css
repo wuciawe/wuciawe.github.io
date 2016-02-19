@@ -15,84 +15,571 @@ blue      #268bd2  reserved keywords
 cyan      #2aa198  strings, numbers
 green     #859900  operators, other keywords
 */
+code {
+    font-family: "Source Code Pro", monospace;
+    /*font-size: large;*/
+}
 
-.highlight pre { background-color: #444444; color: #f8f8f8 }
-.highlight .c { color: grey } /* Comment */
-.highlight .err { color: #dc143c } /* Error */
-.highlight .g { color: #f8f8f8 } /* Generic */
-.highlight .k { color: #ff8c00 } /* Keyword */
-.highlight .l { color: #67b168 } /* Literal */
-.highlight .n { color: #f8f8f8 } /* Name */
-.highlight .o { color: #ffff00 } /* Operator */
-.highlight .x { color: #ee82ee } /* Other */
-.highlight .p { color: #f8f8f8 } /* Punctuation */
+.highlight pre,
+pre.highlight {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    background-color: #393939;
+    color: #f8f8f8
+}
+.highlight .c {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: grey;
+}/* Comment */
+.highlight .err {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #dc143c;
+} /* Error */
+.highlight .g {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Generic */
+.highlight .k {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ff8c00;
+} /* Keyword */
+.highlight .l {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal */
+.highlight .n {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name */
+.highlight .o {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ffff00;
+} /* Operator */
+.highlight .x {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ee82ee;
+} /* Other */
+.highlight .p {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Punctuation */
 
-.highlight .cm { color: #00cc00 } /* Comment.Multiline */
-.highlight .cp { color: #00cc00 } /* Comment.Preproc */
-.highlight .c1 { color: grey } /* Comment.Single */
-.highlight .cs { color: #00cc00 } /* Comment.Special */
+.highlight .cm {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #00cc00;
+} /* Comment.Multiline */
+.highlight .cp {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #00cc00;
+} /* Comment.Preproc */
+.highlight .c1 {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: grey;
+}/* Comment.Single */
+.highlight .cs {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #00cc00;
+} /* Comment.Special */
 
-.highlight .gd { color: #2aa198 } /* Generic.Deleted */
-.highlight .ge { color: #f8f8f8; font-style: italic } /* Generic.Emph */
-.highlight .gr { color: #dc322f } /* Generic.Error */
-.highlight .gh { color: #cb4b16 } /* Generic.Heading */
-.highlight .gi { color: #859900 } /* Generic.Inserted */
-.highlight .go { color: #f8f8f8 } /* Generic.Output */
-.highlight .gp { color: #f8f8f8 } /* Generic.Prompt */
-.highlight .gs { color: #f8f8f8; font-weight: bold } /* Generic.Strong */
-.highlight .gu { color: #cb4b16 } /* Generic.Subheading */
-.highlight .gt { color: #f8f8f8 } /* Generic.Traceback */
+.highlight .gd {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #2aa198;
+} /* Generic.Deleted */
+.highlight .ge {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+    font-style: italic
+} /* Generic.Emph */
+.highlight .gr {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #dc322f;
+} /* Generic.Error */
+.highlight .gh {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #cb4b16;
+} /* Generic.Heading */
+.highlight .gi {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #859900;
+} /* Generic.Inserted */
+.highlight .go {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Generic.Output */
+.highlight .gp {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Generic.Prompt */
+.highlight .gs {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+    font-weight: bold
+} /* Generic.Strong */
+.highlight .gu {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #cb4b16;
+} /* Generic.Subheading */
+.highlight .gt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Generic.Traceback */
 
-.highlight .kc { color: #67b168 } /* Keyword.Constant */
-.highlight .kd { color: #f8f8f8 } /* Keyword.Declaration */
-.highlight .kn { color: #f8f8f8 } /* Keyword.Namespace */
-.highlight .kp { color: #f8f8f8 } /* Keyword.Pseudo */
-.highlight .kr { color: #ff8c00 } /* Keyword.Reserved */
-.highlight .kt { color: #ff8c00 } /* Keyword.Type */
+.highlight .kc {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Keyword.Constant */
+.highlight .kd {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Keyword.Declaration */
+.highlight .kn {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Keyword.Namespace */
+.highlight .kp {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Keyword.Pseudo */
+.highlight .kr {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ff8c00;
+} /* Keyword.Reserved */
+.highlight .kt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ff8c00;
+} /* Keyword.Type */
 
-.highlight .ld { color: #f8f8f8 } /* Literal.Date */
-.highlight .m { color: #67b168 } /* Literal.Number */
-.highlight .s { color: #67b168 } /* Literal.String */
+.highlight .ld {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Literal.Date */
+.highlight .m {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number */
+.highlight .s {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String */
 
-.highlight .na { color: #f8f8f8 } /* Name.Attribute */
-.highlight .nb { color: #B58900 } /* Name.Builtin */
-.highlight .nc { color: #f8f8f8 } /* Name.Class */
-.highlight .no { color: #f8f8f8 } /* Name.Constant */
-.highlight .nd { color: #f8f8f8 } /* Name.Decorator */
-.highlight .ni { color: #f8f8f8 } /* Name.Entity */
-.highlight .ne { color: #cb4b16 } /* Name.Exception */
-.highlight .nf { color: #ffff00 } /* Name.Function */
-.highlight .nl { color: #f8f8f8 } /* Name.Label */
-.highlight .nn { color: #f8f8f8 } /* Name.Namespace */
-.highlight .nx { color: #f8f8f8 } /* Name.Other */
-.highlight .py { color: #f8f8f8 } /* Name.Property */
-.highlight .nt { color: #f8f8f8 } /* Name.Tag */
-.highlight .nv { color: #f8f8f8 } /* Name.Variable */
+.highlight .na {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Attribute */
+.highlight .nb {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #B58900;
+} /* Name.Builtin */
+.highlight .nc {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Class */
+.highlight .no {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Constant */
+.highlight .nd {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Decorator */
+.highlight .ni {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Entity */
+.highlight .ne {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #cb4b16;
+} /* Name.Exception */
+.highlight .nf {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ffff00;
+} /* Name.Function */
+.highlight .nl {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Label */
+.highlight .nn {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Namespace */
+.highlight .nx {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Other */
+.highlight .py {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Property */
+.highlight .nt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Tag */
+.highlight .nv {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Name.Variable */
 
-.highlight .ow { color: #859900 } /* Operator.Word */
+.highlight .ow {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #859900;
+} /* Operator.Word */
 
-.highlight .w { color: #f8f8f8 } /* Text.Whitespace */
+.highlight .w {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Text.Whitespace */
 
-.highlight .mf { color: #67b168 } /* Literal.Number.Float */
-.highlight .mh { color: #67b168 } /* Literal.Number.Hex */
-.highlight .mi { color: #67b168 } /* Literal.Number.Integer */
-.highlight .mo { color: #67b168 } /* Literal.Number.Oct */
+.highlight .mf {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number.Float */
+.highlight .mh {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number.Hex */
+.highlight .mi {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number.Integer */
+.highlight .mo {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number.Oct */
 
-.highlight .sb { color: #586e75 } /* Literal.String.Backtick */
-.highlight .sc { color: #67b168 } /* Literal.String.Char */
-.highlight .sd { color: #f8f8f8 } /* Literal.String.Doc */
-.highlight .s2 { color: #67b168 } /* Literal.String.Double */
-.highlight .se { color: #ff8c00 } /* Literal.String.Escape */
-.highlight .sh { color: #f8f8f8 } /* Literal.String.Heredoc */
-.highlight .si { color: #67b168 } /* Literal.String.Interpol */
-.highlight .sx { color: #67b168 } /* Literal.String.Other */
-.highlight .sr { color: #00ffff } /* Literal.String.Regex */
-.highlight .s1 { color: #67b168 } /* Literal.String.Single */
-.highlight .ss { color: #67b168 } /* Literal.String.Symbol */
+.highlight .sb {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #586e75;
+} /* Literal.String.Backtick */
+.highlight .sc {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Char */
+.highlight .sd {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Literal.String.Doc */
+.highlight .s2 {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Double */
+.highlight .se {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ff8c00;
+} /* Literal.String.Escape */
+.highlight .sh {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #f8f8f8;
+} /* Literal.String.Heredoc */
+.highlight .si {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Interpol */
+.highlight .sx {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Other */
+.highlight .sr {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #00ffff;
+} /* Literal.String.Regex */
+.highlight .s1 {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Single */
+.highlight .ss {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.String.Symbol */
 
-.highlight .bp { color: #67b168 } /* Name.Builtin.Pseudo */
-.highlight .vc { color: #67b168 } /* Name.Variable.Class */
-.highlight .vg { color: #67b168 } /* Name.Variable.Global */
-.highlight .vi { color: #67b168 } /* Name.Variable.Instance */
+.highlight .bp {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Name.Builtin.Pseudo */
+.highlight .vc {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Name.Variable.Class */
+.highlight .vg {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Name.Variable.Global */
+.highlight .vi {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Name.Variable.Instance */
 
-.highlight .il { color: #67b168 } /* Literal.Number.Integer.Long */
+.highlight .il {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #67b168;
+} /* Literal.Number.Integer.Long */
+
+/*.highlight .k {*/
+
+    /*font-family: "Source Code Pro", monospace;*/
+    /*font-size: large;*/
+    /*color: #CC7832;*/
+/*}*/
+.highlight .nx {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: white;
+}
+.highlight .p {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: white;
+}
+.highlight .o {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #D8D8D8;
+}
+.highlight .c,
+.highlight .cm,
+.highlight .c1 {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: lightgrey;
+    font-style: italic;
+}
+.highlight .bp,
+.highlight .cp,
+.highlight .cs,
+.highlight .gh {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #cc7832;
+}
+.highlight .cp,
+.highlight .cs {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-weight: bold;
+}
+.highlight .cs {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-style: italic;
+}
+.highlight .gd {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #000000;
+    background-color: #ffdddd;
+}
+.highlight .gd .x {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    background-color: #ffaaaa;
+}
+.highlight .ge {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-style: italic;
+}
+.highlight .gr,
+.highlight .gt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #aa0000;
+}
+.highlight .gi {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #000000;
+    background-color: #ddffdd;
+}
+.highlight .gi .x {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    background-color: #aaffaa;
+}
+.highlight .go {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #888888;
+}
+.highlight .gp,
+.highlight .nn {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #555555;
+}
+.highlight .gs {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-weight: bold;
+}
+.highlight .gu {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #aaaaaa;
+}
+.highlight .kd
+.highlight .k {
+    color: #ff8c00;
+}
+.highlight .kc,
+.highlight .kd,
+.highlight .kp,
+.highlight .kr,
+.highlight .kt,
+.highlight .k {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-weight: bold;
+}
+.highlight .nc,
+.highlight .kt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #FFF;
+}
+.highlight .na {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #FFC66D;
+}
+.highlight .no,
+.highlight .ni,
+.highlight .nv,
+.highlight .vc,
+.highlight .vg,
+.highlight .vi {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #9876aa;
+}
+.highlight .nb {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #0086b3;
+}
+.highlight .ne {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #990000;
+    font-weight: bold;
+}
+.highlight .nf {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #FFF;
+}
+.highlight .nt {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #ffc66d;
+}
+.highlight .ow {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    font-weight: bold;
+}
+.highlight .w {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #bbbbbb;
+}
+.highlight .m,
+.highlight .mf,
+.highlight .mh,
+.highlight .mi,
+.highlight .mo,
+.highlight .il {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #6897bb;
+}
+.highlight .s,
+.highlight .sb,
+.highlight .s1,
+.highlight .sx,
+.highlight .si,
+.highlight .sh,
+.highlight .se,
+.highlight .s2,
+.highlight .sd,
+.highlight .sc {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #6a8759;
+}
+.highlight .sr {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #6a8759;
+}
+.highlight .ss {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    color: #6a8759;
+}

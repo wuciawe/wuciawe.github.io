@@ -22,13 +22,13 @@
     <link href="{{ ASSET_PATH }}/css/common.min.css?body=1" rel="stylesheet" type="text/css" media="all">
 
     <!-- pygments -->
-    <link rel="stylesheet" href="{{ASSET_PATH}}/css/pygments.css">
+    <!--<link rel="stylesheet" href="{{ASSET_PATH}}/css/pygments.css">-->
 
     <link href="{{ ASSET_PATH }}/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" media="all" href="{{ASSET_PATH}}/css/solarized-dark.css?body=1">
     <link rel="stylesheet" media="only screen and (max-width: 991px)" href="{{ASSET_PATH}}/css/small-screen.min.css">
     <link rel="stylesheet" media="only screen and (min-width: 992px)" href="{{ASSET_PATH}}/css/middle-screen.min.css">
+    <link rel="stylesheet" type="text/css" media="all" href="{{ASSET_PATH}}/css/solarized-dark.css?body=1">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -112,9 +112,9 @@
 <footer data-ng-controller="footerController">
 <div class="container">
     <div id="contacts">
-        <ul style="padding-top: 20px;" data-ng-show="isMiddle()">
-            <li><img src="{{BASE_PATH}}/files/about/ava.jpg" class="img-circle" style="width: 100px"></li>
-        </ul>
+        <!--<ul style="padding-top: 20px;" data-ng-show="isMiddle()">-->
+            <!--<li><img src="{{BASE_PATH}}/files/about/ava.jpg" class="img-circle" style="width: 100px"></li>-->
+        <!--</ul>-->
         <ul style="padding-top: 35px;" data-ng-show="isMiddle()">
             <li>Hi! I'm 嘉偉</li>
             <li><small>Currently a student at SJTU</small></li>
@@ -128,7 +128,7 @@
             <!--<li><span>Stack Overflow: </span><a target="blank" href="http://stackoverflow.com/users/{{site.author.stackoverflow}}">{{site.author.stackoverflow}}</a></li>-->
         </ul>
     </div>
-    <p class="pull-right" data-ng-show="isMiddle()"><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
+    <p class="pull-right copyright" data-ng-show="isMiddle()"><i class="fa fa-copyright"></i> {{ site.time | date: '%Y' }} {{ site.author.name }}
         powered with
         <a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>
         and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>

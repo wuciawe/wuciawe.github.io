@@ -52,12 +52,13 @@ header .nav>li.active a{
 }
 
 .post-title{
-    font-size: 1.1em;
+    font-size: 1.6em;
 }
 
 .post-row .card p{
     color: #999;
-    font-size: 0.95em;
+    font-size: 1.2em;
+    font-weight: 800;
 }
 
 .flipped .post-i.back{

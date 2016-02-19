@@ -14,6 +14,12 @@
 header .navbar-toggle>.icon-bar{
     background-color: #000101;
 }
+header{
+    font-size: large;
+}
+.navbar-brand {
+    font-size: large;
+}
 .nav li{
     background-color: #fff;
     border-bottom: 1px solid #000101;
@@ -40,7 +46,7 @@ header .navbar-toggle>.icon-bar{
 
 .post-row .card > p{
     color: #000101;
-    font-size: 0.8em;
+    font-size: 1.2em;
 }
 
 .post-row > a:hover{
@@ -73,11 +79,7 @@ header .navbar-toggle>.icon-bar{
 }
 
 .post-title{
-    font-size: 1.1em;
-}
-
-.card p{
-    font-size: 1.1em;
+    font-size: 1.5em;
 }
 
 .shot-i {
