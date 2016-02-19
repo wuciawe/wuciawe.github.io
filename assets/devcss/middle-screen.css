@@ -57,8 +57,13 @@ header .nav>li.active a{
 
 .post-row .card p{
     color: #999;
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: 800;
+}
+
+.post-row .card[lang="cn"] p{
+    font-size: 1.2em;
+    font-weight: 500;
 }
 
 .flipped .post-i.back{

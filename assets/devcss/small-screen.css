@@ -4,7 +4,7 @@
 }
 .navbar-brand {
     padding: auto;
-    font-size: xx-large;
+    font-size: large;
     color: #000101;
     text-shadow: none;
 }
@@ -15,9 +15,6 @@ header .navbar-toggle>.icon-bar{
     background-color: #000101;
 }
 header{
-    font-size: large;
-}
-.navbar-brand {
     font-size: large;
 }
 .nav li{
@@ -46,6 +43,9 @@ header{
 
 .post-row .card > p{
     color: #000101;
+    font-size: 1.4em;
+}
+.post-row .card[lang="cn"] > p{
     font-size: 1.2em;
 }
 

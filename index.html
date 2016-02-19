@@ -51,7 +51,7 @@ title: The Blog
             {% if post.layout == 'shot' %}
             <!--<div class="col-md-4 col-sm-12 shot-i post-i" hover-class="flipped">-->
             <div class="col-md-4 col-sm-12" data-hover-class="flipped">
-                <div class="shot-i card front">
+                <div class="shot-i card front" {% if post.lang %} lang="{{post.lang}}" {% endif %}>
                     <h4 class="post-title">
                         {{ post.shotContent }}
                     </h4>
@@ -64,7 +64,7 @@ title: The Blog
                         {% endif %}
                     </p>
                 </div>
-                <div class="shot-i card back">
+                <div class="shot-i card back" {% if post.lang %} lang="{{post.lang}}" {% endif %}>
                     <h4 class="post-title">
                         {{ post.shotContent }}
                     </h4>
@@ -82,7 +82,7 @@ title: The Blog
             <a href="{{ post.url }}" style="display: block">
                 <!--<div class="col-md-4 col-sm-12 post-i" hover-class="flipped">-->
                 <div class="col-md-4 col-sm-12" hover-class="flipped">
-                    <div class="post-i card front">
+                    <div class="post-i card front" {% if post.lang %} lang="{{post.lang}}" {% endif %}>
                         <h4 class="post-title">{{post.title}}</h4>
                         <p>
                             {% capture infotext %}{{ post.infotext }}{% endcapture %}
@@ -93,7 +93,7 @@ title: The Blog
                             {% endif %}
                         </p>
                     </div>
-                    <div class="post-i card back">
+                    <div class="post-i card back" {% if post.lang %} lang="{{post.lang}}" {% endif %}>
                         <h4 class="post-title">{{post.title}}</h4>
                         <p>
                             {% capture infotext %}{{ post.infotext }}{% endcapture %}

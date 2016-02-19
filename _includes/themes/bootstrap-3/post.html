@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="page-header">
+  <div class="page-header" {% if page.lang %} lang="{{page.lang}}" {% endif %}>
     <h1>{{ page.title }} {% if page.tagline %}<small>{{page.tagline}}</small>{% endif %}</h1>
   </div>
 
   <div class="row">
-    <div class="col-md-9 post-full post-text">
+    <div class="col-md-9 post-full post-text" {% if page.lang %} lang="{{page.lang}}" {% endif %}>
       {{ content }}
     </div>
     
