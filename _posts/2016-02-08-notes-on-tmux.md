@@ -12,11 +12,13 @@ Following is the configuration and explanations:
 
 Usually commands of `tmux` is leaded by a `PREFIX` so as to reduce conflicts with other applications. Reduce means there still exists many conflicts, so rebind default `PREFIX` `C-b` with the other key:
 
-    # bind PREFIX with 'C-\'
-    set -g prefix 'C-\'
-    
-    # unbind default one
-    unbind C-b
+{% highlight conf linenos=table %}
+# bind PREFIX with 'C-\'
+set -g prefix 'C-\'
+
+# unbind default one
+unbind C-b
+{% endhighlight %}
 
 The `set` is a short version of `set-option`. The `-g` flag denotes that this configuration is global, it takes effect for all sessions.
 
@@ -24,7 +26,9 @@ There are sessions, windows and panes in `tmux`. For each session, it contains m
 
 Let's first make above configuration effect. To enter the command mode, press `PREFIX` `:`, then type `source-file <path to config file>`. Or we make following config to easy it:
 
-    bind r source-file <path to config file> \; display "Reloaded"
+{% highlight conf linenos=table %}
+bind r source-file <path to config file> \; display "Reloaded"
+{% endhighlight %}
 
 The `bind` is short for `bind-key`.
 
@@ -32,10 +36,12 @@ The `bind` is short for `bind-key`.
 
 Create sessions:
 
-    tmux # create anonymous session
-    tmux new-session -s <s-name> # create named session
-    tmux new -s <s-name> # create named session
-    tmux new [-s <s-name>] -d # create a session and then detach
+{% highlight shell linenos=table %}
+tmux # create anonymous session
+tmux new-session -s <s-name> # create named session
+tmux new -s <s-name> # create named session
+tmux new [-s <s-name>] -d # create a session and then detach
+{% endhighlight %}
 
 Detach and Attach sessions:
 
@@ -43,37 +49,49 @@ To detach the current session, use command `PREFIX` `d`.
 
 To attach a session:
 
-    # list existing sessions
-    tmux list-sessions | ls
-    
-    # if there is only one session
-    tmux attach # attach the session
-    
-    # attach a particular session
-    tmux attach -t <s-name>
+{% highlight shell linenos=table %}
+# list existing sessions
+tmux list-sessions | ls
 
-    e enable utf-8 on status bar
-    set -g status on
-    set -g status-utf8 on
+# if there is only one session
+tmux attach # attach the session
+
+# attach a particular session
+tmux attach -t <s-name>
+{% endhighlight %}
+
+{% highlight conf linenos=table %}
+# enable utf-8 on status bar
+set -g status on
+set -g status-utf8 on
+{% endhighlight %}
 
 To rename a session:
 
-    tmux rename-session -t <s-name> <n-s-name>
+{% highlight shell linenos=table %}
+tmux rename-session -t <s-name> <n-s-name>
+{% endhighlight %}
 
 To kill a session:
 
-    tmux kill-session -t <s-name>
+{% highlight shell linenos=table %}
+tmux kill-session -t <s-name>
+{% endhighlight %}
 
 ### Windows
 
 To create a window in current session, use `PREFIX` `c`.
 
-    # create a named session with a named window
-    tmux -new -s <s-name> -n <w-name>
+{% highlight shell linenos=table %}
+# create a named session with a named window
+tmux -new -s <s-name> -n <w-name>
+{% endhighlight %}
 
 To rename current window, use `PREFIX` `,`, or use:
 
-    tmux rename-window -t <w-id>|<w-name> <n-w-name>
+{% highlight shell linenos=table %}
+tmux rename-window -t <w-id>|<w-name> <n-w-name>
+{% endhighlight %}
 
 Movement between windows:
 
@@ -85,17 +103,21 @@ Movement between windows:
 
 By default, windows and panes are indexed based on 0, following configuration make it to 1:
 
-    set -g base-index 1
-    setw -g pane-base 1
-    
-    # and also enable the renumbering function
-    set -g renumber-windows on
+{% highlight conf linenos=table %}
+set -g base-index 1
+setw -g pane-base 1
+
+# and also enable the renumbering function
+set -g renumber-windows on
+{% endhighlight %}
 
 To close a window, type `exit` into the prompt of the window, or press `PREFIX` `&` to confirm and exit the current window, or press `Ctrl-d` to send the `EOF`, or type `kill-window [-t <w-name> | -a]` in the prompt to kill the current or particular or all window(s).
 
 To move window between different sessions:
 
-    tmux move-window -s <s-name>:<w-name> -t <t-s-name>
+{% highlight shell linenos=table %}
+tmux move-window -s <s-name>:<w-name> -t <t-s-name>
+{% endhighlight %}
 
 To share window between different sessions, type `link-window -t <t-s-name>:<t-w-name>` in the prompt.
 
@@ -103,21 +125,25 @@ To share window between different sessions, type `link-window -t <t-s-name>:<t-w
 
 To split the window vertically, press `PREFIX` `%`. And to split the window horizontally, press `PREFIX` `"`.
 
-    # set new split key combination
-    bind \ split-window -h
-    bind - split-window -v
+{% highlight conf linenos=table %}
+# set new split key combination
+bind \ split-window -h
+bind - split-window -v
+{% endhighlight %}
 
 To focus the panes cyclically, press `PREFIX` `o`. `PREFIX` with `UP`, `DOWN`, `LEFT`, and `RIGHT` is to move to the pane in certain direction.
 
-    # use C-h and C-l to cycle through panes
-    bind -r C-h select-window -t :-
-    bind -r C-l select-window -t :+
+{% highlight conf linenos=table %}
+# use C-h and C-l to cycle through panes
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
 
-    # map vi-like movement
-    bind -r h select-pane -L
-    bind -r j select-pane -D
-    bind -r k select-pane -U
-    bind -r l select-pane -R
+# map vi-like movement
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+{% endhighlight %}
 
 The `-r` flat is to denote that this key can take effect repeatedly with first `PREFIX`.
 
@@ -125,11 +151,13 @@ To move directly to a specific pane, press `PREFIX` `q` then press proper number
 
 To resize the pane:
 
-    # resize pane
-    bind H resize-pane -L 5
-    bind J resize-pane -D 5
-    bind K resize-pane -U 5
-    bind L resize-pane -R 5
+{% highlight conf linenos=table %}
+# resize pane
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+{% endhighlight %}
 
 To max the pane, press `PREFIX` `z`.
 
@@ -177,42 +205,46 @@ To paste specific copied buffer to the current buffer, press `PREFIX` `=` or typ
 
 To paste between programs, `xclip` is required. And add following into the configuration (not tested yet):
 
-    bind -t vi-copy 'v' begin-selection
-    bind -t vi-copy 'y' copy-pipe 'xclip'
+{% highlight conf linenos=table %}
+bind -t vi-copy 'v' begin-selection
+bind -t vi-copy 'y' copy-pipe 'xclip'
+{% endhighlight %}
 
 Other configurations:
 
-    # enable utf-8 on status bar
-    set -g status on
-    set -g status-utf8 on
+{% highlight conf linenos=table %}
+# enable utf-8 on status bar
+set -g status on
+set -g status-utf8 on
 
-    # set Zsh as default tmux shell
-    set -g default-shell /bin/zsh
+# set Zsh as default tmux shell
+set -g default-shell /bin/zsh
 
-    # set history limit to 30000
-    set -g history-limit 30000
+# set history limit to 30000
+set -g history-limit 30000
 
-    # use utf8
-    set -g utf8
-    setw -g utf8 on
+# use utf8
+set -g utf8
+setw -g utf8 on
 
-    # use 256 color
-    set -g default-terminal "screen-256color"
+# use 256 color
+set -g default-terminal "screen-256color"
 
-    # short command delay
-    set -sg escape-time 1
+# short command delay
+set -sg escape-time 1
 
-    # long display time
-    set -g display-time 2000
+# long display time
+set -g display-time 2000
 
-    # make the current window the first window
-    bind T swap-window -t 1
+# make the current window the first window
+bind T swap-window -t 1
 
-    # automatically rename window
-    setw -g automatic-rename on
+# automatically rename window
+setw -g automatic-rename on
 
-    # enable mouse
-    set -g mouse on
+# enable mouse
+set -g mouse on
 
-    # set command prompt vi-like
-    set -g status-key vi
+# set command prompt vi-like
+set -g status-key vi
+{% endhighlight %}

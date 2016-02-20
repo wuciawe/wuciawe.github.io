@@ -15,7 +15,7 @@ there is an implementation of merge sort. But it's not so good.
 If you use the merge sort in book with large `List`, you will face the `java.lang.StackOverflowError`. To explain it, let's first 
 watch following code:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 import scala.util.Random
 
 object test {
@@ -49,7 +49,7 @@ too many functions being on the stack and finally cause the `StackOverflowError`
 
 Below is a better way to implement the merge sort:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 import scala.annotation.tailrec
 import scala.util.Random
 

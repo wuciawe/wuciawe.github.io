@@ -10,7 +10,7 @@ infotext: 'A very simple tutorial on using Package Manager in Emacs.'
 
 Add the following into the Emacs configuration file `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
 (dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
@@ -45,7 +45,7 @@ I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-so
 
 *   Install the **color-theme-solarized** with the emacs package managder.
 *   Add following code into `.emacs`.
-{% highlight cl %}
+{% highlight cl linenos=table %}
 (load-theme 'solarized-dark t)
 {% endhighlight %}
 *   Reload the init file with `M-x eval-region RET`.

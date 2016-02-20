@@ -10,19 +10,21 @@ infotext: 'notes on using vim'
 
 ### Open, Save, and Close a file
 
-    # open a file
-    vim <path to file> # open a specific file
-    vim # open a new file without a name yet
-    vim -d <file1> <file2> ... <filen> # diff mode
+{% highlight bash linenos=table %}
+# open a file
+vim <path to file> # open a specific file
+vim # open a new file without a name yet
+vim -d <file1> <file2> ... <filen> # diff mode
 
-    # save changes
-    :w # write changes to the file
-    :sav # save the changed file as other file
+# save changes
+:w # write changes to the file
+:sav # save the changed file as other file
 
-    # close a file
-    :e! # back to the last saved version of the file
-    :q! # close without saving changes
-    :q # close the file, assuming there is no change
+# close a file
+:e! # back to the last saved version of the file
+:q! # close without saving changes
+:q # close the file, assuming there is no change
+{% endhighlight %}
 
 ### Move in a file
 

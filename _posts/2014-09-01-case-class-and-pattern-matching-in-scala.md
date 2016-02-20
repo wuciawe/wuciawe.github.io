@@ -24,7 +24,7 @@ classes structurally.
 
 ## Pattern Matching
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 selector match { alternatives }
 {% endhighlight %}
 
@@ -80,7 +80,7 @@ right-hand side of the case.
 One other generalization is worth noting: a sequence of cases gives you a partial function. If you apply such a function on a value it does not support,
 it will generate a run-time exception. For example:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 val second: List[Int] => Int = {
   case x :: y :: _ => y
 }
@@ -96,7 +96,7 @@ missing combination    Nil
 The type List[Int] => Int includes all functions from lists of integers to integers, whether or not the functions are partial. The type that
 only includes partial functions from lists of integers to integers is written PartialFunction[List[Int],Int] .
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 val second: PartialFunctin[List[Int], Int] = {
   case x :: y :: _ => y
 }
@@ -109,7 +109,7 @@ Such an expression gets translated by the Scala compiler to a partial function b
 test whether the function is defined or not. For instance, the function literal { case x :: y :: _ => y } above gets translated to the following partial
 function value:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 new PartialFunction[List[Int], Int] {
   def apply(xs: List[Int]) = xs match {
     case x :: y :: _ => y

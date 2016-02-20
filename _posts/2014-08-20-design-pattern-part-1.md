@@ -32,7 +32,7 @@ Multiple examples can be found [here](http://stackoverflow.com/questions/2280170
 
 Following is an example from [stackoverflow](http://stackoverflow.com/questions/1943576/is-there-a-pattern-for-initializing-objects-created-via-a-di-container/1945023#1945023):
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface IMyIntf {
     public String getRunTimeParam();
 }
@@ -105,7 +105,7 @@ different representations.
 
 Following is an example from [stackoverflow](http://stackoverflow.com/questions/757743/what-is-the-difference-between-builder-design-pattern-and-factory-design-pattern):
 
-{% highlight java %}
+{% highlight java linenos=table %}
 // Builder
 class Fruit {
     private final String name;
@@ -177,7 +177,7 @@ Specify the kinds of objects to create using a prototypical instance, and create
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 public interface PrototypeCapable extends Cloneable {
     public PrototypeCapable clone() throws CloneNotSupportedException;
 }
@@ -261,7 +261,7 @@ Ensure a class only has one instance, and provide a global point of access to it
 
 `Note: `for more information about `double checked locking pattern`, check [here](http://en.wikipedia.org/wiki/Double_checked_locking_pattern#Usage_in_Java).
 
-{% highlight java %}
+{% highlight java linenos=table %}
 //double checked
 public class EagerSingleton {
     private static volatile EagerSingleton instance = null;
@@ -374,7 +374,7 @@ class defer instantiation to subclasses.
 
 Following is an example from [stackoverflow](http://stackoverflow.com/questions/13029261/design-patterns-factory-vs-factory-method-vs-abstract-factory):
 
-{% highlight java %}
+{% highlight java linenos=table %}
 abstract class FruitPicker {
 
   protected abstract Fruit makeFruit();

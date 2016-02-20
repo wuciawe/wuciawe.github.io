@@ -11,7 +11,7 @@ also available on Sun workstations. Below are several examples that show how to 
 
 ## Compiling a single source file
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ source.cc -o executable
 {% endhighlight %}
 
@@ -19,7 +19,7 @@ This command compiles source.c into an executable program named executable which
 
 Alternatively, you can also compile it with following two commands:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -c source.cc
 g++ source.o -o executable
 {% endhighlight %}
@@ -33,7 +33,7 @@ is deleted in the process.
 
 ## Compiling a program with multiple source files
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ source1.cc source2.cc -o executable
 {% endhighlight %}
 
@@ -42,7 +42,7 @@ program named executable.
 
 You can also compile it with the two-step method as follows:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -c source1.cc
 g++ -c source2.cc
 g++ source1.o source2.o -o executable
@@ -51,7 +51,7 @@ g++ source1.o source2.o -o executable
 In this way, when part of the sources are modified, you don't need to `compile` all the source files to update the
 executable. That is, for example, when source2.cc is modified, in order to update the executable, you can do as follows:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -c source2.cc
 g++ source1.o source2.o -o executable
 {% endhighlight %}
@@ -68,32 +68,32 @@ use "debugging" and "optimization" options together.
 
 Compile source.cc so that executable contains symbolic information that enables it to be debugged with the gdb debugger.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -g source.cc -o executable
 {% endhighlight %}
 
 Have the compiler generate many warnings about syntactically correct but questionable looking code. It is good practice
 to always use this option with gcc and g++.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -Wall source.cc -o executable
 {% endhighlight %}
 
 Generate symbolic information for gdb and many warning messages.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -g -Wall source.cc -o executable
 {% endhighlight %}
 
 Generate optimized code on a Linux machine with warnings. The -O is `a capital o` and not the number 0.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -Wall -O source.cc -o executable
 {% endhighlight %}
 
 Compile source.cc when it contains Xlib graphics routines.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ source.cc -o executable -lX11
 {% endhighlight %}
 
@@ -102,7 +102,7 @@ If "source.c" is a C program, then the above commands will all work by replacing
 
 Compile a C program that uses math functions such as "sqrt".
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gcc source.c -o executable -lm
 {% endhighlight %}
 
@@ -111,6 +111,6 @@ incorrectly written programs to crash as soon as an error occurs. It is useful f
 be quickly determined using gdb. However, it should only be used for debugging as the executable will be much slower
 and use much more memory than usual.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gcc -g source.c -o executable -lefence
 {% endhighlight %}

@@ -25,7 +25,7 @@ the subsystem easier to use.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Shape {
     void draw();
 }
@@ -115,7 +115,7 @@ Use sharing to support large numbers of fine-grained objects efficiently.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.HashMap;
 
 interface Shape {
@@ -238,7 +238,7 @@ Provide a surrogate or placeholder for another object to control access to it.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Image {
     void display();
 }

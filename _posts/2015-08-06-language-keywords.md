@@ -22,7 +22,7 @@ infotext: "An incomplete list of keywords of c++, java and scala."
     has been initialized.
     -   **java** Reserved, but no use nor function
     -   **scala**
-{% highlight cpp %}
+{% highlight cpp linenos=table %}
 // const keyword use case in cpp
 
 const int Constant1 = 96; // an integer constant
@@ -65,7 +65,7 @@ const int*const Method3(const int*const&)const;
     -   **c++** specifies constructors and conversion operators that don't allow implicit conversions or copy-initialization.
     -   **java**
     -   **scala**
-{% highlight cpp %}
+{% highlight cpp linenos=table %}
 explicit class_name ( params ) // specifies that this constructor is only considered for direct initialization (including explicit conversions)
 explicit operator type ( ) // specifies that this user-defined conversion function is only considered for direct initialization (including explicit conversions)
 {% endhighlight %}
@@ -79,7 +79,7 @@ explicit operator type ( ) // specifies that this user-defined conversion functi
     programming languages; explicit instantiation declaration
     -   **java**
     -   **scala**
-{% highlight cpp %}
+{% highlight cpp linenos=table %}
 // share a variable between a few modules.
 // define it in one module, 
 // and use extern in the others.

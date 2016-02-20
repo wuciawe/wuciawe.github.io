@@ -32,7 +32,7 @@ Chain the receiving objects and pass the request along the chain until an object
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 abstract class AbstractLogger {
     public static int INFO = 1;
     public static int DEBUG = 2;
@@ -146,7 +146,7 @@ requests, and support undoable operations.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.ArrayList;
 import java.util.List;
 
@@ -250,7 +250,7 @@ Provide a way to access the elements of an aggregate object sequentially without
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Iterator {
     public boolean hasNext();
 
@@ -329,7 +329,7 @@ from referring to each other explicitly, and it lets you vary their interaction 
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.Date;
 
 class ChatRoom {
@@ -397,7 +397,7 @@ to this state later.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.ArrayList;
 import java.util.List;
 
@@ -492,7 +492,7 @@ and updated automatically.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.ArrayList;
 import java.util.List;
 

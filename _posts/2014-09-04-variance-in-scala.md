@@ -35,7 +35,7 @@ relationship between A and S.
 
 The `Array` in Java is covariant by default. Following code in Java compiles fine, but it will cause runtime error:
 
-{% highlight java %}
+{% highlight java linenos=table %}
 public class testj {
     public static void main(String[] args) {
         String[] a = {"123"};
@@ -57,7 +57,7 @@ one keeps no change. Than above code may work perfectly great.
 In Scala, functions will be instantiated as the subclass of FunctionN[+T1, ..., +TN, -Tr], where T1 to TN are types of 
 arguments and contravariant and Tr is type of return value and covariant. It's best to illustrate it with an example:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 object test {
   class Animal {
     def eat(): Unit = {}
@@ -115,7 +115,7 @@ parameter has no variance annotation then the current classification is changed 
 
 Finally an example:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 abstract class Cat[-T, +U] {
   def meow[W(−)](volume: T(−), listener: Cat[U(+), T(−)](−) )
     : Cat[Cat[U(+) , T(−) ](−) , U(+)](+)
@@ -126,7 +126,7 @@ abstract class Cat[-T, +U] {
 
 Say we are going to implement an immutable Array which is covariant, and try it as:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 class ImmutableArray[+T]private(list: List[T]){
   def this(args: T*) = this(args.toList)
   def apply(idx: Int, arg: T): ImmutableArray[T] ={
@@ -140,7 +140,7 @@ class ImmutableArray[+T]private(list: List[T]){
 You fails because you try to put covariant values to the contravariant positions as the arguments of functions. In this case, 
 you can use `Lower Bound` to solve this problem: 
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 object test {
   class ImmutableArray[+T]private(list: List[T]){
     def apply[U >: T](idx: Int, arg: U): ImmutableArray[U] ={

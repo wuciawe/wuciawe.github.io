@@ -16,7 +16,7 @@ It seems that gpg is included in the base installation of arch linux, or I have 
 
 Use following command to generate key with full featured generation dialog:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg2 --full-gen-key
 {% endhighlight %}
 
@@ -26,7 +26,7 @@ It takes some time to generate the key.
 
 After the generation, you can use following commands to view the keys managed on your computer. The keys are most likely generated in `~/.gnupg/`, don't let others touch it.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --fingerprint your.email
 gpg --list-keys # list all keys, public and private
 gpg --list-secret-keys # list only private keys
@@ -35,7 +35,7 @@ gpg --list-secret-keys # list only private keys
 
 If you like,
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --gen-revoke user.id
 {% endhighlight %}
 
@@ -43,7 +43,7 @@ to create a revoke cert, also don't let others touch this, or your key can be re
 
 ## Send your keys to the key server
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --send-keys user.id
 {% endhighlight %}
 
@@ -51,7 +51,7 @@ Most key servers will mirror each other, but it will take time for keys to propa
 
 ## Copy your key
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --output pubkey.gpg --export user.id # export your public key to pubkey.gpg
 
 # export your private key and add temporary encryption to keys.asc
@@ -70,7 +70,7 @@ Above are the commands I used today.
 
 ## Encrypt a file
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 # --armor, optional to get ascii-armored file
 # -o specifies the out put filename, optional
 # --sign adds the signature, theoretically optional
@@ -81,13 +81,13 @@ gpg -o filename.out --encrypt --sign -r user.id filename.in
 ## Decrypt a file
 
 After the recipient receives the encrypted file, decrypt the file with:
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --decrypt filename.out -o filename
 {% endhighlight %}
 
 ## More on signs
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 # wrap the message in ascii-armored signature as filename.asc
 # leave the content unchanged
 gpg --clearsign filename
@@ -102,7 +102,7 @@ gpg --verify filename.sig
 
 ## Symmetric Encryption/Decryption
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 # encrypt file with AES256 algorithm, prompt for passphrase
 gpg --symmetric --cipher-algo AES256 filename
 # decrypt the file, same passphrase required
@@ -114,14 +114,14 @@ gpg --version
 
 ## Refresh keys
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 # update keys to public key server, including signatures
 gpg --refresh-keys
 {% endhighlight %}
 
 ## List whom signed your keys
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 gpg --list-sigs user.id
 {% endhighlight %}
 

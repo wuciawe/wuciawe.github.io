@@ -34,7 +34,7 @@ not otherwise because of incompatible interfaces.
 
 `Object Adapter` – This form uses composition and adapter contains the source object.
 
-{% highlight java %}
+{% highlight java linenos=table %}
 class rLine {
     public void do_draw(int x1, int y1, int x2, int y2) {
         System.out.println("line from (" + x1 + ',' + y1 + ") to (" + x2 + ',' + y2 + ')');
@@ -136,7 +136,7 @@ Decouple an abstraction from its implementation so that the two can vary indepen
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface ITV {
     public void on();
     public void off();
@@ -234,7 +234,7 @@ objects and compositions of objects uniformly.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 import java.util.ArrayList;
 
 // Define a "lowest common denominator"
@@ -343,7 +343,7 @@ for extending functionality.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Shape {
     void draw();
 }

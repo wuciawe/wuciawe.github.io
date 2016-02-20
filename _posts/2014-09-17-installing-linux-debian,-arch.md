@@ -22,25 +22,25 @@ hardware not competent to run gnome3, I just install the basic Debian system fir
 
 In order to have easy authorization management, let's first install `sudo`:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 apt-get install sudo
 {% endhighlight %}
 
 And then make our own account as `sudoer` by adding it into the `sudo group`:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 usermod -a -G sudo your_account
 {% endhighlight %}
 
 In order to show Chinese fonts:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 sudo apt-get install ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy
 {% endhighlight %}
 
 And now, we can install the x window xfce4:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 sudo apt-get install x-window-system
 sudo apt-get install xfce4
 # installing the theme
@@ -52,7 +52,7 @@ sudo apt-get install xfce4
 
 And you can start X with:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 startx
 {% endhighlight %}
 
@@ -61,7 +61,7 @@ environment. In that case, you may need to edit the **/etc/apt/sources.list** fi
 ".list" extension to **/etc/apt/sources.list.d/**. Following is an example to add the backports to the
 **sources.list** file in Debian 7:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 deb http://http.debian.net/debian wheezy-backports main
 # deb mirror.url/debian testing main
 # deb mirror.url/debian unstable main
@@ -70,7 +70,7 @@ deb http://http.debian.net/debian wheezy-backports main
 From [http://backports.debian.org/Mirrors](http://backports.debian.org/Mirrors){:target="_blank"}. All
 backports are deactivated by default, to install something from it:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 apt-get -t wheezy-backports install "package"
 aptitude -t wheezy-backports install "package"
 {% endhighlight %}
@@ -89,20 +89,20 @@ Then, boot up from the installation media, and choose **Boot Arch Linux**.
 
 After booting, check the internet connection with
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 ping -c 3 www.google.com
 {% endhighlight %}
 
 If it fails with `Network is unreachable`, try following:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 ip link
 dhcpcd ???{current device name}
 {% endhighlight %}
 
 Then we will create the disk partitions ( Since I have already created disk partitions with GParted, this step is no longer necessary here. ):
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 fdisk -l # list the drivers and partitions
 cgdisk /dev/sda # create partitions on /dev/sda
 cfdisk /dev/sda # another tool for partition
@@ -115,7 +115,7 @@ remaining disk space with 8300 Hex code for `/home`.
 
 After that, format these partitions with:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 mkfs.fat -F32 /dev/sda1
 mkfs.ext4 /dev/sda2
 mkfs.ext4 /dev/sda4
@@ -127,7 +127,7 @@ swapon /dev/sda3
 
 And mount them:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 mount /dev/sda2 /mnt
 mkdir -p /mnt/boot
 mount /dev/sda1 /mnt/boot
@@ -137,50 +137,50 @@ mount /dev/sda4 /mnt/home
 
 Adjusting mirrorlist:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 nano /etc/pacman.d/mirrorlist
 {% endhighlight %}
 
 Here is a list of nano shortcuts:
 
-{% highlight console %}
-Alt + 6 copy line
-Ctrl + K cut line
-Ctrl + U paste line
-Ctrl + W search word
-Ctrl + O save
-Ctrl + X exit
+{% highlight shell linenos=table %}
+Alt + 6 # copy line
+Ctrl + K # cut line
+Ctrl + U # paste line
+Ctrl + W # search word
+Ctrl + O # save
+Ctrl + X # exit
 {% endhighlight %}
 
 or, you can rank mirrorlist automatically:
 
-{%highlight console %}
+{%highlight shell linenos=table %}
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 rankmirrors -n 50 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 {% endhighlight %}
 
 After that, install the base system:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 pacstrap -i /mnt base base-devel
 {% endhighlight %}
 
 And generate fastab:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 genfstab -U -p /mnt >> /mnt/etc/fstab
 {% endhighlight %}
 
 Run **chroot** check in to the newly installed system
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 arch-chroot /mnt
 passwd # set the root password
 {% endhighlight %}
 
 Some configurations:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 echo arch > /etc/hostname
 ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 pacman -S ntp
@@ -197,7 +197,7 @@ system enable dhcpcd@interfacename.service
 
 And for UEFI:
 
-{% highlight console%}
+{% highlight shell linenos=table%}
 pacman -S grub efibootmgr
 grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=arch_grub --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
@@ -206,7 +206,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 and old one:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 mkinitcpio -p linux # create initial ramdisk environment
 pacman -S gptfdisk # install and set syslinux
 pacman -S syslinux
@@ -218,7 +218,7 @@ Replace the line **APPEND root=/dev/sda3 rw** with **APPEND root=/dev/sda1 rw**.
 
 After that, we will need to install grub to make the dual booting.
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 pacman -S grub
 grub-install --recheck /dev/sda
 {% endhighlight %}
@@ -227,12 +227,12 @@ grub-install --recheck /dev/sda
 
 Then,
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 pacman -S os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 {% endhighlight %}
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 exit
 umount -R /mnt
 reboot
@@ -240,7 +240,7 @@ reboot
 
 At this point, we have installed the Arch Linux with Win7. Now let's add a new user account:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 useradd -m -g users -G wheel -s /bin/bash newUser
 {% endhighlight %}
 
@@ -255,7 +255,7 @@ Install yaourt & packer
 
 edit /etc/pacman.conf by appending:
 
-{% highlight console %}
+{% highlight conf linenos=table %}
 [multilib]
 Include = /etc/pacman.d/mirrorlist
 
@@ -264,7 +264,7 @@ SigLevel = Optional TrustAll
 Server = http://repo.archlinux.fr/$arch
 {% endhighlight %}
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 pacman -Syy
 pacman -S yaourt customizepkg rsync
 yaourt packer
@@ -272,7 +272,7 @@ yaourt packer
 
 Sound, X, Login screen and window manager
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 yaourt -S alsa-utils
 pacman -S xorg-server xorg-xinit xorg-utils xorg-server-utils
 pacman -S xorg-twm xorg-xclock xterm
@@ -284,6 +284,6 @@ systemctl enable slim.service
 `/etc/slim.conf` and `xinitrc`
 
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 useradd -m -G users,audio,lp,optical,storage,video,wheel,power -s /bin/bash username
 {% endhighlight %}

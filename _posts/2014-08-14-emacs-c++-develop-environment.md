@@ -16,7 +16,7 @@ Following I will describe how to configure Emacs as a C++ specified editor.
 
 Add following code into the `.emacs`:
 
-{% highlight cl%}
+{% highlight cl linenos=table%}
 ;;; enable C++ mode when opening a file with extension .h, .c, .cc and so on.
 (require 'cc-mode)
 ;;; make Emacs to indent code correctly
@@ -50,7 +50,7 @@ Install the `auto-complete-c-headers` with the
 [emacs package managder]({%post_url 2014-08-14-emacs-package-manager-and-theme-setup%}). Add the following code into 
 the `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 (defun my:ac-c-headers-init ()
     (require 'auto-complete-c-headers)
     (add-to-list 'ac-sources 'ac-source-c-headers))
@@ -65,7 +65,7 @@ Install the `member-function` with the
 [emacs package managder]({%post_url 2014-08-14-emacs-package-manager-and-theme-setup%}). Add the following code into 
 the `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 (require 'member-function)
 (setq mf--source-file-extension "cpp")
 {% endhighlight %}
@@ -77,7 +77,7 @@ This package can help expand the function headers defined in .h file into a .cc 
 Now, the `flymake` is part of Emacs, so just add the following code to enable it upon opening files with syntax 
 checking available:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 (require 'flymake)
 (add-hook 'find-file-hook 'flymake-find-file-hook)
 {% endhighlight %}
@@ -85,7 +85,7 @@ checking available:
 The `flymake` requires the `MakeFile` with the file name **Makefile**. To use `flymake` with C++ programs, add the 
 following MakeFile code into the **Makefile**:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 check-syntax:
     g++ -o nul -S ${CHK_SOURCES}
 {% endhighlight %}

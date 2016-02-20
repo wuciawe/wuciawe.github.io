@@ -25,7 +25,7 @@ And actually the input function is also a higher order function. What the Y
 Combinator does is to return the fix-point-of the input function. That is to 
 say:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (Y f) = (f (Y f))
 {% endhighlight %}
 
@@ -35,7 +35,7 @@ Y Combinator directly computes out the fix-point of `f`.
 
 First, we define a almost-factorial function as:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define almost-factorial
     (lambda (f)
         (lambda (n)
@@ -49,7 +49,7 @@ aim is to define a Y such that `(Y almost-factorial)` is the factorial function
 with type `Int => Int` and the factorial function is the fix-point-of `almost-factorial 
 which means:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 factorial = (almost-factorial factorial)
           = (almost-factorial
                 (almost-factorial
@@ -59,7 +59,7 @@ factorial = (almost-factorial factorial)
 Before derive the Y Combinator, let's define another function called 
 part-factorial:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define part-factorial
     (lambda (self)
         (lambda (n)
@@ -79,7 +79,7 @@ And it is clear that the type of `part-factorial` is also `X => Int => Int`, so 
 
 Let's utilize the definition of `almost-factorial`:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define part-factorial
     (lambda (self)
         (almost-factorial (self self))))
@@ -89,7 +89,7 @@ Let's utilize the definition of `almost-factorial`:
 
 Then we can define `factorial` as:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define factorial
     ((lambda (self)
         (almost-factorial (self self)))
@@ -108,7 +108,7 @@ Then we can define `factorial` as:
 
 Finally, we can define Y Combinator as follows:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define Y
     (lambda (f)
         ((lambda (h)
@@ -138,7 +138,7 @@ big problem.
 
 And the above definition works in the lazy version of Scheme, for strict evaluation Scheme define Y as:
 
-{% highlight scm %}
+{% highlight scheme linenos=table %}
 (define Y
     (lambda (f)
         ((lambda (x) (x x))
@@ -151,7 +151,7 @@ And the above definition works in the lazy version of Scheme, for strict evaluat
 
 Let's first deal with the easy part, define the `almostFactorial`:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 val almostFactorial = (f: Int => Int) => (n: Int) => if(n == 0) 1 else n * f(n - 1)
 {% endhighlight %}
 
@@ -159,7 +159,7 @@ Then, let's try to define Y. Since Scala is a statically typed language, the rec
 cause invalid cyclic reference. So it's hard to define Y through higher kinded type. Fortunately, it is 
 possible to define Y with the help of case class:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 def Y[A, Z] = (f: (A => Z) => A => Z) => {
     case class H(h: H => A => Z){
         def apply(h: H) = this.h(h)

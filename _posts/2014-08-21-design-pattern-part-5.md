@@ -26,7 +26,7 @@ Allow an object to alter its behavior when its internal state changes. The objec
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface State {
     public void doAction(Context context);
 }
@@ -111,7 +111,7 @@ independently from clients that use it.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Strategy {
     public int doOperation(int num1, int num2);
 }
@@ -188,7 +188,7 @@ without changing the classes of the elements on which it operates.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface ComputerPart {
     public void accept(ComputerPartVisitor computerPartVisitor);
 }
@@ -299,7 +299,7 @@ interpret sentences in the language.
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 interface Expression {
     public boolean interpret(String context);
 }
@@ -404,7 +404,7 @@ subclasses redefine certain steps of an algorithm without changing the algorithm
 
 #### Examples
 
-{% highlight java %}
+{% highlight java linenos=table %}
 abstract class Game {
     abstract void initialize();
 

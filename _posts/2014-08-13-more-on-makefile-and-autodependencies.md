@@ -23,7 +23,7 @@ When GNU Make cannot find a prerequisite it will search the directories in `the 
 stop at the first directory in which it finds the missing prerequisite. It then substitutes the location where the
 missing prerequisite is found for the name specified in the Makefile.
 
-{% highlight make %}
+{% highlight make linenos=table %}
 # Specifying this anywhere in MakeFile will add /usr/include into search path
 VPATH = /usr/include
 
@@ -39,13 +39,13 @@ down the `VPATH`. It would be better to tell GNU Make just where to find specifi
 The `vpath` directive both a search path and a pattern. Only missing prerequisites matching the pattern are searched
 using the associated path. So `vpath` makes it possible to specify just a path to search for header ( .h) files:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 vpath %.h /usr/include
 {% endhighlight %}
 
 The `vpath` syntax is a little more complicated than `VPATH` and has three forms:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 # This sets the search path for the pattern.
 vpath pattern path
 
@@ -58,14 +58,14 @@ vpath
 
 ### Multiple targets
 
-{% highlight make %}
+{% highlight make linenos=table %}
 boutput loutput: text
     generate $< -$(subst output,,$@) > $@
 {% endhighlight %}
 
 This is equivalent to the following one:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 boutput: text
     generate text -b > boutput
 loutput: text
@@ -76,7 +76,7 @@ loutput: text
 
 Following is the syntax of a static pattern rule:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 targets: target-pattern: prereq-patterns
     command
 {% endhighlight %}
@@ -89,7 +89,7 @@ prereq-patterns to make the prerequisite names (one from each prereq-pattern).
 Each pattern normally contains the character `%` just once. When the target-pattern matches a target, the `%` can match
 any part of the target name; this part is called the stem. The rest of the pattern must match exactly.
 
-{% highlight make %}
+{% highlight make linenos=table %}
 files = foo.elc source1.o source2.o
 
 $(filter %.o, $(files)): %.o: %.cc
@@ -101,7 +101,7 @@ c++ program.
 
 Another example shows how to use `$*` in static pattern rules:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 boutput loutput: %output: text
     generate text -$* > $@
 {% endhighlight %}
@@ -110,7 +110,7 @@ When the **generate** command is run, `$*` will expand to the stem.
 
 ### Functions
 
-{% highlight make %}
+{% highlight make linenos=table %}
 # Performs a textual replacement on the text text: each occurrence of from is replaced by to. The result is substituted for the function call.
 $(subst from,to,text)
 
@@ -186,7 +186,7 @@ For directory and file of automatic variables, see
 
 The dependencies of the source files can be decided by the included header files of every source file, and compilers
 support listing include files as follows:
-{% highlight console %}
+{% highlight shell linenos=table %}
 g++ -M source.cc
 g++ -MM source.cc
 g++ -H source.cc
@@ -198,7 +198,7 @@ header includes which.
 
 Based on that, we can let the MakeFile generates the dependencies automatically as follows:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 sources = source1.cc source2.cc
 CC = g++-4.8
 CFLAGS = -std=c++11

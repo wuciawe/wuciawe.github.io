@@ -10,7 +10,7 @@ ECB is the Emacs Code Browser, it makes Emacs more like IDE. You can install it 
 
 *   Install the **ecb** with the [emacs package managder]({%post_url 2014-08-14-emacs-package-manager-and-theme-setup%}).
 *   Add following code into `.emacs`.
-{% highlight cl %}
+{% highlight cl linenos=table %}
 ;;; activate ecb
 (require 'ecb)
 (require 'ecb-autoloads)
@@ -26,7 +26,7 @@ Now, you can activate ECB with `M-x ecb-activate RET` and deactivate it with `M-
 
 Below are my ECB configuration in `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 ;;; set layout for ECB
 (setq ecb-layout-name "left2")
 

@@ -16,21 +16,21 @@ need.
 
 The basic makefile is composed of:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 target: dependencies
     command
 {% endhighlight %}
 
 When you finish writing the MakeFile, you can use following basic command to compile the program:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 make
 {% endhighlight %}
 
 This will look for a file named makefile/Makefile/MakeFile in current directory, and then make the MakeFile. If there
 are several MakeFiles, use following command to specify the desired MakeFile:
 
-{% highlight console %}
+{% highlight shell linenos=table %}
 make -f theMakeFile
 {% endhighlight %}
 
@@ -45,7 +45,7 @@ of compiling and update the program by recompiling things modified or to be modi
 
 For example:
 
-{% highlight make %}
+{% highlight make linenos=table %}
 all: executable
 
 executable: main.o source1.o source2.o
@@ -70,7 +70,7 @@ through all the targets available and executed if found.
 You can also use variables when writing Makefiles. It comes in handy in situations where you want to change the
 compiler, or the compiler options.
 
-{% highlight make %}
+{% highlight make linenos=table %}
 #Now we define some constants CC and CFLAGS.
 #CC specifies which compiler to use
 #CFLAGS is the list of flags to pass to the compilation command.
@@ -94,7 +94,7 @@ source2.o: source2.cc
 
 ### Simple macros
 
-{% highlight make %}
+{% highlight make linenos=table %}
 CC = g++
 CFLAGS = -c
 DEPS = header.h
@@ -116,7 +116,7 @@ output of the compilcation in the file named on the left side of the `:`, while 
 
 ### Last example
 
-{% highlight make %}
+{% highlight make linenos=table %}
 IDIR = ../include
 CC = g++
 CFLAGS = -c -Wall -I$(IDIR)

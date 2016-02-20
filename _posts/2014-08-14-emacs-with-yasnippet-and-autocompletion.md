@@ -16,7 +16,7 @@ First, install `yasnippet` and `autocomplete` with the
 
 Then, add the following code into the `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 ;;; yasnippet
 ;;; should be loaded before auto complete so that they can work together
 (require 'yasnippet)
@@ -47,7 +47,7 @@ In order to autocomplete codes with Clang, you need first install Clang on your 
 
 After that, add the following code into the `.emacs`:
 
-{% highlight cl %}
+{% highlight cl linenos=table %}
 (require 'auto-complete-clang)
 (define-key c++-mode-map (kbd "C-S-<return>") 'ac-complete-clang)
 ;; replace C-S-<return> with a key binding that you want

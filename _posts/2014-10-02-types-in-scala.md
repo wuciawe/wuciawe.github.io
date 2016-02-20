@@ -57,7 +57,7 @@ With `type linearization`, there will be no such kind of ambiguity. It works as 
 -   expand each supertype recursively and put all their types into this list
 -   remove duplicates from the resulting list, by scanning it from the left to right, removing all the types that already appeared
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 trait A {def common = "A"}
 // Any with AnyRef with A
 
@@ -88,7 +88,7 @@ subtyping in Scala, use Scala's `refinement types`.
 
 Following is an example:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 using(new PrintWriter("data")){
     writer => writer.println(new Date)
 }
@@ -118,7 +118,7 @@ Now, it's time for early initialization.
 Before that, I will first talk about one difference between class and trait in Scala. The class may take parameters in 
 initialization, but the trait can not have parameters in initialization. For example:
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 class A (val a: Double, val b: Int){
     require(b != 0)
     val c = a / b
@@ -146,7 +146,7 @@ anonymous and is the subtype of trait B. This is common, the super class should 
 In order to make the refinements available in the instantiation of the trait, one way is to use the early initialization, 
 the other way is to use `lazy val`s.
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 new {
     val a = 2.0
     val b = 2
@@ -156,7 +156,7 @@ new {
 The above codes illustrate the use of early initialization. Just first initialise a type with corresponding fields then mix 
 in the trait. Although it also uses the refinement mechanism, they are different.
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 new B {
     val a = 2.0
     val b = 2
@@ -182,7 +182,7 @@ fields behave in this respect like class constructor arguments.
 The inner class types in Java can be represented as `Type Projection` in Scala, while Scala provides a more strict thing 
 called path dependent type.
 
-{% highlight scala %}
+{% highlight scala linenos=table %}
 class Parent{ // outer class
     class Child // inner class
 }
