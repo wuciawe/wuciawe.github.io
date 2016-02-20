@@ -25,91 +25,52 @@
 /*#ffffff*/
 /*}*/
 
-@font-face {
-    font-family: 'Delicious-Roman';
-    src: url('/assets/fonts/Delicious-Roman.otf') format('opentype');
-}
-@font-face {
-    font-family: "Lato-Light";
-    src: url("/assets/fonts/Lato-Light.ttf") format("truetype");
-    src: url("/assets/fonts/Lato-Light.woff") format("woff"),
-         url("/assets/fonts/Lato-Light.eot");
-}
-@font-face {
-    font-family: "Lato";
-    src: url("/assets/fonts/Lato-Regular.ttf") format("truetype");
-    src: url("/assets/fonts/Lato-Regular.woff") format("woff"),
-         url("/assets/fonts/Lato-Regular.eot");
-}
-@font-face {
-    font-family: "Courier New";
-    src: local('Courier New'),
-         url("/assets/fonts/Courier-New.ttf") format("truetype");
-}
-@font-face {
-    font-family: "Source Code Pro";
-    src: local('Source Code Pro'),
-         url("/assets/fonts/SourceCodePro-Regular.ttf") format("truetype")
-}
-@font-face {
-    font-family: "Source Code Pro";
-    src: local('Source Code Pro'),
-         url("/assets/fonts/SourceCodePro-Bold.ttf") format("truetype");
-    font-weight: bold;
-}
-@font-face {
-    font-family: "Source Code Pro";
-    src: local('Source Code Pro'),
-         url("/assets/fonts/SourceCodePro-It.ttf") format("truetype");
-    font-style: italic;
-}
-
 body {
-    font-family: 'Lato-Light', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
-    /*font-weight: 400;*/
-    /*font-size: 2em;*/
+    font-family: 'Lato', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
 }
 
 header{
-    font-family: 'Courier New', 'Lato', sans-serif;
-    font-size: x-large;
+    font-family: 'Cutive Mono', sans-serif;
+    font-size: 30px;
     font-weight: 900;
     text-shadow: none;
+    letter-spacing: -3px;
+}
+header .dropdown-menu {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -2px;
 }
 .navbar-brand {
-    font-size: x-large;
-    font-weight: 900;
+    font-family: 'Dawning of a New Day', cursive;
+    font-size: 32px;
+    font-weight: 600;
     text-shadow: none;
+    letter-spacing: 0px;
 }
 .navbar-header a:hover{
     color: #fff;
 }
 .page-title {
     text-align: center;
-    font-family: 'Delicious-Roman', sans-serif;
-    font-size: xx-large;
+    font-family: 'Dawning of a New Day', cursive;
+    font-size: 36px;
     font-weight: 600;
     /*text-shadow: 1px 1px #efefef, 2px 2px #AEE2D9;*/
 }
-
 .post-title {
-    font-family: 'Lato-Light', 'Arial', sans-serif;
-    font-weight: bold;
+    font-family: 'Lato', 'Arial', sans-serif;
+    font-weight: 600;
 }
 .card[lang="cn"] .post-title {
     font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
-    font-weight: 500;
+    font-weight: normal;
 }
 
-/*.post-text {*/
-    /*font-family: 'Lato', 'Arial', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;*/
-    /*text-align: justify;*/
-    /*font-size: 0.9em;*/
-/*}*/
-
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Lato-Light', 'Arial', sans-serif;
+    font-family: 'Lato', 'Arial', sans-serif;
     font-weight: 600;
+    letter-spacing: 0;
 }
 
 [lang="cn"] h1,
@@ -119,7 +80,7 @@ h1, h2, h3, h4, h5, h6 {
 [lang="cn"] h5,
 [lang="cn"] h6 {
     font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
-    font-weight: 500;
+    font-weight: normal;
 }
 
 .pagination {
@@ -127,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 footer {
-    font-family: 'Courier New', 'Lato', sans-serif;
+    font-family: 'Cutive Mono', sans-serif;
     font-size: x-large;
     font-weight: 900;
     text-shadow: none;
@@ -178,9 +139,8 @@ footer span{
 /*}*/
 
 .list-item-ul{
-    font-family: 'Lato-Light', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', sans-serif;
-    font-size: large;
-    font-weight: 900;
+    font-size: 25px;
+    font-weight: 500;
     list-style-type: none;
 }
 .list-item-ul>li{
@@ -198,9 +158,8 @@ footer span{
 
 /* tag_box */
 .tag_box {
-    font-family: 'Lato-Light', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', sans-serif;
-    font-size: x-large;
-    font-weight: 800;
+    font-size: 26px;
+    font-weight: 400;
     list-style: none;
     margin: 0;
     overflow: hidden;
@@ -272,12 +231,13 @@ footer span{
 
 .audiojs {
     margin: 7px 0 5px;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0;
 }
 
 /* sidebar */
 .bs-docs-sidebar {
-    font-family: 'Lato-Light', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', sans-serif;
-    font-size: large;
+    font-size: 24px;
     font-weight: 300;
     padding-left: 20px;
     margin-top: 20px;
@@ -288,11 +248,11 @@ footer span{
     font-weight: 500;
 }
 .post-text {
-    font-family: 'Courier New', sans-serif;
+    font-family: 'Cutive Mono', sans-serif;
     font-size: 21px;
     font-weight: 500;
     text-align: justify;
-    letter-spacing: -1px;
+    letter-spacing: -2px;
 }
 .post-text[lang="cn"] {
     font-family: 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', sans-serif;
@@ -301,8 +261,7 @@ footer span{
 
 
 .post-sidebar {
-    font-family: 'Lato-Light', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', sans-serif;
-    font-size: large;
+    font-size: 22px;
     font-weight: 300;
     padding-left: 20px;
     margin-top: 20px;

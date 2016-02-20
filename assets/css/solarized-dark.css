@@ -17,367 +17,236 @@ green     #859900  operators, other keywords
 */
 code {
     font-family: "Source Code Pro", monospace;
-    /*font-size: large;*/
+    letter-spacing: 0;
+    font-size: large !important;
+}
+
+.highlight span {
+    font-family: "Source Code Pro", monospace;
+    font-size: large;
+    letter-spacing: 0;
 }
 
 .highlight pre,
 pre.highlight {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     background-color: #393939;
     color: #f8f8f8
 }
 .highlight .c {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: grey;
 }/* Comment */
 .highlight .err {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #dc143c;
 } /* Error */
 .highlight .g {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Generic */
 .highlight .k {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ff8c00;
 } /* Keyword */
 .highlight .l {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal */
 .highlight .n {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name */
 .highlight .o {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ffff00;
 } /* Operator */
 .highlight .x {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ee82ee;
 } /* Other */
 .highlight .p {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Punctuation */
 
 .highlight .cm {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #00cc00;
 } /* Comment.Multiline */
 .highlight .cp {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #00cc00;
 } /* Comment.Preproc */
 .highlight .c1 {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: grey;
 }/* Comment.Single */
 .highlight .cs {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #00cc00;
 } /* Comment.Special */
 
 .highlight .gd {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #2aa198;
 } /* Generic.Deleted */
 .highlight .ge {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
     font-style: italic
 } /* Generic.Emph */
 .highlight .gr {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #dc322f;
 } /* Generic.Error */
 .highlight .gh {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #cb4b16;
 } /* Generic.Heading */
 .highlight .gi {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #859900;
 } /* Generic.Inserted */
 .highlight .go {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Generic.Output */
 .highlight .gp {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Generic.Prompt */
 .highlight .gs {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
     font-weight: bold
 } /* Generic.Strong */
 .highlight .gu {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #cb4b16;
 } /* Generic.Subheading */
 .highlight .gt {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Generic.Traceback */
 
 .highlight .kc {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Keyword.Constant */
 .highlight .kd {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Keyword.Declaration */
 .highlight .kn {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Keyword.Namespace */
 .highlight .kp {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Keyword.Pseudo */
 .highlight .kr {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ff8c00;
 } /* Keyword.Reserved */
 .highlight .kt {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ff8c00;
 } /* Keyword.Type */
 
 .highlight .ld {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Literal.Date */
 .highlight .m {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number */
 .highlight .s {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String */
 
 .highlight .na {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Attribute */
 .highlight .nb {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #B58900;
 } /* Name.Builtin */
 .highlight .nc {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Class */
 .highlight .no {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Constant */
 .highlight .nd {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Decorator */
 .highlight .ni {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Entity */
 .highlight .ne {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #cb4b16;
 } /* Name.Exception */
 .highlight .nf {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ffff00;
 } /* Name.Function */
 .highlight .nl {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Label */
 .highlight .nn {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Namespace */
 .highlight .nx {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Other */
 .highlight .py {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Property */
 .highlight .nt {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Tag */
 .highlight .nv {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Name.Variable */
 
 .highlight .ow {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #859900;
 } /* Operator.Word */
 
 .highlight .w {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Text.Whitespace */
 
 .highlight .mf {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number.Float */
 .highlight .mh {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number.Hex */
 .highlight .mi {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number.Integer */
 .highlight .mo {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number.Oct */
 
 .highlight .sb {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #586e75;
 } /* Literal.String.Backtick */
 .highlight .sc {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Char */
 .highlight .sd {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Literal.String.Doc */
 .highlight .s2 {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Double */
 .highlight .se {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #ff8c00;
 } /* Literal.String.Escape */
 .highlight .sh {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #f8f8f8;
 } /* Literal.String.Heredoc */
 .highlight .si {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Interpol */
 .highlight .sx {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Other */
 .highlight .sr {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #00ffff;
 } /* Literal.String.Regex */
 .highlight .s1 {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Single */
 .highlight .ss {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.String.Symbol */
 
 .highlight .bp {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Name.Builtin.Pseudo */
 .highlight .vc {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Name.Variable.Class */
 .highlight .vg {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Name.Variable.Global */
 .highlight .vi {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Name.Variable.Instance */
 
 .highlight .il {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #67b168;
 } /* Literal.Number.Integer.Long */
 
@@ -388,25 +257,17 @@ pre.highlight {
     /*color: #CC7832;*/
 /*}*/
 .highlight .nx {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: white;
 }
 .highlight .p {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: white;
 }
 .highlight .o {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #D8D8D8;
 }
 .highlight .c,
 .highlight .cm,
 .highlight .c1 {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: lightgrey;
     font-style: italic;
 }
@@ -414,76 +275,50 @@ pre.highlight {
 .highlight .cp,
 .highlight .cs,
 .highlight .gh {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #cc7832;
 }
 .highlight .cp,
 .highlight .cs {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-weight: bold;
 }
 .highlight .cs {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-style: italic;
 }
 .highlight .gd {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #000000;
     background-color: #ffdddd;
 }
 .highlight .gd .x {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     background-color: #ffaaaa;
 }
 .highlight .ge {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-style: italic;
 }
 .highlight .gr,
 .highlight .gt {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #aa0000;
 }
 .highlight .gi {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #000000;
     background-color: #ddffdd;
 }
 .highlight .gi .x {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     background-color: #aaffaa;
 }
 .highlight .go {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #888888;
 }
 .highlight .gp,
 .highlight .nn {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #555555;
 }
 .highlight .gs {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-weight: bold;
 }
 .highlight .gu {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #aaaaaa;
 }
-.highlight .kd
+.highlight .kd,
 .highlight .k {
     color: #ff8c00;
 }
@@ -493,19 +328,13 @@ pre.highlight {
 .highlight .kr,
 .highlight .kt,
 .highlight .k {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-weight: bold;
 }
 .highlight .nc,
 .highlight .kt {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #FFF;
 }
 .highlight .na {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #FFC66D;
 }
 .highlight .no,
@@ -514,24 +343,16 @@ pre.highlight {
 .highlight .vc,
 .highlight .vg,
 .highlight .vi {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #9876aa;
 }
 .highlight .nb {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #0086b3;
 }
 .highlight .ne {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #990000;
     font-weight: bold;
 }
 .highlight .nf {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #FFF;
 }
 .highlight .nt {
@@ -540,13 +361,9 @@ pre.highlight {
     color: #ffc66d;
 }
 .highlight .ow {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     font-weight: bold;
 }
 .highlight .w {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #bbbbbb;
 }
 .highlight .m,
@@ -555,8 +372,6 @@ pre.highlight {
 .highlight .mi,
 .highlight .mo,
 .highlight .il {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #6897bb;
 }
 .highlight .s,
@@ -569,17 +384,11 @@ pre.highlight {
 .highlight .s2,
 .highlight .sd,
 .highlight .sc {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #6a8759;
 }
 .highlight .sr {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #6a8759;
 }
 .highlight .ss {
-    font-family: "Source Code Pro", monospace;
-    font-size: large;
     color: #6a8759;
 }

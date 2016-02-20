@@ -25,7 +25,37 @@
     <!--<link rel="stylesheet" href="{{ASSET_PATH}}/css/pygments.css">-->
 
     <link href="{{ ASSET_PATH }}/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,400italic|Dawning+of+a+New+Day|Cutive+Mono|Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <script src="{{ ASSET_PATH }}/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        function replaceGoogleCDN(sheet) {
+//            $('link').each(function(){
+//                var $intial  = $(this).attr('href'),
+//                        $replace = $intial.replace('https://fonts.googleapis.com/', 'http://fonts.useso.com/');
+//                $(this).attr('href', $replace);
+//            });
+            $('<link rel="stylesheet" type="text/css" href="http://fonts.useso.com/css?family=Lato:400,400italic|Dawning+of+a+New+Day|Cutive+Mono|Source+Code+Pro" />').appendTo('head')
+//            sheet.disabled = true;
+            $('link[href="' + sheet.href + '"]').remove();
+        }
 
+//        $.getJSON('http://api.wipmania.com/jsonp?callback=?', function (data) {
+//            if ( data.address.country_code == 'CN' ) {
+                var toDel = [];
+                $.each(document.styleSheets, function (i,sheet) {
+                    if(sheet.href == 'https://fonts.googleapis.com/css?family=Lato:400,400italic|Dawning+of+a+New+Day|Cutive+Mono|Source+Code+Pro'){
+                        if(!((sheet.rules && sheet.rules.length != 0) || (sheet.cssRules && sheet.cssRules.length != 0))){
+                            console.log('to delete');
+                            toDel.push(sheet);
+                        }
+                    }
+                });
+                $.each(toDel, function(index, sheet){
+                   replaceGoogleCDN(sheet);
+                });
+//            }
+//        });
+    </script>
     <link rel="stylesheet" media="only screen and (max-width: 991px)" href="{{ASSET_PATH}}/css/small-screen.min.css">
     <link rel="stylesheet" media="only screen and (min-width: 992px)" href="{{ASSET_PATH}}/css/middle-screen.min.css">
     <link rel="stylesheet" type="text/css" media="all" href="{{ASSET_PATH}}/css/solarized-dark.css?body=1">
@@ -142,7 +172,7 @@
 </div>
 <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="{{ ASSET_PATH }}/js/jquery-1.11.1.min.js"></script>
+
 <!-- Latest compiled and minified JavaScript -->
 <script src="{{ ASSET_PATH }}/js/bootstrap.min.js"></script>
 <script src="{{ ASSET_PATH }}/js/custom.min.js"></script>

@@ -4,7 +4,7 @@
 }
 .navbar-brand {
     padding: auto;
-    font-size: large;
+    font-size: 26px;
     color: #000101;
     text-shadow: none;
 }
@@ -15,7 +15,10 @@ header .navbar-toggle>.icon-bar{
     background-color: #000101;
 }
 header{
-    font-size: large;
+    font-size: 24px;
+}
+header .dropdown-menu {
+    font-size: 20px;
 }
 .nav li{
     background-color: #fff;

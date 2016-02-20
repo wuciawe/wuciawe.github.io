@@ -13,7 +13,7 @@
   })();
 
   BoardController = (function() {
-    function BoardController($scope, $http, DataService) {
+    function BoardController($scope, $http, $timeout, DataService) {
       var oldWindowWidth, unifyHeights;
       oldWindowWidth = DataService.isWindowMiddle(DataService.getWindowWidth());
       $(window).resize(function() {
@@ -29,14 +29,51 @@
       unifyHeights = function() {
         var isWindowMiddle;
         isWindowMiddle = DataService.isWindowMiddle(DataService.getWindowWidth());
-        return $('.post-row').each(function() {
-          var as, childs, maxHeight, maxWidth;
-          maxHeight = 0;
-          maxWidth = $(this).innerWidth() / 3 - 10;
-          as = $(this).children('a');
-          if (isWindowMiddle) {
+        if (isWindowMiddle) {
+          $('.post-row').each(function() {
+            var as, childs, maxWidth;
+            maxWidth = $(this).innerWidth() / 3 - 10;
+            as = $(this).children('a');
+            childs = $(this).children('.col-md-4');
+            childs.css({
+              'width': maxWidth
+            });
             as.each(function() {
+              return $(this).children('.col-md-4').css({
+                'width': maxWidth
+              });
+            });
+            childs.each(function() {
+              return $(this).children('.card').css({
+                'width': maxWidth
+              });
+            });
+            return as.each(function() {
               return $(this).children('.col-md-4').each(function() {
+                return $(this).children('.card').css({
+                  'width': maxWidth
+                });
+              });
+            });
+          });
+          return $timeout(function() {
+            return $('.post-row').each(function() {
+              var as, childs, maxHeight;
+              maxHeight = 0;
+              as = $(this).children('a');
+              as.each(function() {
+                return $(this).children('.col-md-4').each(function() {
+                  return $(this).children('.front').each(function() {
+                    var height;
+                    height = $(this).innerHeight();
+                    if (height > maxHeight) {
+                      return maxHeight = height;
+                    }
+                  });
+                });
+              });
+              childs = $(this).children('.col-md-4');
+              childs.each(function() {
                 return $(this).children('.front').each(function() {
                   var height;
                   height = $(this).innerHeight();
@@ -45,48 +82,37 @@
                   }
                 });
               });
-            });
-          }
-          childs = $(this).children('.col-md-4');
-          if (isWindowMiddle) {
-            childs.each(function() {
-              return $(this).children('.front').each(function() {
-                var height;
-                height = $(this).innerHeight();
-                if (height > maxHeight) {
-                  return maxHeight = height;
-                }
+              childs.css({
+                'height': maxHeight
               });
-            });
-            childs.css({
-              'height': maxHeight,
-              'width': maxWidth
-            });
-            as.each(function() {
-              return $(this).children('.col-md-4').css({
-                'height': maxHeight,
-                'width': maxWidth
+              as.each(function() {
+                return $(this).children('.col-md-4').css({
+                  'height': maxHeight
+                });
               });
-            });
-            childs.each(function() {
-              $(this).children('.card').css({
-                'height': maxHeight,
-                'width': maxWidth
-              });
-              $(this).children('.front').css('transform', "translateZ(" + (maxHeight / 2) + "px) rotateX(0deg)");
-              return $(this).children('.back').css('transform', "translateY(" + (maxHeight / 2) + "px) rotateX(-90deg)");
-            });
-            return as.each(function() {
-              return $(this).children('.col-md-4').each(function() {
+              childs.each(function() {
                 $(this).children('.card').css({
-                  'height': maxHeight,
-                  'width': maxWidth
+                  'height': maxHeight
                 });
                 $(this).children('.front').css('transform', "translateZ(" + (maxHeight / 2) + "px) rotateX(0deg)");
                 return $(this).children('.back').css('transform', "translateY(" + (maxHeight / 2) + "px) rotateX(-90deg)");
               });
+              return as.each(function() {
+                return $(this).children('.col-md-4').each(function() {
+                  $(this).children('.card').css({
+                    'height': maxHeight
+                  });
+                  $(this).children('.front').css('transform', "translateZ(" + (maxHeight / 2) + "px) rotateX(0deg)");
+                  return $(this).children('.back').css('transform', "translateY(" + (maxHeight / 2) + "px) rotateX(-90deg)");
+                });
+              });
             });
-          } else {
+          }, 150);
+        } else {
+          return $('.post-row').each(function() {
+            var as, childs;
+            as = $(this).children('a');
+            childs = $(this).children('.col-md-4');
             childs.css({
               'height': '',
               'width': ''
@@ -115,8 +141,8 @@
                 return $(this).children('.back').css('transform', '');
               });
             });
-          }
-        });
+          });
+        }
       };
       unifyHeights();
     }
@@ -173,7 +199,7 @@
         }
       };
     }
-  ]).controller('boardController', ['$scope', '$http', 'DataService', BoardController]).controller('footerController', [
+  ]).controller('boardController', ['$scope', '$http', '$timeout', 'DataService', BoardController]).controller('footerController', [
     '$scope', 'DataService', function($scope, DataService) {
       return $scope.isMiddle = function() {
         return DataService.isWindowMiddle(DataService.getWindowWidth());
