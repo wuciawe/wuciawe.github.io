@@ -1,7 +1,7 @@
 ---
 layout: post
 category: [tools]
-tags: [ssh]
+tags: [ssh, error code]
 infotext: 'notes on using ssh, make life easier with remote access'
 ---
 {% include JB/setup %}
@@ -134,3 +134,22 @@ failure. At this point, `-O` flag is very useful, so that you can use `-O "Stric
 remote ends successfully.
 
 When using `pssh` you may also meet with following error code caused by wrong `<command>`:
+
+| exit code number | meaning | comment |
+| 1 | catchall for general errors | miscellaneous errors |
+| 2 | misuse of shell builtins | missing keyword or command or permission problems |
+| 126 | command invoked cannot execute | permission problem or command is not an executable |
+| 127 | command not found | command not found |
+| 128 | invalid arugment to exit | exit only takes integer arguments in the range 0 ~ 255 |
+| 128 + n | fatal error signal n | |
+| 130 | script terminated by `Ctrl + C` | `Ctrl + C` is fatal error signal 2 |
+| 255* | exit status out of range | exit takes only integer arguments in the range 0 ~ 255 |
+
+## change user
+
+If you want to execute some commands on remote end with some other user account other than the 
+login account, then you will need to change user via `su` command as following:
+
+{% highlight shell linenos=table %}
+ssh <user>@<host> -p <port> -o <ssh options> "su - <another user> -c \"<command>\""
+{% endhighlight %}
