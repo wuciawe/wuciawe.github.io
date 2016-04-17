@@ -37,7 +37,8 @@ and probability. At mean while, I used that to keep avoiding thinking of nonsens
 
 Then in the sixth year, I devoted most of my time to composing researching paper. That was a very dark 
 period. The good thing is I had a chance to feel the fun part of life. It lighted me on a new way to 
-interpersonal relation. I do feel very happy on that.
+interpersonal relation. I do feel very happy on that. And in this year, I re-started to watch American 
+drama series. I enjoyed it much and some of them gave me insight on what life would be like.
 
 In the last year, I encountered too much on lies and betrayal. I gave one my mercy, one ruined it. Under 
 different circumstances, with different people. I view that as the fact that people start to reveal the 
@@ -50,4 +51,5 @@ after seven years and I will soon figure out a way.
 What I regret most are I didn't spend time in a proper way, and I just chose to pass most of the lessons  
 given by life. Maybe the reason I didn't work very hard before is that I know it was the last chance for 
 me to revel. As I am not a student anymore, I have to take more responsibility. There is a life burden 
-on my shoulder after then.
+on my shoulder after then. Will I be a great fighter for life? Maybe the first step is stopping wasting 
+time on nonsense.
