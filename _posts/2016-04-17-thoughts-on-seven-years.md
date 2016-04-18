@@ -32,8 +32,14 @@ There was an episode in the last year of undergraduate life. The change of the a
 the future of that time very blurry. If I was aggressive that time, maybe it would lead me to a better place or 
 circumstance.
 
+And in the following summer, I decided to gain a driving licence which make me very funny. I refused to 
+make it at a low price, but was determined to do it right after its price rose. It should be a good 
+period. And I should act better.
+
 In the fifth year, I decided to learn something interesting myself. I spent a lot of time on studying abstraction 
-and probability. At mean while, I used that to keep avoiding thinking of nonsense. What a mental midget.
+and probability. At mean while, I used that to keep avoiding thinking of nonsense. What a mental midget. And 
+it's also a pity that I failed to maintain a relationship with some wield person. To some extent, it could 
+be viewed as mutual destruction.
 
 Then in the sixth year, I devoted most of my time to composing researching paper. That was a very dark 
 period. The good thing is I had a chance to feel the fun part of life. It lighted me on a new way to 
@@ -48,7 +54,7 @@ reckless and lack of consideration.
 Time doesn't just pass by, it teaches me something. I believe it's different weakness on relation 
 after seven years and I will soon figure out a way.
 
-What I regret most are I didn't spend time in a proper way, and I just chose to pass most of the lessons  
+What I regret most are I didn't spend time in a proper way, and I just chose to pass most of the lessons 
 given by life. Maybe the reason I didn't work very hard before is that I know it was the last chance for 
 me to revel. As I am not a student anymore, I have to take more responsibility. There is a life burden 
 on my shoulder after then. Will I be a great fighter for life? Maybe the first step is stopping wasting 

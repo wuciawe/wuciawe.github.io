@@ -25,6 +25,52 @@
 /*#ffffff*/
 /*}*/
 
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/fonts/lato-regular-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/lato-regular-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/lato-regular-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/assets/fonts/lato-regular-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/lato-regular-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/lato-regular-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Lato';
+  src: url('/assets/fonts/lato-italic-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/lato-italic-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/lato-italic-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/assets/fonts/lato-italic-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/lato-italic-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/lato-italic-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Cutive Mono';
+  src: url('/assets/fonts/cutive-mono-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/cutive-mono-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/cutive-mono-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/assets/fonts/cutive-mono-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/cutive-mono-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/cutive-mono-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Dawning of a New Day';
+  src: url('/assets/fonts/dawning-of-a-new-day-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/dawning-of-a-new-day-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/dawning-of-a-new-day-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/assets/fonts/dawning-of-a-new-day-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/dawning-of-a-new-day-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/dawning-of-a-new-day-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'Source Code Pro';
+  src: url('/assets/fonts/sourcecodepro-regular-webfont.eot'); /* IE9 Compat Modes */
+  src: url('/assets/fonts/sourcecodepro-regular-webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/assets/fonts/sourcecodepro-regular-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/assets/fonts/sourcecodepro-regular-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/assets/fonts/sourcecodepro-regular-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/assets/fonts/sourcecodepro-regular-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
 body {
     font-family: 'Lato', 'Microsoft YaHei', 'WenQuanYi Micro Hei', 'Hiragino Sans GB', 'STHeiti', 'Droid Sans', sans-serif;
 }
