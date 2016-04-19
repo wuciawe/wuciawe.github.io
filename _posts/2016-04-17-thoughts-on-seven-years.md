@@ -46,10 +46,10 @@ period. The good thing is I had a chance to feel the fun part of life. It lighte
 interpersonal relation. I do feel very happy on that. And in this year, I re-started to watch American 
 drama series. I enjoyed it much and some of them gave me insight on what life would be like.
 
-In the last year, I encountered too much on lies and betrayal. I gave one my mercy, one ruined it. Under 
-different circumstances, with different people. I view that as the fact that people start to reveal the 
-real one of themselves. The ironic part is, after seven years, I still don't get grown up, I keep on being 
-reckless and lack of consideration.
+In the last year, I encountered too much on lies and betrayal. I gave one my mercy, one ruined it, ungratefully and 
+with no honour. Under different circumstances, with different people. I view that as the fact that people 
+start to reveal the real one of themselves. The ironic part is, after seven years, I still don't get grown up, 
+I keep on being reckless and lack of consideration.
 
 Time doesn't just pass by, it teaches me something. I believe it's different weakness on relation 
 after seven years and I will soon figure out a way.
