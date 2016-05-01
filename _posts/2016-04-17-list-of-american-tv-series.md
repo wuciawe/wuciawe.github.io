@@ -10,18 +10,18 @@ List of TV series:
 - Person of Interest
 - Marvel's Agents of S.H.I.E.L.D
 - Scorpion
-- The Sopranos
-- Lilyhammer
-- Shameless
+- The Sopranos 1999 s1-s6
+- Lilyhammer 2012 s1-s3
+- Shameless 2011 s1-s6
 - Banshee
-- The Shield
-- House of Cards
-- And Then There Were None
-- Hatfields & McCoys
-- How To Get Away With Murder
+- The Shield 2002 s1-s7
+- House of Cards 2013 s1-s4
+- And Then There Were None 2015 s1
+- Hatfields & McCoys 2012 s1
+- How To Get Away With Murder 2014 s1-s2
 - 12 Monkeys
 
 List of Films:
 
-- The Lobster
-- Few Options
+- The Lobster 2015
+- Few Options 2011

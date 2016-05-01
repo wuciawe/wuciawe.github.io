@@ -66,3 +66,86 @@ $$
 where \\( \bar{y} = \frac{1}{T}\sum_{t=1}^Ty_t \\) is the sample mean. To see why \\( \hat{\gamma}_j \\) is achieved by deviding \\( T \\) instead of \\( T - j \\), click [here]( http://stats.stackexchange.com/questions/56238/question-about-sample-autocovariance-function ){:target="_blank"}.
 
 A stationary time series \\( \\{ y_t \\} \\) is ergodic if sample moments converge in probability to population moments, i.e. \\( \bar{y} \overset{P}{\to} \mu \\), \\( \hat{\gamma}_j \overset{P}{\to} \gamma_j \\), and \\( \hat{\rho}_j \overset{P}{\to} \rho_j \\).
+
+
+---
+
+temporary notes
+
+linear regression model, ordinary least squares, central limit theorem
+
+anova(fit) analysis of variance, names(fit) gives all names associated with fit, summary(fit)
+
+Once a model has been fitted to the data, the deviations from the model are the residuals. If the model 
+is appropriate, then the residual mimic the true errors.
+
+signal + noise = observation = hat(signal) + hat(noise)
+
+A stationary time series is one that has had trend elements removed and that has a time invariant pattern in the 
+random noise.
+
+A complete daa analysis involves:
+
+step1: Finding a good model to fit the signal based on the data
+
+step2: Finding a good model to fit the noise, based on the residuals from the model
+
+step3: Adjusting variances, test statistics, confidence intervals, and predictions, based on the model for noise.
+
+What to look for in a time series:
+
+ The signal: trend, intervention, periodic, ...
+ 
+ The structure of the random elements
+
+The spectrum measures the intensity of periodic patterns of difference frequencies.
+
+A random walk model is very widely used for non-stationary data, particularly finance and economic data. Random 
+walks typically have:
+
+ long periods of apparent trends up or down
+ 
+ sudden and unpredictable changes in direction
+
+HoltWinters, bats, tbats, msts, dshw, stlf
+
+The main disadvantage of the ARIMA approach is that the seasonality is forced to be periodic whereas 
+tbats model allows for dynamic seasonality.
+
+robjhyndman.com/hyndsight/tbats-with-regression
+
+Box.test(series, lag=Int, type='Ljung-Box')
+ examines whether there is significant evidence for non-zero correlations at lags 1-lag, small p-value (i.e. 
+ less than 0.05) suggest that the series is stationary,
+ 
+adf.test(series, alternative='stationary')
+ t-statistic test, small p-values suggest the data is stationary
+
+kpss.test(series)
+ accepting the null hypothesis means that the series is stationary, and small p-values suggest that 
+ the series is not stationary.
+
+www.statosphere.com.au/check-time-series-stationary-r
+
+non-zero autocorrelations
+
+unit root tests, where a time series variable is non-stationary using an autoregression model
+
+zoonek2.free.fr/UNIX/48_R/15.html
+
+GARCH
+
+TarqueBera.test
+
+https://onlinecourses.science.psu.edu/stat510/node/64
+
+janda.org/c10/Lectures/topic06/L24-significanceR.htm
+
+data <- read.csv(file)
+data$GMT2 <- strptime(data$GMT, "%Y-%m-%d %H:%M:%S")
+ts <- timeSeries(data$value, data$GMT2)
+ts2 <- ts(data$value, freq=1440)
+result <- interpNA(ts, method='linear')
+ts3 <- ts(ts$`TS.1`, freq=1440)
+stl(ts3, s.window='periodic')
+result$`time.series`
