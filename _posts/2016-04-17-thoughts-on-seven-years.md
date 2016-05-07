@@ -5,6 +5,8 @@ infotext: "After spending seven years in the university, sometimes you will thin
 ---
 {% include JB/setup %}
 
+### Recall The Past
+
 When I look back to the seven years, I recall a lot of embarrassing moments. And I really have so many chances to 
 learn something from those embarrassments and prepare to act better in the next time. But I didn't.
 
@@ -59,3 +61,33 @@ given by life. Maybe the reason I didn't work very hard before is that I know it
 me to revel. As I am not a student anymore, I have to take more responsibility. There is a life burden 
 on my shoulder after then. Will I be a great fighter for life? Maybe the first step is stopping wasting 
 time on nonsense.
+
+### A Saying
+
+About six years ago, I saw a saying 'look ahead, youth fades' from some place. At that time, I don't 
+understand the meaning of that saying (actually, I just googled this saying, there is nothing related 
+to the 'saying'). And so I asked Todd what that sentence means, he explained his understanding.
+
+Six years later, that saying comes to my mind again. Now, I think I begin to understand the meaning of 
+that saying. (To clarify, I think everything in the world is meaningless to everyone, until something 
+turns out to be meaningful to a specific person. Everyone stays in a specific state, and moves from one 
+state to another as time passes by. In different state, one will feel differently on the meaning of 
+things. So back to this one, what I really want to say is that I discard the old feeling on that sentence.) 
+Maybe in the 30s or 40s, I will feel more about this saying. Now, what I feel strongly is that time is 
+always the problem (like some one told me in the interview three years ago). I hope I can have more 
+time and I just waste the time I have in real life.
+
+Besides time, there are other things related with youth, I feel they are saying goodbye to me. And most 
+of them are unrecoverable. Sometimes, you just feel you are lost. The question is, is it really necessary 
+that you need to figure everything out clearly and then you can start to step on. If so, then you just 
+stays. Time again, he will tell you things you are confused with.
+
+Everybody knows that it's important to work hard, but I don't know what is right to work hard on. Some 
+may say there is no right or wrong on such things, working hard is always good for you. Maybe, to some 
+extent, yes, it is. But you know there exists better things to work hard on. Is it really worthy to 
+spend time and efforts on something when you don't know what has long term effects on the life that is 
+really worthy to work hard on. But how to define the word worthy, especially when you feel most things 
+are meaningless. 
+
+You know you need strategy to solve problems, and it remains true for this one as well. And you also 
+know you need to solve contradictions in your mind. 
