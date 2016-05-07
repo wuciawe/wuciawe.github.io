@@ -2,7 +2,7 @@
 layout: post
 category: [tools]
 tags: [git]
-infotext: 'notes on using git'
+infotext: 'notes on using git, an overview on git commands.'
 ---
 {% include JB/setup %}
 
@@ -201,6 +201,8 @@ git rebase -i <base> # interactive one, pick and squash
 
 The primary reason for rebasing is to maintain a linear project history.
 
+In addition, rebasing is useful for changing the git history, see [notes on git part 2]({%post_url 2016-05-07-notes-on-git-part-2%}).
+
 ### git reflog
 
 {% highlight shell linenos=table %}
@@ -257,7 +259,11 @@ git branch -r | grep -v -- ' -> ' | while read remote; do git branch --track "${
 
 {% highlight shell linenos=table %}
 git stash # temporary save uncommited stuff
-git stash apply # restore stashed stuff
+git stash list # get a list of all stashes
+git stash apply [<stash>] # restore [a specific <stash>] stashed stuff
+git stash pop [<stash>] # apply and remove the most[|a specific <stash>] recent stashed stuff
+git stash drop [<stash>] # remove a stash from the stash list
+git stash show [-p] [<stash>] # show the changes recorded in the stash as a diff between the stashed state and its original parent. -p for enabling the patch mode.
 {% endhighlight %}
 
 By default, `git stash` will only stash those indexed files, which means you need to `git add` untracked files first to make them into staged area, then stash them.
