@@ -1,3 +1,5 @@
+linear regression model, ordinary least squares, central limit theorem
+
 glob pattern
 
 java advisory locking mechanisms, mandatory locks
