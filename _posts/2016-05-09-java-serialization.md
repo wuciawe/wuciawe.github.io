@@ -162,8 +162,11 @@ class Foo {
 
 val f = new Foo().f
 {% endhighlight %}
+
 In this case, Scala will serialize the entire instance of Foo class so as to serialize the `f` function, 
 even the closure only includes one specific value of that instance.
+
+For the static methods and non-static methods, JVM serializes them differently, see [here](https://github.com/scala/scala/pull/5157){:target='_blank'} and [here](http://cr.openjdk.java.net/~briangoetz/eg-attachments/lambda-serialization.html){:target='_blank'}.
 
 So to avoid serialize the entire instance in this kind of cases, Spark does some work to eliminate 
 unnecessary serializations.
