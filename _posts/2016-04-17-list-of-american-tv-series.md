@@ -8,12 +8,12 @@ infotext: 'This is a list on American TV series which I have watched and will ha
 List of TV series:
 
 - Person of Interest
-- Marvel's Agents of S.H.I.E.L.D
-- Scorpion
+- Marvel's Agents of S.H.I.E.L.D 2013 s2-s3
+- Scorpion 2014 s1-s2
 - The Sopranos 1999 s1-s6
 - Lilyhammer 2012 s1-s3
 - Shameless 2011 s1-s6
-- Banshee
+- Banshee 2013 s1-s4
 - The Shield 2002 s1-s7
 - House of Cards 2013 s1-s4
 - And Then There Were None 2015 s1
