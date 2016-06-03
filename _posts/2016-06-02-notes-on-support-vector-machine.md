@@ -10,11 +10,11 @@ infotext: '(BTW: That response made me feel great.) This is a very detailed note
 
 ### Construction of linearly separable svm
 
-This note is about the inference of the two class classifiction svm.
+This note is about the inference of the two class classification svm.
 
-Suppose we have a set of data \\(\mathbb{D} = \\{(x_i, y_i); i = 1, \dots, m\\}\\), where \\(x_i \in \mathbb{R}^n\\) is the 
-feature vector and \\(y_i \in \\{-1, +1\\}\\) is the label, the classifier with hypothesis 
-\\(h_{\omega, b}\\) is like:
+Suppose we have a set of data \\(\mathbb{D} = \\{(x_i, y_i); i = 1, \dots, m\\}\\), where 
+\\(x_i \in \mathbb{R}^n\\) is the feature vector and \\(y_i \in \\{-1, +1\\}\\) is the label, 
+the classifier with hypothesis \\(h_{\omega, b}\\) is like:
 
 $$
 h_{\omega, b} = g(\omega^T x + b)
@@ -22,17 +22,22 @@ $$
 
 where, \\(g(z) = 1\\) if \\(z \ge 0\\), and \\(g(z) = -1\\) if \\(z \lt 0\\).
 
-Based on the above notation, we define __the functional margin__ w.r.t each element in \\(\mathbb{D}\\) as
+As so, we can image \\(\omega^T x + b = 0\\) as a hyperplane in \\(\mathbb{R}^n\\) that split apart 
+the two classes elements into different half spaces as in an affine space.
+
+Based on the above notation, we define the __functional margin__ w.r.t each element in 
+\\(\mathbb{D}\\) as
 
 $$
 \hat{\gamma}^{(i)} = y^{(i)}(\omega^T x^{(i)} + b)
 $$
 
-Then, if \\(y^{(i)} = 1\\), larger value of \\(\omega^T x^{(i)} + b\\) will make a larger \\(\hat{\gamma}^{(i)}\\), 
-similar for the case where \\(y^{(i)} = -1\\).
+Then, if \\(y^{(i)} = 1\\), larger value of \\(\omega^T x^{(i)} + b\\) will make a larger 
+\\(\hat{\gamma}^{(i)}\\), similar for the case where \\(y^{(i)} = -1\\).
 
 And with the definition of hypothesis \\(h_{\omega, b}\\), scaling \\(\omega\\) and \\(b\\) will not 
-affect the result of the output of the hypothesis, it will only affect the value of \\(\hat{\gamma}^{(i)}\\).
+affect the result of the output of the hypothesis, it will only affect the value of 
+\\(\hat{\gamma}^{(i)}\\).
 
 After that, we define the __functional margin__ w.r.t the whole \\(\mathbb{D}\\) as
 
@@ -40,10 +45,11 @@ $$
 \hat{\gamma} = \min_{i = 1, \dots, m} \gamma^{(i)}
 $$
 
-And the __geometric margin__ \\(\gamma^{(i)}\\) w.r.t each element in \\(\mathbb{D}\\) is defined as the distance of each element 
-apart from the hyper plane \\(\omega^T x + b = 0\\). We can see that the projection of the element \\(x^{(i)}\\) on 
-the hyper plane equals \\(x^{(i)} - \gamma^{(i)}\frac{\omega}{||\omega||}\\), and since this point is on 
-the hyper plane, the following equation holds:
+And the __geometric margin__ \\(\gamma^{(i)}\\) w.r.t each element in \\(\mathbb{D}\\) is defined as 
+the distance of each element apart from the hyper plane \\(\omega^T x + b = 0\\). We can see that 
+the projection of the element \\(x^{(i)}\\) on the hyper plane equals 
+\\(x^{(i)} - \gamma^{(i)}\frac{\omega}{||\omega||}\\), and since this point is on the hyper plane, 
+the following equation holds:
 
 $$
 \omega^T(x^{(i)} - \gamma^{(i)}\frac{\omega}{||\omega||}) + b = 0
@@ -61,7 +67,7 @@ $$
 \gamma^{(i)} = y^{(i)}\bigg(\Big(\frac{\omega}{||\omega||}\Big)^T x^{(i)} + \frac{b}{||\omega||}\bigg)
 $$
 
-If \\(||\omega|| = 1\\), then the functional margin equals the geometric margin.
+If \\(\|\|\omega\|\| = 1\\), then the functional margin equals the geometric margin.
 
 And the __geometric margin__ w.r.t the whole \\(\mathbb{D}\\) is
 
@@ -69,8 +75,8 @@ $$
 \gamma = \min_{i = 1, \dots, m}\gamma^{(i)}
 $$
 
-With the definition of the geometric margin, we can imagine the optimal classification boundary is the 
-hyper plane that gains the maximum geometric margin w.r.t the whole \\(\mathbb{D}\\):
+With the definition of the geometric margin, we can imagine the optimal classification boundary is 
+the hyper plane that gains the maximum geometric margin w.r.t the whole \\(\mathbb{D}\\):
 
 $$
 \begin{align}
@@ -99,9 +105,9 @@ s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge 1,\quad i = 1, \dots, m
 \end{align}
 $$
 
-This is because by scaling \\(\omega\\) and \\(b\\), we can get \\(\hat{\gamma}\\) with any magnitude. 
-So by setting \\(\hat{\gamma} = 1\\), we get the above convex quadratic optimization problem with 
-linear constraints.
+This is because by scaling \\(\omega\\) and \\(b\\), we can get \\(\hat{\gamma}\\) with any 
+magnitude. So by setting \\(\hat{\gamma} = 1\\), we get the above convex quadratic optimization 
+problem with linear constraints.
 
 ### Lagrange duality
 
@@ -152,7 +158,7 @@ $$
 where \\(\mathcal{P}\\) stands for "primal". We can see that
 
 $$
-\theta_\mathcal{P} = \begin{cases} f(\omega) \quad& if \omega satisfies primal constraints\\\infty \quad&otherwise\end{cases}
+\theta_\mathcal{P} = \begin{cases} f(\omega) \quad& \text{if } \omega \text{ satisfies primal constraints}\\\infty \quad&\text{otherwise}\end{cases}
 $$
 
 The primal problem can then be expressed as
@@ -167,19 +173,20 @@ $$
 \max_{\alpha, \beta: \alpha_i \ge 0}\theta_\mathcal{D}(\alpha, \beta) = max_{\alpha, \beta: \alpha_i \ge 0} min_\omega \mathcal{L}(\omega, \alpha, \beta)
 $$
 
-And we can see that the optimal value of the __dual__ problem has the relationship with the optimal value 
-of the __primal__ problem as follows:
+And we can see that the optimal value of the __dual__ problem has the relationship with the optimal 
+value of the __primal__ problem as follows:
 
 $$
 d^* = \max_{\alpha, \beta: \alpha_i \ge 0} min_\omega \mathcal{L}(\omega, \alpha, \beta) \le min_\omega max_{\alpha, \beta: \alpha_i \ge 0}\mathcal{L}(\omega, \alpha, \beta) = p*
 $$
 
-Suppose \\(f\\) and \\(g_i\\)'s are convex, and \\(h_i\\)'s are affine. Suppose the constraints \\(g_i\\)'s 
-are (strictly) feasible; \\(\exists\\) \\(\omega\\) such that \\(g_i(\omega\) \lt 0\\) for all \\(i\\). Then 
-there must exists \\(\omega^\*\\), \\(\alpha^\*\\), \\(\beta^\*\\) so that \\(\omega^\*\\) is the solution 
-to the __primal__ problem, \\(\alpha^\*\\) and \\(\beta^\*\\) are the solution to the __dual__ problem. And 
-\\(p^* = d^* = \mathcal{L}(\omega^\*, \alpha^\*, \beta^\*)\\). And \\(\omega^\*\\), \\(\alpha^\*\\) and \\(\beta^\*\\) 
-satisfy the __Karush-Kuhn-Tucker (KKT)__ conditions, which are follows:
+Suppose \\(f\\) and \\(g_i\\)'s are convex, and \\(h_i\\)'s are affine. Suppose the constraints 
+\\(g_i\\)'s are (strictly) feasible; \\(\exists\\) \\(\omega\\) such that \\(g_i(\omega\) \lt 0\\) 
+for all \\(i\\). Then there must exists \\(\omega^\*\\), \\(\alpha^\*\\), \\(\beta^\*\\) so that 
+\\(\omega^\*\\) is the solution to the __primal__ problem, \\(\alpha^\*\\) and \\(\beta^\*\\) are 
+the solution to the __dual__ problem. And \\(p^* = d^* = \mathcal{L}(\omega^\*, \alpha^\*, \beta^\*)\\). 
+And \\(\omega^\*\\), \\(\alpha^\*\\) and \\(\beta^\*\\) satisfy the __Karush-Kuhn-Tucker (KKT)__ 
+conditions, which are follows:
 
 $$
 \begin{align}
@@ -216,9 +223,10 @@ $$
 `NOTE:` In the final result, only those __support vector \\(x^{(i)}\\)__'s corresponding \\(\alpha_i\\)'s are 
 non-zero.
 
-To solve the dual form of the problem, first minimize \\(\mathcal{L}(\omega, b, \alpha)\\) with respect 
-to \\(\omega\\) and \\(b\\) (for fixed \\(\alpha\\)), to get \\(\theta_\mathcal{D}\\), which is achieved 
-by setting the derivatives of \\(\mathcal{L}\\) with respect to \\(\omega\\) and \\(b\\) to zero:
+To solve the dual form of the problem, first minimize \\(\mathcal{L}(\omega, b, \alpha)\\) with 
+respect to \\(\omega\\) and \\(b\\) (for fixed \\(\alpha\\)), to get \\(\theta_\mathcal{D}\\), 
+which is achieved by setting the derivatives of \\(\mathcal{L}\\) with respect to \\(\omega\\) and 
+\\(b\\) to zero:
 
 $$
 \nabla_\omega\mathcal{L}(\omega, b, \alpha) = \omega - \sum_{i = 1}^m\alpha_iy^{(i)}x^{(i)} = 0
@@ -276,8 +284,8 @@ K(x, z) = \phi(x)^T\phi(z)
 $$
 
 where \\(\phi(\omega)\\) can be very complicated, while \\(K(x, z)\\) is computationally cheap. With 
-the kernel trick, we can map the elements into a higher dimensional space with little extra computation 
-by avoiding explicit computing of \\(\phi(\omega)\\)
+the kernel trick, we can map the elements into a higher dimensional space with little extra 
+computation by avoiding explicit computing of \\(\phi(\omega)\\)
 
 A valid kernel matrix should be symmetric and semi-definite, vice versa.
 
@@ -336,9 +344,11 @@ do following:
 
 $$
 \begin{align}
-&repeat until convergence:\\
-&\quad for \quad i = 1, \dots, m:\\
-&\qquad \alpha_i = \arg\max_{\hat{\alpha}_i} F(\alpha_1, \dots, \alpha_{i - 1}, \hat{\alpha}_i, \alpha_{i + 1}, \dots, \alpha_m)
+&\text{repeat until convergence: }\{\\
+&\quad for \quad i = 1, \dots, m:\{\\
+&\qquad \alpha_i = \arg\max_{\hat{\alpha}_i} F(\alpha_1, \dots, \alpha_{i - 1}, \hat{\alpha}_i, \alpha_{i + 1}, \dots, \alpha_m)\\
+&\quad \}\\
+&\}
 \end{align}
 $$
 
@@ -355,14 +365,14 @@ $$
 We can't update single \\(\alpha\\) at each step because
 
 $$
-\alpha_i y^{(i)} = - \sum_{j = 1, \dots, m, j \neq i}\alpha_j y^{(j)}
+\alpha_i y^{(i)} = - \sum_{\substack{j = 1\\j \neq i}}^m\alpha_j y^{(j)}
 $$
 
 \\(\alpha_i\\) is determined by fixing other \\(alpha_j\\)'s. Thus the smo chooses to update two 
 \\(\alpha_i\\)'s in each step, such that the constraints will not be violated. Now we have
 
 $$
-\alpha_i y^{(i)} + \alpha_j y^{(j)} = - \sum_{k = 1, \dots, m, k \neq i, k\neq j}\alpha_k y^{(k)} = \zeta
+\alpha_i y^{(i)} + \alpha_j y^{(j)} = - \sum_{\substack{k = 1\\k \neq i, k\neq j}}^m\alpha_k y^{(k)} = \zeta
 $$
 
 which gives us
@@ -383,4 +393,27 @@ $$
 \alpha_j^{new} = \begin{cases} H \quad& if\quad \alpha_j^{new, unclipped} \gt H\\ \alpha_j^{new, unclipped} \quad& if\quad L \le \alpha_j^{new, unclipped} \le H\\L \quad& if\quad \alpha_j^{new, unclipped} \lt L\end{cases}
 $$
 
-After finding the new value of \\(\alpha_j\\), we can then get the new value of \\(\alpha_i\\) with equation \\(\alpha_i = (\zeta - alpha_j y^{(j)})y^{(i)}\\).
+After finding the new value of \\(\alpha_j\\), we can then get the new value of \\(\alpha_i\\) with 
+equation \\(\alpha_i = (\zeta - alpha_j y^{(j)})y^{(i)}\\).
+
+### Recent method for Hard Margin Linear SVM
+
+The loss function for each element in hard margin linear svm is defined as the __hinge loss__:
+
+$$
+\mathcal{L^{(i)}}(\omega) = \max\{0, 1 - y^{(i)}(\omega^T x^{(i)} + b)\}
+$$
+
+And the sub-gradient is like
+
+$$
+\frac{\partial \mathcal{L^{(i)}}(\omega)}{\partial \omega} = \begin{cases}-y^{(i)}x^{(i)} \quad& \text{if } y^{(i)}\omega^Tx^{(i)} < 1\\0 \quad& \text{otherwise}\end{cases}
+$$
+
+And the objective function is to minimize the total loss
+
+$$
+min_\omega \mathcal{L} = min_\omega \sum_{i = 1}^m \mathcal{L^{(i)}}
+$$
+
+which is a convex linear problem, thus can be easily solved by __SGD__ or __L-BFGS__.
