@@ -1,43 +1,44 @@
 ---
 layout: post
 category: [machine learning, math]
-tags: [machine learning, math, quadratic programming, classification]
+tags: [machine learning, math, quadratic programming, classification, loss function, svm]
 infotext: '(BTW: That response made me feel great.) This is a very detailed notes on svm, easy to understand as well.'
 ---
 {% include JB/setup %}
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-### Construction of linearly separable svm
+### Construction of linearly separable SVM
 
 This note is about the inference of the two class classification svm.
 
-Suppose we have a set of data \\(\mathbb{D} = \\{(x_i, y_i); i = 1, \dots, m\\}\\), where 
-\\(x_i \in \mathbb{R}^n\\) is the feature vector and \\(y_i \in \\{-1, +1\\}\\) is the label, 
-the classifier with hypothesis \\(h_{\omega, b}\\) is like:
+Suppose we have a set of data \\(\mathbb{D} = \\{(\boldsymbol{x}\_i, y_i)\\}\_{i = 1}^m\\), where 
+\\(\boldsymbol{x}\_i \in \mathbb{R}^n\\) is the feature vector and \\(y_i \in \\{-1, +1\\}\\) is the label, 
+the classifier with hypothesis \\(h_{\boldsymbol{\omega}, b}\\) is like:
 
 $$
-h_{\omega, b} = g(\omega^T x + b)
+h_{\boldsymbol{\omega}, b}(\boldsymbol{x}) = g(\boldsymbol{\omega}^T \boldsymbol{x} + b)
 $$
 
 where, \\(g(z) = 1\\) if \\(z \ge 0\\), and \\(g(z) = -1\\) if \\(z \lt 0\\).
 
-As so, we can image \\(\omega^T x + b = 0\\) as a hyperplane in \\(\mathbb{R}^n\\) that split apart 
-the two classes elements into different half spaces as in an affine space.
+As so, we can image \\(\boldsymbol{\omega}^T \boldsymbol{x} + b = 0\\) as a hyperplane in 
+\\(\mathbb{R}^n\\) that split apart the two classes elements into different half spaces as in an 
+affine space.
 
 Based on the above notation, we define the __functional margin__ w.r.t each element in 
 \\(\mathbb{D}\\) as
 
 $$
-\hat{\gamma}^{(i)} = y^{(i)}(\omega^T x^{(i)} + b)
+\hat{\gamma}^{(i)} = y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b)
 $$
 
-Then, if \\(y^{(i)} = 1\\), larger value of \\(\omega^T x^{(i)} + b\\) will make a larger 
-\\(\hat{\gamma}^{(i)}\\), similar for the case where \\(y^{(i)} = -1\\).
+Then, if \\(y^{(i)} = 1\\), larger value of \\(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b\\) 
+will make a larger \\(\hat{\gamma}^{(i)}\\), similar for the case where \\(y^{(i)} = -1\\).
 
-And with the definition of hypothesis \\(h_{\omega, b}\\), scaling \\(\omega\\) and \\(b\\) will not 
-affect the result of the output of the hypothesis, it will only affect the value of 
-\\(\hat{\gamma}^{(i)}\\).
+And with the definition of hypothesis \\(h_{\boldsymbol{\omega}, b}\\), scaling 
+\\(\boldsymbol{\omega}\\) and \\(b\\) will not affect the result of the output of the hypothesis, 
+it will only affect the value of \\(\hat{\gamma}^{(i)}\\).
 
 After that, we define the __functional margin__ w.r.t the whole \\(\mathbb{D}\\) as
 
@@ -46,28 +47,29 @@ $$
 $$
 
 And the __geometric margin__ \\(\gamma^{(i)}\\) w.r.t each element in \\(\mathbb{D}\\) is defined as 
-the distance of each element apart from the hyper plane \\(\omega^T x + b = 0\\). We can see that 
-the projection of the element \\(x^{(i)}\\) on the hyper plane equals 
-\\(x^{(i)} - \gamma^{(i)}\frac{\omega}{||\omega||}\\), and since this point is on the hyper plane, 
-the following equation holds:
+the distance of each element apart from the hyper plane 
+\\(\boldsymbol{\omega}^T \boldsymbol{x} + b = 0\\). We can see that the projection of the element 
+\\(\boldsymbol{x}^{(i)}\\) on the hyper plane equals 
+\\(\boldsymbol{x}^{(i)} - \gamma^{(i)}\frac{\boldsymbol{\omega}}{||\boldsymbol{\omega}||}\\), and 
+since this point is on the hyper plane, the following equation holds:
 
 $$
-\omega^T(x^{(i)} - \gamma^{(i)}\frac{\omega}{||\omega||}) + b = 0
+\boldsymbol{\omega}^T(\boldsymbol{x}^{(i)} - \gamma^{(i)}\frac{\boldsymbol{\omega}}{||\boldsymbol{\omega}||}) + b = 0
 $$
 
 And we can get
 
 $$
-\gamma^{(i)} = \frac{\omega^Tx^{(i)} + b}{||\omega||} = \Big(\frac{\omega}{||\omega||}\Big)^T x^{(i)} + \frac{b}{||\omega||}
+\gamma^{(i)} = \frac{\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b}{||\boldsymbol{\omega}||} = \Big(\frac{\boldsymbol{\omega}}{||\boldsymbol{\omega}||}\Big)^T \boldsymbol{x}^{(i)} + \frac{b}{||\boldsymbol{\omega}||}
 $$
 
 Taking the case where \\(y^{(i)} = -1\\) into account, we get
 
 $$
-\gamma^{(i)} = y^{(i)}\bigg(\Big(\frac{\omega}{||\omega||}\Big)^T x^{(i)} + \frac{b}{||\omega||}\bigg)
+\gamma^{(i)} = y^{(i)}\bigg(\Big(\frac{\boldsymbol{\omega}}{||\boldsymbol{\omega}||}\Big)^T \boldsymbol{x}^{(i)} + \frac{b}{||\boldsymbol{\omega}||}\bigg)
 $$
 
-If \\(\|\|\omega\|\| = 1\\), then the functional margin equals the geometric margin.
+If \\(\|\|\boldsymbol{\omega}\|\| = 1\\), then the functional margin equals the geometric margin.
 
 And the __geometric margin__ w.r.t the whole \\(\mathbb{D}\\) is
 
@@ -80,9 +82,9 @@ the hyper plane that gains the maximum geometric margin w.r.t the whole \\(\math
 
 $$
 \begin{align}
-max_{\gamma, \omega, b} \quad& \gamma\\
-s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge \gamma,\quad i = 1, \dots, m\\
-& ||\omega|| = 1
+max_{\gamma, \boldsymbol{\omega}, b} \quad& \gamma\\
+s.t. \quad& y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b) \ge \gamma,\quad i = 1, \dots, m\\
+& ||\boldsymbol{\omega}|| = 1
 \end{align}
 $$
 
@@ -90,24 +92,24 @@ which can be transfromed to
 
 $$
 \begin{align}
-max_{\hat{\gamma}, \omega, b} \quad& \frac{\hat{\gamma}}{||\omega||}\\
-s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge \hat{\gamma},\quad i = 1, \dots, m
+max_{\hat{\gamma}, \boldsymbol{\omega}, b} \quad& \frac{\hat{\gamma}}{||\boldsymbol{\omega}||}\\
+s.t. \quad& y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b) \ge \hat{\gamma},\quad i = 1, \dots, m
 \end{align}
 $$
 
 where the objective target is changed to minimize the functional margin as 
-\\(\gamma = \frac{\hat{\gamma}}{||\omega||}\\). And it can be further transformed as
+\\(\gamma = \frac{\hat{\gamma}}{||\boldsymbol{\omega}||}\\). And it can be further transformed as
 
 $$
 \begin{align}
-min_{\gamma, \omega, b} \quad& \frac{1}{2}||\omega||^2\\
-s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge 1,\quad i = 1, \dots, m
+min_{\gamma, \boldsymbol{\omega}, b} \quad& \frac{1}{2}||\boldsymbol{\omega}||^2\\
+s.t. \quad& y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b) \ge 1,\quad i = 1, \dots, m
 \end{align}
 $$
 
-This is because by scaling \\(\omega\\) and \\(b\\), we can get \\(\hat{\gamma}\\) with any 
-magnitude. So by setting \\(\hat{\gamma} = 1\\), we get the above convex quadratic optimization 
-problem with linear constraints.
+This is because by scaling \\(\boldsymbol{\omega}\\) and \\(b\\), we can get 
+\\(\hat{\boldsymbol{\omega}}\\) with any magnitude. So by setting \\(\hat{\gamma} = 1\\), we get 
+the above convex quadratic optimization problem with linear constraints.
 
 ### Lagrange duality
 
@@ -115,19 +117,19 @@ Consider a problem of the following form:
 
 $$
 \begin{align}
-min_{\omega} \quad& f(\omega)\\
-s.t. \quad& h_i(\omega) = 0,\quad i = 1, \dots, l
+min_{\boldsymbol{\omega}} \quad& f(\boldsymbol{\omega})\\
+s.t. \quad& h_i(\boldsymbol{\omega}) = 0,\quad i = 1, \dots, l
 \end{align}
 $$
 
 The __Lagrangian__ is defined to be
 
 $$
-\mathcal{L}(\omega, \beta) = f(\omega) + \sum_{i = 1}^l\beta_ih_i(\omega)
+\mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\beta}) = f(\boldsymbol{\omega}) + \sum_{i = 1}^l\beta_ih_i(\boldsymbol{\omega})
 $$
 
-where \\(\beta_i\\)'s are called the __Lagrange multipliers__. And we can solve for \\(\omega\\) and 
-\\(\beta\\) with
+where \\(\beta_i\\)'s are called the __Lagrange multipliers__. And we can solve for \\(\boldsymbol{\omega}\\) and 
+\\(\boldsymbol{\beta}\\) with
 
 $$
 \frac{\partial\mathcal{L}}{\partial\omega_i} = 0, \quad \frac{\partial\mathcal{L}}{\partial\beta_i} = 0
@@ -137,119 +139,120 @@ The __primal__ optimization problem is defined as
 
 $$
 \begin{align}
-min_{\omega} \quad& f(\omega)\\
-s.t. \quad& g_i(\omega) \le 0,\quad i = 1, \dots, k
-& h_i(\omega) = 0,\quad i = 1, \dots, l
+min_{\boldsymbol{\omega}} \quad& f(\boldsymbol{\omega})\\
+s.t. \quad& g_i(\boldsymbol{\omega}) \le 0,\quad i = 1, \dots, k\\
+& h_i(\boldsymbol{\omega}) = 0,\quad i = 1, \dots, l
 \end{align}
 $$
 
 And the __generlized Lagrangian__ is defined as
 
 $$
-\mathcal{L}(\omega, \alpha, \beta) = f(\omega) + \sum_{i = 1}^k\alpha_ig_i(\omega) + \sum_{i = 1}^l\beta_ih_i(\omega)
+\mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta}) = f(\boldsymbol{\omega}) + \sum_{i = 1}^k\alpha_ig_i(\boldsymbol{\omega}) + \sum_{i = 1}^l\beta_ih_i(\boldsymbol{\omega})
 $$
 
-where \\(\alpha\\)'s and \\(\beta\\)'s are the __Lagrange multipliers__. Consider the quantity
+where \\(\boldsymbol{\alpha}\\)'s and \\(\boldsymbol{\beta}\\)'s are the __Lagrange multipliers__. Consider the quantity
 
 $$
-\theta_\mathcal{P}(\omega) = \max_{\alpha, \beta: \alpha_i \ge 0}\mathcal{L}(\omega, \alpha, \beta)
+\theta_\mathcal{P}(\boldsymbol{\omega}) = \max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0}\mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta})
 $$
 
 where \\(\mathcal{P}\\) stands for "primal". We can see that
 
 $$
-\theta_\mathcal{P} = \begin{cases} f(\omega) \quad& \text{if } \omega \text{ satisfies primal constraints}\\\infty \quad&\text{otherwise}\end{cases}
+\theta_\mathcal{P} = \begin{cases} f(\boldsymbol{\omega}) \quad& \text{if } \omega \text{ satisfies primal constraints}\\\infty \quad&\text{otherwise}\end{cases}
 $$
 
 The primal problem can then be expressed as
 
 $$
-p^* = min_\omega\theta_\mathcal{P}(\omega) = min_\omega max_{\alpha, \beta: \alpha_i \ge 0}\mathcal{L}(\omega, \alpha, \beta)
+p^* = min_\boldsymbol{\omega}\theta_\mathcal{P}(\boldsymbol{\omega}) = min_\boldsymbol{\omega} max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0}\mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta})
 $$
 
 The __dual__ problem is like:
 
 $$
-\max_{\alpha, \beta: \alpha_i \ge 0}\theta_\mathcal{D}(\alpha, \beta) = max_{\alpha, \beta: \alpha_i \ge 0} min_\omega \mathcal{L}(\omega, \alpha, \beta)
+\max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0}\theta_\mathcal{D}(\boldsymbol{\alpha}, \boldsymbol{\beta}) = max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0} min_\boldsymbol{\omega} \mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta})
 $$
 
 And we can see that the optimal value of the __dual__ problem has the relationship with the optimal 
 value of the __primal__ problem as follows:
 
 $$
-d^* = \max_{\alpha, \beta: \alpha_i \ge 0} min_\omega \mathcal{L}(\omega, \alpha, \beta) \le min_\omega max_{\alpha, \beta: \alpha_i \ge 0}\mathcal{L}(\omega, \alpha, \beta) = p*
+d^* = \max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0} min_\boldsymbol{\omega} \mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta}) \le min_\boldsymbol{\omega} max_{\boldsymbol{\alpha}, \boldsymbol{\beta}: \alpha_i \ge 0}\mathcal{L}(\boldsymbol{\omega}, \boldsymbol{\alpha}, \boldsymbol{\beta}) = p*
 $$
 
 Suppose \\(f\\) and \\(g_i\\)'s are convex, and \\(h_i\\)'s are affine. Suppose the constraints 
-\\(g_i\\)'s are (strictly) feasible; \\(\exists\\) \\(\omega\\) such that \\(g_i(\omega\) \lt 0\\) 
-for all \\(i\\). Then there must exists \\(\omega^\*\\), \\(\alpha^\*\\), \\(\beta^\*\\) so that 
-\\(\omega^\*\\) is the solution to the __primal__ problem, \\(\alpha^\*\\) and \\(\beta^\*\\) are 
-the solution to the __dual__ problem. And \\(p^* = d^* = \mathcal{L}(\omega^\*, \alpha^\*, \beta^\*)\\). 
-And \\(\omega^\*\\), \\(\alpha^\*\\) and \\(\beta^\*\\) satisfy the __Karush-Kuhn-Tucker (KKT)__ 
+\\(g_i\\)'s are (strictly) feasible; \\(\exists\\) \\(\boldsymbol{\omega}\\) such that 
+\\(g_i(\boldsymbol{\omega}) \lt 0\\) for all \\(i\\). Then there must exists \\(\boldsymbol{\omega}^\*\\), 
+\\(\boldsymbol{\alpha}^\*\\), \\(\boldsymbol{\beta}^\*\\) so that \\(\boldsymbol{\omega}^\*\\) is the solution to the 
+__primal__ problem, \\(\boldsymbol{\alpha}^\*\\) and \\(\boldsymbol{\beta}^\*\\) are the solution to the __dual__ problem. 
+And \\(p^* = d^* = \mathcal{L}(\boldsymbol{\omega}^\*, \boldsymbol{\alpha}^\*, \boldsymbol{\beta}^\*)\\). 
+And \\(\boldsymbol{\omega}^\*\\), \\(\boldsymbol{\alpha}^\*\\) and \\(\boldsymbol{\beta}^\*\\) satisfy the __Karush-Kuhn-Tucker (KKT)__ 
 conditions, which are follows:
 
 $$
 \begin{align}
-\frac{\partial}{\partial\omega_i}\mathcal{L}(\omega^*, \alpha^*, \beta^*) &= 0,\quad i = 1, \dots, n\\
-\frac{\partial}{\partial\beta_i}\mathcal{L}(\omega^*, \alpha^*, \beta^*) &= 0,\quad i = 1, \dots, l\\
-\alpha_i^*g_i(\omega^*) &= 0,\quad i = 1, \dots, k\\
-g_i(\omega^*) &\le 0,\quad i = 1, \dots, k\\
-\alpha^* &\ge 0,\quad i = 1, \dots, k
+\frac{\partial}{\partial\omega_i}\mathcal{L}(\boldsymbol{\omega}^*, \boldsymbol{\alpha}^*, \boldsymbol{\beta}^*) &= 0,\quad i = 1, \dots, n\\
+\frac{\partial}{\partial\beta_i}\mathcal{L}(\boldsymbol{\omega}^*, \boldsymbol{\alpha}^*, \boldsymbol{\beta}^*) &= 0,\quad i = 1, \dots, l\\
+\alpha_i^*g_i(\boldsymbol{\omega}^*) &= 0,\quad i = 1, \dots, k\\
+g_i(\boldsymbol{\omega}^*) &\le 0,\quad i = 1, \dots, k\\
+\alpha_i^* &\ge 0,\quad i = 1, \dots, k
 \end{align}
 $$
 
-And any \\(\omega^\*\\), \\(\alpha^\*\\) and \\(\beta^\*\\) satisfy the __KKT__ conditions is the 
+And any \\(\boldsymbol{\omega}^\*\\), \\(\boldsymbol{\alpha}^\*\\) and \\(\boldsymbol{\beta}^\*\\) satisfy the __KKT__ conditions is the 
 solution to the primal and dual problems.
 
 And the third constraint of the __KKT__ conditions is very interesting.
 
-### Solving svm with Lagrange dual
+### Solving SVM with Lagrange dual
 
 For
 
 $$
 \begin{align}
-min_{\gamma, \omega, b} \quad& \frac{1}{2}||\omega||^2\\
-s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge 1,\quad i = 1, \dots, m
+min_{\gamma, \boldsymbol{\omega}, b} \quad& \frac{1}{2}||\boldsymbol{\omega}||^2\\
+s.t. \quad& y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b) \ge 1,\quad i = 1, \dots, m
 \end{align}
 $$
 
 the Lagrangian is like
 
 $$
-\mathcal{L}(\omega, b, \alpha) = \frac{1}{2}||\omega||^2 - \sum_{i = 1}^m\alpha_i\bigg[y^{(i)}\Big(\omega^T x^{(i)} + b\Big) - 1\bigg]
+\mathcal{L}(\boldsymbol{\omega}, b, \boldsymbol{\alpha}) = \frac{1}{2}||\boldsymbol{\omega}||^2 - \sum_{i = 1}^m\alpha_i\bigg[y^{(i)}\Big(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b\Big) - 1\bigg]
 $$
 
-`NOTE:` In the final result, only those __support vector \\(x^{(i)}\\)__'s corresponding \\(\alpha_i\\)'s are 
+`NOTE:` In the final result, only those __support vector \\(\boldsymbol{x}^{(i)}\\)__'s corresponding \\(\alpha_i\\)'s are 
 non-zero.
 
-To solve the dual form of the problem, first minimize \\(\mathcal{L}(\omega, b, \alpha)\\) with 
-respect to \\(\omega\\) and \\(b\\) (for fixed \\(\alpha\\)), to get \\(\theta_\mathcal{D}\\), 
-which is achieved by setting the derivatives of \\(\mathcal{L}\\) with respect to \\(\omega\\) and 
+To solve the dual form of the problem, first minimize \\(\mathcal{L}(\boldsymbol{\omega}, b, \boldsymbol{\alpha})\\) with 
+respect to \\(\boldsymbol{\omega}\\) and \\(b\\) (for fixed \\(\boldsymbol{\alpha}\\)), to get \\(\theta_\mathcal{D}\\), 
+which is achieved by setting the derivatives of \\(\mathcal{L}\\) with respect to \\(\boldsymbol{\omega}\\) and 
 \\(b\\) to zero:
 
 $$
-\nabla_\omega\mathcal{L}(\omega, b, \alpha) = \omega - \sum_{i = 1}^m\alpha_iy^{(i)}x^{(i)} = 0
+\nabla_\boldsymbol{\omega}\mathcal{L}(\boldsymbol{\omega}, b, \boldsymbol{\alpha}) = \boldsymbol{\omega} - \sum_{i = 1}^m\alpha_iy^{(i)}\boldsymbol{x}^{(i)} = \boldsymbol{0}
 $$
 
 which implies that
 
 $$
-\omega = \sum_{i = 1}^m\alpha_iy^{(i)}x^{(i)}
+\boldsymbol{\omega} = \sum_{i = 1}^m\alpha_iy^{(i)}\boldsymbol{x}^{(i)}
 $$
 
 As for derivative with respect to \\(b\\), we obtain
 
 $$
-\frac{\partial}{\partial b}\mathcal{L}(\omega, b, \alpha) = \sum_{i = 1}^m\alpha_iy^{(i)} = 0
+\frac{\partial}{\partial b}\mathcal{L}(\boldsymbol{\omega}, b, \boldsymbol{\alpha}) = \sum_{i = 1}^m\alpha_iy^{(i)} = 0
 $$
 
 And we substitute those back to the dual problem, and get the following:
 
 $$
 \begin{align}
-\mathcal{L}(\omega, b, \alpha) &= \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)} - b\sum_{i = 1}^m\alpha_i y^{(i)}\\
-&= \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j(x^{(i)})^Tx^{(j)}
+\mathcal{L}(\boldsymbol{\omega}, b, \boldsymbol{\alpha}) &= \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j(\boldsymbol{x}^{(i)})^T\boldsymbol{x}^{(j)} - b\sum_{i = 1}^m\alpha_i y^{(i)}\\
+&= \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j(\boldsymbol{x}^{(i)})^T\boldsymbol{x}^{(j)}
 \end{align}
 $$
 
@@ -257,22 +260,22 @@ Finally we obtain the dual optimization problem:
 
 $$
 \begin{align}
-max_\alpha \quad& F(\alpha) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)}, x^{(j)} \rangle\\
+max_\boldsymbol{\alpha} \quad& F(\boldsymbol{\alpha}) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle \boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)} \rangle\\
 s.t. \quad& \alpha_i \ge 0,\quad i = 1, \dots, m\\
 & \sum_{i = 1}^m\alpha_i y^{(i)} = 0
 \end{align}
 $$
 
-After solving \\(\omega^\*\\), the intercept term \\(b\\) can be calculated as
+After solving \\(\boldsymbol{\omega}^\*\\), the intercept term \\(b\\) can be calculated as
 
 $$
-b^* = -\frac{max_{i: y^{(i)} = -1}\langle\omega^*, x^{(i)}\rangle + min_{i: y^{(i)} = 1}\langle\omega^*, x^{(i)}\rangle}{2}
+b^* = -\frac{max_{i: y^{(i)} = -1}\langle\boldsymbol{\omega}^*, \boldsymbol{x}^{(i)}\rangle + min_{i: y^{(i)} = 1}\langle\boldsymbol{\omega}^*, \boldsymbol{x}^{(i)}\rangle}{2}
 $$
 
-And \\(\omega^T x + b\\) can be calculated as
+And \\(\boldsymbol{\omega}^T \boldsymbol{x} + b\\) can be calculated as
 
 $$
-\omega^T x + b = \Big(\sum_{i = 1}^m\alpha_iy^{(i)}x^{(i)}\Big)^T x + b = \sum_{i = 1}^m\alpha_i y^{(i)} \langle x^{(i)}, x\rangle + b
+\boldsymbol{\omega}^T \boldsymbol{x} + b = \Big(\sum_{i = 1}^m\alpha_iy^{(i)}\boldsymbol{x}^{(i)}\Big)^T \boldsymbol{x} + b = \sum_{i = 1}^m\alpha_i y^{(i)} \langle \boldsymbol{x}^{(i)}, \boldsymbol{x}\rangle + b
 $$
 
 ### Kernel trick
@@ -280,12 +283,12 @@ $$
 The kernel is defined as
 
 $$
-K(x, z) = \phi(x)^T\phi(z)
+K(\boldsymbol{x}, \boldsymbol{z}) = \phi(\boldsymbol{x})^T\phi(\boldsymbol{z})
 $$
 
-where \\(\phi(\omega)\\) can be very complicated, while \\(K(x, z)\\) is computationally cheap. With 
-the kernel trick, we can map the elements into a higher dimensional space with little extra 
-computation by avoiding explicit computing of \\(\phi(\omega)\\)
+where \\(\phi(\boldsymbol{\omega})\\) can be very complicated, while \\(K(\boldsymbol{x}, \boldsymbol{z})\\) 
+is computationally cheap. With the kernel trick, we can map the elements into a higher dimensional 
+space with little extra computation by avoiding explicit computing of \\(\phi(\boldsymbol{\omega})\\).
 
 A valid kernel matrix should be symmetric and semi-definite, vice versa.
 
@@ -295,8 +298,8 @@ With __\\(\mathit{l}_1\\) regularization__, we have
 
 $$
 \begin{align}
-min_{\gamma, \omega, b} \quad& \frac{1}{2}||\omega||^2 + C\sum_{i = 1}^m\xi_i\\
-s.t. \quad& y^{(i)}(\omega^T x^{(i)} + b) \ge 1 - \xi_i,\quad i = 1, \dots, m\\
+min_{\gamma, \boldsymbol{\omega}, b} \quad& \frac{1}{2}||\boldsymbol{\omega}||^2 + C\sum_{i = 1}^m\xi_i\\
+s.t. \quad& y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b) \ge 1 - \xi_i,\quad i = 1, \dots, m\\
 & \xi_i \ge 0,\quad i = 1, \dots, m
 \end{align}
 $$
@@ -304,14 +307,14 @@ $$
 Now the elements are permitted to have (functional) margin less than \\(1\\), and if an example 
 has functional margin \\(1 - \xi_i\\), there will a cost of the objective function being 
 increased by \\(C\xi_i\\). The parameter \\(C\\) controls the relative weighting between the twin 
-goals of making the \\(||\omega||^2\\) small and of ensuring that most elements have functional 
+goals of making the \\(||\boldsymbol{\omega}||^2\\) small and of ensuring that most elements have functional 
 margin at least \\(1\\).
 
 The dual form is like:
 
 $$
 \begin{align}
-max_\alpha \quad& F(\alpha) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)}, x^{(j)}\rangle\\
+max_\boldsymbol{\alpha} \quad& F(\boldsymbol{\alpha}) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle \boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}\rangle\\
 s.t. \quad& 0 \le \alpha_i \le C,\quad i = 1, \dots, m\\
 & \sum_{i = 1}^m\alpha_i y^{(i)} = 0
 \end{align}
@@ -321,9 +324,9 @@ And the KKT dual-complementarity conditions are:
 
 $$
 \begin{align}
-\alpha_i = 0 &\Rightarrow y^{(i)}(\omega^Tx^{(i)} + b) \ge 1\\
-\alpha_i = C &\Rightarrow y^{(i)}(\omega^Tx^{(i)} + b) \le 1\\
-0 \lt \alpha_i \lt C &\Rightarrow y^{(i)}(\omega^Tx^{(i)} + b) = 1
+\alpha_i = 0 &\Rightarrow y^{(i)}(\boldsymbol{\omega}^T\boldsymbol{x}^{(i)} + b) \ge 1\\
+\alpha_i = C &\Rightarrow y^{(i)}(\boldsymbol{\omega}^T\boldsymbol{x}^{(i)} + b) \le 1\\
+0 \lt \alpha_i \lt C &\Rightarrow y^{(i)}(\boldsymbol{\omega}^T\boldsymbol{x}^{(i)} + b) = 1
 \end{align}
 $$
 
@@ -331,13 +334,13 @@ Calculation for \\(b^\*\\) mentioned above is not valid here any more.
 
 ### The SMO Algorithm
 
-Before talking about the SMO (sequential minimal optimization) algorithm, first introduct the 
+Before talking about the SMO (sequential minimal optimization) algorithm, first introduce the 
 coordinate ascent.
 
 For an unconstrained optimization problem
 
 $$
-max_\alpha F(\alpha_1, \alpha_2, \dots, \alpha_m)
+max_\boldsymbol{\alpha} F(\alpha_1, \alpha_2, \dots, \alpha_m)
 $$
 
 do following:
@@ -356,13 +359,13 @@ While in the problem of svm:
 
 $$
 \begin{align}
-max_\alpha \quad& F(\alpha) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle x^{(i)}, x^{(j)}\rangle\\
+max_\boldsymbol{\alpha} \quad& F(\boldsymbol{\alpha}) = \sum_{i = 1}^m\alpha_i - \frac{1}{2}\sum_{i, j = 1}^m y^{(i)}y^{(j)}\alpha_i\alpha_j\langle \boldsymbol{x}^{(i)}, \boldsymbol{x}^{(j)}\rangle\\
 s.t. \quad& 0 \le \alpha_i \le C,\quad i = 1, \dots, m\\
 & \sum_{i = 1}^m\alpha_i y^{(i)} = 0
 \end{align}
 $$
 
-We can't update single \\(\alpha\\) at each step because
+We can't update single \\(\boldsymbol{\alpha}\\) at each step because
 
 $$
 \alpha_i y^{(i)} = - \sum_{\substack{j = 1\\j \neq i}}^m\alpha_j y^{(j)}
@@ -378,13 +381,13 @@ $$
 which gives us
 
 $$
-\alpha_i = (\zeta - alpha_j y^{(j)})y^{(i)}
+\alpha_i = (\zeta - \alpha_j y^{(j)})y^{(i)}
 $$
 
 And the objective function turns out to be
 
 $$
-F(\alpha) = F(\alpha_1, \dots, (\zeta - alpha_j y^{(j)})y^{(i)}, \dots, \alpha_j, \dots, \alpha_m)
+F(\boldsymbol{\alpha}) = F(\alpha_1, \dots, (\zeta - alpha_j y^{(j)})y^{(i)}, \dots, \alpha_j, \dots, \alpha_m)
 $$
 
 And \\(\alpha_j\\) is updated with
@@ -401,19 +404,19 @@ equation \\(\alpha_i = (\zeta - alpha_j y^{(j)})y^{(i)}\\).
 The loss function for each element in hard margin linear svm is defined as the __hinge loss__:
 
 $$
-\mathcal{L^{(i)}}(\omega) = \max\{0, 1 - y^{(i)}(\omega^T x^{(i)} + b)\}
+\mathcal{L^{(i)}}(\boldsymbol{\omega}) = \max\{0, 1 - y^{(i)}(\boldsymbol{\omega}^T \boldsymbol{x}^{(i)} + b)\}
 $$
 
 And the sub-gradient is like
 
 $$
-\frac{\partial \mathcal{L^{(i)}}(\omega)}{\partial \omega} = \begin{cases}-y^{(i)}x^{(i)} \quad& \text{if } y^{(i)}\omega^Tx^{(i)} < 1\\0 \quad& \text{otherwise}\end{cases}
+\frac{\partial \mathcal{L^{(i)}}(\boldsymbol{\omega})}{\partial \boldsymbol{\omega}} = \begin{cases}-y^{(i)}\boldsymbol{x}^{(i)} \quad& \text{if } y^{(i)}\boldsymbol{\omega}^T\boldsymbol{x}^{(i)} < 1\\0 \quad& \text{otherwise}\end{cases}
 $$
 
 And the objective function is to minimize the total loss
 
 $$
-min_\omega \mathcal{L} = min_\omega \sum_{i = 1}^m \mathcal{L^{(i)}}
+min_\boldsymbol{\omega} \mathcal{L} = min_\boldsymbol{\omega} \sum_{i = 1}^m \mathcal{L^{(i)}}(\boldsymbol{\omega})
 $$
 
 which is a convex linear problem, thus can be easily solved by __SGD__ or __L-BFGS__.
