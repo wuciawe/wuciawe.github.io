@@ -104,7 +104,7 @@ $$
 $$
 
 And thanks to the fact that the gradient/sub-gradient is additive, the regularizer is easy to be applied 
-in the process of computing optimum in SGD or L-BFGS.
+in the process of computing optimum in [SGD or L-BFGS]({% post_url 2016-06-06-notes-on-gradient-descent-and-newton-raphson-method %}).
 
 ### More on Ridge regression
 

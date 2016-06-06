@@ -80,7 +80,7 @@ $$
 \nabla_{\boldsymbol{\theta}}\mathcal{L}^{(i)} = -(2y^{(i)} - 1)\Big(1 - \frac{1}{1 + \mathrm{e}^{-(2y^{(i)} - 1)\boldsymbol{\theta}^T\boldsymbol{x}^{(i)}}}\Big)\boldsymbol{x}^{(i)}
 $$
 
-So this optimization can be easily solved by SGD or L-BFGS.
+So this optimization can be easily solved by [SGD or L-BFGS]({% post_url 2016-06-06-notes-on-gradient-descent-and-newton-raphson-method %}).
 
 ### Maximum Likelihood Estimation
 

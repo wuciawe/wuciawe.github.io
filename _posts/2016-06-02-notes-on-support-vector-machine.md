@@ -419,4 +419,4 @@ $$
 min_\boldsymbol{\omega} \mathcal{L} = min_\boldsymbol{\omega} \sum_{i = 1}^m \mathcal{L^{(i)}}(\boldsymbol{\omega})
 $$
 
-which is a convex linear problem, thus can be easily solved by __SGD__ or __L-BFGS__.
+which is a convex linear problem, thus can be easily solved by [SGD or L-BFGS]({% post_url 2016-06-06-notes-on-gradient-descent-and-newton-raphson-method %}).
