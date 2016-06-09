@@ -27,18 +27,23 @@ Usage:
       </a></li>
     {% endfor %}
   {% else %}
-    {% capture cats %}
-      {% for cat in categories_list %}
-        {{ cat[1].size | append: '_' | append: cat[0] | replace: ' ', '&#32;' }}
-      {% endfor %}
-    {% endcapture %}
-    {% assign sortedcats = cats | split:' ' | sort %}
+    {% assign cats = "" | split:"|" %}
+    {% for cat in categories_list %}
+      {% assign o = "" | split:"|" %}
+      {% assign is = 0 | minus:cat[1].size %}
+      {% assign o = o | push:is %}
+      {% assign o = o | push:cat[0] %}
+      {% assign cats = cats | push:o %}
+    {% endfor %}
+    {% assign sortedcats = cats | sort %}
     {% for cat in sortedcats %}
-      {% assign rcat = cat | split:'_' %}
-      {% assign catName = rcat.last | replace: '&#32;', ' ' %}
-      <li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ catName }}-ref">
-        {{ catName }} <span>{{ rcat.first }}</span>
-      </a></li>
+      {% assign catName = cat.last %}
+      {% assign catSize = 0 | minus:cat.first %}
+      <li>
+        <a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ catName }}-ref">
+          {{ catName }} <span>{{ catSize }}</span>
+        </a>
+      </li>
     {% endfor %}
   {% endif %}
 {% endif %}

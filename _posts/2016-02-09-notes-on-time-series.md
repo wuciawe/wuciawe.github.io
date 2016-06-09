@@ -1,7 +1,7 @@
 ---
 layout: post
 category: [math]
-tags: [stat, time series]
+tags: [stat, time series, math]
 infotext: "notes on time series analysis, containing the very basic concepts, some of them recall me of the course 'digital signal processing'"
 ---
 {% include JB/setup %}

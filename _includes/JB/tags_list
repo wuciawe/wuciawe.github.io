@@ -27,16 +27,23 @@ Usage:
       </a></li>
     {% endfor %}
   {% else %}
-    {% capture tags %}
-      {% for tag in tags_list %}
-        {{ tag[1].size | append: '_' | append: tag[0] | replace: ' ', '&#32;' }}
-      {% endfor %}
-    {% endcapture %}
-    {% assign sortedtags = tags | split:' ' | sort %}
+    {% assign tags = "" | split:"|" %}
+    {% for tag in tags_list %}
+      {% assign o = "" | split:"|" %}
+      {% assign is = 0 | minus:tag[1].size %}
+      {% assign o = o | push:is %}
+      {% assign o = o | push:tag[0] %}
+      {% assign tags = tags | push:o %}
+    {% endfor %}
+    {% assign sortedtags = tags | sort %}
     {% for tag in sortedtags %}
-      {% assign rtag = tag | split:'_' %}
-      {% assign tagName = rtag.last | replace: '&#32;', ' ' %}
-      <li><a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tagName }}-ref">{{ tagName }} <span>{{ rtag.first }}</span></a></li>
+      {% assign tagName = tag.last %}
+      {% assign tagSize = 0 | minus:tag.first %}
+      <li>
+        <a href="{{ BASE_PATH }}{{ site.JB.tags_path }}#{{ tagName }}-ref">
+          {{ tagName }} <span>{{ tagSize }}</span>
+        </a>
+      </li>
     {% endfor %}
   {% endif %}
 {% endif %}

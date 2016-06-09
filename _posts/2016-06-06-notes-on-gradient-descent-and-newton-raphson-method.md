@@ -144,7 +144,7 @@ Similar in Newton's method, the Taylor series of \\(\mathcal{F}(\boldsymbol{\ome
 iterate is:
 
 $$
-\mathcal{F}(\boldsymbol{\omega}_{n + 1} + \Delta\boldsymbol{\omega}) \approx \mathcal{F}(\boldsymbol{\omega}_n) + \nabla\mathcal{F}(\boldsymbol{\omega}_n)^T\Delta\boldsymbol{\omega} + \frac{1}{2}\Delta\boldsymbol{\omega}^TB\Delta\boldsymbol{\omega}
+\mathcal{F}(\boldsymbol{\omega}_n + \Delta\boldsymbol{\omega}) \approx \mathcal{F}(\boldsymbol{\omega}_n) + \nabla\mathcal{F}(\boldsymbol{\omega}_n)^T\Delta\boldsymbol{\omega} + \frac{1}{2}\Delta\boldsymbol{\omega}^TB\Delta\boldsymbol{\omega}
 $$
 
 where \\(B\\) is an approximation to the Hessian matrix, and the gradient of this approximation w.r.t 
