@@ -51,6 +51,20 @@ calculated from a given set of sample data.
 A p-value stands the probability that a value at least as extreme as the 
 test statistic would be observed under the null hypothesis.
 
+Given the null hypothesis that the population mean \\(\mu\\) is equal to a 
+given value \\(0\\), the p-values for testing \\(H_0\\) against each of 
+the possible alternative hypotheses are (t-statistic):
+
+$$
+P(Z \gt z) for H_a: \mu \gt 0
+$$
+$$
+P(Z \lt z) for H_a: \mu \lt 0
+$$
+$$
+2P(Z \gt |z|) for H_a: \mu = 0.
+$$
+
 ### Significance levels
 
 The significance level \\(\alpha\\) for a given hypothesis test is a value 
