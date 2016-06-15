@@ -2,7 +2,7 @@
 layout: post
 category: [machine learning, math]
 tags: [machine learning, math, regression, loss function, linear regression, regularization]
-infotext: 'A very simple review on linear regression'
+infotext: 'A simple review on linear regression'
 ---
 {% include JB/setup %}
 
@@ -166,4 +166,63 @@ combination of some other features, we will suffer from the multicollinearity. F
 loss, we can't get the solution via the matrix notation, since the 
 \\(\boldsymbol{X}^T\boldsymbol{X}\\) is not invertible. As a result, the value of \\(\boldsymbol{\theta}\\) 
 is not identifiable. In this case, we can use __Ridge__ to ensure the intertibility of 
-\\(\boldsymbol{X}^T\boldsymbol{X} + \lambda\boldsymbol{I}\\). 
+\\(\boldsymbol{X}^T\boldsymbol{X} + \lambda\boldsymbol{I}\\).
+
+### The goodness of the fit of linear regression
+
+In statistics, the coefficient of determination, denoted \\(\mathrm{R}^2\\) or \\(\mathrm{r}^2\\), is 
+a number that indicates the proportion of the variance in the dependent variable that is predictable 
+from the independent variable.
+
+- For simple linear regression, \\(\mathrm{R}^2\\) is the square of the sample correlation 
+\\(r_{xy}\\).
+- For multiple linear regression with intercept(which includes simple linear regression), it is 
+defined as \\(\mathrm{R}^2 = \frac{\text{SSM}}{\text{SST}}\\).
+
+In either case, \\(\mathrm{R}^2\\) indicates the proportion of variation in the y-variable that 
+is due to variation in the x-variables. Many researchers prefer the adjusted \\(\hat{\mathrm{R}}^2\\) 
+instead, which is penalized for having a large number of parameters in the model:
+
+$$
+\hat{\mathrm{R}}^2 = 1 - \frac{n - 1}{n - p}(1 - \mathrm{R}^2)
+$$
+
+As \\(\mathrm{R}^2\\) is defined as \\(1 - \frac{\text{SSE}}{\text{SST}}\\) or 
+\\(1 - \mathrm{R}^2 = \frac{\text{SSE}}{\text{SST}}\\). To take into account the number of 
+regression parameters \\(p\\), define the adjusted \\(\hat{\mathrm{R}}^2\\) value as
+
+$$
+1 - \hat{\mathrm{R}}^2 = \frac{\text{MSE}}{\text{MST}}
+$$
+
+where \\(\text{MSE} = \frac{\text{SSE}}{\text{DFE}} = \frac{\text{SSE}}{n-p}\\) and 
+\\(\text{MST} = \frac{\text{SST}}{\text{DFT}} = \frac{\text{SST}}{n-1}\\). Thus,
+
+$$
+\begin{array}
+{}1 - \hat{\mathrm{R}}^2 &= \frac{\frac{\text{SSE}}{n-p}}{\frac{\text{SST}}{n-1}}\\
+&= \frac{n - 1}{n - p}\frac{\text{SSE}}{\text{SST}}
+\end{array}
+$$
+
+so
+
+$$
+\begin{array}
+{}\hat{\mathrm{R}}^2 &= 1 - \frac{n - 1}{n - p}\frac{\text{SSE}}{\text{SST}}\\
+& = 1 - \frac{n - 1}{n - p}(1 - \mathrm{R}^2)
+\end{array}
+$$
+
+In linear least squares regression with an estimated intercept term, \\(\mathrm{R}^2\\) equals the 
+square of the Pearson correlation coefficient between the observed and modeled (predicted) data 
+values of the dependent variable. Specifically, \\(\mathrm{R}^2\\) equals the squared Pearson 
+correlation coefficient of the dependent and explanatory variable in an univariate linear least 
+squares regression.
+
+Under more general modeling conditions, where the predicted values might be generated from a model 
+different from linear least squares regression, an R2 value can be calculated as the square of the 
+correlation coefficient between the original and modeled data values. In this case, the value is 
+not directly a measure of how good the modeled values are, but rather a measure of how good a 
+predictor might be constructed from the modeled values (by creating a revised predictor of the 
+form \\(\alpha + \beta f_i\\)).

@@ -152,7 +152,7 @@ to follow the F-distribution under the null hypothesis, the sums of squares shou
 independent, and each should follow a scaled chi-squared distribution. The latter condition is 
 guaranteed if the data values are independent and normally distributed with a common variance.
 
-#### Multiple-comparison ANOVA problems[edit]
+#### Multiple-comparison ANOVA problems
 
 The F-test in one-way analysis of variance is used to assess whether the expected values of a 
 quantitative variable within several pre-defined groups differ from each other. The advantage of 
@@ -183,7 +183,7 @@ Student's t statistic.
 Definitions for Regression with Intercept
 
 - \\(n\\) is the number of observations, \\(p\\) is the number of regression parameters.
-- Corrected Sum of Squares for Model (sum of squares for regression): \\(\text{SSM| = \sum_{i = 1}^n(\hat{y}_i - \bar{y})^2\\)
+- Corrected Sum of Squares for Model (sum of squares for regression): \\(\text{SSM} = \sum_{i = 1}^n(\hat{y}_i - \bar{y})^2\\)
 - Sum of Squares for Error (sum of squares for residuals): \\(\text{SSE} = \sum_{i = 1}^n(y_i - \hat{y}_i)^2\\)
 - Corrected Sum of Squares Total: \\(\text{SST} = \sum_{i = 1}^n(y_i - \bar{y})^2\\), sample variance of the y-variable 
 multiplied by \\(n - 1\\)
