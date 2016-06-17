@@ -240,7 +240,7 @@ so \\(F\\) is independent of \\(\delta\\).
 The complete model:
 
 $$
-y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_{p - 1}x_{p - 1} + \beta_px_p + \dots + \beta{k - 1}x_{k - 1}
+y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \dots + \beta_{p - 1}x_{p - 1} + \beta_px_p + \dots + \beta_{k - 1}x_{k - 1}
 $$
 
 The reduced model:
