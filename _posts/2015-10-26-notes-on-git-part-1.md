@@ -93,6 +93,15 @@ git commit -m <message> # commit the staged snapshot with <message>
 git commit -am <message> # commit all changes of the staged area, with those deleted files
 {% endhighlight %}
 
+## Ignoring new files or Removing files
+
+### git rm
+
+{% highlight shell linenos=table %}
+git rm --cached [-r] <file> # stage the removal of <file>, but leave the file in the working tree
+git rm [-r] <file> # stage the removal of <file>
+{% endhighlight %}
+
 ## Inspecting
 
 ### git status
