@@ -79,3 +79,65 @@ of parentheses. The information of ($) operator is
   (a -> b) -> a -> b
 infixr 0 $
 {% endhighlight %}
+
+### Composition operator
+
+Function composition is a type of higher-order function that allows us to 
+combine functions such that the result of applying one function gets passed 
+to the next function as an argument.
+
+The composition operator is defined as:
+
+{% highlight haskell linenos=table %}
+(.) :: (b -> c) -> (a -> b) -> a -> c
+infixr 9 .
+{% endhighlight %}
+
+For example:
+
+{% highlight haskell linenos=table %}
+f :: Bool -> String
+f x = 
+  case x of
+    True -> "it is true."
+    False -> "it is false."
+
+g :: Int -> Bool
+g x = x == 1
+
+(f.g) 5 -- it is false.
+{% endhighlight %}
+
+We can think of the (.) or composition operator as being a way of pipelining 
+data through multiple functions.
+
+### Pointfree
+
+In Haskell the precedence of an ordinary function call (white space, usually) 
+is of 10. While the composition operator has a precedence of 9. It results 
+in the case where we want to compose functions then apply it to some parameter, 
+we have to parenthesize the composition so as to keep the application in 
+right order.
+
+With the help of ($) operator, the syntax can be much neater:
+
+{% highlight haskell linenos=table %}
+(f.g) 5 -- it is false.
+f.g $ 1 -- it is true.
+{% endhighlight %}
+
+Further more, we can focus on composing functions, rather than applying functions, 
+which is thus pretty elegant:
+
+{% highlight haskell linenos=table %}
+print :: Show a => a -> IO()
+print a = (putStrLn . show) a
+
+-- pointfree version
+print :: Show a => a -> IO()
+print = putStrLn . show
+{% endhighlight %}
+
+Pointfree refers to a style of composing functions without specifying their 
+arguments. The “point” in “pointfree” refers to the arguments, not to the function 
+composition operator.
