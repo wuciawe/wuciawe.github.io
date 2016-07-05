@@ -141,3 +141,16 @@ print = putStrLn . show
 Pointfree refers to a style of composing functions without specifying their 
 arguments. The “point” in “pointfree” refers to the arguments, not to the function 
 composition operator.
+
+### (->) operator
+
+The type constructor for functions, (->), is also a function, whose information 
+is like:
+
+{% highlight haskell linenos=table %}
+data (->) t1 t2
+infixr 0 `(->)`
+{% endhighlight %}
+
+Since (->) is an infix operator and right associative, it makes currying the default 
+in Haskell.
