@@ -154,3 +154,10 @@ infixr 0 `(->)`
 
 Since (->) is an infix operator and right associative, it makes currying the default 
 in Haskell.
+
+### Infix type constructor and data constructor
+
+Any operator that starts with a colon (:) must be an infix type or data constructor. 
+All infix data constructors must start with a colon. The type constructor of functions, 
+(->), is the only infix type constructor that doesn't start with a colon. Another exception 
+is that they cannot be (::) as this syntax is reserved for type assertions.

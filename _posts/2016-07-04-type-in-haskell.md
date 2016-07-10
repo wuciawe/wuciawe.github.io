@@ -257,9 +257,10 @@ Polymorphism in Haskell means being able to write code in terms of values
 which may be one of several, or any, type. Polymorphism in Haskell is either 
 parametric or constrained.
 
-Polymorphic type variables give us the ability to implement expressions that 
-can accept arguments and return results of different types without having to 
-write variations on the same expression for each type.
+Instead of limiting functions to a concrete type, we use typeclass polymorphic 
+type variables. Polymorphic type variables give us the ability to implement 
+expressions that can accept arguments and return results of different types 
+without having to write variations on the same expression for each type.
 
 In Haskell, polymorphism divides into two categories: parametric polymorphism 
 and constrained polymorphism.
