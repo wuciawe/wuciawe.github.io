@@ -161,3 +161,8 @@ Any operator that starts with a colon (:) must be an infix type or data construc
 All infix data constructors must start with a colon. The type constructor of functions, 
 (->), is the only infix type constructor that doesn't start with a colon. Another exception 
 is that they cannot be (::) as this syntax is reserved for type assertions.
+
+Data constructors with only non-alphanumeric symbols and that begin with a colon are infix by 
+default; those with alphanumeric names are prefix by default.
+
+The above two are inconsistent with each other?

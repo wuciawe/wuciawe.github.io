@@ -184,9 +184,22 @@ argument
 of the type it contains, as it's not allowed to be a record (product 
 type) or tagged union (sum type), the difference between newtype and the 
 type it contains is gone by the time the compiler generates the code, 
-which is similar to a type synonym
+which is similar to a type synonym (no additional "boxing up", newtype 
+is like a single-member C union that avoids creating an extra pointer, 
+but still gives a new type constructor and data constructor, so you don't 
+mix up things that share a single representation)
 - newtype creates a strict value constructor and type synonym creates 
 a lazy one
+
+In summary, reasons to use newtype:
+
+- Signal intent: using newtype makes it clear that you only intend for it 
+to be a wrapper for the underlying type. The newtype cannot eventually grow 
+into a more complicated sum or product type, while a normal datatype can.
+- Improve type safety: avoid mixing up many values of the same representation, 
+such as Text or Integer .
+- Add different typeclass instances to a type that is otherwise unchanged 
+representationally.
 
 ### Type variable
 
