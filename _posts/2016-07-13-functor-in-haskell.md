@@ -42,7 +42,7 @@ Note the similarity between `(<$>)` and `($)`:
 {% highlight haskell linenos=table %}
 (<$>) :: Functor f => (a -> b) -> f a -> f b
 
-($) :: (a -> b) -> a -> b
+($)   ::              (a -> b) ->  a  ->  b
 {% endhighlight %}
 
 #### Law
