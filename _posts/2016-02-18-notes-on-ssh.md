@@ -6,7 +6,7 @@ infotext: 'notes on using ssh, make life easier with remote access'
 ---
 {% include JB/setup %}
 
-## scp and ssh
+### scp and ssh
 
 When we need to login a remote machine via `ssh`, we will do something like
 
@@ -108,7 +108,7 @@ Besides that we can assign other `option`s to both `scp` and `ssh` via `-o` flag
 to connect to a remote end takes place, the message asking for something like remembering new key 
 will prompt. We can use `-o "StrictHostKeyChecking no"` to avoid prompting of the message.
 
-## pscp and pssh
+### pscp and pssh
 
 Sometimes you will need to transfer the same files with multiple remote ends or take the same actions 
 on multiple remote ends, repeatedly doing the same work with different hosts is quite cumbersome. Use 
@@ -145,7 +145,7 @@ When using `pssh` you may also meet with following error code caused by wrong `<
 | 130 | script terminated by `Ctrl + C` | `Ctrl + C` is fatal error signal 2 |
 | 255* | exit status out of range | exit takes only integer arguments in the range 0 ~ 255 |
 
-## change user
+### change user
 
 If you want to execute some commands on remote end with some other user account other than the 
 login account, then you will need to change user via `su` command as following:
