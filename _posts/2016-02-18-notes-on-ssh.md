@@ -108,6 +108,18 @@ Besides that we can assign other `option`s to both `scp` and `ssh` via `-o` flag
 to connect to a remote end takes place, the message asking for something like remembering new key 
 will prompt. We can use `-o "StrictHostKeyChecking no"` to avoid prompting of the message.
 
+In order to pull/push to Github via ssh behind a http proxy, you may use the `connect` program to 
+manage the proxy http connection as:
+
+{% highlight conf linenos=table %}
+Host                github.com
+    User            git
+    ProxyCommand    connect -H <proxy host>:<proxy port> ssh.github.com 443
+{% endhighlight %}
+
+Note that `ssh.github.com` and `443` is the real remote url and port as Github doesn't allow http 
+proxy to its `github.com:22`.
+
 ### pscp and pssh
 
 Sometimes you will need to transfer the same files with multiple remote ends or take the same actions 
