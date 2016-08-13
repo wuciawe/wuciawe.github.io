@@ -13,7 +13,7 @@ Add the following into the Emacs configuration file `.emacs`:
 {% highlight cl linenos=table %}
 ;;; Emacs is not a package manager, and here we load its package manager!
 (require 'package)
-(dolist (source '(("marmalade" . "http://marmalade-repo.org/packages/")
+(dolist (source '(("marmalade" . "https://marmalade-repo.org/packages/") ;;; this one not work in win
                   ("elpa" . "http://tromey.com/elpa/")
                   ;; TODO: Maybe, use this after emacs24 is released
                   ;; (development versions of packages)
@@ -41,7 +41,7 @@ For complete list of keys, call `describe-mode` with `Ctrl+h m`.
 
 ## Setup dark theme
 
-I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-solarized).
+I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-solarized){:target='_blank'}.
 
 *   Install the **color-theme-solarized** with the emacs package managder.
 *   Add following code into `.emacs`.
@@ -49,3 +49,5 @@ I use the [solarized-dark-theme](https://github.com/sellout/emacs-color-theme-so
 (load-theme 'solarized-dark t)
 {% endhighlight %}
 *   Reload the init file with `M-x eval-region RET`.
+
+`NOTE:` `dracula` is great.
