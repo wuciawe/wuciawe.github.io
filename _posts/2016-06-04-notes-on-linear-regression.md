@@ -226,3 +226,5 @@ correlation coefficient between the original and modeled data values. In this ca
 not directly a measure of how good the modeled values are, but rather a measure of how good a 
 predictor might be constructed from the modeled values (by creating a revised predictor of the 
 form \\(\alpha + \beta f_i\\)).
+
+`Note:` here is [the revisit on this topic]({%post_url 2016-09-08-notes-on-regression-revisit%}).

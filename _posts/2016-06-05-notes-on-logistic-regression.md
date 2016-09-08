@@ -139,3 +139,5 @@ $$
 The square root elements of \\(\text{cov}(\hat{\boldsymbol{\theta}})\\) is \\(\text{s.e.}(\hat{\boldsymbol{\theta}})\\).
 
 And the confidence interval for \\(\boldsymbol{\theta}\\) is \\([\hat{\boldsymbol{\theta}} - z_{\alpha / 2}\text{s.e.}(\hat{\boldsymbol{\theta}}), \hat{\boldsymbol{\theta}} + z_{\alpha / 2}\text{s.e.}(\hat{\boldsymbol{\theta}})]\\).
+
+`Note:` here is [the revisit on this topic]({%post_url 2016-09-08-notes-on-regression-revisit%}).
