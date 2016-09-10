@@ -70,7 +70,7 @@ $$
 __Cost function__: For each instance when \\( y \in \\{0, 1\\} \\): 
 
 $$
-\text{cost}^{(i)} = - \left(y \log \frac{1}{1 + \mathrm{e}^{-\mathbb{\omega}^T\mathbb{x}}} + (1 - y) \log \frac{\mathrm{e}^{\mathbb{\omega}^T\mathbb{x}}}{1 + \mathrm{e}^{-\mathbb{\omega}^T\mathbb{x}}}\right)
+\text{cost}^{(i)} = - \left(y \log \frac{1}{1 + \mathrm{e}^{-\mathbb{\omega}^T\mathbb{x}}} + (1 - y) \log \frac{\mathrm{e}^{-\mathbb{\omega}^T\mathbb{x}}}{1 + \mathrm{e}^{-\mathbb{\omega}^T\mathbb{x}}}\right)
 $$
 
 __Cost function__: For each instance when \\( y \in \\{-1, 1\\} \\): 
