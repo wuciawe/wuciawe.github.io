@@ -1,7 +1,7 @@
 ---
 layout: post
 category: [math]
-tags: [machine, regression, math]
+tags: [machine learning, regression, math]
 infotext: "After revisiting the regressions, I feel having a better view on the implementation details of those regressions."
 ---
 {% include JB/setup %}
