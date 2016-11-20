@@ -9,7 +9,7 @@ infotext: "Basics on combination and permutation."
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 When dealing with the problem of placing balls in boxes or choosing balls, it is usually helpful to 
-thinking the problem in terms of [the stars and bars problem](https://en.wikipedia.org/wiki/Stars_and_bars_%28combinatorics%29){:target='_blank'}, 
+think the problem in terms of [the stars and bars problem](https://en.wikipedia.org/wiki/Stars_and_bars_%28combinatorics%29){:target='_blank'}, 
 which is a graphical aid for deriving certain combinatorial theorems.
 
 ### Placing balls into boxes
