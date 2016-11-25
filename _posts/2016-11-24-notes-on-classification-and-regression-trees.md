@@ -72,4 +72,4 @@ is met:
 - No split candidate leads to an information gain greater than the minimum information gain threshold
 - No split candidate produces child nodes which each have at least minimum instances
 
-Note that, a too deep decision may surfer from overfitting.
+Note that, a too deep decision tree may surfer from overfitting.
