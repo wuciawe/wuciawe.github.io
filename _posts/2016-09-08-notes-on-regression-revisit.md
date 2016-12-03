@@ -1,6 +1,6 @@
 ---
 layout: post
-category: [math]
+category: [machine learning, math]
 tags: [machine learning, regression, math]
 infotext: "After revisiting the regressions, I feel having a better view on the implementation details of those regressions."
 ---
