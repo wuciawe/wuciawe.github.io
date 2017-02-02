@@ -6,7 +6,7 @@ infotext: "It has been a while not updating notes. It feels good to get rid of t
 ---
 {% include JB/setup %}
 
-Days before, after the maintainment of the cluster, I met the NoClassDefFoundError when I tried to 
+Days before, after the maintenance of the cluster, I met the NoClassDefFoundError when I tried to 
 resubmit the application to the yarn. At first, I thought that was caused by messing the classpath 
 up, or distribution of the application. After several try of re-compiling and re-distributing, I 
 found that the real cause is the failure of initialising an `object`.
@@ -20,7 +20,24 @@ ClassNotFoundException comes when you try to load a class at runtime by using `C
 `Classloader.loadClass()` or `Classloader.findSystemClass()` explicitly and the requested class is 
 not present in classpath.
 
-ClassNotFoundException is a checked Exception derived directly from `java.lang.Exception class`.
+ClassNotFoundException is a checked Exception derived directly from `java.lang.Exception` class.
+
+Following is an example:
+
+{% highlight java linenos=table %}
+
+class A {
+
+  public static void main(String[] args){
+    Class B = Class.forName("xxx.B");
+  }
+  
+}
+
+{% endhighlight %}
+
+If there is no class file for `xxx.B` in the class path, then a `ClassNotFoundException` will be 
+thrown. Note that we load the class explicitly in this example.
 
 ### NoClassDefFoundError
 
@@ -48,8 +65,28 @@ This will result in java.lang.NoClassDefFoundError for User class. Also, If the 
 in both JAR file and you will call equals method to compare those two object, it will result in 
 ClassCastException as object loaded by two different classloaders can not be equal.
 
+Following is an example:
+
+{% highlight java linenos=table %}
+
+import xxx.B;
+
+class A {
+
+  public static void main(String[] args){
+    B b = new B();
+  }
+  
+}
+
+{% endhighlight %}
+
+If there is no class file for `xxx.B` in the class path, then a `NoClassDefFoundError` will be 
+thrown, which is caused by a `ClassNotFoundException`. Note that in this example we refer to 
+`xxx.B` which cause the runtime to load the class implicitly.
+
 ### References
 
 [link1](http://javarevisited.blogspot.in/2011/06/noclassdeffounderror-exception-in.html){:target='_blank'}, 
-[link2](http://javarevisited.blogspot.com/2011/07/classnotfoundexception-vs.html), and 
-[link3](http://javarevisited.blogspot.com/2011/08/classnotfoundexception-in-java-example.html).
+[link2](http://javarevisited.blogspot.com/2011/07/classnotfoundexception-vs.html){:target='_blank'}, and 
+[link3](http://javarevisited.blogspot.com/2011/08/classnotfoundexception-in-java-example.html){:target='_blank'}.
