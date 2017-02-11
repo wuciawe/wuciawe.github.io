@@ -124,7 +124,7 @@ respect to the parameters, we need to calculate the value of \\(\sum_{i = 1}^m e
 When the total class number \\(m\\) is large, that step will be computational heavy, as it requires 
 \\(|n \times m|\\) multiplications involving all the parameters in the model.
 
-The hierarchical softmax is much cheaper in model training phrase with respect to the original softmax with 
+The hierarchical softmax is much cheaper in model training phase with respect to the original softmax with 
 large \\(m\\).
 
 Suppose we use a balanced binary tree to construct the hierarchical softmax, where every leaf \\(i\\) represents 
@@ -136,5 +136,5 @@ Given a \\(y = i\\), the path from root to leaf \\(i\\) is determined, which mea
 of the derivative of each \\(y\\), we need to do \\(|n * \log_2 m|\\) multiplications as the contribution 
 of the parameters not on the path is zero.
 
-Also note that, the hierarchical softmax only accelerate the process of model training, in prediction phrase, 
+Also note that, the hierarchical softmax only accelerate the process of model training, in prediction phase, 
 you still need to calculate the probability of all leaves to find a optimal prediction.
