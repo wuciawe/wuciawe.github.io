@@ -101,7 +101,7 @@ Then, let's derive the derivatives of the original loss function:
 
 $$
 \begin{align}
-&{}&&\frac{\partial -\log\mathbb{L}(\mathbb{\omega}|\vec y, vec x)}{\partial \omega_{jk}} = \frac{\partial -\sum_{i = 1}^m y_i \log \hat{y}_i}{\partial \omega_{jk}}
+&{}&&\frac{\partial -\log\mathbb{L}(\mathbb{\omega}|\vec y, \vec x)}{\partial \omega_{jk}} = \frac{\partial -\sum_{i = 1}^m y_i \log \hat{y}_i}{\partial \omega_{jk}}
 = -\sum_{i = 1}^m y_i \frac{\partial \log \hat{y}_i}{\partial \omega_{jk}}
 = -\sum_{i = 1}^m y_i \frac{1}{\hat{y}_i} \frac{\partial \hat{y}_i}{\partial \omega_{jk}}\\
 &{}&=& -( y_j \frac{1}{\hat{y}_j} \frac{\partial \hat{y}_j}{\partial \omega_{jk}} + \sum_{i = 1, i \neq j}^m y_i \frac{1}{\hat{y}_i} \frac{\partial \hat{y}_i}{\partial \omega_{jk}} )
