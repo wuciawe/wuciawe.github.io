@@ -426,3 +426,6 @@ if(<condition testing>) {
   }
 }
 {% endhighlight %}
+
+http://www.coopsoft.com/ar/CalamityArticle.html#faulty
+https://stackoverflow.com/questions/29966535/confused-by-docs-and-source-of-countedcompleter
