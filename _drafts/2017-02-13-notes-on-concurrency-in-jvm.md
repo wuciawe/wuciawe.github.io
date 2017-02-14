@@ -321,22 +321,108 @@ The Executor framework is a mechanism that allows you to separate thread creatio
 the implementation of concurrent tasks. The Executor framework also resuses the threads so as to 
 avoid overhead of the creation of threads.
 
-- ThreadPoolExecutor
-- ScheduledThreadPoolExecutor
-- Executors
-- Runnable
-- Callable
-- Future
-- ForkJoinPool, async mode
+- ThreadPoolExecutor: a class that provides an executor with a pool of threads and optionally define a 
+maximum number of parallel tasks.
+- ScheduledThreadPoolExecutor: a speical kind of executor that allows to execute tasks after a delay or 
+periodically, which is similar to Timer, but more powerful.
+- ForkJoinPool: a special kind of executor specialized in the resolution of problems with the divide and 
+conquer technique.
+  - `async mode`: it concerns the order in which each worker takes forked tasks that are never joined 
+  from its work queue.
+  
+  In ForkJoinPool, workers in async mode process tasks in FIFO order. By default, it processes tasks in 
+  LIFO order.
+- Executors: a facility for the creation of executors.
+- Callable: an alternative to the Runnable interface, with the ability to return a result.
+- Future: an interface that includes the methods to obtain the value returned by a Callable interface 
+and to control its status.
 
 ### Concurrency design patterns
 
-- Signaling
-- Rendezvous
-- Mutex
-- Multiplex
-- Barrier
-- Double-checked locking
+- Signaling, a task notifies an event to another task
 
+{% highlight java linenos=table %}
+public void task1(){
+  // codes 1
+  obj.notify();
+}
 
+public void task2(){
+  obj.wait();
+  // codes 2
+}
+{% endhighlight %}
 
+So that codes 2 will always be executed after codes 1 has finished.
+
+- Rendezvous, a generalization of the Signaling pattern, where two tasks wait events from each other.
+
+{% highlight java linenos=table %}
+public void task1(){
+  // codes 1
+  obj1.notify();
+  obj2.wait();
+  // codes 2
+}
+
+public void task2(){
+  // codes 3
+  obj2.notify();
+  obj1.wait();
+  // codes 4
+}
+{% endhighlight %}
+
+In this case, codes 4 will always be executed after codes 1 has finished and codes 2 will always be 
+executed after codes 3 has finished. If you switch the wait and notify, there will be a deadlock.
+
+- Mutex, mutual exclusion
+
+{% highlight java linenos=table %}
+public void task(){
+  // before critical section
+  lock.lock();
+  // critical section
+  lock.unlock();
+  // after critical section
+}
+{% endhighlight %}
+
+- Multiplex, a generalization of the mutex, where a determined number of tasks can execute a block of 
+code simultaneously.
+
+{% highlight java linenos=table %}
+public void task(){
+  // before critical section
+  semaphore.acquire();
+  // critical section
+  semaphore.release();
+  // after critical section
+}
+{% endhighlight %}
+
+- Barrier, a mechanism to synchronize tasks at a common point.
+
+{% highlight java linenos=table %}
+public void task(){
+  // before sync point
+  barrier.await();
+  // after sync point
+}
+{% endhighlight %}
+
+- Double-checked locking, a pattern for condition testing under concurrent execution
+
+{% highlight java linenos=table %}
+if(<condition testing>) {
+  lock.lock();
+  try{
+    if(<condition testing>) {
+      // codes
+      // mutating condition
+    }
+  } finally {
+    lock.unlock();
+  }
+}
+{% endhighlight %}
