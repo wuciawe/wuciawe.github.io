@@ -6,12 +6,12 @@ infotext: 'introduction to concurrency in jvm'
 ---
 {% include JB/setup %}
 
-Days ago, when I want to set up some schudled task in each executor in a Spark Streaming job, 
+Days ago, when I wanted to set up some schudled task in each executor in a Spark Streaming job, 
 I did not find an appropriate tool at first try. Many years ago, I have learnt Java very 
 roughly. Then years later, I learnt Scala in more depth, but still remained very limited knowledge 
-about Java. So in the following years, when I need to do something in parallelism, I utilize 
-Akka in Scala. Until days before I faced that task, I found that it is over complicated to 
-use Akka in Spark executors. And not until then, I found the concurrent tools in standard Java.
+about Java. So in the following years, when I needed parallelism, I utilized 
+Akka in Scala. Until days before I faced that task, I found that it was overcomplicated to 
+use Akka in Spark executors. And not until then, I found the concurrent tools in the standard Java.
 
 ### Concurrency v.s. Parallelism
 
@@ -71,7 +71,7 @@ block.
 
 Some most important mechanisms for defining a critical section or synchronize tasks in a common point:
 
-- synchronized keyword: define a critical section in a block of code or in an entire method. The 
+- `synchronized` keyword: define a critical section in a block of code or in an entire method. The 
 synchronized keyword exhibits two properties: mutual exclusion and visibility. The JVM supports synchronized 
 keyword via monitors and the `monitorenter` and `monitorexit` JVM instructions.
   - synchronized method acquires the intrinsic lock for the instance the method belongs to
@@ -99,9 +99,10 @@ semantics as provided by the built-in monitor lock.
   hold count is increased by one. When the thread unlock it, the hold count is decremented 
   by one. The lock is released when the hould count reaches zero.
   
-  ReentrantLock offers the same concurrency and memory semantics as the implicit monitor 
-  lock that's accessed via synchronized keyword. It has extended capabilities and offers 
-  better performance under high thread contention.
+    ReentrantLock offers the same concurrency and memory semantics as the implicit monitor 
+    lock that's accessed via synchronized keyword. It has extended capabilities and offers 
+    better performance under high thread contention.
+  
   - Condition: it factors out Object's wait and notification methods into distinct 
   condition objects to give the effect of having multiple wait-sets per object, by combining 
   them with the use of arbitrary Lock implementations. A Condition instance is intrinsically 
@@ -110,18 +111,18 @@ semantics as provided by the built-in monitor lock.
   for write operations. The read lock may be held simultaneously be multiple reader threads 
   as long as there are no writers. The write lock is exclusive: only a single thread can modify 
   shared data.
-    - `readLocd`: return the lock that's used for reading
+    - `readLock`: return the lock that's used for reading
     - `writeLock`: return the lock that's used for writing
   - ReentrantReadWriteLock.
   
-  A thread that tries to acquire a fair read lock (non-reentrantly) will block when the write 
-  lock is held or when there's a waiting writer thread. The thread will not acquire the read lock 
-  until after the oldest currently waiting writer thread has acquired and released the write lock. 
-  If a waiting writer abandons its wait, leaving one or more reader threads as the longest waiters 
-  in the queue with the write lock free, those readers will be assigned the read lock.
+    A thread that tries to acquire a fair read lock (non-reentrantly) will block when the write 
+    lock is held or when there's a waiting writer thread. The thread will not acquire the read lock 
+    until after the oldest currently waiting writer thread has acquired and released the write lock. 
+    If a waiting writer abandons its wait, leaving one or more reader threads as the longest waiters 
+    in the queue with the write lock free, those readers will be assigned the read lock.
   
-  A thread that tries to acquire a fair write lock (non-reentrantly) will block unless both the read 
-  lock and write lock are free (which implies no waiting threads).
+    A thread that tries to acquire a fair write lock (non-reentrantly) will block unless both the 
+    read lock and write lock are free (which implies no waiting threads).
   
   - StampedLock: is a capability-based lock with three modes for controlling read/write access. It 
   allows for optimistic reads.
@@ -140,15 +141,15 @@ is ensured.
   - `isFair`: fairness
   - `release`/`release(n)`: release a/n permit(s)
 - CountDownLatch: it consists of a count and causes threads to wait until the count decremented to zero.
- - `await`: force the calling thread to wait until the latch has counted down to zero
- - `countDown`: decrement the count, releasing all waiting threads when the count reaches zero. Nothing 
- happens when the count is already zero when this method is called.
- -  `getCount`: return the current count
+  - `await`: force the calling thread to wait until the latch has counted down to zero
+  - `countDown`: decrement the count, releasing all waiting threads when the count reaches zero. Nothing 
+  happens when the count is already zero when this method is called.
+  -  `getCount`: return the current count
 - CyclicBarrier: it lets a set of threads wait for each other to reach a common barrier point. The barrier 
 is cyclic because it can be reused after the waiting threads are released.
 
-The constructor of the CyclicBarrier can accept a Runnable which is executed when the barrier is tripped. 
-It can be used to update shared state before any of the threads continue.
+  The constructor of the CyclicBarrier can accept a Runnable which is executed when the barrier is tripped. 
+  It can be used to update shared state before any of the threads continue.
 
   - `await`: force the calling thread to wait until all parties have invoked `await`.
   - `getNumberWaiting`: return the number of parties that are currently waiting at the barrier.
@@ -172,7 +173,7 @@ a variable number of threads, which can register at any time.
 
 ### The Java Memory Model
 
-`volatile` is a weaker form of synchronized keyword which ensures the visibility only.
+`volatile` is a weaker form of `synchronized` keyword which ensures the visibility only.
 
 CPU have different levels of cache, and each core has its own cache, which stores the minimal set of main 
 memory (RAM) for performance. Each thread mutates the variable and the result of the mutation may not be 
@@ -182,7 +183,7 @@ The Java Memory Model is defined in happens before rules, e.g. there is a happen
 write of field x and a volatile read of field x. So when a write is done, a subsequent read will see the value 
 written.
 
-`volatile` also prevents compiler over optimising the order of execution of the code, which is achieved by 
+`volatile` also prevents compiler over-optimising the order of execution of the code, which is achieved by 
 the Java Memory Model.
 
 A volatile filed can not also be declared `final`. final fields are thread safe as they are immutable.
@@ -209,11 +210,11 @@ that memory.
 
 When the four Coffman's conditions happen simultaneously in the system, the deadlock happens:
 
-1 Mutual exclusion: the resources involved in the deadlock is not shareable.
-2 Hold and wait condition: A task holds the mutual excluson for a resource and it requires the 
+1.  Mutual exclusion: the resources involved in the deadlock is not shareable.
+2.  Hold and wait condition: A task holds the mutual excluson for a resource and it requires the 
 mutual exclusion for another resource.
-3 No pre-emption: The resources can only be released by the tasks that hold them.
-4 Circular wait: There is a circular waiting.
+3.  No pre-emption: The resources can only be released by the tasks that hold them.
+4.  Circular wait: There is a circular waiting.
 
 It is a good practice to get locks in the same order.
 
@@ -330,8 +331,8 @@ conquer technique.
   - `async mode`: it concerns the order in which each worker takes forked tasks that are never joined 
   from its work queue.
   
-  In ForkJoinPool, workers in async mode process tasks in FIFO order. By default, it processes tasks in 
-  LIFO order.
+    In ForkJoinPool, workers in async mode process tasks in FIFO order. By default, it processes tasks in 
+    LIFO order.
 - Executors: a facility for the creation of executors.
 - Callable: an alternative to the Runnable interface, with the ability to return a result.
 - Future: an interface that includes the methods to obtain the value returned by a Callable interface 
@@ -427,5 +428,8 @@ if(<condition testing>) {
 }
 {% endhighlight %}
 
-http://www.coopsoft.com/ar/CalamityArticle.html#faulty
-https://stackoverflow.com/questions/29966535/confused-by-docs-and-source-of-countedcompleter
+### Other
+
+There are some interesting things on ForkJoinPool in JVM, see 
+[link1](https://stackoverflow.com/questions/29966535/confused-by-docs-and-source-of-countedcompleter){:target='_blank'}
+and [link2](http://www.coopsoft.com/ar/CalamityArticle.html#faulty){:target='_blank'} for reference.
