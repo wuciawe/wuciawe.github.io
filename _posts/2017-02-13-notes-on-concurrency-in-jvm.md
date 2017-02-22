@@ -177,7 +177,11 @@ a variable number of threads, which can register at any time.
 
 CPU have different levels of cache, and each core has its own cache, which stores the minimal set of main 
 memory (RAM) for performance. Each thread mutates the variable and the result of the mutation may not be 
-visible to other threads. `volatile` keyword ensures the visibility of the mutation.
+visible to other threads. There is no guarantee that operations in one thread will be performed in the order 
+given by the program, as long as the reordering is not detectable from within that thread -- even if the 
+reordering is apparent to other threads. In the absence of synchronization, the Jave Memory Model permits the 
+compiler to reorder operations and cache values in registers, and permits CPUs to reorder operations and cache 
+values in processor-specific caches. `volatile` keyword ensures the visibility of the mutation.
 
 The Java Memory Model is defined in happens before rules, e.g. there is a happens before rule between a volatile 
 write of field x and a volatile read of field x. So when a write is done, a subsequent read will see the value 
