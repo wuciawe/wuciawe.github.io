@@ -190,7 +190,24 @@ written.
 `volatile` also prevents compiler over-optimising the order of execution of the code, which is achieved by 
 the Java Memory Model.
 
-A volatile filed can not also be declared `final`. final fields are thread safe as they are immutable.
+A volatile filed can not also be declared `final`.
+
+`final` is a more limited version of the `const` mechanism from C++, supports the construction of 
+immutable objects. Final fields can not be modified, and have special sematics under the Java Memory Model. 
+It is the use of final fields that makes possible the guarantee of `initialization safety` that lets 
+immutable objects be freely accessed and shared without synchronization. Properly constructed final 
+fields can be safely accessed without additional synchronization. However, if final fields refer to 
+mutable objects, synchronization is still required to access the state of the objects they refer to.
+
+`static` initializer is often the easiest and safest way to publish objects that can be statically 
+constructed. Static initializers are executed by the JVM at class initialization time, because of internal 
+synchronization in the JVM, this mechanism is guaranteed to safely publish any objects initialized in this 
+way.
+
+The safe publication mechanisms all guarantee that the as-published state of an object is visible to all 
+accessing threads as soon as the reference to it is visible, and if that state is not going to be changed 
+again, this is sufficient to ensure that any access is safe. If an object may be modified after 
+construction, safe publication ensures only the visibility of the as-published state.
 
 ### Race
 
@@ -298,12 +315,27 @@ section for the `wait` method.
 
 #### ThreadLocal variable
 
-Each `ThreadLocal` instance describes a thread-local variable, which is a variable that provides a 
-separate storage slot to each thread that accesses the variable. Each thread sees only its value and 
-is unaware of other threads having their own values in this variable.
+If data is only accessed from a single thread, no synchronization is needed, which is called `thread 
+confinement`, one of the simplest ways to achieve thread safety. Swing and pooled JDBC use this 
+technique. For example in pooled JDBC, the JDBC specification does not require that `Connection` be 
+thread-safe. The pool will not dispense the same connection to another thread until it ihas been 
+returned, this pattern of connection management implicitly confines the `Connection` to that thread 
+for the duration of the request.
 
-`InheritableThreadLocal` is a subclass of `ThreadLocal`, which provides the capability of controlling 
-the initialization of the ThreadLocal variable in child thread from parent thread.
+- `ad-hoc thread confinement` describes when the responsibility for maintaining thread confinement 
+falls entirely on the implementation.
+- `stack confinement` is a special case of thread confinement in which an object can only be reached 
+through local variables. Local variables are intrinsically confined to the executing thread. They 
+exist on the executing thread's stack, which is not accessible to other threads.
+- `ThreadLocal` is a more formal means of maintaining thread confinement, which allows you to associate 
+a per-thread value with a value-holding object.
+
+  Each `ThreadLocal` instance describes a thread-local variable, which is a variable that provides a 
+  separate storage slot to each thread that accesses the variable. Each thread sees only its value and 
+  is unaware of other threads having their own values in this variable.
+
+  `InheritableThreadLocal` is a subclass of `ThreadLocal`, which provides the capability of controlling 
+  the initialization of the ThreadLocal variable in child thread from parent thread.
 
 ### Timer
 
