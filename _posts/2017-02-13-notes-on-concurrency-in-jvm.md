@@ -145,8 +145,12 @@ is ensured.
   - `countDown`: decrement the count, releasing all waiting threads when the count reaches zero. Nothing 
   happens when the count is already zero when this method is called.
   -  `getCount`: return the current count
+  
+  A binary semaphore can be used as a `mutex` with nonreentrant locking semantics.
+  
 - CyclicBarrier: it lets a set of threads wait for each other to reach a common barrier point. The barrier 
-is cyclic because it can be reused after the waiting threads are released.
+is cyclic because it can be reused after the waiting threads are released. Latches are for waiting for 
+events; barriers are for waiting for other threads.
 
   The constructor of the CyclicBarrier can accept a Runnable which is executed when the barrier is tripped. 
   It can be used to update shared state before any of the threads continue.
@@ -239,6 +243,9 @@ mutual exclusion for another resource.
 
 It is a good practice to get locks in the same order.
 
+The above is the most deadlock, called lock ordering deadlock. Besides, there is thread starvation 
+deadlock which means threads waiting for results from each other.
+
 #### Livelock
 
 A livelock occurs when two tasks in the system chaing their states due to the actions of the other. 
@@ -280,6 +287,11 @@ IllegalThreadStateException will arise.
 Some interesting methods:
 
 - `interrupt`: interrupt the thread
+
+  A good way to think about interruption is that it does not actually interrupt a running thread; it just 
+  requests that the thread interrupt itself at the next convenient opportunity, which is called 
+  `cancellation point`.
+
 - `join`: wait the thread to die
 - `sleep`: temporarily cease execution, no waste of processor cycles
 - `holdsLock`: check whether the thread holds the lock on an object
@@ -369,10 +381,22 @@ conquer technique.
   
     In ForkJoinPool, workers in async mode process tasks in FIFO order. By default, it processes tasks in 
     LIFO order.
+  
+  Work stealing is implemented in `ForkJoinTask.join()`, 
+  [here for more information](http://stackoverflow.com/questions/26576260/can-i-use-the-work-stealing-behaviour-of-forkjoinpool-to-avoid-a-thread-starvati){:target='_blank'}. In a work stealing design, every consumer has its own deque. If 
+  a consumer exhausts the work in its own deque, it can steal work from the tail of someone else's deque.
+  
 - Executors: a facility for the creation of executors.
 - Callable: an alternative to the Runnable interface, with the ability to return a result.
 - Future: an interface that includes the methods to obtain the value returned by a Callable interface 
 and to control its status.
+  - `FutureTask` acts like a latch. It implements `Future`. A computation represented by a `FutureTask` is 
+  implemented with a `Callable`, and can be in one of three states: waiting to run, running, or completed.
+  
+    The behaviour of `Future.get` depends on the state of the task. If it is completed, it returns the 
+    result immediately, and otherwise blocks until the task transitions to the completed state and then 
+    returns the result or throws an exception. The specification of `FutureTask` guarantees that this 
+    transfer constitutes a safe publication of the result.
 
 ### Concurrency design patterns
 
@@ -463,6 +487,41 @@ if(<condition testing>) {
   }
 }
 {% endhighlight %}
+
+### Costs
+
+- `context switching`: if there are more runnable threads than CPUs, eventually the OS will preempt one 
+thread so that another can use the CPU, which requires saving the execution context of the currently 
+running thread and restoring the execution context of the newly scheduled thread.
+
+  Thread scheduling requires manipulating shared data structures in the OS and JVM. When a new thread is 
+  switched in, the data it needs is unlikely to be in the local processor cache, so a context switch 
+  causes a flurry of cache misses.
+
+- `memory synchronization`: the visibility guarantees provided by `synchronized` and `volatile` may entail 
+using special instructions called `memory barriers` that can flush or invalidate caches, flush hardware 
+write buffers, and stall execution pipelines. Memory barriers may also have indirect performance 
+conseuences because they inhibit other compiler optimizations; most operations can not be reordered with 
+memory barriers.
+
+  The uncontended synchronization is rarely significant in overall application performance. Modern JVMs 
+  can even reduce the cost of incidental synchronization by optimizing away locking that can be proven 
+  never to contend. More sophisticated JVMs can use `escape analysis` to identify when a local object 
+  reference is never published to the heap and is therefore thread-local. Compilers can also perform 
+  `lock coarsening`, the merging of adjacent synchronized blocks using the same lock. It will give the 
+  optimizer a much larger block to work with, likely enabling other optimizations.
+
+- `block`: contended synchronization may require OS activity, which adds to cost. When locking is 
+contended, the losing threads must block. The JVM can implement blocking either via `spin-waiting` 
+(repeatedly trying to acquire the lock until it succeeds) or by `suspending` the blocked thread through 
+the operating system.
+
+  Suspending a thread because it could not get a lock, or because it blocked on a condition wait or 
+  blocking I/O operation, entails two additional context switches and all the attendant OS and cache 
+  activity: the blocked thread is switched out before its quantum has expired, and is then switched back 
+  in later after the lock or other resource becomes available. (Blocking due to lock contention also has 
+  a cost for the thread holding the lock: when it releases the lock, it must then ask the OS to resume the 
+  blocked thread.)
 
 ### Other
 
