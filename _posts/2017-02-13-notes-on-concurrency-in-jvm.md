@@ -95,13 +95,20 @@ semantics as provided by the built-in monitor lock.
     - `newCondition`: return a new Condition instance that's bound to this Lock instance.
     - `tryLock`: acquire the lock when it's available at the time this method is invoked.
     - `unlock`: release the lock.
+    
+    Lock implementations must provide the same memory-visibility semantics as intrinsic locks, 
+    but can differ in their locking semantics, scheduling algorithms, ordering guarantees, and 
+    performance characteristics.
+    
   - ReentrantLock: it is associated with a hold count. When a thread acquire the lock, the 
   hold count is increased by one. When the thread unlock it, the hold count is decremented 
   by one. The lock is released when the hould count reaches zero.
   
     ReentrantLock offers the same concurrency and memory semantics as the implicit monitor 
-    lock that's accessed via synchronized keyword. It has extended capabilities and offers 
-    better performance under high thread contention.
+    lock that's accessed via synchronized keyword. Acquiring a ReentrantLock has the same 
+    memory semantics as entering a synchronized block, and releasing a ReentrantLock has 
+    the same memory semantics as exiting a synchronized block. It has extended capabilities 
+    and offers better performance under high thread contention.
   
   - Condition: it factors out Object's wait and notification methods into distinct 
   condition objects to give the effect of having multiple wait-sets per object, by combining 
@@ -212,6 +219,38 @@ The safe publication mechanisms all guarantee that the as-published state of an 
 accessing threads as soon as the reference to it is visible, and if that state is not going to be changed 
 again, this is sufficient to ensure that any access is safe. If an object may be modified after 
 construction, safe publication ensures only the visibility of the as-published state.
+
+#### what is it
+
+The Java Language Specification requires the JVM to maintain `within-thread as-if-serial` semantics: 
+as long as the program has the same result as if it were executed in program order in a strictly 
+sequential environment, all these games are permissible. Compilers may generate instructions in a 
+different order than the one suggested by the source code, or store variables in registers instead 
+of in memory; processors may execute instructions in parallel or out of order; caches may vary the 
+order in which writes to variables are committed to main memory; and values stored in 
+processor-local caches may not be visible to other processors.
+
+In a multithreaded environment, the illusion of sequentiality can not be maintained without 
+significant performance cost. The JMM specifies the minimal guarantees the JVM must make about when 
+writes to variables become visible to other threads. It was designed to balance the need for 
+predictability and ease of program development with the realities of implementing high-performance 
+JVMs on a wide range of popular processor architectures.
+
+In a shared-memory multiprocessor architecture, each processor has its own cache that is periodically 
+reconciled withmain memory. Processor architectures provide varing degrees of cache coherence. An 
+architecture's memory model tells programs what guarantees they can expect from the memory system, 
+and specifies the special instructions required (called memory barriers or fences) to get 
+additional memory coordination guarantees required when sharing data. Java provides its own memory 
+model, and the JVM deals with the differences between the JMM and the underlying platform's memory 
+model by inserting memory barriers at the appropriate places.
+
+The Java Memory Model is specified in terms of `action`s, which include reads and writes to 
+variables, locks and unlocks of monitors, and starting and joining with threads. The JMM defines 
+a partial ordering called `happens-before` on all actions within the program. To guarantee that 
+the thread executing action B can see the results of action A, there must be a `happens-before` 
+relationship between A and B. In the absence of a `happens-before` ordering between two operations, 
+the JVM is free to reorder them as it pleases.
+
 
 ### Race
 
