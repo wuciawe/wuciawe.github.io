@@ -95,13 +95,20 @@ semantics as provided by the built-in monitor lock.
     - `newCondition`: return a new Condition instance that's bound to this Lock instance.
     - `tryLock`: acquire the lock when it's available at the time this method is invoked.
     - `unlock`: release the lock.
+    
+    Lock implementations must provide the same memory-visibility semantics as intrinsic locks, 
+    but can differ in their locking semantics, scheduling algorithms, ordering guarantees, and 
+    performance characteristics.
+    
   - ReentrantLock: it is associated with a hold count. When a thread acquire the lock, the 
   hold count is increased by one. When the thread unlock it, the hold count is decremented 
   by one. The lock is released when the hould count reaches zero.
   
     ReentrantLock offers the same concurrency and memory semantics as the implicit monitor 
-    lock that's accessed via synchronized keyword. It has extended capabilities and offers 
-    better performance under high thread contention.
+    lock that's accessed via synchronized keyword. Acquiring a ReentrantLock has the same 
+    memory semantics as entering a synchronized block, and releasing a ReentrantLock has 
+    the same memory semantics as exiting a synchronized block. It has extended capabilities 
+    and offers better performance under high thread contention.
   
   - Condition: it factors out Object's wait and notification methods into distinct 
   condition objects to give the effect of having multiple wait-sets per object, by combining 
@@ -145,8 +152,12 @@ is ensured.
   - `countDown`: decrement the count, releasing all waiting threads when the count reaches zero. Nothing 
   happens when the count is already zero when this method is called.
   -  `getCount`: return the current count
+  
+  A binary semaphore can be used as a `mutex` with nonreentrant locking semantics.
+  
 - CyclicBarrier: it lets a set of threads wait for each other to reach a common barrier point. The barrier 
-is cyclic because it can be reused after the waiting threads are released.
+is cyclic because it can be reused after the waiting threads are released. Latches are for waiting for 
+events; barriers are for waiting for other threads.
 
   The constructor of the CyclicBarrier can accept a Runnable which is executed when the barrier is tripped. 
   It can be used to update shared state before any of the threads continue.
@@ -177,7 +188,11 @@ a variable number of threads, which can register at any time.
 
 CPU have different levels of cache, and each core has its own cache, which stores the minimal set of main 
 memory (RAM) for performance. Each thread mutates the variable and the result of the mutation may not be 
-visible to other threads. `volatile` keyword ensures the visibility of the mutation.
+visible to other threads. There is no guarantee that operations in one thread will be performed in the order 
+given by the program, as long as the reordering is not detectable from within that thread -- even if the 
+reordering is apparent to other threads. In the absence of synchronization, the Jave Memory Model permits the 
+compiler to reorder operations and cache values in registers, and permits CPUs to reorder operations and cache 
+values in processor-specific caches. `volatile` keyword ensures the visibility of the mutation.
 
 The Java Memory Model is defined in happens before rules, e.g. there is a happens before rule between a volatile 
 write of field x and a volatile read of field x. So when a write is done, a subsequent read will see the value 
@@ -186,7 +201,91 @@ written.
 `volatile` also prevents compiler over-optimising the order of execution of the code, which is achieved by 
 the Java Memory Model.
 
-A volatile filed can not also be declared `final`. final fields are thread safe as they are immutable.
+A volatile filed can not also be declared `final`.
+
+`final` is a more limited version of the `const` mechanism from C++, supports the construction of 
+immutable objects. Final fields can not be modified, and have special sematics under the Java Memory Model. 
+It is the use of final fields that makes possible the guarantee of `initialization safety` that lets 
+immutable objects be freely accessed and shared without synchronization. Properly constructed final 
+fields can be safely accessed without additional synchronization. However, if final fields refer to 
+mutable objects, synchronization is still required to access the state of the objects they refer to.
+
+`static` initializer is often the easiest and safest way to publish objects that can be statically 
+constructed. Static initializers are executed by the JVM at class initialization time, because of internal 
+synchronization in the JVM, this mechanism is guaranteed to safely publish any objects initialized in this 
+way.
+
+The safe publication mechanisms all guarantee that the as-published state of an object is visible to all 
+accessing threads as soon as the reference to it is visible, and if that state is not going to be changed 
+again, this is sufficient to ensure that any access is safe. If an object may be modified after 
+construction, safe publication ensures only the visibility of the as-published state.
+
+#### what is it
+
+The Java Language Specification requires the JVM to maintain `within-thread as-if-serial` semantics: 
+as long as the program has the same result as if it were executed in program order in a strictly 
+sequential environment, all these games are permissible. Compilers may generate instructions in a 
+different order than the one suggested by the source code, or store variables in registers instead 
+of in memory; processors may execute instructions in parallel or out of order; caches may vary the 
+order in which writes to variables are committed to main memory; and values stored in 
+processor-local caches may not be visible to other processors.
+
+In a multithreaded environment, the illusion of sequentiality can not be maintained without 
+significant performance cost. The JMM specifies the minimal guarantees the JVM must make about when 
+writes to variables become visible to other threads. It was designed to balance the need for 
+predictability and ease of program development with the realities of implementing high-performance 
+JVMs on a wide range of popular processor architectures.
+
+In a shared-memory multiprocessor architecture, each processor has its own cache that is periodically 
+reconciled withmain memory. Processor architectures provide varing degrees of cache coherence. An 
+architecture's memory model tells programs what guarantees they can expect from the memory system, 
+and specifies the special instructions required (called memory barriers or fences) to get 
+additional memory coordination guarantees required when sharing data. Java provides its own memory 
+model, and the JVM deals with the differences between the JMM and the underlying platform's memory 
+model by inserting memory barriers at the appropriate places.
+
+The Java Memory Model is specified in terms of `action`s, which include reads and writes to 
+variables, locks and unlocks of monitors, and starting and joining with threads. The JMM defines 
+a partial ordering called `happens-before` on all actions within the program. To guarantee that 
+the thread executing action B can see the results of action A, there must be a `happens-before` 
+relationship between A and B. In the absence of a `happens-before` ordering between two operations, 
+the JVM is free to reorder them as it pleases.
+
+A `data race` occurs when a variable is read by more than one thread, and written by at least one 
+thread, but the reads and writes are not ordered by `happens-before`. A correctly synchronized 
+program is one with no data races; correctly synchronized programs exhibit sequential consistency, 
+meaning that all actions within the program appear to happen in a fixed, global order.
+
+The rules for `happens-before` are:
+
+- __Program order rule__ Each action in a thread happens-before every action in that thread that 
+comes later in the program order.
+- __Monitor lock rule__ An unlock on a monitor lock happens-before every subsequent lock on that 
+same monitor lock.
+- __Volatile variable rule__ A write to a volatile field happens-before every subsequent read of 
+that same field.
+- __Thread start rule__ A call to `Thread.start` on a thread happens-before every action in the 
+started thread.
+- __Thread termination rule__ Any action in a thread happens-before any other thread detects that 
+thread has terminated, either by successfully return from `Thread.join` or by `Thread.isAlive` 
+returning false.
+- __Interruption rule__ A thread calling interrupt on another thread happens-before the interrupted 
+thread detects the interrupt (either by having `InterruptedException` thrown, or invoking 
+`isInterrupted` or `interrupted`).
+- __Finalizer rule__ The end of a constructor for an object happens-before the start of the 
+finalizer for that object.
+- __Transitivity__ If A happens-before B, and B happens-before C, then A happens-before C.
+
+Even though actions are only partially ordered, synchronization actions—lock acquisition and 
+release, and reads and writes of volatile variables—are totally ordered. This makes it sensible to 
+describe happens-before in terms of “subsequent” lock acquisitions and reads of volatile variables.
+
+Static initializers are run by the JVM at class initialization time, after class loading but before 
+the class is used by any thread. Because the JVM acquires a lock during initialization and this lock 
+is acquired by each thread at least once to ensure that the class has been loaded, memory writes 
+made during static initialization are automatically visible to all threads. Thus statically 
+initialized objects require no explicit synchronization either during construction or when being 
+referenced.
 
 ### Race
 
@@ -217,6 +316,9 @@ mutual exclusion for another resource.
 4.  Circular wait: There is a circular waiting.
 
 It is a good practice to get locks in the same order.
+
+The above is the most deadlock, called lock ordering deadlock. Besides, there is thread starvation 
+deadlock which means threads waiting for results from each other.
 
 #### Livelock
 
@@ -259,6 +361,11 @@ IllegalThreadStateException will arise.
 Some interesting methods:
 
 - `interrupt`: interrupt the thread
+
+  A good way to think about interruption is that it does not actually interrupt a running thread; it just 
+  requests that the thread interrupt itself at the next convenient opportunity, which is called 
+  `cancellation point`.
+
 - `join`: wait the thread to die
 - `sleep`: temporarily cease execution, no waste of processor cycles
 - `holdsLock`: check whether the thread holds the lock on an object
@@ -294,12 +401,27 @@ section for the `wait` method.
 
 #### ThreadLocal variable
 
-Each `ThreadLocal` instance describes a thread-local variable, which is a variable that provides a 
-separate storage slot to each thread that accesses the variable. Each thread sees only its value and 
-is unaware of other threads having their own values in this variable.
+If data is only accessed from a single thread, no synchronization is needed, which is called `thread 
+confinement`, one of the simplest ways to achieve thread safety. Swing and pooled JDBC use this 
+technique. For example in pooled JDBC, the JDBC specification does not require that `Connection` be 
+thread-safe. The pool will not dispense the same connection to another thread until it ihas been 
+returned, this pattern of connection management implicitly confines the `Connection` to that thread 
+for the duration of the request.
 
-`InheritableThreadLocal` is a subclass of `ThreadLocal`, which provides the capability of controlling 
-the initialization of the ThreadLocal variable in child thread from parent thread.
+- `ad-hoc thread confinement` describes when the responsibility for maintaining thread confinement 
+falls entirely on the implementation.
+- `stack confinement` is a special case of thread confinement in which an object can only be reached 
+through local variables. Local variables are intrinsically confined to the executing thread. They 
+exist on the executing thread's stack, which is not accessible to other threads.
+- `ThreadLocal` is a more formal means of maintaining thread confinement, which allows you to associate 
+a per-thread value with a value-holding object.
+
+  Each `ThreadLocal` instance describes a thread-local variable, which is a variable that provides a 
+  separate storage slot to each thread that accesses the variable. Each thread sees only its value and 
+  is unaware of other threads having their own values in this variable.
+
+  `InheritableThreadLocal` is a subclass of `ThreadLocal`, which provides the capability of controlling 
+  the initialization of the ThreadLocal variable in child thread from parent thread.
 
 ### Timer
 
@@ -333,10 +455,22 @@ conquer technique.
   
     In ForkJoinPool, workers in async mode process tasks in FIFO order. By default, it processes tasks in 
     LIFO order.
+  
+  Work stealing is implemented in `ForkJoinTask.join()`, 
+  [here for more information](http://stackoverflow.com/questions/26576260/can-i-use-the-work-stealing-behaviour-of-forkjoinpool-to-avoid-a-thread-starvati){:target='_blank'}. In a work stealing design, every consumer has its own deque. If 
+  a consumer exhausts the work in its own deque, it can steal work from the tail of someone else's deque.
+  
 - Executors: a facility for the creation of executors.
 - Callable: an alternative to the Runnable interface, with the ability to return a result.
 - Future: an interface that includes the methods to obtain the value returned by a Callable interface 
 and to control its status.
+  - `FutureTask` acts like a latch. It implements `Future`. A computation represented by a `FutureTask` is 
+  implemented with a `Callable`, and can be in one of three states: waiting to run, running, or completed.
+  
+    The behaviour of `Future.get` depends on the state of the task. If it is completed, it returns the 
+    result immediately, and otherwise blocks until the task transitions to the completed state and then 
+    returns the result or throws an exception. The specification of `FutureTask` guarantees that this 
+    transfer constitutes a safe publication of the result.
 
 ### Concurrency design patterns
 
@@ -427,6 +561,41 @@ if(<condition testing>) {
   }
 }
 {% endhighlight %}
+
+### Costs
+
+- `context switching`: if there are more runnable threads than CPUs, eventually the OS will preempt one 
+thread so that another can use the CPU, which requires saving the execution context of the currently 
+running thread and restoring the execution context of the newly scheduled thread.
+
+  Thread scheduling requires manipulating shared data structures in the OS and JVM. When a new thread is 
+  switched in, the data it needs is unlikely to be in the local processor cache, so a context switch 
+  causes a flurry of cache misses.
+
+- `memory synchronization`: the visibility guarantees provided by `synchronized` and `volatile` may entail 
+using special instructions called `memory barriers` that can flush or invalidate caches, flush hardware 
+write buffers, and stall execution pipelines. Memory barriers may also have indirect performance 
+conseuences because they inhibit other compiler optimizations; most operations can not be reordered with 
+memory barriers.
+
+  The uncontended synchronization is rarely significant in overall application performance. Modern JVMs 
+  can even reduce the cost of incidental synchronization by optimizing away locking that can be proven 
+  never to contend. More sophisticated JVMs can use `escape analysis` to identify when a local object 
+  reference is never published to the heap and is therefore thread-local. Compilers can also perform 
+  `lock coarsening`, the merging of adjacent synchronized blocks using the same lock. It will give the 
+  optimizer a much larger block to work with, likely enabling other optimizations.
+
+- `block`: contended synchronization may require OS activity, which adds to cost. When locking is 
+contended, the losing threads must block. The JVM can implement blocking either via `spin-waiting` 
+(repeatedly trying to acquire the lock until it succeeds) or by `suspending` the blocked thread through 
+the operating system.
+
+  Suspending a thread because it could not get a lock, or because it blocked on a condition wait or 
+  blocking I/O operation, entails two additional context switches and all the attendant OS and cache 
+  activity: the blocked thread is switched out before its quantum has expired, and is then switched back 
+  in later after the lock or other resource becomes available. (Blocking due to lock contention also has 
+  a cost for the thread holding the lock: when it releases the lock, it must then ask the OS to resume the 
+  blocked thread.)
 
 ### Other
 
