@@ -251,6 +251,41 @@ the thread executing action B can see the results of action A, there must be a `
 relationship between A and B. In the absence of a `happens-before` ordering between two operations, 
 the JVM is free to reorder them as it pleases.
 
+A `data race` occurs when a variable is read by more than one thread, and written by at least one 
+thread, but the reads and writes are not ordered by `happens-before`. A correctly synchronized 
+program is one with no data races; correctly synchronized programs exhibit sequential consistency, 
+meaning that all actions within the program appear to happen in a fixed, global order.
+
+The rules for `happens-before` are:
+
+- __Program order rule__ Each action in a thread happens-before every action in that thread that 
+comes later in the program order.
+- __Monitor lock rule__ An unlock on a monitor lock happens-before every subsequent lock on that 
+same monitor lock.
+- __Volatile variable rule__ A write to a volatile field happens-before every subsequent read of 
+that same field.
+- __Thread start rule__ A call to `Thread.start` on a thread happens-before every action in the 
+started thread.
+- __Thread termination rule__ Any action in a thread happens-before any other thread detects that 
+thread has terminated, either by successfully return from `Thread.join` or by `Thread.isAlive` 
+returning false.
+- __Interruption rule__ A thread calling interrupt on another thread happens-before the interrupted 
+thread detects the interrupt (either by having `InterruptedException` thrown, or invoking 
+`isInterrupted` or `interrupted`).
+- __Finalizer rule__ The end of a constructor for an object happens-before the start of the 
+finalizer for that object.
+- __Transitivity__ If A happens-before B, and B happens-before C, then A happens-before C.
+
+Even though actions are only partially ordered, synchronization actions—lock acquisition and 
+release, and reads and writes of volatile variables—are totally ordered. This makes it sensible to 
+describe happens-before in terms of “subsequent” lock acquisitions and reads of volatile variables.
+
+Static initializers are run by the JVM at class initialization time, after class loading but before 
+the class is used by any thread. Because the JVM acquires a lock during initialization and this lock 
+is acquired by each thread at least once to ensure that the class has been loaded, memory writes 
+made during static initialization are automatically visible to all threads. Thus statically 
+initialized objects require no explicit synchronization either during construction or when being 
+referenced.
 
 ### Race
 

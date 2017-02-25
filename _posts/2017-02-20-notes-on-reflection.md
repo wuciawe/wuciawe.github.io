@@ -1,3 +1,11 @@
+---
+layout: post
+category: [jvm]
+tags: [jvm, reflection]
+infotext: 'introduction to reflection in java'
+---
+{% include JB/setup %}
+
 In computer science, reflection is the ability of a program to examine, introspect, and modify 
 its own structure and behaviour at runtime.
 
