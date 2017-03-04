@@ -2,7 +2,7 @@
 layout: post
 category: [jvm]
 tags: [jvm]
-infotext: 'very rough, or even worse, something incorrect, description on the internal memory appearance in jvm.'
+infotext: 'very rough, or even worse, something incorrect, description on the internal memory in jvm.'
 ---
 {% include JB/setup %}
 

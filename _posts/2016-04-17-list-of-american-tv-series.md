@@ -18,7 +18,7 @@ List of TV series:
 - House of Cards 2013 s1-s4
 - And Then There Were None 2015 s1
 - Hatfields & McCoys 2012 s1
-- How To Get Away With Murder 2014 s1-s2
+- How To Get Away With Murder 2014 s1-s3
 - 12 Monkeys
 
 List of Films:
