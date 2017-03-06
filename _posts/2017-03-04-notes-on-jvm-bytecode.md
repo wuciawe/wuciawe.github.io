@@ -201,6 +201,10 @@ For non-array objects:
 
 - creation: __new__
 
+  __new__ only creates a reference of a type. In order to initialize the object, it is required to 
+  call `<init>` on that object reference. __new__/__dup__/__invokespecial__/__astore__ is a common 
+  pattern to new an object and store it into a local variable.
+
 - manipulation: __getstatic__, __putstaic__, __getfield__, __putfield__
 
 - type: __checkcast__, __instanceof__
@@ -245,10 +249,69 @@ So there are 23 opcodes in this section.
 Method invocation includes:
 
 - __invokevirtual__
+
+  Methods in Java is by default `virtual`, unless noted as `final`, which means that each Java class 
+  is associated with a `virtual method table` that contains links to the bytecode of each method of 
+  a class. The table is inherited from the superclass of a particular class and extended with regard 
+  to the new methods of the subclass.
+  
+  __invokevirtual__ enables the dynamic binding in JVM. It also ensures that the method being 
+  called is on the class instance without using interface, and the method access is not `private`.
+  
+  Since the method in the vtable is known at compile time, the JVM can be optimized to remember each 
+  method's position in the table, so as to call methods efficiently.
+
 - __invokespecial__
+
+  __invokespecial__ is for invoking instance initialization methods, `private` methods, and methods 
+  of a specific superlcass of the current class. That means there is no dynamic binding, 
+  __invokespecial__ always invoke the particular class'version of a method.
+  
+  In Java 8, __invokespecial__ is also used to call default methods via `super`.
+
 - __invokestatic__
+
+  __invokestatic__ is used to call the class methods, those methods declared with the `static` 
+  keyword. There is no need to load the target object reference to the operand stack. The method is 
+  identified by a reference in the constant pool. Only the parameters are passed in, so the first 
+  local variable of the method being called is not `this`.
+
 - __invokeinterface__
+
+  The differences between __invokeinterface__ and __invokevirtual__ contains:
+  
+  - __invokeinterface__ does not check the accessibility of the method, all methods in interface is 
+  declared `public` as until Java 8. For more information, check [this SO question](http://stackoverflow.com/questions/27368432/why-does-java-8-not-allow-non-public-default-methods){:target='_blank'}.
+  - __invokeinterface__ has a different method lookup process. The method table of an interface 
+  can have different offsets. So __invokeinterface__ has no chance for the style of optimization 
+  that __invokevirtual__ does. For more information, check 
+  [Efficient Implementation of Java Interfaces: Invokeinterface Considered Harmless](http://www.research.ibm.com/people/d/dgrove/papers/oopsla01.pdf){:target='_blank'}.
+
 - __invokedynamic__
+
+  It is introduced with Java 7, originally targeting to support dynamic languages running on the 
+  JVM. In Java 8, __invokedynamic__ is used under the hood to implement lambda expressions and 
+  default methods, as well as the primary dispatch mechanism.
+  
+  __invokedynamic__ allows user code to decide which method to call at runtime, instead of some 
+  constant pointing to the Constant Pool. `java.lang.invoke.MethodHandle` represents the methods 
+  that __invokedynamic__ can target, it receives some special treatment from the JVM, in order to 
+  operate correctly. Method handles are invoked by using polymorphic signature. A polymorphic 
+  signature is created by the Java compiler dependant on the types of the actual arguments and the 
+  expected return type at a call site. When __invokedynamic__ is first encountered, it does not 
+  have a known target. A method handle (bootstrap method) is invoked, which returns a `CallSite` 
+  containing another method handle, that is the actual target of the __invokedynamic__ call.
+  
+  Currently the lambda expression in Java is implemented as follows: the lambda's body is copied into 
+  a private method inside of the class in which the expression is defined. Given that the lambda 
+  expression makes no use of non-static fields or methods of the enclosing class, the method is also 
+  defined to be static. (final fields are directly copied.) The lambda expression itself is substituted 
+  by an __invokedynamic__ call site. For bootstrapping a call site, __invokedynamic__ instruction 
+  currently delegates to the `LambdaMetafactory` class which is responsible for creating a class that 
+  implements the functional interface and which invokes the appropriate method that contains the 
+  lambda's body stored in the original class. The method contains the lambda's body is private. So 
+  the generated class is loaded using anonymous class loading, so as to receive the host class's full 
+  security context.
 
 Return includes: __ireturn__, __lreturn__, __freturn__, __dreturn__, __areturn__, __return__. The 
 __return__ is for returning `void` from a method invocation.
@@ -280,3 +343,68 @@ Opcodes for other specific tasks includes:
 So there are 8 opcodes in this section.
 
 ### Class File
+
+A compiled class file consists of the following structure:
+
+{% highlight c %}
+ClassFile {
+    u4			      magic;
+    u2			      minor_version;
+    u2			      major_version;
+    u2			      constant_pool_count; // constant pool for the class
+    cp_info		    contant_pool[constant_pool_count – 1]; // numeric literals, string literals, class references, field references, and method references are all here
+    u2			      access_flags; // modifiers for the class
+    u2			      this_class; // index into constant pool pointing to the fully qualified name of this class
+    u2			      super_class;  // index into constant pool pointing to a symbolic reference to the super class
+    u2			      interfaces_count;
+    u2			      interfaces[interfaces_count]; // indices into the constant pool pointing to symbolic references to interfaces implemented
+    u2			      fields_count;
+    field_info		fields[fields_count]; // indices into the constant pool pointing to fields
+    u2			      methods_count;
+    method_info		methods[methods_count]; // indices into the constant pool pointing to methods, bytecode is present for method not being abstract nor native
+    u2			      attributes_count;
+    attribute_info	attributes[attributes_count]; // additional information
+}
+{% endhighlight %}
+
+To decompile the classfile, use 
+
+{% highlight shell %}
+javap -c -v -p -s -sysinfo -constants xxx
+{% endhighlight %}
+
+To view the assembler code, use 
+
+{% highlight shell %}
+javaw -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly xxx
+{% endhighlight %}
+
+#### Loading, Linking and Initialization
+
+The JVM starts up by loading an initial class using the bootstrap classloader. The class is then linked 
+and initialized before `main` is invoked. The execution of this method will in turn drive futher 
+loading, linking and initialization as required.
+
+- __Loading__
+
+  Load the byte array of the class definition. Any class or interface named as a direct superclass is 
+  also loaded.
+
+- __Linking__, it contains three steps verifying, preparing, and optionally resolving.
+
+  - __verifying__, it confirms the representation is structurally correct and obeys the semantic 
+  requirements.
+  - __preparing__, it allocates the memory for static storage and any data structures used by the 
+  JVM such as method tables. Static fields are created and initialized to their default values, no 
+  initializers or code is executed at this stage as that happens as part of initialization.
+  - __resolving__, it checks symbolic references by loading the referenced classes or interfaces 
+  and checks the references are correct. If this does not take place at this point the resolution 
+  of symbolic references can be deferred until just prior to their use by a bytecode instruction.
+
+- __Initialization__, it executes the initialization method `<clinit>`.
+
+### References
+
+[link1](http://mydailyjava.blogspot.com/2015/03/dismantling-invokedynamic.html){:target='_blank'}, 
+[link2](https://www.beyondjava.net/blog/java-programmers-guide-java-byte-code/){:target='_blank'}, 
+and [link3](http://blog.jamesdbloom.com/JVMInternals.html){:target='_blank'}.
