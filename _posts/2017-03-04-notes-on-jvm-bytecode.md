@@ -348,22 +348,22 @@ A compiled class file consists of the following structure:
 
 {% highlight c %}
 ClassFile {
-    u4			      magic;
-    u2			      minor_version;
-    u2			      major_version;
-    u2			      constant_pool_count; // constant pool for the class
-    cp_info		    contant_pool[constant_pool_count – 1]; // numeric literals, string literals, class references, field references, and method references are all here
-    u2			      access_flags; // modifiers for the class
-    u2			      this_class; // index into constant pool pointing to the fully qualified name of this class
-    u2			      super_class;  // index into constant pool pointing to a symbolic reference to the super class
-    u2			      interfaces_count;
-    u2			      interfaces[interfaces_count]; // indices into the constant pool pointing to symbolic references to interfaces implemented
-    u2			      fields_count;
-    field_info		fields[fields_count]; // indices into the constant pool pointing to fields
-    u2			      methods_count;
-    method_info		methods[methods_count]; // indices into the constant pool pointing to methods, bytecode is present for method not being abstract nor native
-    u2			      attributes_count;
-    attribute_info	attributes[attributes_count]; // additional information
+    u4              magic;
+    u2              minor_version;
+    u2              major_version;
+    u2              constant_pool_count; // constant pool for the class
+    cp_info         contant_pool[constant_pool_count – 1]; // numeric literals, string literals, class references, field references, and method references are all here
+    u2              access_flags; // modifiers for the class
+    u2              this_class; // index into constant pool pointing to the fully qualified name of this class
+    u2              super_class;  // index into constant pool pointing to a symbolic reference to the super class
+    u2              interfaces_count;
+    u2              interfaces[interfaces_count]; // indices into the constant pool pointing to symbolic references to interfaces implemented
+    u2              fields_count;
+    field_info      fields[fields_count]; // indices into the constant pool pointing to fields
+    u2              methods_count;
+    method_info     methods[methods_count]; // indices into the constant pool pointing to methods, bytecode is present for method not being abstract nor native
+    u2              attributes_count;
+    attribute_info  attributes[attributes_count]; // additional information
 }
 {% endhighlight %}
 
