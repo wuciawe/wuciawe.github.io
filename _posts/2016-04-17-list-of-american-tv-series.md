@@ -59,3 +59,5 @@ List of Films:
 - The Godfather 1974
 - The Godfather 1990
 - La Femme Défendue 1997
+- Memento 2000
+- The Usual Suspects 1995
