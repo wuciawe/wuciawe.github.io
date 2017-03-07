@@ -435,3 +435,7 @@ footer span{
     /*background-color: rgba(255, 44, 44, 0.4);*/
     /*!*border-color: #FFFACD;*!*/
 /*}*/
+
+code.highlighter-rouge {
+    font-size: 75% !important;
+}
