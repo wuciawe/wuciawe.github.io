@@ -61,3 +61,5 @@ List of Films:
 - La Femme Défendue 1997
 - Memento 2000
 - The Usual Suspects 1995
+- The Sixth Sense 1999
+- Identity 2003
