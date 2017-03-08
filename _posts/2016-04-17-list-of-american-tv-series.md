@@ -63,3 +63,4 @@ List of Films:
 - The Usual Suspects 1995
 - The Sixth Sense 1999
 - Identity 2003
+- Shutter Island 2010
