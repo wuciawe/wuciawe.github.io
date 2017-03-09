@@ -144,3 +144,8 @@ means messages are waited to be committed.
 There is still no clear clue why reading is so slow. Because uncommitted messages are not visible 
 to the consumer. And according to the log of my application, in each batch the amount of message 
 of partitions do not vary very much and only some partition is slow to read.
+
+### References
+
+[link1](https://kafka.apache.org/documentation/#replication){:target='_blank'}, and
+[link2](https://www.confluent.io/blog/hands-free-kafka-replication-a-lesson-in-operational-simplicity/){:target='_blank'}
