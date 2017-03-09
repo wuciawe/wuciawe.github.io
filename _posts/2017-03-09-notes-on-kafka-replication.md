@@ -1,7 +1,7 @@
 ---
 layout: post
-category: [scala]
-tags: [scala]
+category: [kafka]
+tags: [kafka]
 infotext: 'notes on the ISR in kafka, a mechanism for HA and consistence.'
 ---
 {% include JB/setup %}
