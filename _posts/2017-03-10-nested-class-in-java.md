@@ -37,8 +37,13 @@ class O {
 }
 {% endhighlight %}
 
-Use the command `javap -c -s -v -p <class>`, we can decompile the class, where `O` is 
-like:
+Use the command `javap -c -s -v -p <class>`, we can decompile the class, where `-c` denotes 
+printing out disassembled code, i.e., the instructions that comprise the Java bytecodes, for 
+each of the methods in the class; `-s` denotes printing internal type signatures; `-v` denotes 
+printing stack size, number of locals and args for methods; `-p` denotes showing all classes 
+and members.. 
+
+`O` is like:
 
 {% highlight console %}
 {
