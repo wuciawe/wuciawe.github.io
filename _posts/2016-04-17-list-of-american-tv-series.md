@@ -64,3 +64,10 @@ List of Films:
 - The Sixth Sense 1999
 - Identity 2003
 - Shutter Island 2010
+- The Machine 2013 2013
+- A.I. Artificial Intelligence 2001
+- You're Next 2011
+- Mimic 1997
+- Mimic 2: Hardshell 2001
+- Mimic 3: Sentinel 2003
+- It Follows 2014
