@@ -1,0 +1,211 @@
+Programs that recognize languages are called parsers or syntax analyzers.
+Syntax refers to the rules governing language membership.
+
+The process of grouping characters into words or symbols (tokens) is called
+lexical analysis or simply tokenizing. We call a program that tokenizes the
+input a lexer. The lexer can group related tokens into token classes, or token
+types, such as  INT (integers),  ID (identifiers),  FLOAT (floating-point numbers),
+and so on.
+
+lexers try to match the longest string possible for each token
+
+charstream -> tokenstream -> terminalnode -> rulenode -> parse tree
+
+ANTLR provides support for two tree-walking mechanisms in its runtime
+library. By default, ANTLR generates a parse-tree listener interface that
+responds to events triggered by the built-in tree walker.
+
+The beauty of the listener mechanism is that it’s all automatic. We don’t have
+to write a parse-tree walker, and our listener methods don’t have to explicitly
+visit their children.
+
+There are situations, however, where we want to control the walk itself,
+explicitly calling methods to visit children. Option  -visitor asks ANTLR to gen-
+erate a visitor interface from a grammar with a visit method per rule.
+
+Language A language is a set of valid sentences; sentences are composed of phrases,
+which are composed of subphrases, and so on.
+Grammar A grammar formally defines the syntax rules of a language. Each rule in
+a grammar expresses the structure of a subphrase.
+Syntax tree or parse tree This represents the structure of the sentence where each
+subtree root gives an abstract name to the elements beneath it. The subtree roots
+correspond to grammar rule names. The leaves of the tree are symbols or tokens
+of the sentence.
+Token A token is a vocabulary symbol in a language; these can represent a category
+of symbols such as “identifier” or can represent a single operator or keyword.
+Lexer or tokenizer This breaks up an input character stream into tokens. A lexer
+performs lexical analysis.
+Parser A parser checks sentences for membership in a specific language by checking
+the sentence’s structure against the rules of a grammar. The best analogy for
+parsing is traversing a maze, comparing words of a sentence to words written
+along the floor to go from entrance to exit. ANTLR generates top-down parsers
+called ALL(*) that can use all remaining input symbols to make decisions. Top-
+down parsers are goal-oriented and start matching at the rule associated with
+the coarsest construct, such as  program or  inputFile .
+Recursive-descent parser This is a specific kind of top-down parser implemented
+with a function for each rule in the grammar.
+Lookahead Parsers use lookahead to make decisions by comparing the symbols that
+begin each alternative.
+
+The first step to building a language application is to create a grammar that
+describes a language’s syntactic rules (the set of valid sentences).
+
+how to embed actions (arbitrary code) directly in the
+grammar
+
+Grammars consist of a set of rules that describe language syntax. There
+are rules for syntactic structure like  stat and  expr as well as rules for
+vocabulary symbols (tokens) such as identifiers and integers.
+
+Rules starting with a lowercase letter comprise the parser rules.
+
+Rules starting with an uppercase letter comprise the lexical (token) rules.
+
+We separate the alternatives of a rule with the  | operator, and we can
+group symbols with parentheses into subrules. For example, subrule  ('*'|'/')
+matches either a multiplication symbol or a division symbol.
+
+A left-recursive rule is one that invokes itself at
+the start of an alternative.
+
+It’s a good idea to break up very large grammars into logical chunks, just like
+we do with software. One way to do that is to split a grammar into parser and
+lexer grammars.
+
+First, we need to label the alternatives of the rules. (The labels can
+be any identifier that doesn’t collide with a rule name.) Without labels on the
+alternatives, ANTLR generates only one visitor method per rule.
+
+The biggest difference between the listener and visitor mechanisms is that
+listener methods are called by the ANTLR-provided walker object, whereas
+visitor methods must walk their children with explicit visit calls. Forgetting
+to invoke  visit() on a node’s children means those subtrees don’t get visited.
+
+Listeners and visitors are great because they keep application-specific code
+out of grammars, making grammars easier to read and preventing them from
+getting entangled with a particular application. For the ultimate flexibility
+and control, however, we can directly embed code snippets (actions) within
+grammars. These actions are copied into the recursive-descent parser code
+ANTLR generates.
+
+We can compute values or print things out on-the-fly during parsing if we
+don’t want the overhead of building a parse tree.
+
+For now, actions are code snippets surrounded by
+curly braces. The  members action injects that code into the member area of
+the generated parser class.
+
+The key in the following  Data grammar is a special Boolean-valued action
+called a semantic predicate:  {$i<=$n}? . That predicate evaluates to true until
+we surpass the number of integers requested by the  sequence rule parameter
+n . False predicates make the associated alternative “disappear” from the
+grammar and, hence, from the generated parser.
+
+there are common file formats that contain multiple languages.
+These
+are often called island grammars.
+ANTLR provides a well-known lexer feature called lexical modes that lets us
+deal easily with files containing mixed formats. The basic idea is to have the
+lexer switch back and forth between modes when it sees special sentinel
+character sequences.
+
+The key is the  TokenStreamRewriter object that knows how to give altered views
+of a token stream without actually modifying the stream.
+
+The rewriter exe-
+cutes those instructions every time we call  getText() .
+
+The constraints of word order and dependency, derived from natural language,
+blossom into four abstract computer language patterns.
+
+ Sequence: This is a sequence of elements such as the values in an array
+initializer.
+
+Choice: This is a choice between multiple, alternative phrases such as
+the different kinds of statements in a programming language.
+
+Token dependence: The presence of one token requires the presence of
+its counterpart elsewhere in a phrase such as matching left and right
+parentheses.
+
+Nested phrase: This is a self-similar language construct such as nested
+arithmetic expressions or nested statement blocks in a programming
+language.
+
+Grammars consist of a header that names the grammar and a set of rules
+that can invoke each other.
+
+By default, ANTLR associates operators left to right
+we have
+to manually specify the associativity on the operator token using option  assoc .
+
+A left-recursive rule is one that
+either directly or indirectly invokes itself on the left edge of an alternative.
+
+While ANTLR v4 can handle direct left recursion, it can’t handle indirect left
+recursion.
+
+Since lexing and parsing rules have similar structures, ANTLR allows us to
+combine both in a single grammar file. But since lexing and parsing are two
+distinct phases of language recognition, we must tell ANTLR which phase is
+associated with each rule. We do this by starting lexer rule names with
+uppercase letters and parser rule names with lowercase letters.
+
+For keywords, operators, and punctuation, we don’t need lexer rules because
+we can directly reference them in parser rules in single quotes like  'while' ,  '*' ,
+and  '++' . Some developers prefer to use lexer rule references such as  MULT
+instead of literal  '*' . That way, they can change the multiply operator character
+without altering the references to  MULT in the parser rules. Having both the
+literal and lexical rule  MULT is no problem; they both result in the same token
+type.
+
+ANTLR collects and separates all of the string literals and lexer rules from
+the parser rules. Literals such as  'enum' become lexical rules and go immedi-
+ately after the parser rules but before the explicit lexical rules.
+
+ANTLR lexers resolve ambiguities between lexical rules by favoring the rule
+specified first.
+
+ANTLR puts the implicitly gener-
+ated lexical rules for literals before explicit lexer rules, so those always have
+priority. In this case,  'enum' is given priority over  ID automatically.
+
+Rules prefixed with  fragment can
+be called only from other lexer rules; they are not tokens in their own right.
+
+To make the grammar reusable and language
+neutral, we need to completely avoid embedded actions.
+
+As it stands, rule  e yields a fairly unhelpful listener because all alternatives
+of  e result in a tree walker triggering the same  enterE() and  exitE() methods.
+
+To get more precise listener events, ANTLR lets us label the outermost alter-
+natives of any rule using the  # operator. Let’s derive grammar  LExpr from  Expr
+and label  e ’s alternatives.
+
+Instead of using temporary storage to share data between event methods, we
+can store those values in the parse tree itself. We can use this tree annotation
+approach with both a listener and a visitor
+
+Adding Fields to Nodes via Rule Arguments and Return Values
+
+The easiest way to annotate parse-tree nodes is to use a  Map that associates
+arbitrary values with nodes. For that reason, ANTLR provides a simple helper
+class called  ParseTreeProperty .
+
+Comparing Information Sharing Approaches
+
+Native Java call stack: Visitor methods return a value of user-defined
+type. If a visitor needs to pass parameters, it must also use one of the
+next two techniques.
+
+Stack-based: A stack field simulates parameters and return values like
+the Java call stack.
+
+ Annotator: A map field annotates nodes with useful values.
+ 
+ Language implementers typically call the data structure that holds symbols
+a symbol table.
+
+
+
