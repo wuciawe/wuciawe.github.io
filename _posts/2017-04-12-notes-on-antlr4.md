@@ -207,5 +207,114 @@ the Java call stack.
  Language implementers typically call the data structure that holds symbols
 a symbol table.
 
+Error recovery is what allows the parser to continue after finding a syntax
+error.
+
+parsers perform
+single-token insertion and single-token deletion upon mismatched token errors
+if possible. If not, parsers gobble up tokens until they find a token that could
+reasonably follow the current rule and then return, continuing as if nothing
+had happened.
+
+Recovery by Scanning for Following Tokens
+
+When faced with truly borked-up input, the current rule can’t continue, so
+the parser recovers by gobbling up tokens until it thinks that it has resynchro-
+nized and then returns to the calling rule. We can call this the sync-and-return
+strategy.
+
+It
+can throw out tokens only until the lookahead is consistent with something
+that should match after the parser exits from the rule.
+
+ANTLR tries to recover within
+the rule before falling back on this basic strategy.
+
+for now, we can summarize
+recover() as consuming tokens until it finds one in the resynchronization set.
+The resynchronization set is the union of rule reference following sets for all
+the rules on the invocation stack. The following set for a rule reference is the
+set of tokens that can match immediately following that reference and without
+leaving the current rule.
+
+During recovery, ANTLR parsers avoid emitting cascading error messages
+That is, parsers emit a single error message for
+each syntax error until they successfully recover from that error.
+
+In many cases, ANTLR can recover more intelligently than consuming until
+the resynchronization set and returning from the current rule. It pays to
+attempt to “repair” the input and continue within the same rule.
+
+Recovering from Mismatched Tokens
+
+For
+every token reference,  T , in the grammar, the parser invokes  match(T) . If the
+current token isn’t  T ,  match() notifies the error listener(s) and attempts to
+resynchronize. To resynchronize, it has three choices. It can delete a token,
+it can conjure one up, or it can punt and throw an exception to engage the
+basic sync-and-return mechanism.
+
+Deleting the current token is the easiest way to resynchronize, if it makes
+sense to do so.
+
+If the parser can’t resynchronize by deleting a token, it attempts to insert a
+token instead.
+
+Recovering from Errors in Subrules
+
+ANTLR v4 now
+automatically inserts synchronization checks at the start and at the loop
+continuation test to avoid such drastic recovery. The mechanism looks like
+this:
+
+Subrule start At the start of any subrule, parsers attempt single-token
+deletion. But, unlike token matches, parsers don’t attempt single-token
+insertion. ANTLR would have a hard time conjuring up a token because
+it would have to guess which of several alternatives would ultimately be
+successful.
+
+Looping subrule continuation test If the subrule is a looping construct,  (...)*
+or  (...)+ , the parser tries to recover aggressively upon error to stay in the
+loop. After successfully matching an alternative of the loop, the parser
+consumes until it finds a token consistent with one of these sets:
+(a) Another iteration of the loop
+(b) What follows the loop
+(c) The resynchronization set of the current
+
+Besides the recognition of tokens and subrules, parsers can also fail to match
+semantic predicates.
+
+Catching Failed Semantic Predicates
+
+For now, let’s treat semantic predicates
+like assertions. They specify conditions that must be true at runtime for the
+parser to get past them. If a predicate evaluates to false, the parser throws a
+FailedPredicateException exception, which is caught by the  catch of the current rule.
+The parser reports an error and does the generic sync-and-return recovery.
+
+We can change the message from
+a chunk of code to something a little more readable by using the  fail option
+on the semantic predicate.
+
+it’s
+worth pointing out a potential flaw in the mechanism. Given that the parser
+sometimes doesn’t consume any tokens during a single recovery attempt, it’s
+possible that overall recovery could go into an infinite loop. If we recover
+without consuming a token and get back to the same location in the parser,
+we will recover again without consuming a token.
+
+Error Recovery Fail-Safe
+
+ANTLR parsers have a built-in fail-safe to guarantee error recovery terminates.
+If we reach the same parser location and have the same input position, the
+parser forces a token consumption before attempting recovery.
+
+Error Alternatives
+
+While these error alternatives can make an ANTLR-generated parser work a
+little harder to choose between alternatives, they don’t in any way confuse
+the parser. Just like any other alternative, the parser matches them if they
+are consistent with the current input.
+
 
 
