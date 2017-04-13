@@ -316,5 +316,15 @@ little harder to choose between alternatives, they don’t in any way confuse
 the parser. Just like any other alternative, the parser matches them if they
 are consistent with the current input.
 
+special actions,  {...}? , called
+semantic predicates that let us selectively deactivate portions of a grammar
+at runtime. Predicates are Boolean expressions that have the effect of reducing
+the number of choices that the parser sees.
+
+Issuing Context-Sensitive Tokens with Lexical Modes
+
+ANTLR provides lexical modes that let lexers
+switch between contexts (modes).
+
 
 
