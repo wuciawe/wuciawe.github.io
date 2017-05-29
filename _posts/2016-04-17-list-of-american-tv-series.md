@@ -8,8 +8,8 @@ infotext: 'This is a list on American TV series which I have watched and will ha
 List of TV series:
 
 - Person of Interest 2011 s1-s5
-- Marvel's Agents of S.H.I.E.L.D 2013 s2-s3
-- Scorpion 2014 s1-s2
+- Marvel's Agents of S.H.I.E.L.D 2013 s2-s4
+- Scorpion 2014 s1-s3
 - The Sopranos 1999 s1-s6
 - Lilyhammer 2012 s1-s3
 - Shameless 2011 s1-s6
@@ -19,7 +19,9 @@ List of TV series:
 - And Then There Were None 2015 s1
 - Hatfields & McCoys 2012 s1
 - How To Get Away With Murder 2014 s1-s3
-- 12 Monkeys
+- 12 Monkeys 2015 s1-s3
+- Feud 2017 s1
+- Black Mirror 2011 s1-s3
 
 List of Films:
 
@@ -71,3 +73,22 @@ List of Films:
 - Mimic 2: Hardshell 2001
 - Mimic 3: Sentinel 2003
 - It Follows 2014
+- John Carter 2012
+- The Suffering 2016
+- Con Air 1997
+- Grosse Pointe Blank 2007
+- The Conversation 1974 x
+- The Big Hit 1998
+- Source Code 2011
+- Sunshine 2007
+- The Wild Geese 1978
+- Evil Under the Sun 1982
+- Revolutionary Road 2008
+- CHUPACABRATERROR-Dark seas 2005
+- Death on the Nile 1978
+- Poirot: The Mystery of the Blue Train 2005
+- Notorious 2009
+- Chicago Overcoat 2009
+- Devil's Playground 2010
+- Friday the 13th 1980s x
+- Gangster Squad 2013 x

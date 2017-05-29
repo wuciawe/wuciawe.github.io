@@ -271,7 +271,7 @@ $$
 Evaluating the ratio of \\(\frac{p(\boldsymbol{\theta}'|y)}{p(\boldsymbol{\theta}^{(t)} | y)}\\) in 
 practice involves a comparison of the unstandardised posterior densityt. In practice also the 
 parameters are updated individually or in sub-blocks of the overall parameter set. In fact, for 
-updating a particular parameter, with proposed value \\(\theta'_j\\) from a proposal density 
+updating a particular parameter, with proposed value \\(\theta'\_j\\) from a proposal density 
 specific to \\(\theta_j\\), all other parameters than the jth can be regarded as fixed. So all 
 terms in the ratio \\(\frac{p(\boldsymbol{\theta}'|y)}{p(\boldsymbol{\theta}^{(t)} | y)}\\) cancel 
 out, apart from those in the full conditional densities \\(p(\theta_j|y, \theta_{[j]})\\). So for 
@@ -282,7 +282,7 @@ $$
 \frac{p(\boldsymbol{\theta}'_j|y, \theta_{[j]})q(\boldsymbol{\theta}^{(t)}|\boldsymbol{\theta}^*)}{p(\boldsymbol{\theta}^{(t)}_j|y,\theta_{[j]})q(\boldsymbol{\theta}^*|\boldsymbol{\theta}^{(t)})}
 $$
 
-where \\(\boldsymbol{\theta}^* = (\theta_1, \dots, \theta_{j-1}, \theta'_j, \theta_{j+1}, \dots, \theta_p)\\). 
+where \\(\boldsymbol{\theta}^* = (\theta_1, \dots, \theta_{j-1}, \theta'\_j, \theta_{j+1}, \dots, \theta_p)\\). 
 It may in practice be easier (if not strictly necessary) to program using the ratio
 
 $$
