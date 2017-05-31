@@ -1,3 +1,44 @@
+- Client Client ID
+- Server Server ID
+- Key Distribution Center KDC
+  - Authentication Server AS
+  - Ticket Granting Server TGS
+
+1 Client -> Clear Text, User xxx wants Service -> AS
+
+AS checks if User xxx is in database.
+
+2 Client <- A: Client/TGS session key (Client secret key) B: Ticket Granting Ticket (TGT) - Client ID,
+Client network address - ticket validity period, Client/TGS session key (TGS secret key) <- AS
+
+Client decrypts A obtaining Client/TGS session key.
+
+3 Client -> C: B + Server ID D: Authenticator - Client ID, timestamp (Client/TGS session key) -> TGS
+
+AS decrypts C and D, checks Client ID from C with Client ID from D and ticket validity period from C and timestamp from D.
+
+4 Client <- E: Client/Server ticket - Client ID, network address - validity period, Client/Server session key (Server secret key) 
+F: Client/Server session key (Client/TGS session key) <- TGS
+
+Client decrypts F, obtaining Client/Server session key.
+
+5 Client -> G: E H: Authenticator - Client ID and timestamp (Client/Server session key) -> Server
+
+Server decrypts G and H, checks Client ID from G with Client ID from H and ticket validity period from G with timestamp from H.
+
+6 Client <- I: timestamp from H + 1 (Client/Server session key) <- Server
+
+Client decrypts I, checks timestamp = timestamp + 1.
+
+Easy for administrators to manage passwords by storing them centrally. Enhance security by ensuring no 
+clear text passwords are transmitted. Allow users to access different services with the same password. Single sign on.
+
+Users and services in a Kerberos realm are known as "principals", each has its own secret 
+encryption key stored on the KDC.
+
+TGT proves user's identity.
+User principal will eventually use this TGT to receive all of the services it wants to access.
+
 Kerberos V5 is a trusted third party network authentication protocol designed to provide 
 strong authentication using secret key cryptography. When using Kerberos V5, the user's 
 password is never sent across the network, not even in encrypted form, except during 
