@@ -139,6 +139,7 @@ $$
 $$
 
 http://www.recsyswiki.com/wiki/SVD%2B%2B
+http://stat.wikia.com/wiki/Matrix_factorization
 
 `NOTE`: In all the above three models, no negative feedback is allowed. (Maybe negative feedback makes 
 sense in the neighborhood models.)
