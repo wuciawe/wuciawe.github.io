@@ -19,6 +19,11 @@ value of \\(\\{\hat{r}_{ui}\\}\\) that have not been observed yet.
 
 ### Neighborhood models
 
+Here I will introduce two kinds of neighborhood models: user to user / item to item models, and 
+content based models.
+
+#### user to user / item to item
+
 This sort of algorithms are based on the assumption that users with similar rating behaviour are more 
 likely to rate the same score on a certain item, or similar items will have similar ratings on the 
 other side, where the former one is called the user-oriented approach and the latter one is called 
@@ -36,8 +41,9 @@ $$
 
 where \\(\Phi = \sum\_{v \in \mathcal{S}^k(u; i)}s\_{uv}\\) is the normalization factor.
 
-Similarly for item-oriented approach, with the similarity \\(s\_{ij}\\) between item \\(i\\) and item 
-\\(j\\), in order to infer the rating \\(\hat{r}\_{ui}\\), we have the neighbor set 
+Similarly for item-oriented approach, with the similarity \\(s\_{ij}\\) between item \\(i\\) and 
+item \\(j\\) calculated based on the ratings of the commond set of users all of whom have rated them, 
+in order to infer the rating \\(\hat{r}\_{ui}\\), we have the neighbor set 
 \\(\mathcal{S}^k(u; i)\\) with \\(k\\) nearest items to item \\(i\\) rated by user \\(u\\), where the 
 similarity is most commonly obtained by __the Pearson coefficient__. (For more details on similarity 
 matrices, view [notes on similarity matrices]({% post_url 2016-06-09-notes-on-similarity-measurements %}).) The rating is
@@ -51,7 +57,22 @@ where \\(\Phi = \sum\_{j \in \mathcal{S}^k(u; i)}s\_{ij}\\) is the normalization
 I remember that in the early version of the implementation of mahout, it uses this kind of models for 
 collaborative filtering.
 
+#### content based models
+
+The content based models are similar to the item-oriented approaches, the difference is that in the 
+content models the similarities between items are calculated by the profiles or the attributions of 
+the items.
+
+It might also make sense to build a content based model based the user-profiles.
+
+After obtaining the similarities between items/users, we apply similar formulae to estimate 
+the ratings from a set of nearest items/users' ratings.
+
 ### Latent factor model
+
+There are many kinds of latent factor models: pLSA, Latent Dirichlet Allocation, SVD and so on.
+
+In this post, the matrix factorization approach will be discussed, specifically the SVD.
 
 In this approach, each user \\(u\\) is associated with a user vector \\(\boldsymbol{x\_{u}}\\) and 
 each item \\(i\\) is associated with an item vector \\(\boldsymbol{y\_{i}}\\), then the rating made by 
@@ -70,6 +91,12 @@ where \\(\lambda\\) is the regularization factor.
 
 In the above approach, it only utilizes the explicit feedback made by the users, while in this 
 approach, the implicit feedback information is used as well.
+
+In the following, two kinds of implicit feedback latent factor models will be discussed.
+
+#### Unknown name model
+
+I forget the name of the model. Let's just simply step on.
 
 First introduce the indicator \\(p\_{ui}\\) indicating the preference of user \\(u\\) to item \\(i\\)
 
@@ -97,6 +124,21 @@ both the implicit feedback and explicit feedback, which implies that a lack of f
 the user have no preference in the item for example the item is just too expansive to afford and an 
 appearance of positive feedback does not mean the user really have a positive preference in the item as 
 the user may choose the item as a gift for someone else or choose the item by coincidence.
+
+#### SVD++
+
+This is an variation of SVD based models, in which it includes the effect of the implicit information 
+as opposed to \\(\boldsymbol{x}\_u\\) that only includes the effect of the explicit one. It assumes 
+that a user rates an item is in itself an indication of preference. In other words, chances that the 
+user likes an item he/she has rated are higher than for a random not-rated item.
+
+The objective function is similar to that of SVD apporach:
+
+$$
+\min_{x_*, y_*}\sum_{\text{observed} r_{ui}} (r_{ui} - (\boldsymbol{x}_u + |N(u)|^{-\frac{1}{2}}\sum_{j \in N(u)} yay_i)^T\boldsymbol{y}_i)^2 + \lambda(||\boldsymbol{x}_u||^2 + ||\boldsymbol{y}_i||^2)
+$$
+
+http://www.recsyswiki.com/wiki/SVD%2B%2B
 
 `NOTE`: In all the above three models, no negative feedback is allowed. (Maybe negative feedback makes 
 sense in the neighborhood models.)
