@@ -135,7 +135,7 @@ user likes an item he/she has rated are higher than for a random not-rated item.
 The objective function is similar to that of SVD apporach:
 
 $$
-\min_{x_*, y_*}\sum_{\text{observed} r_{ui}} (r_{ui} - (\boldsymbol{x}_u + |N(u)|^{-\frac{1}{2}}\sum_{j \in N(u)} yay_i)^T\boldsymbol{y}_i)^2 + \lambda(||\boldsymbol{x}_u||^2 + ||\boldsymbol{y}_i||^2)
+\min_{x_*, y_*}\sum_{\text{observed} r_{ui}} (r_{ui} - (\boldsymbol{x}_u + |N(u)|^{-\frac{1}{2}}\sum_{j \in N(u)} yay_j)^T\boldsymbol{y}_i)^2 + \lambda(||\boldsymbol{x}_u||^2 + ||\boldsymbol{y}_i||^2 + \sum_{j \in N(u)} ||yay_j||^2)
 $$
 
 http://www.recsyswiki.com/wiki/SVD%2B%2B
