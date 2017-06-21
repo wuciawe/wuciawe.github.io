@@ -22,10 +22,20 @@ constant increases exponentially with the dimension of the integral.
 
 ### Rejection Sampling
 
+Rejection sampling is based on the observation that to sample a random variable one can perform 
+a uniformly random sampling of a 2D cartesian graph, and keep the samples in the region under 
+the graph of its density function. Note that this property can be extended to N-dimension functions.
+
 Suppose we want to sample from the density \\(p(x)\\) as shown in 
 [!](2017-06-20-notes-on-sampling-revisit/reject_sampling.jpg). 
 If we can sample uniformly 
-from the 2-D region under the curve, then this process is the same as sampling from \\(p(x)\\). 
+from the 2D region under the curve, then this process is the same as sampling from \\(p(x)\\).
+
+The general form of rejection sampling assumes that the board is not necessarily rectangular but 
+is shaped according to some distribution that we know how to sample from (for example, using 
+inversion sampling), and which is at least as high at every point as the distribution we want 
+to sample from, so that the former completely encloses the latter.
+
 In rejection sampling, another density \\(q(x)\\) is considered from which we can sample directly 
 under the restriction that \\(p(x) < M q(x)\\) where \\(M > 1\\) is an appropriate bound on 
 \\(\frac{p(x)}{q(x)}\\). The rejection sampling algorithm is described below.
@@ -124,6 +134,44 @@ $$
 
 ### Metropolis-Hastings
 
+The Metropolis-Hastings algorithm is a Markov chain Monte Carlo method for obtaining 
+a sequence of random samples from a probability distribution for which direct sampling 
+is difficult.
+
+The Metropolis-Hastings algorithm can draw samples from any probability distribution 
+\\(p(x)\\), provided you can compute the value of a function \\(f(x)\\) that is proportional 
+to the density of \\(p(x)\\). The lax requirement that \\(f(x)\\) should be merely proportional 
+to the density, rather than exactly equal to it, makes the Metropolis-Hastings algorithm 
+particularly useful, because calculating the necessary normalization factor is often 
+extremely difficult in practice.
+
+The Metropolis-Hastings algorithm works by generating a sequence of sample values in such a 
+way that, as more and more sample values are produced, the distribution of values more 
+closely approximates the desired distribution \\(p(x)\\). These sample values are produced 
+iteratively, with the distribution of the next sample being dependent only on the current 
+sample value (thus making the sequence of samples into a Markov chain).
+
+Let \\(f(x)\\) be a function that is propotional to the desired probability distribution 
+\\(p(x)\\)
+
+1. Initialization: Choose an arbitrary point \\(x_0\\) to be the first sample, and choose 
+an arbitrary probability density \\(g(x|y)\\) that suggests a candidate for the next 
+sample value \\(x\\), given the previous sample value \\(y\\). For the Metropolis algorithm, 
+\\(g\\) must be symmetric; in other words, it must satisfy \\(g(x|y)=g(y|x)\\). A usual 
+choice is to let \\(g(x|y)\\) be a Gaussian distribution centered at \\(y\\), so that points 
+closer to \\(y\\) are more likely to be visited next -- making the sequence of samples into 
+a random walk. The function \\(g\\) is referred to as the proposal density or jumping 
+distribution.
+2. For each iteration \\(t\\):
+   - Generate a candidate \\(x'\\) for the next sample by picking from the distribution 
+   \\(g(x'|x_t)\\).
+   - Calculate the acceptance ratio \\(\alpha=\frac{f(x')}{f(x_t)}\\), which will be used 
+   to decide whether to accept or reject the candidate. Because \\(f\\) is propotional to 
+   the density of \\(p\\), we have that \\(\alpha=\frac{f(x')}{f(x_t)}=\frac{p(x')}{p(x_t)}\\).
+   - If \\(\alpha \geq 1\\), then the candidate is more likely than \\(x_t\\); automatically 
+   accept the candidate by setting \\(x_{t+1}=x'\\). Otherwise, accept the candidate with 
+   probability \\(\alpha\\); if the candidate is rejected, set \\(x_{t+1}=x_t\\) instead.
+
 In Metropolis-Hastings sampling, samples mostly move towards higher density regions, but 
 sometimes also move downhill. In comparison to rejection sampling where we always throw 
 away the rejected samples, here we sometimes keep those samples as well.
@@ -143,3 +191,90 @@ Remark 2. In line 5 of the algorithm, if \\(q\\) is symmetric then \\(\frac{q(x^
 This term was later introduced to the original Metropolis algorithm by Hastings.
 
 https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/lectures/lecture17.pdf
+
+Compared with an algorithm like adaptive rejection sampling that directly generates 
+independent samples from a distribution, Metropolis-Hastings and other MCMC algorithms 
+have a number of disadvantages:
+
+- The samples are correlated. Even though over the long term they do correctly follow 
+\\(p(x)\\), a set of nearby samples will be correlated with each other and not correctly 
+reflect the distribution. This means that if we want a set of independent samples, we 
+have to throw away the majority of samples and only take every \\(n\\)th sample, for 
+some value of \\(n\\). Autocorrelation can be reduced by increaing the jumping width, 
+but this will also increase the likehood of rejection of the proposed jump. Too large 
+or too small a jumping size will lead to a slow-mixing Markov chain, i.e. a highly 
+correlated set of samples, so that a very large number of samples will be needed to 
+get a reasonable estimate of any desired property of the distribution.
+- Although the Markov chain eventually converges to the desired distribution, the 
+initial samples may follow a very different distribution, especially if the starting 
+point is in a region of low density. As a result, a burn-in period is typically 
+necessary, where an initial number of samples are thrown away.
+
+On the other hand, most simple rejection sampling methods suffer from the __curse of 
+dimensionality__, where the probability of rejection increases exponentially as a 
+function of the number of dimensions. Metropolis-Hastings, along with other MCMC 
+methods, do not have this problem to such a degree, and thus are ofthen the only 
+solutions available when the number of dimensions of the distribution to be sampled 
+is high.
+
+### Gibbs Sampling
+
+The Gibbs sampler is a technique for generating random variables from a (marginal) 
+distribution indirectly, without having to calculate the density.
+
+Suppose we are given a joint density \\(f(x,y_1,y_2,\cdots,y_p)\\), and are 
+interested in obtaining characteristics of the marginal density
+
+$$
+f(x) = \int\cdots\int f(x,y_1,y_2,\cdots,y_p) dy_1 dy_2 \cdots dy_p
+$$
+
+such as the mean or variance. If the integration is extremely difficult to perform, 
+the Gibbs sampler provides an alternative method for obtaining \\(f(x)\\).
+
+Rather than compute or approximate \\(f(x)\\) directly, the Gibbs sampler allows 
+us effectively to generate a sample \\(X_1, \cdots, X_m \sim f(x)\\) without 
+requiring \\(f(x)\\). And we compute mean or variance based on population 
+quantities.
+
+In a two-variable case, the Gibbs sampler generates a sample from \\(f(x)\\) by 
+sampling instead from the conditional distributions \\(f(x|y)\\) and \\(f(y|x)\\), 
+distributions that are ofthen known in statistical models. And we generate a 
+sequence of random variables
+
+$$
+Y'_0, X'_0, Y'_1, X'_1, Y'_2, X'_2,\cdots,Y'_k,X'_k
+$$
+
+The initial value \\(Y'_0=y'_0\\) is specified, and the rest is obtained iteratively by:
+
+$$
+X'_j \sim f(x|Y'_j = y'_j)
+$$
+$$
+Y'_{j+1} \sim f(y | X'_j = x'_j)
+$$
+
+Under general conditions, the distribution of \\(X'_k\\) converges to \\(f(x)\\) as 
+\\(k \arrow \infinity\\).
+
+The convergence of the Gibbs samples is a consequence of the Markovian nature of 
+the generation iteration. In a two random variable case, the transition probability 
+is \\(A_{x|x} = f(x_{i+1}|x_i) = \sum f(x_{i+1}|y)f(y|x_i) = A_{y|x}A_{x|y}\\). Thus 
+we have \\(P(X'_k=x_k | X'_0 = x_0) = (A_{x|x})^k\\).
+
+As long as all the entries of \\(A_{x|x}\\) are positive, then for any initial 
+probability \\(f_0\\), as \\(k \arrow \infinity\\), \\(f_k\\) converges to the 
+unique distribution \\(f\\) that is a sationary point which satisfies 
+
+$$
+fA_{x|x} = f
+$$
+
+If the Gibbs sequence converges, the \\(f\\) that satisfies the above equation 
+must be the marginal distribution of \\(X\\).
+
+For more than two variables, in each iteration we sample through each variable 
+with the conditional probability. In fact, a defining characteristic of the 
+Gibbs sampler is that it always uses the full set of univariate conditionals to 
+define the iteration.
