@@ -2,6 +2,9 @@ In previous post [efficient sampling from known distribution]({%post_url 2016-08
 I have introduced how to perform sampling from a distribution. In this post, I will talk about 
 some different kinds of sampling algorithms.
 
+http://pages.cs.wisc.edu/~jerryzhu/cs731/mcmc.pdf
+http://bjlkeng.github.io/posts/markov-chain-monte-carlo-mcmc-and-the-metropolis-hastings-algorithm/
+
 ### Monte Carlo Sampling
 
 Monte Carlo sampling is often used in two kinds of problems:
