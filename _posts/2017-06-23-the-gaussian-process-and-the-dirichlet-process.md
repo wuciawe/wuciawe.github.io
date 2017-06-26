@@ -166,4 +166,163 @@ If an algorithm is defined solely in terms of inner products in input space then
 into feature space by replacing occurrences of those inner products by \\(k(\boldsymbol{x},\boldsymbol{x}')\\); 
 this is sometimes called the kernel trick.
 
+#### Function space view
 
+To use a Gaussian Process to describe a distribution over functions.
+
+A Gaussian Process is a collection of random variables, any finite of which have a joint Gaussian 
+distribution.
+
+A Gaussian process is completely specified by its mean funciton and covariance function. We define 
+mean function \\(m(\boldsymbol{x})\\) and the covariance function \\(k(\boldsymbol{x},\boldsymbol{x}')\\) 
+of a real process \\(f(\boldsymbol{x})\\) as 
+
+$$
+m(\boldsymbol{x}) = \mathbb{E}[f(\boldsymbol{x})]
+$$
+$$
+k(\boldsymbol{x},\boldsymbol{x}') = \mathbb{E}[(f(\boldsymbol{x}) - m(\boldsymbol{x}))(f(\boldsymbol{x})') - m(\boldsymbol{x}'))]
+$$
+
+and will write the Gaussian process as
+
+$$
+f(\boldsymbol{x}) \sim \mathbb{GP}(m(\boldsymbol{x}), k(\boldsymbol{x}, \boldsymbol{x}'))
+$$
+
+Here the index set \\(\mathbb{X}\\) is the set of possible inputs, which could be more general, 
+\\(\mathbb{R}^D\\). For notational convenience we use the enumeration of the cases in the training 
+set to identify the random variables such that \\(f_i = f(\boldsymbol{x}_i)\\) is the random 
+variable corresponding to the case \\(\boldsymbol{x}_i, y_i\\) as would be expected.
+
+A Gaussian process is defined as a collection of random variables. Thus, the definition 
+automatically implies a consistency requirement, which is also sometimes known as the marginalization 
+property. This property simply means that if the GP specifies \\((y_1,y_w) \sim \mathbb{N}(\boldsymbol{\mu}, \Sigma)\\), 
+then it must also specify \\(y_1 \sim \mathbb{N}(\mu_1, \Sigma_{11})\\) where \\(\Sigma_{11}\\) is 
+the relevant submatrix of \\(\Sigma\\). In other words, examination of a larger set of variables 
+does not change the distribution of the smaller set. Notice that the consistency requirement is 
+automatically fulfilled if the covariance function specifies entries of the covariance matrix. The 
+definition does not exclude Gaussian processes with finite index sets (which would be simply 
+Gaussian distributions), but these are not particularly interesting for our purposes.
+
+A simple example of a Guassian process can be obtained from our Bayesian linear regression model 
+\\(f(\boldsymbol{x}) = \phi(\boldsymbol{x})^T\boldsymbol{w}\\) with prior 
+\\(\boldsymbol{w} \sim \mathbb{N}(\boldsymbol{0}, \Sigma_p)\\). We have for the mean and covariance 
+
+$$
+\mathbb{E}[f(\boldsymbol{x})] = \phi(\boldsymbol{x})^T\mathbb{E}[\boldsymbol{w}] = 0
+$$
+$$
+\mathbb{E}[f(\boldsymbol{x})f(\boldsymbol{x}')] = \phi(\boldsymbol{x})^T\mathbb{E}[\boldsymbol{w}\boldsymbol{w}^T]\phi(\boldsymbol{x}') = \phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')
+$$
+
+Thus \\(f(\boldsymbol{x})\\) and \\(f(\boldsymbol{x}')\\) are jointly Gaussian with zero mean and 
+covariance given by \\(\phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\). Indeed, the function 
+values \\(f(\boldsymbol{x}_1), \cdots, f(\boldsymbol{x}_n)\\) corresponding to any number of input 
+points \\(n\\) are jointly Gaussian, although if \\(N < n\\) then this Gaussian is singular.
+
+The squared exponential covariance function specifies the covariance between pairs of random variables 
+
+$$
+\text{cov}(f(\boldsymbol{x}_p), f(\boldsymbol{x}_q)) = k(\boldsymbol{x}_p, \boldsymbol{x}_q) = \exp (-\frac{1}{2}|\boldsymbol{x}_p - \boldsymbol{x}_q|^2)
+$$
+
+Note that the covariance between the outputs is written as a function of the inputs. For this 
+particular covariance function, we see that the covariance is almost unity between variables whose 
+corresponding inputs are very close, and decreases as their distance in the input space increases.
+
+The squared exponential covariance function corresponds to a Bayesian linear regression model with 
+an infinite number of basis functions. Indeed for every positive definite covariance function 
+\\(k(\cdot, \cdot)\\), there exists a (possibly infinite) expansion in terms of basis functions.
+
+#### prediction using noisy observation
+
+It is typical for more realistic modelling situations that we do not have access to function values 
+themselves, but only noisy versions thereof \\(y = f(\boldsymbol{x}) + \epsilon\\). Assuming additive 
+independent identically distributed Gaussian noise \\(epsilon\\) with variance \\(\delta_n^2\\), the 
+prior on the noisy observations becomes
+
+$$
+\text{cov}(y_p, y_q) = k(\boldsymbol{x}_p, \boldsymbol{x}_q) + \sigma_n^2\delta_{pq}
+$$
+
+or
+
+$$
+\text{cov}(\boldsymbol{y}) = K(X, X) + \sigma_n^2 I
+$$
+
+where \\(\delta_{pq}\\) is a Kronecker delta which is one iff \\(p = q\\) and zero otherwise. It 
+follows from the independence assumption about the noise, that a diagonal matrix is added, in 
+comparison to the noise free case. Introducing the noise term we can write the joint distribution 
+of the observed target values and function values at the test locations under the  prior as
+
+$$
+\begin{bmatrix}\boldsymbol{y} \\ \boldsymbol{f}_*\end{bmatrix} \sim \mathbb{N}(\boldsymbol{0}, [
+\begin{bmatrix}K(X, X) + \sigma_n^2I & K(X, X_*) \\ K(K_*, X) & K(X_*, K_*)\end{bmatrix}
+])
+$$
+
+And we have
+
+$$
+\boldsymbol{f}_*|X, \boldsymbol{y}, X_* \sim \mathbb{N}(\bar{\boldsymbol{f}_*}, \text{cov}(\boldsymbol{f}_*))
+$$
+
+where 
+
+$$
+\bar{\boldsymbol{f}_*} = \mathbb{E}[\boldsymbol{f}_*|X, \boldsymbold{y}, X_*] = K(X_*, X)[K(X, X) + \sigma_n^2I]^{-1}\boldsymbol{y}
+$$
+
+$$
+\text{cov}(\boldsymbol{f}_*) = K(X_*, X_*) - K(X_*, X)[K(X, X) + \sigma_n^2I]^{-1}K(X, X_*)
+$$
+
+For notation simplicity, we take the notation
+
+$$
+\bar{f_*} = \boldsymbol{k}_*^T(K + \sigma_n^2I)^{-1}\boldsymbol{y}
+$$
+$$
+\mathbb{V}[f_*] = k(\boldsymbol{x}_*, \boldsymbol{x}_*) - \boldsymbol{k}_*^T(K + \sigma_n^2I)^{-1}\boldsymbol{k}_*
+$$
+
+Note that the mean prediction is a linear combination of observations \\(\boldsymbol{y}\\); this is 
+sometimes referred to as linear predictor. Another way to look at this equation is to see it as a 
+linear combination of \\(n\\) kernel functions, each one centered on a training point, by writing
+
+$$
+\bar{f}(\boldsymbol{x}_*) = \sum_{i=1}^n \alpha_i k(\boldsymbol{x}_i, \boldsymbol{x}_*)
+$$
+
+where \\(\boldsymbol{\alpha} = (K + \sigma_n^2I)^{-1}\boldsymbol{y}\\).
+
+The variance does not depend on the observed targets, but only on the inputs; this is a property 
+of the Gaussian distribution. The variance is the difference between two terms: the first term 
+\\(K(X_*, X_*)\\) is simply the prior covariance; from that is subtracted a (positive) term, 
+representing the information the observations gives us about the function. We can compute the 
+predictive distribution of test targets \\(\boldsymbol{y}_*\\) by adding \\(\sigma_n^2I\\) to the 
+variance in the expression for \\(\text{cov}(\boldsymbol{f}_*)\\).
+
+The marginal likelihood is the integral of the likelihood times the prior
+
+$$
+p(\boldsymbol{y}|X) = \int p(\boldsymbol{y}|\boldsymbol{f}, X)p(\boldsymbol{f}|X)d\boldsymbol{f}
+$$
+
+The term merginal likelihood refers to the marginalization over the function values \\(\boldsymbol{f}\\). 
+Under the Gaussian process model the prior is Gaussian, \\(\boldsymbol{f}|X \sim \mathbb{N}(\boldsymbol{0}, K)\\), or 
+
+$$
+\log p(\boldsymbol{f}|X) = -\frac{1}{2} \boldsymbol{f}^TK^{-1}\boldsymbol{f} - \frac{1}{2}\log|K| - \frac{n}{2}\log 2\pi
+$$
+
+and the likelihood is a factorized Gaussian \\(\boldsymbol{y}|\boldsymbol{f} \sim \mathbb{N}(\boldsymbol{f}, \sigma_n^2I)\\) so 
+we have the log marginal likelihood
+
+$$
+\log p(\boldsymbol{y}|X) = -\frac{1}{2}\boldsymbol{y}^T(K+\sigma_n^2I)^{-1}\boldsymbol{y} - \frac{1}{2}\log|K+\sigma_n^2I| - \frac{n}{2}\log 2\pi
+$$
+
+This result can also be obtained directly by observing that \\(\boldsymbol{y} \sim \mathbb{N}(\boldsymbol{0}, K+\sigma_n^2I)\\).
