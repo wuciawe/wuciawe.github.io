@@ -358,3 +358,23 @@ for the squared loss \\((y_{\text{guess}} - y_*)^2\\) it is themean of this dist
 predictive distribution is Gaussian the mean and the median coincide, and indeed for any symmetric 
 loss function and symmetric predictive distribution we always get \\(y_{\text{guess}}\\) as the 
 mean of the predictive distribution.
+
+#### Generate samples
+
+To generate samples \\(\boldsymbol{x} \sim \mathbb{N}(\boldsymbol{m}, K)\\) with arbitrary mean 
+\\(\boldsymbol{m}\\) and covariance matrix \\(K\\) using a scalar Gaussian generator we proceed as 
+follows: first compute the Cholesky decomposition (also known as the matrix square root) \\(L\\) of 
+the positive definite symmetric covariance matrix \\(K = LL^T\\), where \\(L\\) is a lower triangular 
+matrix. Then generate \\(\boldsymbol{u} \sim \mathbb{N}(\boldsymbol{0}, I)\\) by multiple separate 
+calls to the scalar Gaussian generator. Compute \\(\boldsymbol{x} = \boldsymbol{m} + L\boldsymbol{u}\\), 
+which has the desired distribution with mean \\(\boldsymbol{m}\\) and covariance 
+\\(L\mathbb{E}[\boldsymbol{u}\boldsymbol{u}^T]L^T = LL^T = K\\) (by the independence of the 
+elements of \\(\boldsymbol{u}\\).
+
+In practice it may be necessary to add a small multiple of the identity matrix \\(\epsilonI\\) to the 
+covariance matrix for numerical reasons. This is because the eigenvalues of the matrix \\(K\\) can 
+decay very rapidly and without this stabilization the Cholesky independent noise of variance 
+\\(\epsilon\\). From the context \\(\epsilon\\) can usually be chosen to have inconsequential effects 
+on the samples, while ensuring numerical stability.
+
+http://katbailey.github.io/post/gaussian-processes-for-dummies/
