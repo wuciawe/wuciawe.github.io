@@ -326,3 +326,35 @@ $$
 $$
 
 This result can also be obtained directly by observing that \\(\boldsymbol{y} \sim \mathbb{N}(\boldsymbol{0}, K+\sigma_n^2I)\\).
+
+In practical applications, we are often forced to make a decision about how to act, i.e. we need a 
+point-like prediction which is optimal in some sense. To this end, we need a loss function 
+\\(\mathbb{L}(y_{\text{true}}, y_{\text{guess}})\\), which specifies the loss incurred by guessing the value 
+\\(y_{\text{guess}}\\) when the true value is \\(y_{\text{true}}\\).
+
+Notice that we computed the predictive distribution with out reference to the loss function. In non-Bayesian 
+paradigms, the model is typically trained by minimizing the empirical risk (or loss). In contrast, in the 
+Bayesian setting there is a clear separation between the likelihood function (used for training, in 
+addition to the prior) and the loss function. The likelihood function describes how the noisy measurements 
+are assumed to deviate from the underlying noisefree function. The loss function, on the other hand, 
+captures the consequences of making a specific choice, given an actual true state. The likelihoood and loss 
+function need not have anything in common.
+
+We minimize the expected loss or risk, by averaging w.r.t. our model's opinion as to what the truth might be 
+
+$$
+\tilde{R}_{\mathbb{L}}(y_{\text{guess}}|\boldsymbol{x}_*) = \int \mathbb{L}(y_*, y_{\text{guess}}) p(y_*|\boldsymbol{x}_*, \mathbb{D}) dy_*
+$$
+
+Thus our best guess, in the sense that it minimizes the expected loss, is
+
+$$
+y_{\text{optimal}}|\boldsymbol{x}_* = \arg\min_{y_{\text{guess}}} \tilde{R}_{\mathbb{L}}(y_{\text{guess}}|\boldsymbol{x}_*)
+$$
+
+In general the value of \\(y_{\text{guess}}\\) that minimizes the risk for loss function 
+\\(|y_{\text{guess}} - y_*|\\) is the median of \\(p(y_*|\boldsymbol{x}_*, \mathbb{D})\\), while 
+for the squared loss \\((y_{\text{guess}} - y_*)^2\\) it is themean of this distribution. When the 
+predictive distribution is Gaussian the mean and the median coincide, and indeed for any symmetric 
+loss function and symmetric predictive distribution we always get \\(y_{\text{guess}}\\) as the 
+mean of the predictive distribution.
