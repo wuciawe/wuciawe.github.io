@@ -1,9 +1,16 @@
+---
+layout: post
+category: [math]
+tags: [math, stat]
+infotext: 'commonly used sampling algorithms.'
+---
+{% include JB/setup %}
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 In previous post [efficient sampling from known distribution]({%post_url 2016-08-24-efficient-sampling-from-known-distribution%}), 
 I have introduced how to perform sampling from a distribution. In this post, I will talk about 
 some different kinds of sampling algorithms.
-
-http://pages.cs.wisc.edu/~jerryzhu/cs731/mcmc.pdf
-http://bjlkeng.github.io/posts/markov-chain-monte-carlo-mcmc-and-the-metropolis-hastings-algorithm/
 
 ### Monte Carlo Sampling
 
@@ -30,7 +37,7 @@ random variables, each having a finite mean \\(\mu = \mathbb{E}(X_i)\\), then wi
 \\(1\\) we have
 
 $$
-\frac{X_1 + X_2 + \cdots + X_M}{M} \arrow \mu \text{ as } M \arrow \infinity
+\frac{X_1 + X_2 + \cdots + X_M}{M} \rightarrow \mu \quad \text{ as } \quad M \rightarrow \infty
 $$
 
 Suppose we want to draw from the posterior distribution \\(p(\theta|y)\\), but we cannot sample 
@@ -39,20 +46,16 @@ be able to sample draws from \\(p(\theta|y)\\) that are slightly dependent. If w
 slightly dependent draws using a Markov chain then we can still find quantities of interests 
 from those draws.
 
-Markov Chain: A stochastic process in which future states are independent of past states given the present state.
-
-Stochastic process: A consecutive set of random (not deterministic) quantities defined on some known state space \\(\Theta\\).
-
-
-
 ### Rejection Sampling
 
 Rejection sampling is based on the observation that to sample a random variable one can perform 
 a uniformly random sampling of a 2D cartesian graph, and keep the samples in the region under 
 the graph of its density function. Note that this property can be extended to N-dimension functions.
 
-Suppose we want to sample from the density \\(p(x)\\) as shown in 
-[!](2017-06-20-notes-on-sampling-revisit/reject_sampling.jpg). 
+Suppose we want to sample from the density \\(p(x)\\) as shown in bellow: 
+
+![reject sampling](/files/2017-06-20-notes-on-sampling-revisit/reject_sampling.jpg){: style="margin:0 auto;display:block;"}
+
 If we can sample uniformly 
 from the 2D region under the curve, then this process is the same as sampling from \\(p(x)\\).
 
@@ -63,23 +66,27 @@ to sample from, so that the former completely encloses the latter.
 
 In rejection sampling, another density \\(q(x)\\) is considered from which we can sample directly 
 under the restriction that \\(p(x) < M q(x)\\) where \\(M > 1\\) is an appropriate bound on 
-\\(\frac{p(x)}{q(x)}\\). The rejection sampling algorithm is described below.
+\\(\frac{p(x)}{q(x)}\\). The rejection sampling algorithm is described below: 
 
-i <- 0
-while i \neq N do
-  x^{(i)} \sim q(x)
-  u \sim U(0,1)
-  if u < \frac{p(x^{(i)})}{M q(x^{(i)})} then
-    accept x^{(i)}
-    i <- i + 1
-  else
-    reject x^{(i)}
-  end if
-end while
+$$
+\begin{align}
+&i \leftarrow 0\\
+&\text{while } i \neq N \text{ do}\\
+&\quad x^{(i)} \sim q(x)\\
+&\quad u \sim U(0,1)\\
+&\quad \text{if } u < \frac{p(x^{(i)})}{M q(x^{(i)})} \text{ then}\\
+&\qquad \text{accept } x^{(i)}\\
+&\qquad i \leftarrow i + 1\\
+&\quad \text{else}\\
+&\qquad \text{reject } x^{(i)}\\
+&\quad \text{end if}\\
+&\text{end while}
+\end{align}
+$$
 
 Informally, all this process does is sampling \\(x^{(i)}\\) from some distribution and then it 
 decides whether to accept it or reject. The main problem with this process is that \\(M\\) is 
-generally large in high-dimensional spaces and since \\(p(accept) \propto \frac{1}{M}\\), 
+generally large in high-dimensional spaces and since \\(p(\text{accept}) \propto \frac{1}{M}\\), 
 rejection rate will be large.
 
 ### Importance Sampling
@@ -94,16 +101,18 @@ $$
 Consider the weighted Monte Carlo sum:
 
 $$
-\frac{1}{N}\sum_{i=1}^N f(x^{(i)}) w(x^{(i)}) = \frac{1}{N} \sum_{i=1}^N f(x^{(i)}) \frac{p(x^{(i)})}{q(x^{(i)})}\\
-\stackrel{\text{a.s}}{\longrightarrow} \int (f(x)\frac{p(x)}{q(x)}) q(x) dx \\
-= \int f(x)p(x) dx
+\begin{align}
+\frac{1}{N}\sum_{i=1}^N f(x^{(i)}) w(x^{(i)}) &= \frac{1}{N} \sum_{i=1}^N f(x^{(i)}) \frac{p(x^{(i)})}{q(x^{(i)})}\\
+&\stackrel{\text{a.s}}{\rightarrow} \int (f(x)\frac{p(x)}{q(x)}) q(x) dx \\
+&= \int f(x)p(x) dx
+\end{align}
 $$
 
 In principle, we can sample from any distribution \\(q(x)\\). In practice, we would like 
 to choose \\(q(x)\\) as close as possible to \\(|f(x)|w(x)\\) to reduce the variance of 
 our estimator.
 
-Remark 1. We do not need to know the normalization constants for \\(p(x)\\) and \\(q(x)\\). 
+__Remark 1__ We do not need to know the normalization constants for \\(p(x)\\) and \\(q(x)\\). 
 Sine \\(w = \frac{p}{q}\\), we can compute 
 
 $$
@@ -121,11 +130,14 @@ Now, combing back to the question of how to pick \\(q(x)\\). Ideally, we would l
 \\(q(x)\\) such that the variance of \\(f(x)w(x)\\) is minimum.
 
 $$
-Var_{q(x)} f(x)w(x) = \mathbb{E}_{q(x)} {f(x)}^2{w(x)}^2 - {I(f)}^2
+\mathbb{Var}_{q(x)} f(x)w(x) = \mathbb{E}_{q(x)} {f(x)}^2{w(x)}^2 - {I(f)}^2
 $$
+
 $$
-\mathbb{E}_{q(x)}{f(x)}^2{w(x)}^2 \geq (\mathbb{E}|f(x)|w(x))^2 (Jensen's Inequality)\\
-= (\int |f(x)|p(x) dx)^2
+\begin{align}
+\mathbb{E}_{q(x)}{f(x)}^2{w(x)}^2 &\geq \quad (\mathbb{E}|f(x)|w(x))^2 (\text{Jensen's Inequality})\\
+&= (\int |f(x)|p(x) dx)^2
+\end{align}
 $$
 
 The term \\({I(f)}^2\\) is independent of \\(q\\). So, the best \\(q^*(x)\\) which 
@@ -155,23 +167,77 @@ $$
 
 Statistically, there is no advantage in working with SIR because of the introduction of 
 variance again in re-sampling.
+
+### Markov chain Monte Carlo method
+
+MCMC is a class of methods in which we can simulte draws that are slightly dependent 
+and are approximately from a (posterior) distribution. In Bayesian statistics, there 
+are generally two MCMC algorithms that we use: the Gibbs Sampler and the Metropolis-Hastings 
+algorithm.
+
+#### Markov Chain
+
+A stochastic process in which future states are independent of past states given the present state.
+
+#### Stochastic Process
+
+A consecutive set of random (not deterministic) quantities defined on some known state space 
+\\(\Theta\\).
+
+#### Ergodic Theorem
+
+Let \\(\theta^{(2)}, \theta^{(2)}, \cdots, \theta^{(M)}\\) be \\(M\\) values from 
+a Markov chain that is aperiodic, irreducible, and positive recurrent (the the chain 
+is ergodic) and \\(\mathbb{E}[g(\theta)] < \infty\\). Then with probability \\(1\\), 
+
 $$
+\frac{1}{M} \sum_{i=1}^M g(\theta_i) \rightarrow \int_{\Theta} g(\theta)\pi(\theta) d\theta
+$$
+
+as \\(M \rightarrow \infty\\), where \\(\pi\\) is the stationary distribution.
+This is the Markov chain analog to the SLLN, and it allows us to ignore the dependence 
+between draws of the Markov chain when we calculate quantities of interest from the 
+draws.
+
+A Markov chain is aperiodic if the only length of time for which the chain repeats some 
+cycle of values is the trivial case with cycle length equal to one.
+
+A Markov chain is irreducible if it is possible go from any state to any other state 
+(ot necessarily in one step).
+
+A Markov chain is recurrent if for any given state \\(i\\), if the chain starts at \\(i\\), 
+it will eventually return to \\(i\\) with probability \\(1\\).
+
+A Markov chain is positive recurrent if the expected return time to state \\(i\\) is 
+finite; otherwise it is null recurrent.
+
+Thinning: In order to break the dependence between draws in the Markov chain, some have 
+suggested only keeping every \\(d\\)th draw of the chain.
+
+__Pros:__
+
+- Perhaps gets you a little closer to i.i.d. draws.
+- Saves memory by storing a fraction of the draws.
+
+__Cons:__
+
+- Unnecessary with ergodic theorem.
+- Increase the variance of the Monte Carlo estimates.
 
 ### Metropolis-Hastings
 
-Suppose we have a posterior \\(p(\theta|y)\\) that we want to sample from, but
+The Metropolis-Hastings algorithm is a Markov chain Monte Carlo method for obtaining 
+a sequence of random samples from a probability distribution for which direct sampling 
+is difficult.
+
+Suppose we have a posterior \\(p(\theta\|y)\\) that we want to sample from, but
+
 - the posterior doesn't look like any distribution we know (no conjugacy)
 - the posterior consists of more than 2 parameters (grid approximations intractable)
 - some of the full conditionals do not look like any distributions we know (no 
 Gibbs sampling for those whose full conditionals we don't know)
 
 If all else fails, we can use the Metropolis-Hastings algorithm which will always work.
-
-http://pareto.uab.es/mcreel/IDEA2017/Bayesian/MCMC/mcmc.pdf
-
-The Metropolis-Hastings algorithm is a Markov chain Monte Carlo method for obtaining 
-a sequence of random samples from a probability distribution for which direct sampling 
-is difficult.
 
 The Metropolis-Hastings algorithm can draw samples from any probability distribution 
 \\(p(x)\\), provided you can compute the value of a function \\(f(x)\\) that is proportional 
@@ -211,21 +277,24 @@ In Metropolis-Hastings sampling, samples mostly move towards higher density regi
 sometimes also move downhill. In comparison to rejection sampling where we always throw 
 away the rejected samples, here we sometimes keep those samples as well.
 
-Init x^{(0)}
-for i = 0 to N-1 do
-  u \sim U(0,1)
-  x^* \sim q(x^* | x^{(i)})
-  if u < \min{1, \frac{p(x^*)q(x^{(i)}|x^*)}{p(x^{(i)})q(x^*|x^{(i)})}} then 
-    x^{(i+1)} <- x^*
-  else
-    x^{(i+1)} <- x^{(i)}
-  end if
-end for
+$$
+\begin{align}
+&\text{Init } x^{(0)}\\
+&\text{for } i = 0 \text{ to } N-1 \text{ do}\\
+&\quad u \sim U(0,1)\\
+&\quad x^* \sim q(x^* | x^{(i)})\\
+&\quad \text{if } u < \min\{1, \frac{p(x^*)q(x^{(i)}|x^*)}{p(x^{(i)})q(x^*|x^{(i)})}\} \text{ then}\\ 
+&\qquad x^{(i+1)} \leftarrow x^*\\
+&\quad \text{else}\\
+&\qquad x^{(i+1)} \leftarrow x^{(i)}\\
+&\quad \text{end if}\\
+&\text{end for}
+\end{align}
+$$
 
-Remark 2. In line 5 of the algorithm, if \\(q\\) is symmetric then \\(\frac{q(x^{(i)}|x^*)}{q(x^*|x^{(i)})}=1\\). 
+__Remark 2__ In line 5 of the algorithm, if \\(q\\) is symmetric then 
+\\(\frac{q(x^{(i)}\|x^\*)}{q(x^\*\|x^{(i)})}=1\\). 
 This term was later introduced to the original Metropolis algorithm by Hastings.
-
-https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/lectures/lecture17.pdf
 
 Compared with an algorithm like adaptive rejection sampling that directly generates 
 independent samples from a distribution, Metropolis-Hastings and other MCMC algorithms 
@@ -260,47 +329,6 @@ methods, do not have this problem to such a degree, and thus are ofthen the only
 solutions available when the number of dimensions of the distribution to be sampled 
 is high.
 
-#### Ergodic Theorem
-
-Let \\(\theta^{(2)}, \theta^{(2)}, \cdots, \theta^{(M)}\\) be \\(M\\) values from 
-a Markov chain that is aperiodic, irreducible, and positive recurrent (the the chain 
-is ergodic) and \\(\mathbb{E}[g(\theta)] < \infinity\\). Then with probability \\(1\\), 
-
-$$
-\frac{1}{M} \sum_{i=1}^M g(\theta_i) \arrow \int_{\Theta} g(\theta)\pi(\theta) d\theta
-$$
-
-as \\(M \arrow \infinity\\), where \\(\pi\\) is the stationary distribution.
-This is the Markov chain analog to the SLLN, and it allows us to ignore the dependence 
-between draws of the Markov chain when we calculate quantities of interest from the 
-draws.
-
-A Markov chain is aperiodic if the only length of time for which the chain repeats some 
-cycle of values is the trivial case with cycle length equal to one.
-
-A Markov chain is irreducible if it is possible go from any state to any other state 
-(ot necessarily in one step).
-
-A Markov chain is recurrent if for any given state \\(i\\), if the chain starts at \\(i\\), 
-it will eventually return to \\(i\\) with probability \\(1\\).
-
-A Markov chain is positive recurrent if the expected return time to state \\(i\\) is 
-finite; otherwise it is null recurrent.
-
-Thinning: In order to break the dependence between draws in the Markov chain, some have 
-suggested only keeping every \\(d\\)th draw of the chain.
-
-Pros:
-- Perhaps gets you a little closer to i.i.d. draws.
-- Saves memory by storing a fraction of the draws.
-Cons:
-- Unnecessary with ergodic theorem.
-- Increase the variance of the Monte Carlo estimates.
-
-MCMC is a class of methods in which we can simulte draws that are slightly dependent 
-and are approximately from a (posterior) distribution. In Bayesian statistics, there 
-are generally two MCMC algorithms that we use: the Gibbs Sampler and the Metropolis-Hastings algorithm.
-
 ### Gibbs Sampling
 
 Suppose we have a joint distribution \\(p(\theta_1,\cdots,\theta_k)\\) that we want 
@@ -317,6 +345,7 @@ out the joint density in terms of the conditional densities \\(f(x|y)\\) and \\(
 $$
 f(x,y) = \frac{f(y|x)}{\int \frac{f(y|x)}{f(x|y)} dy}
 $$
+
 $$
 \int \frac{f(y|x)}{f(x|y)} dy = \int \frac{\frac{f(x,y)}{f(x)}}{\frac{f(x,y)}{f(y)}} dy = \int \frac{f(y)}{f(x)} dy = \frac{1}{f(x)}
 $$
@@ -353,20 +382,21 @@ The initial value \\(Y'_0=y'_0\\) is specified, and the rest is obtained iterati
 $$
 X'_j \sim f(x|Y'_j = y'_j)
 $$
+
 $$
 Y'_{j+1} \sim f(y | X'_j = x'_j)
 $$
 
 Under general conditions, the distribution of \\(X'_k\\) converges to \\(f(x)\\) as 
-\\(k \arrow \infinity\\).
+\\(k \rightarrow \infty\\).
 
 The convergence of the Gibbs samples is a consequence of the Markovian nature of 
 the generation iteration. In a two random variable case, the transition probability 
 is \\(A_{x|x} = f(x_{i+1}|x_i) = \sum f(x_{i+1}|y)f(y|x_i) = A_{y|x}A_{x|y}\\). Thus 
-we have \\(P(X'_k=x_k | X'_0 = x_0) = (A_{x|x})^k\\).
+we have \\(P(X'\_k=x_k \| X'\_0 = x_0) = (A_{x|x})^k\\).
 
 As long as all the entries of \\(A_{x|x}\\) are positive, then for any initial 
-probability \\(f_0\\), as \\(k \arrow \infinity\\), \\(f_k\\) converges to the 
+probability \\(f_0\\), as \\(k \rightarrow \infty\\), \\(f_k\\) converges to the 
 unique distribution \\(f\\) that is a sationary point which satisfies 
 
 $$
@@ -381,4 +411,12 @@ with the conditional probability. In fact, a defining characteristic of the
 Gibbs sampler is that it always uses the full set of univariate conditionals to 
 define the iteration.
 
-https://stats.stackexchange.com/questions/185631/what-is-the-difference-between-metropolis-hastings-gibbs-importance-and-rejec
+
+
+### References
+
+[link1](http://pages.cs.wisc.edu/~jerryzhu/cs731/mcmc.pdf){:target="_blank"}, 
+[link2](http://bjlkeng.github.io/posts/markov-chain-monte-carlo-mcmc-and-the-metropolis-hastings-algorithm/){:target="_blank"}, 
+[link3](http://pareto.uab.es/mcreel/IDEA2017/Bayesian/MCMC/mcmc.pdf){:target="_blank"}, 
+[link4](https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/lectures/lecture17.pdf){:target="_blank"}, 
+and [link5](https://stats.stackexchange.com/questions/185631/what-is-the-difference-between-metropolis-hastings-gibbs-importance-and-rejec){:target="_blank"}

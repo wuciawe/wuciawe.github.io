@@ -1,4 +1,12 @@
-Of cause, these two random processes are not so much closely related. I just read about them recently.
+---
+layout: post
+category: [math]
+tags: [math, stat]
+infotext: 'Of cause, these two random processes are not so much closely related. I just read about them recently.'
+---
+{% include JB/setup %}
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 ### The Gaussian Process
 
@@ -17,6 +25,7 @@ Let's review the Bayesian analysis of the standard linear regression model with 
 $$
 f(\boldsymbol{x}) = \boldsymbol{x}^T\boldsymbol{w}
 $$
+
 $$
 y = f(\boldsymbol{x}) + \epsilon
 $$
@@ -25,10 +34,10 @@ where \\(\boldsymbol{x}\\) is the input vector, \\(\boldsymbol{w}\\) is a vector
 linear model, \\(f\\) is the function value and \\(y\\) is the observed target value. We have assumed 
 that the observed values \\(y\\) differs from the function values \\(f(\boldsymbol{x})\\) by additive 
 noise, and we further assume that this noise follows an independent, identically distributioned 
-Gaussian distribution with zero mean and variance \\(\delta_n^2\\)
+Gaussian distribution with zero mean and variance \\(\sigma_n^2\\)
 
 $$
-\epsilon \sim \mathbb{N}(0, \delta_n^2)
+\epsilon \sim \mathcal{N}(0, \sigma_n^2)
 $$
 
 This noise assumption together with the model directly gives rise to the likelihood, the probability 
@@ -36,8 +45,11 @@ density of the observations given the parameters, which is factored over cases i
 give
 
 $$
-p(\boldsymbol{y}|X,\boldsymbol{w}) = \prod_{i=1}^n p(y_i|\boldsymbol{x}_i, \boldsymbol{w}) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\delta_n} \exp(-\frac{(y_i - \boldsymbol{x}^T\boldsymbol{w})^2}{2\delta_n^2}) \\
-= \frac{1}{(2\pi\delta_n^2)^{\frac{n}{2}} \exp (-\frac{1}{2\delta_n^2}|\boldsymbol{y} - X^T\boldsymbol{w}|^2) = \mathbb{N}(X^T\boldsymbol{w}, \delta_n^2I)
+\begin{align}
+p(\boldsymbol{y}|X,\boldsymbol{w}) &= \prod_{i=1}^n p(y_i|\boldsymbol{x}_i, \boldsymbol{w}) = \prod_{i=1}^n \frac{1}{\sqrt{2\pi}\sigma_n} \exp(-\frac{(y_i - \boldsymbol{x}^T\boldsymbol{w})^2}{2\sigma_n^2}) \\
+&= \frac{1}{(2\pi\sigma_n^2)^{\frac{n}{2}}} \exp (-\frac{1}{2\sigma_n^2}|\boldsymbol{y} - X^T\boldsymbol{w}|^2) \\
+&= \mathcal{N}(X^T\boldsymbol{w}, \sigma_n^2I)
+\end{align}
 $$
 
 In the Bayesian formalism we need to specify a prior over the parameters, expressing our beliefs about 
@@ -45,7 +57,7 @@ the parameters before we look at the observations. We put a zero mean Gaussian p
 matrix \\(\Sigma_p\\) on the weights
 
 $$
-\boldsymbol{w} \sim \mathbb{N}(\boldsymbol{0}, \Sigma_p)
+\boldsymbol{w} \sim \mathcal{N}(\boldsymbol{0}, \Sigma_p)
 $$
 
 Inference in the Bayesian linear model is based on the posterior distribution over the weights, 
@@ -54,8 +66,9 @@ computed by Bayes' rule
 $$
 \text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{marginal likelihood}}
 $$
+
 $$
-p(\boldsymbol{w}|\boldsymbol{y},X) = \frac{p(\boldysmbol{y}|X,\boldsymbol{w})}{p(\boldsymbol{y}|X)}
+p(\boldsymbol{w}|\boldsymbol{y},X) = \frac{p(\boldsymbol{y}|X,\boldsymbol{w})}{p(\boldsymbol{y}|X)}
 $$
 
 where the normalizing constant, also known as the marginal likelihood, is independent of the weights 
@@ -69,20 +82,22 @@ The posterior combines the likelihood and the prior, and captures everything we 
 parameters.
 
 $$
-p(\boldsymbol{w}|X,\boldsymbol{y}) \propto \exp (-\frac{1}{2\delta_n^2}(\boldsymbol{y} - X^T\boldsymbol{w})^T(\boldsymbol{y} - X^T\boldsymbol{w})) \exp (-\frac{1}{2} \boldsymbol{w}^T\Sigma_p^{-1}\boldsymbol{w})
-\propto \ext(-\frac{1}{2}(\boldsymbol{w} - \bar{\boldsymbol{w}})^T(\frac{1}{\delta_n^2 XX^T + \Sigma_p^{-1}})(\boldsymbol{w} - \bar{\boldsymbol{w}}))
+\begin{align}
+p(\boldsymbol{w}|X,\boldsymbol{y}) & \propto \exp (-\frac{1}{2\sigma_n^2}(\boldsymbol{y} - X^T\boldsymbol{w})^T(\boldsymbol{y} - X^T\boldsymbol{w})) \exp (-\frac{1}{2} \boldsymbol{w}^T\Sigma_p^{-1}\boldsymbol{w})\\
+& \propto \exp(-\frac{1}{2}(\boldsymbol{w} - \bar{\boldsymbol{w}})^T(\frac{1}{\sigma_n^2 XX^T + \Sigma_p^{-1}})(\boldsymbol{w} - \bar{\boldsymbol{w}}))
+\end{align}
 $$
 
-where \\(\bar{\boldsymbol{w}} = \delta_n^{-2}(\delta_n^2XX^T + \Sigma_p^{-1})^{-1}X\boldsymbol{y}\\), 
+where \\(\bar{\boldsymbol{w}} = \sigma_n^{-2}(\sigma_n^2XX^T + \Sigma_p^{-1})^{-1}X\boldsymbol{y}\\), 
 and we recognize the from of the posterior distribution as Gaussian with mean \\(\bar{\boldsymbol{w}}\\) 
 and covariance matrix \\(A^{-1}\\)
 
 $$
-p(\boldsymbol{w}|X,\boldsymbol{y}) \sim \mathbb{N}(\bar{\boldsymbol{w}} = \frac{1}{\delta_n^2} A^{-1}X\boldsymbol{y}, A^{-1})
+p(\boldsymbol{w}|X,\boldsymbol{y}) \sim \mathcal{N}(\bar{\boldsymbol{w}} = \frac{1}{\sigma_n^2} A^{-1}X\boldsymbol{y}, A^{-1})
 $$
 
-where \\(A = \delta_n^{-2}XX^T + \Sigma_p^{-1}\\). Notice that for this model (indeed for any Gaussian 
-posterior) the mean of the posterior distribution \\(p\boldsymbol{w}|\boldsymbol{y},X)\\) is also its 
+where \\(A = \sigma_n^{-2}XX^T + \Sigma_p^{-1}\\). Notice that for this model (indeed for any Gaussian 
+posterior) the mean of the posterior distribution \\(p(\boldsymbol{w}|\boldsymbol{y},X)\\) is also its 
 mode, which also called the maximum a posteriori estimate of \\(\boldsymbol{w}\\).
 
 In a non-Baysian setting the negative log prior is sometimes thought of as penalty term, and the 
@@ -97,8 +112,10 @@ their posterior probability. This is in contrast to non-Bayesian schemes, where 
 is typically chosen by some criterion.
 
 $$
-p(f_*|\boldsymbol{x}_*,X,\boldsymbol{y}) = \int p(f_*|\boldsymbol{x}_*,\boldsymbol{w})p(\boldsymbol{w}|X,\boldsymbol{y})d\boldsymbol{w} \\
-= \mathbb{N}(\frac{1}{\delta_n^2} \boldsymbol{x}_*^TA^{-1}X\boldsymbol{y}, \boldsymbol{x}_*^TA_{-1}\boldsymbol{x}_*)
+\begin{align}
+p(f_*|\boldsymbol{x}_*,X,\boldsymbol{y}) &= \int p(f_*|\boldsymbol{x}_*,\boldsymbol{w})p(\boldsymbol{w}|X,\boldsymbol{y})d\boldsymbol{w} \\
+&= \mathcal{N}(\frac{1}{\delta_n^2} \boldsymbol{x}_*^TA^{-1}X\boldsymbol{y}, \boldsymbol{x}_*^TA_{-1}\boldsymbol{x}_*)
+\end{align}
 $$
 
 The predictive distribution is again Gaussian, with a mean given by the posterior mean of the weights 
@@ -109,7 +126,7 @@ uncertainties grow with the magnitude of the test input, as one would expect for
 #### Projections of Inputs into Feature Space
 
 Let's introduce the function \\(\phi(\boldsymbol{x})\\) which maps a \\(D\\)-dimensional input vector 
-\\(boldsymbol{x}\\) into an \\(N\\) dimensional feature space. Further let the matrix \\(\Phi(X)\\) be 
+\\(\boldsymbol{x}\\) into an \\(N\\) dimensional feature space. Further let the matrix \\(\Phi(X)\\) be 
 the aggregation of columns of \\(\phi(\boldsymbol{x})\\) for all cases in the training set. Now the 
 model is 
 
@@ -122,7 +139,7 @@ where the vector of parameters now has length \\(N\\).
 The predictive distribution becomes
 
 $$
-f_*|\boldsymbol{x}_*,X,\boldsymbol{y} \sim \mathbb{N}(\frac{1}{\delta_n^2}\phi(\boldsymbol{x}_*)^TA^{-1}\Phi\boldsymbol{y},\phi(\boldsymbol{x}_*)^TA^{-1}\phi(\boldsymbol{x}_*))
+f_*|\boldsymbol{x}_*,X,\boldsymbol{y} \sim \mathcal{N}(\frac{1}{\sigma_n^2}\phi(\boldsymbol{x}_*)^TA^{-1}\Phi\boldsymbol{y},\phi(\boldsymbol{x}_*)^TA^{-1}\phi(\boldsymbol{x}_*))
 $$
 
 with \\(\Phi = \Phi(X)\\) and \\(A = \delta_n^{-2}\Phi\Phi^T + \Sigma_p^{-1}\\). To make predictions 
@@ -133,7 +150,7 @@ $$
 f_*|\boldsymbol{x}_*,X,\boldsymbol{y} \sim \mathbb{N}(\phi_*^T\Sigma_p\Phi(K + \delta_n^2I)^{-1}\boldsymbol{y}, \phi_*^T\Sigma_p\phi_* - \phi_*^T\Sigma_p\Phi(K+\delta_n^2I)^{-1}\Phi^T\Sigma_*\phi_*)
 $$
 
-where we have used the shorthand \\(\phi(\boldsymbol{x}_*) = \phi_*\\) and defined 
+where we have used the shorthand \\(\phi(\boldsymbol{x}\_\*) = \phi\_\*\\) and defined 
 \\(K = \Phi^T\Sigma_p\Phi\\).
 
 To show this for the mean, using the definitions of \\(A\\) and \\(K\\), we have 
@@ -152,11 +169,11 @@ $$
 $$
 
 Notice that in the new equation the feature space always enters in the form of \\(\Phi^T\Sigma_p\Phi\\), 
-\\(\phi_*^T\Sigma_p\Phi\\), or \\(\phi_*^T\Sigma_p\phi_*\\); thus the entries of these matrices 
+\\(\phi\_\*^T\Sigma_p\Phi\\), or \\(\phi\_\*^T\Sigma_p\phi\_\*\\); thus the entries of these matrices 
 are invariably of the form \\(\phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\). Let us define 
 \\(k(\boldsymbol{x},\boldsymbol{x}') = \phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\). We 
 call \\(k(\cdot,\cdot)\\) a covariance function or kernel. Notice that \\(\phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\) 
-is an inner product with respect to \\(\Sigma_p\\). As \\(Sigma_p\\) is positive definite we can define 
+is an inner product with respect to \\(\Sigma_p\\). As \\(\Sigma_p\\) is positive definite we can define 
 \\(\Sigma_p^{1/2}\\) so that \\((\Sigma_p^{1/2})^2 = \Sigma_p\\); for example if the SVD of \\(Sigma_p = UDU^T\\), 
 where \\(D\\) is diagonal, then one form for \\(\Sigma_p^{1/2}\\) is \\(UD^{1/2}U^T\\). Then defining 
 \\(\psi(\boldsymbol{x}) = \Sigma_p^{1/2}\phi(\boldsymbol{x})\\) we obtain a simple dot product 
@@ -164,7 +181,7 @@ representation \\(k(\boldsymbol{x},\boldsymbol{x}') = \psi(\boldsymbol{x})\cdot\
 
 If an algorithm is defined solely in terms of inner products in input space then it can be lifted 
 into feature space by replacing occurrences of those inner products by \\(k(\boldsymbol{x},\boldsymbol{x}')\\); 
-this is sometimes called the kernel trick.
+this is sometimes called the __kernel trick__.
 
 #### Function space view
 
@@ -180,6 +197,7 @@ of a real process \\(f(\boldsymbol{x})\\) as
 $$
 m(\boldsymbol{x}) = \mathbb{E}[f(\boldsymbol{x})]
 $$
+
 $$
 k(\boldsymbol{x},\boldsymbol{x}') = \mathbb{E}[(f(\boldsymbol{x}) - m(\boldsymbol{x}))(f(\boldsymbol{x})') - m(\boldsymbol{x}'))]
 $$
@@ -187,7 +205,7 @@ $$
 and will write the Gaussian process as
 
 $$
-f(\boldsymbol{x}) \sim \mathbb{GP}(m(\boldsymbol{x}), k(\boldsymbol{x}, \boldsymbol{x}'))
+f(\boldsymbol{x}) \sim \mathcal{GP}(m(\boldsymbol{x}), k(\boldsymbol{x}, \boldsymbol{x}'))
 $$
 
 Here the index set \\(\mathbb{X}\\) is the set of possible inputs, which could be more general, 
@@ -197,8 +215,8 @@ variable corresponding to the case \\(\boldsymbol{x}_i, y_i\\) as would be expec
 
 A Gaussian process is defined as a collection of random variables. Thus, the definition 
 automatically implies a consistency requirement, which is also sometimes known as the marginalization 
-property. This property simply means that if the GP specifies \\((y_1,y_w) \sim \mathbb{N}(\boldsymbol{\mu}, \Sigma)\\), 
-then it must also specify \\(y_1 \sim \mathbb{N}(\mu_1, \Sigma_{11})\\) where \\(\Sigma_{11}\\) is 
+property. This property simply means that if the GP specifies \\((y_1,y_w) \sim \mathcal{N}(\boldsymbol{\mu}, \Sigma)\\), 
+then it must also specify \\(y_1 \sim \mathcal{N}(\mu_1, \Sigma_{11})\\) where \\(\Sigma_{11}\\) is 
 the relevant submatrix of \\(\Sigma\\). In other words, examination of a larger set of variables 
 does not change the distribution of the smaller set. Notice that the consistency requirement is 
 automatically fulfilled if the covariance function specifies entries of the covariance matrix. The 
@@ -207,11 +225,12 @@ Gaussian distributions), but these are not particularly interesting for our purp
 
 A simple example of a Guassian process can be obtained from our Bayesian linear regression model 
 \\(f(\boldsymbol{x}) = \phi(\boldsymbol{x})^T\boldsymbol{w}\\) with prior 
-\\(\boldsymbol{w} \sim \mathbb{N}(\boldsymbol{0}, \Sigma_p)\\). We have for the mean and covariance 
+\\(\boldsymbol{w} \sim \mathcal{N}(\boldsymbol{0}, \Sigma_p)\\). We have for the mean and covariance 
 
 $$
 \mathbb{E}[f(\boldsymbol{x})] = \phi(\boldsymbol{x})^T\mathbb{E}[\boldsymbol{w}] = 0
 $$
+
 $$
 \mathbb{E}[f(\boldsymbol{x})f(\boldsymbol{x}')] = \phi(\boldsymbol{x})^T\mathbb{E}[\boldsymbol{w}\boldsymbol{w}^T]\phi(\boldsymbol{x}') = \phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')
 $$
@@ -239,7 +258,7 @@ an infinite number of basis functions. Indeed for every positive definite covari
 
 It is typical for more realistic modelling situations that we do not have access to function values 
 themselves, but only noisy versions thereof \\(y = f(\boldsymbol{x}) + \epsilon\\). Assuming additive 
-independent identically distributed Gaussian noise \\(epsilon\\) with variance \\(\delta_n^2\\), the 
+independent identically distributed Gaussian noise \\(\epsilon\\) with variance \\(\sigma_n^2\\), the 
 prior on the noisy observations becomes
 
 $$
@@ -258,21 +277,20 @@ comparison to the noise free case. Introducing the noise term we can write the j
 of the observed target values and function values at the test locations under the  prior as
 
 $$
-\begin{bmatrix}\boldsymbol{y} \\ \boldsymbol{f}_*\end{bmatrix} \sim \mathbb{N}(\boldsymbol{0}, [
-\begin{bmatrix}K(X, X) + \sigma_n^2I & K(X, X_*) \\ K(K_*, X) & K(X_*, K_*)\end{bmatrix}
-])
+\begin{bmatrix}\boldsymbol{y} \\ \boldsymbol{f}_*\end{bmatrix} \sim \mathcal{N}\left(\boldsymbol{0}, 
+\begin{bmatrix}K(X, X) + \sigma_n^2I & K(X, X_*) \\ K(K_*, X) & K(X_*, K_*)\end{bmatrix}\right)
 $$
 
 And we have
 
 $$
-\boldsymbol{f}_*|X, \boldsymbol{y}, X_* \sim \mathbb{N}(\bar{\boldsymbol{f}_*}, \text{cov}(\boldsymbol{f}_*))
+\boldsymbol{f}_*|X, \boldsymbol{y}, X_* \sim \mathcal{N}(\bar{\boldsymbol{f}_*}, \text{cov}(\boldsymbol{f}_*))
 $$
 
 where 
 
 $$
-\bar{\boldsymbol{f}_*} = \mathbb{E}[\boldsymbol{f}_*|X, \boldsymbold{y}, X_*] = K(X_*, X)[K(X, X) + \sigma_n^2I]^{-1}\boldsymbol{y}
+\bar{\boldsymbol{f}_*} = \mathbb{E}[\boldsymbol{f}_*|X, \boldsymbol{y}, X_*] = K(X_*, X)[K(X, X) + \sigma_n^2I]^{-1}\boldsymbol{y}
 $$
 
 $$
@@ -284,6 +302,7 @@ For notation simplicity, we take the notation
 $$
 \bar{f_*} = \boldsymbol{k}_*^T(K + \sigma_n^2I)^{-1}\boldsymbol{y}
 $$
+
 $$
 \mathbb{V}[f_*] = k(\boldsymbol{x}_*, \boldsymbol{x}_*) - \boldsymbol{k}_*^T(K + \sigma_n^2I)^{-1}\boldsymbol{k}_*
 $$
@@ -300,10 +319,10 @@ where \\(\boldsymbol{\alpha} = (K + \sigma_n^2I)^{-1}\boldsymbol{y}\\).
 
 The variance does not depend on the observed targets, but only on the inputs; this is a property 
 of the Gaussian distribution. The variance is the difference between two terms: the first term 
-\\(K(X_*, X_*)\\) is simply the prior covariance; from that is subtracted a (positive) term, 
+\\(K(X\_\*, X\_\*)\\) is simply the prior covariance; from that is subtracted a (positive) term, 
 representing the information the observations gives us about the function. We can compute the 
-predictive distribution of test targets \\(\boldsymbol{y}_*\\) by adding \\(\sigma_n^2I\\) to the 
-variance in the expression for \\(\text{cov}(\boldsymbol{f}_*)\\).
+predictive distribution of test targets \\(\boldsymbol{y}\_\*\\) by adding \\(\sigma_n^2I\\) to the 
+variance in the expression for \\(\text{cov}(\boldsymbol{f}\_\*)\\).
 
 The marginal likelihood is the integral of the likelihood times the prior
 
@@ -312,24 +331,24 @@ p(\boldsymbol{y}|X) = \int p(\boldsymbol{y}|\boldsymbol{f}, X)p(\boldsymbol{f}|X
 $$
 
 The term merginal likelihood refers to the marginalization over the function values \\(\boldsymbol{f}\\). 
-Under the Gaussian process model the prior is Gaussian, \\(\boldsymbol{f}|X \sim \mathbb{N}(\boldsymbol{0}, K)\\), or 
+Under the Gaussian process model the prior is Gaussian, \\(\boldsymbol{f}|X \sim \mathcal{N}(\boldsymbol{0}, K)\\), or 
 
 $$
 \log p(\boldsymbol{f}|X) = -\frac{1}{2} \boldsymbol{f}^TK^{-1}\boldsymbol{f} - \frac{1}{2}\log|K| - \frac{n}{2}\log 2\pi
 $$
 
-and the likelihood is a factorized Gaussian \\(\boldsymbol{y}|\boldsymbol{f} \sim \mathbb{N}(\boldsymbol{f}, \sigma_n^2I)\\) so 
+and the likelihood is a factorized Gaussian \\(\boldsymbol{y}|\boldsymbol{f} \sim \mathcal{N}(\boldsymbol{f}, \sigma_n^2I)\\) so 
 we have the log marginal likelihood
 
 $$
 \log p(\boldsymbol{y}|X) = -\frac{1}{2}\boldsymbol{y}^T(K+\sigma_n^2I)^{-1}\boldsymbol{y} - \frac{1}{2}\log|K+\sigma_n^2I| - \frac{n}{2}\log 2\pi
 $$
 
-This result can also be obtained directly by observing that \\(\boldsymbol{y} \sim \mathbb{N}(\boldsymbol{0}, K+\sigma_n^2I)\\).
+This result can also be obtained directly by observing that \\(\boldsymbol{y} \sim \mathcal{N}(\boldsymbol{0}, K+\sigma_n^2I)\\).
 
 In practical applications, we are often forced to make a decision about how to act, i.e. we need a 
 point-like prediction which is optimal in some sense. To this end, we need a loss function 
-\\(\mathbb{L}(y_{\text{true}}, y_{\text{guess}})\\), which specifies the loss incurred by guessing the value 
+\\(\mathcal{L}(y_{\text{true}}, y_{\text{guess}})\\), which specifies the loss incurred by guessing the value 
 \\(y_{\text{guess}}\\) when the true value is \\(y_{\text{true}}\\).
 
 Notice that we computed the predictive distribution with out reference to the loss function. In non-Bayesian 
@@ -343,38 +362,40 @@ function need not have anything in common.
 We minimize the expected loss or risk, by averaging w.r.t. our model's opinion as to what the truth might be 
 
 $$
-\tilde{R}_{\mathbb{L}}(y_{\text{guess}}|\boldsymbol{x}_*) = \int \mathbb{L}(y_*, y_{\text{guess}}) p(y_*|\boldsymbol{x}_*, \mathbb{D}) dy_*
+\tilde{R}_{\mathcal{L}}(y_{\text{guess}}|\boldsymbol{x}_*) = \int \mathcal{L}(y_*, y_{\text{guess}}) p(y_*|\boldsymbol{x}_*, \mathbb{D}) dy_*
 $$
 
 Thus our best guess, in the sense that it minimizes the expected loss, is
 
 $$
-y_{\text{optimal}}|\boldsymbol{x}_* = \arg\min_{y_{\text{guess}}} \tilde{R}_{\mathbb{L}}(y_{\text{guess}}|\boldsymbol{x}_*)
+y_{\text{optimal}}|\boldsymbol{x}_* = \arg\min_{y_{\text{guess}}} \tilde{R}_{\mathcal{L}}(y_{\text{guess}}|\boldsymbol{x}_*)
 $$
 
 In general the value of \\(y_{\text{guess}}\\) that minimizes the risk for loss function 
-\\(|y_{\text{guess}} - y_*|\\) is the median of \\(p(y_*|\boldsymbol{x}_*, \mathbb{D})\\), while 
-for the squared loss \\((y_{\text{guess}} - y_*)^2\\) it is themean of this distribution. When the 
+\\(|y_{\text{guess}} - y\_\*|\\) is the median of \\(p(y\_\*|\boldsymbol{x}\_\*, \mathbb{D})\\), while 
+for the squared loss \\((y_{\text{guess}} - y\_\*)^2\\) it is the mean of this distribution. When the 
 predictive distribution is Gaussian the mean and the median coincide, and indeed for any symmetric 
 loss function and symmetric predictive distribution we always get \\(y_{\text{guess}}\\) as the 
 mean of the predictive distribution.
 
 #### Generate samples
 
-To generate samples \\(\boldsymbol{x} \sim \mathbb{N}(\boldsymbol{m}, K)\\) with arbitrary mean 
+To generate samples \\(\boldsymbol{x} \sim \mathcal{N}(\boldsymbol{m}, K)\\) with arbitrary mean 
 \\(\boldsymbol{m}\\) and covariance matrix \\(K\\) using a scalar Gaussian generator we proceed as 
 follows: first compute the Cholesky decomposition (also known as the matrix square root) \\(L\\) of 
 the positive definite symmetric covariance matrix \\(K = LL^T\\), where \\(L\\) is a lower triangular 
-matrix. Then generate \\(\boldsymbol{u} \sim \mathbb{N}(\boldsymbol{0}, I)\\) by multiple separate 
+matrix. Then generate \\(\boldsymbol{u} \sim \mathcal{N}(\boldsymbol{0}, I)\\) by multiple separate 
 calls to the scalar Gaussian generator. Compute \\(\boldsymbol{x} = \boldsymbol{m} + L\boldsymbol{u}\\), 
 which has the desired distribution with mean \\(\boldsymbol{m}\\) and covariance 
 \\(L\mathbb{E}[\boldsymbol{u}\boldsymbol{u}^T]L^T = LL^T = K\\) (by the independence of the 
 elements of \\(\boldsymbol{u}\\).
 
-In practice it may be necessary to add a small multiple of the identity matrix \\(\epsilonI\\) to the 
+In practice it may be necessary to add a small multiple of the identity matrix \\(\epsilon I\\) to the 
 covariance matrix for numerical reasons. This is because the eigenvalues of the matrix \\(K\\) can 
 decay very rapidly and without this stabilization the Cholesky independent noise of variance 
 \\(\epsilon\\). From the context \\(\epsilon\\) can usually be chosen to have inconsequential effects 
 on the samples, while ensuring numerical stability.
 
-http://katbailey.github.io/post/gaussian-processes-for-dummies/
+### References
+
+[link1](http://katbailey.github.io/post/gaussian-processes-for-dummies/){:target="_blank"}
