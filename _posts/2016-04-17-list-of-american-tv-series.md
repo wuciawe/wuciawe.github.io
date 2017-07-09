@@ -92,3 +92,5 @@ List of Films:
 - Devil's Playground 2010
 - Friday the 13th 1980s x
 - Gangster Squad 2013 x
+- No Good Deed 2014
+- Assault on Wall Street 2013
