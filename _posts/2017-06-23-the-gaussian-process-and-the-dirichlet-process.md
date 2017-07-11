@@ -821,5 +821,9 @@ $$
 ### References
 
 [link1](http://katbailey.github.io/post/gaussian-processes-for-dummies/){:target="_blank"}, 
-[link2](https://www.stats.ox.ac.uk/~teh/teaching/npbayes/mlss2007.pdf){:target="_blank"}
+[link2](https://www.stats.ox.ac.uk/~teh/teaching/npbayes/mlss2007.pdf){:target="_blank"}, 
+[link3](https://pymc-devs.github.io/pymc3/notebooks/dp_mix.html){:target="_blank"}, 
+[link4](https://github.com/datumbox/DPMM-Clustering){:target="_blank"}, 
+and [link5](https://www.cs.cmu.edu/~kbe/dp_tutorial.pdf)
+
 
