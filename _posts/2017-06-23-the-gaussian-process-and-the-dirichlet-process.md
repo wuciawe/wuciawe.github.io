@@ -396,6 +396,399 @@ decay very rapidly and without this stabilization the Cholesky independent noise
 \\(\epsilon\\). From the context \\(\epsilon\\) can usually be chosen to have inconsequential effects 
 on the samples, while ensuring numerical stability.
 
+###
+
+Dirichlet processes are a class of Bayesian nonparametric models. Dirichlet processes are used for: 
+density estimation, semiparametric modelling, and sidestepping model selection/averaging.
+
+#### Function Estimation
+
+Parametric function estimation (regression, classification)
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y} = \{y_1, y_2, \cdots\}\\)
+
+Model: \\(y_i = f(x_i | w) + \mathcal{N}(0, \sigma^2)\\)
+
+prior over parameters \\(p(w)\\)
+
+posterior over parameters \\(p(w | \boldsymbol{x}, \boldsymbol{y}) = \frac{p(w)p(\boldsymbol{y}|\boldsymbol{x}, w)}{p(\boldsymbol{y} | \boldsymbol{x})}\\)
+
+prediction with posteriors \\(p(y_\* | x_\*, \boldsymbol{x}, \boldsymbol{y}) = \int p(y_\* | x_\*, w)p(w | \boldsymbol{x}, \boldsymbol{y}) dw\\)
+
+Bayesian nonparametric function estimation with Gaussian processes
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y}=\{y_1,y_2,\cdots\}\\)
+
+Model: \\(y_i = f(x_i) + \mathcal{N}(0, \sigma^2)\\)
+
+Prior over functions \\(f \sim \mathcal{GP}(\mu, \Sigma)\\)
+
+Posterior over functions \\(p(f | \boldsymbol{x}, \boldsymbol{y}) = \frac{p(f)p(\boldsymbol{y}|\boldsymbol{x}, f)}{p(\boldsymbol{y}|\boldsymbol{x})}
+
+Prediction with posteriors \\(p(y_\*|x_\*,\boldsymbol{x},\boldsymbol{y}) = \int p(y_\*|x_\*, f)p(f|\boldsymbol{x},\boldsymbol{y}) df\\)
+
+#### Density Estimation
+
+Parametric density estimation (Gaussian, mixture models)
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Model: \\(x_i | w \sim F(\cdot | w)\\)
+
+Prior over parameters \\(p(w)\\)
+
+Posterior over parameters \\(p(w|\boldsymbol{x}) = \frac{p(w)p(\boldsymbol{x}|w)}{p(\boldsymbol{x})}\\)
+
+Prediction with posteriors \\(p(x_\* | \boldsymbol{x}) = \int p(x_\*|w)p(w|\boldsymbol{x}) dw\\)
+
+Bayesian nonparametric density estimation with Dirichlet processes
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Model: \\(x_i \sim F\\)
+
+Prior over distributions \\(F \sim \mathcal{DP}(\alpha, H)\\)
+
+Posterior over distributions \\(p(F|\boldsymbol{x})=\frac{p(F)p(\boldsymbol{x}|F)}{p(\boldsymbol{x})}\\)
+
+Prediction with posteriors \\(p(x_\*|\boldsymbol{x}) = \in p(x_\*|F)p(F|\boldsymbol{x}) dF = \int F'(x_\*)p(F|\boldsymbol{x}) dF\\)
+
+#### Semiparametric Modelling
+
+Linear regression model for inferring effectiveness of new medical treatments.
+
+$$
+y_{ij} = \beta^Tx_{ij} + b_i^Tz_{ij} + \epsilon_{ij}
+$$
+
+where \\(y_{ij}\\) is outcome of \\(i\\)th subject, \\(x_{ij}\\),\\(z_{ij}\\) are predictors, \\(\beta\\) are 
+fixed-effects coefficients, \\(b_i\\) are random-effects subject-specific coefficients, \\(\epsilon_{ij}\\) 
+are noise terms.
+
+Care about inferring \\(\beta\\). If \\(x_{ij}\\) is treatment, we want to determine \\(p(\beta > 0|\boldsymbol{x}, \boldsymbol{y})\\).
+
+Usually we assume Gaussian noise \\(\epsilon_{ij} \sim \mathcal{GP}(0, \sigma^2)\\). Is this a sensible prior? 
+Over-dispersion, skewness, etc. May be better to model 
+noise nonparametrically:
+
+$$
+\epsilon_{ij} \sim F
+$$
+
+$$
+F \sim \mathcal{DP}
+$$
+
+Also possible to model subject-specific random effects nonparametrically:
+
+$$
+b_i \sim G
+$$
+
+$$
+G \sim \mathcal{DP}
+$$
+
+#### Model Selection / Averaging
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Models: \\(p(\theta_k|M_k)\\), \\(p(\boldsymbol{x}|\theta_k, M_k)\\)
+
+Marginal likelihood \\(p(\boldsymbol{x}|M_k) = \int p(\boldsymbol{x}|\theta_k,M_k)p(\theta_k|M_k) d\theta_k\\)
+
+Model selection \\(M = \arg\max_{M_k} p(\boldsymbol{x}|M_k)\\)
+
+Model averaging \\(p(x_\*|\boldsymbol{x}) = \sum_{M_k} p(x_\*|M_k)p(M_k|\boldsymbol{x}) = \sum_{M_k}p(x_\*|M_k)\frac{p(\boldsymbol{x}|M_k)p(M_k)}{p(\boldsymbol{x})}\\)
+
+Marginal likelihood is usually extremely hard to compute
+
+$$
+p(\boldsymbol{x}|M_k) = \int p(\boldsymbol{x}|\theta_k,M_k)p(\theta_k|M_k) d\theta_k
+$$
+
+Model selection/averaging is to prevent underfitting and overfitting. Use a really large model \\(M_\infty\\) 
+instead, and let the data spreak for themselves.
+
+#### Gaussian Processes
+
+A Gaussian process is a distribution over functions \\(f: \mathbb{X} \mapsto \mathbb{R}\\)
+
+Denote \\(f \sim \mathcal{Gp}\\) if \\(f\\) is a \\(\mathcal{GP}\\)-distributed random function.
+
+For any finite set of input points \\(x_1, \cdots, x_n\\), we require \\((f(x_1), \cdots, f(x_n))\\) to be 
+a multivariate Gaussian. The \\(\mathcal{GP}\\) is parametrized by its mean \\(m(x)\\) and covariance 
+\\(c(x, y)\\) functions.
+
+#### Dirichlet Processes
+
+#### Dirichlet Distributions
+
+A Dirichlet distribution is a distribution over the \\(K\\)-dimensional probability simplex:
+
+$$
+\Delta_K = \{(\pi_1, \cdots, \pi_K): \pi_k \geq 0, \Sigma_k \pi_k = 1\}
+$$
+
+We say \\((\pi_1, \cdots, \pi_K)\\) is Dirichlet distributed, \\((\pi_1, \cdots, \pi_K) \sim \text{Dirichlect}(\alpha_1, \cdots, \alpha_K)\\) with parameters \\((\alpha_1, \cdots, \alpha_k)\\), if
+
+$$
+p(\pi_1, \cdots, \pi_K) = \frac{\Gamma(\sum_k \alpha_k)}{\prod_k \Gamma(\alpha_k)}\prod_{k=1}^n \pi_k^{\alpha_k - 1}
+$$
+
+Combining entries of probability vectors preserves Dirichlet property, for example:
+
+$$
+(\pi_1, \cdots, \pi_K) \sim \text{Dirichlet}(\alpha_1, \cdots, \alpha_K)\\
+\Rightarrow (\pi_1 + \pi_2, \pi_3, \cdots, \pi_K) \sim \text{Dirichlet}(\alpha_1 + \alpha_2, \alpha_3, \cdots, \alpha_K)
+$$
+
+Generally, if \\((I_1, \cdots, I_j)\\) is a partition of \\((1, \cdots, n)\\):
+
+$$
+\left(\sum_{i \in I_1}\pi_i, \cdots, \sum_{i \in I_j}\pi_i\right) \sim \text{Dirichlet}\left(\sum_{i \in I_1}\alpha_i, \cdots, \sum_{i \in I_j} \alpha_i\right)
+$$
+
+The converse of the agglomerative property is also true, for example if:
+
+$$
+(\pi_1, \cdots, \pi_K) \sim \text{Dirichlet}(\alpha_1, \cdots, \alpha_K)\\
+(\tau_1, \tau_2) \sim \text{Dirichlet}(\alpha_1\beta_1, \alpha_1\beta_2)\\
+\text{with } \beta_1 + \beta_2 = 1\\
+\Rightarrow (\pi_1\tau_1, \pi_1\tau_2, \pi_2, \cdots, \pi_K) \sim \text{Dirichlet}(\alpha_1\beta_1, \alpha_2\beta_2, \alpha_2, \cdots, \alpha_K)
+$$
+
+#### Dirichlet Processes
+
+A Dirichlet process is an infinitely decimated Dirichlet distribution:
+
+$$
+1 \sim \text{Dirichlet}(\alpha)\\
+(\pi_1, \pi_2) \sim \text{Dirichlet}(\alpha/2, \alpha/2) \qquad \pi_1 + \pi_2 = 1\\
+(\pi_{11}, \pi_{12}, \pi_{21}, \pi_{22}) \sim \text{Dirichlet}(\alpha/4, \alpha/4, \alpha/4, \alpha/4) \qquad \pi_{i1} + \pi_{i2} = \pi_i
+$$
+
+Each decimation step involves drawing from a Beta distribution and multiplying into the relevant entry.
+
+A probability measure is a function from subsets of a space \\(\mathbb{X}\\) to \\(\[0,1\]\\) satisfying 
+certain properties. A Dirichlet Process is a distribution over probability measures. Denote 
+\\(G \sim \mathcal{DP}\\) if \\(G\\) is a \\(\mathcal{DP}\\)-distributed random probability measure. For 
+any finite set of partitions \\(A_1 \dot{\cup} \cdots \dot{\cup} A_K = \mathbb{X}\\), we require 
+\\((G(A_1), \cdots, G(A_K))\\) to be Dirichlet distributed.
+
+A \\(\mathcal{DP}\\) has two parameters:
+
+- Base distribution \\(H\\), which is like the mean of the \\(\mathcal{DP}\\)
+- Strength parameter \\(\alpha\\), which is like an inverse-variance of the \\(\mathcal{DP}\\).
+
+We write: \\(G \sim \mathcal{DP}(\alpha, H)\\)
+
+if for any partition \\((A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\): \\(G(A_1), \cdots, G(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alhpa H(A_K))\\)
+
+The first two ocumulants of the \\(\mathcal{DP}\\): 
+
+- Expectation: \\(\mathbb{E}[G(A)] = H(A)\\)
+- Variance: \\(\mathbb{V}[G(A)] = \frac{H(A)(1-H(A))}{\alhpa+1}\\)
+
+where \\(A\\) is any measurable subset of \\(\mathbb{X}\\).
+
+Suppose \\(G\\) is Dirichlet process distributed: \\(G \sim \mathcal{DP}(\alpha, H)\\), \\(G\\) is a 
+(random) probability measure over \\(\mathbb{X}\\). We can treat it as a distribution over \\(\mathbb{X}\\). 
+Let \\(\theta \sim G\\) be a random variable with distribution \\(G\\). We are interested in:
+
+$$
+p(\theta) = \int p(\theta|G)p(G) dG
+$$
+
+$$
+p(G|\theta) = \frac{p(\theta|G)p(G)}{p(\theta)}
+$$
+
+Consider:
+
+$$
+(\pi_1, \cdots, \pi_K) \sim \text{Dirichlet}(\alpha_1, \cdots, \alpha_K)
+$$
+
+$$
+z|(\pi_1, \cdots, \pi_K) \sim \text{Dirichlet}(\pi_1, \cdots, \pi_K)
+$$
+
+\\(z\\) is a multinomial variate, taking on value \\(i \in \{1, \cdots, n\}\\) with probability \\(\pi_i\\).
+
+Then:
+
+$$
+z \sim \text{Discrete}(\frac{\alpha1}{\sum_i \alpha_i}, \cdots, \frac{\alpha_K}{\sum_i \alpha_i})
+$$
+
+$$
+(\pi_1, \cdots, \pi_K) | z \sim \text{Dirichlet}(\alpha_1 + \delta_1(z), \cdots, \alpha_K + \delta_K(z))
+$$
+
+where \\(\delta_i(z)=1\\) if \\(z\\) takes on value \\(i\\), \\(0\\) otherwise.
+
+Converse also true.
+
+Fix a partition \\((A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\). Then 
+
+$$
+(G(A_1), \cdots, G(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alpha H(A_K))
+$$
+
+$$
+P(\theta \in A_i | G) = G(A_i)
+$$
+
+Using Dirichlet-multinomial conjugacy, 
+
+$$
+P(\theta \in A_i) = H(A_i)
+$$
+
+$$
+(G(A_1), \cdots, G(A_K)) | \theta \sim \text{Dirichlet}(\alpha H(A_1) + \delta_\theta(A_1), \cdots, \alpha H(A_K) + \delta_\theta (A_K))
+$$
+
+The above is true for every finite partition of \\(\mathbb{X}\\). In particular, taking a really fine 
+partition, \\(p(\theta)d\theta = H(d\theta)\\). Also, the posterior \\(G|\theta\\) is also a Dirichlet 
+process: \\(G|\theta \sim \mathcal{DP}(\alpha+1, \frac{\alpha H + \delta_\theta}{\alpha + 1})\\)
+
+##### Blackwell-MacQueen Urn Scheme
+
+Blackwell-MacQueen urn scheme produces a sequence \\(\theta_1, \theta_2, \cdots\\) with the following 
+conditions: \\(\theta_n|\theta_{1:n-1} \sim \frac{\alpha H + \sum_{i=1}^{n-1}\delta_{\theta_i}}{\alpha + n -1}\\).
+
+Picking balls of different colors from an urn:
+
+- Start with no balls in the urn
+- with probability \\(\propto \alpha\\), draw \\(\theta_n \sim H\\), and add a ball of that color into the urn
+- with probability \\(\propto n - 1\\), pick a ball at random from the urn, record \\(\theta_n\\) to be its 
+color, return the ball into the urn and place a second ball of same color into urn.
+
+Blackwell-MacQueen urn scheme is like a representer for the \\(\mathcal{DP}\\) - a finite projection of an 
+infinite object.
+
+##### Exchangeability and de Finetti's Theorem
+
+Starting with a \\(\mathcal{DP}\\), we constructed Blackwell-MacQueen urn scheme. The reverse is possible 
+using de Finetti's Theorem. Since \\(\theta_i\\) are \\(iid \sim G\\), their joint distribution is invariant 
+to permutations, thus \\(\theta_1, \theta_2, \cdots\\) are exchangeable. Thus a distribution over measures 
+must exist making them \\(iid\\). This is the \\(\mathcal{DP}\\).
+
+##### Chinese Restaurant Process
+
+Draw \\(\theta_1, \cdots, \theta_n\\) from a Blackwell-MacQueen urn scheme. They take on \\(K < n\\) 
+distinct values, say \\(\theta_1^\*, \cdots, \theta_K^\*\\). This defines a partition of \\(1, \cdots, n\\) 
+into \\(K\\) clusters, such that if \\(i\\) is in cluster \\(k\\), then \\(\theta_i = \theta_k^\*\\). Random 
+draws \\(\theta_1, \cdots, \theta_n\\) from a Blackwell-MacQueen urn scheme induces a random partition 
+\\(1, \cdots, n\\). The induced distribution over partitions is a Chinese Restaurant Process.
+
+- Generating from the CRP:
+  - First customer sits at the first table
+  - Customer \\(n\\) sits at:
+    - Table \\(k\\) with probability \\(\frac{n_k}{\alpha + n - 1}\\) where \\(n_k\\) is the number of 
+    customers at table \\(k\\)
+    - A new table \\(K + 1\\) with probability \\(\frac{\alpha}{\alpha + n - 1}\\)
+  - Customers \\(\Rightarrow\\) integers, tables \\(\Rightarrow\\) clusters
+- The CRP exhibits the clustering property of the \\(\mathcal{DP}\\)
+
+To get back from the CRP to Blackwell-MacQueen urn scheme, simply draw \\(\theta_k^\* \sim H\\) for 
+\\(k=1, \cdots, K\\), then for \\(i = 1, \cdots, n\\) set \\(\theta_i = \theta_{z_i}^\*\\) where 
+\\(z_i\\) is the table that customer \\(i\\) sat at.
+
+##### Stick-breaking Construction
+
+Returning to the posterior process:
+
+$$
+G \sim \mathcal{DP}(\alpha,H) \Leftrightarrow \theta \sim H \\
+\theta|G \sim G \Leftrightarrow G|\theta \sim \mathcal{DP}(\alpha + 1, \frac{\alpha H + \delta_\theta}{\alpha + 1})
+$$
+
+Consider a partition \\((\theta, \mathbb{X}\\theta\\) of \\(\mathbb{X}\\). We have
+
+$$
+\begin{aligh}
+(G(\theta), G(\mathbb{X}\\theta)) &\sim \text{Dirichlet}((\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1}(\theta), (\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1} (\mathbb{X}\\theta))\\
+&=\text{Dirichlet}(1, \alpha)
+\end{align}
+$$
+
+\\(G\\) has a point mass located at \\(\theta\\): \\(G=\beta \delta_\theta + (1 - \beta)G'\\) with 
+\\(\beta \sim \text{Beta}(1, \alpha)\\) and \\(G'\\) is the (renormalized) probability measure with the 
+point mass removed.
+
+Consider a further paritition \\((\theta, A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\):
+
+$$
+(G(\theta), G(A_1), \cdots, G(A_K)) = (\beta, (1 - \beta)G'(A_1), \cdots, (1 - \beta)G'(A_K)) \sim \text{Dirichlect}(1, alpha H(A_1), \cdots, \alpha H(A_K))
+$$
+
+The agglomerative/decimative property of Dirichlet implies:
+
+$$
+(G'(A_1), \cdots, G'(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alpha H(A_K))\\
+G' \sim \mathcal{DP}(\alhpa, H)
+$$
+
+We have:
+
+$$
+G \sim \mathcal{DP}(\alpha,H)\\
+G=\beta_1\delta_{\theta_1^\*} + (1-\beta_1)G_1\\
+G=\beta_1\delta_{\theta_1^\*} + (1-\beta_1)(\beta_2\delta_{\theta_2^\*} + (1 - \beta_2)G_2)\\
+\vdots\\
+G=\sum_{k=1}^\infty \pi_k\delta_{\theta_k^\*}
+$$
+
+where \\(\pi_k = \beta_k\prod_{i=1}^{k-1}(1-\beta_1)\\), \\(\beta_k \sim \text{Beta}(1,\alpha)\\), 
+\\(\theta_k^\* \sim H\\).
+
+This is the stick-breaking construction.
+
+##### Density Estimation
+
+Recall the approach to density estimation with Dirichlet process:
+
+$$
+G \sim \mathcal{DP}(\alpha, H)\\
+x_i \sim G
+$$
+
+The problem is that \\(G\\) is a discrete distribution; inparticular it has no density. To solve this, 
+convole the \\(\mathcal{DP}\\) with a smooth distribution:
+
+$$
+G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^\*}\\
+F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^\*)\\
+x_i \sim F_x
+$$
+
+Usually, \\(F(\cdot|\mu,\Sigma)\\) is Gaussian with mean \\(\mu\\), covariance \\(\Sigma\\). \\(H(\mu, \Sigma)\\) 
+is Gaussian-inverse-Wishart conjugate prior.
+
+##### Clustering
+
+$$
+G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^\*}\\
+F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^\*)\\
+x_i \sim F_x
+$$
+
+is equivalent to
+
+$$
+z_i \sim \text{Discrete}(\pi)\\
+\theta_i = \theta_{z_i}^\*\\
+x_i|z_i \sim F(\cdot|\theta_i) = F(\cdot|\theta_{z_i}^\*)
+$$
+
+This is simply a mixture model with an infinite number of components. This is called a \\(\mathcal{DP}\\) 
+mixture model.
+
 ### References
 
-[link1](http://katbailey.github.io/post/gaussian-processes-for-dummies/){:target="_blank"}
+[link1](http://katbailey.github.io/post/gaussian-processes-for-dummies/){:target="_blank"}, 
+[link2](https://www.stats.ox.ac.uk/~teh/teaching/npbayes/mlss2007.pdf){:target="_blank"}
+
