@@ -787,6 +787,37 @@ $$
 This is simply a mixture model with an infinite number of components. This is called a \\(\mathcal{DP}\\) 
 mixture model.
 
+##### Exponential Families
+
+An exponential family of distributions is parametrized as:
+
+$$
+\begin{align}
+p(\boldsymbol{x}|\theta) &= \exp (t(\theta)^Ts(\boldsymbol{x}) - \phi(\boldsymbol{x}) - \psi(\theta)) \\
+s(\boldsymbol{x}) &= \text{ sufficient statistics vector}\\
+t(\theta) &= \text{ natural parameter vector}\\
+\psi(\theta) = \log \sum_{x'} \exp (t(\theta)^Ts(x') - \phi(x')) \text{ (log normalization)}
+\end{align}
+$$
+
+The conjugation prior is an exponential family distribution over \\(\theta\\):
+
+$$
+p(\theta) = \exp (t(\theta)^Tv - \eta\psi(\theta) - \xi(v,\eta))
+$$
+
+The posterior given observations \\(x_1, \cdots, x_n\\) is in the same family:
+
+$$
+p(\theta|\boldsymbol{x}) = \exp (t(\theta)^T(v + \sum_is(x_i)) - (\eta + n)\psi(\theta) - \xi(v + \sum_is(x_i),\eta + n))
+$$
+
+The marginal probability is:
+
+$$
+p(\boldsymbol{x}) = \exp (\xi(v + \sum_is(x_i),\eta+n) - \xi(v,\eta) - \sum_i\phi(x_i))
+$$
+
 ### References
 
 [link1](http://katbailey.github.io/post/gaussian-processes-for-dummies/){:target="_blank"}, 
