@@ -10,6 +10,16 @@ infotext: 'Of cause, these two random processes are not so much closely related.
 
 ### The Gaussian Process
 
+A Gaussian process is a distribution over functions \\(f: \mathbb{X} \mapsto \mathbb{R}\\)
+
+Denote \\(f \sim \mathcal{Gp}\\) if \\(f\\) is a \\(\mathcal{GP}\\)-distributed random function.
+
+For any finite set of input points \\(x_1, \cdots, x_n\\), we require \\((f(x_1), \cdots, f(x_n))\\) to be 
+a multivariate Gaussian. The \\(\mathcal{GP}\\) is parametrized by its mean \\(m(x)\\) and covariance 
+\\(c(x, y)\\) functions.
+
+#### Gaussian Process for Regression
+
 We have a training set \\(\mathbb{D}\\) of \\(n\\) obeservations, 
 \\(\mathbb{D}=\{(\boldsymbol{x}_i,y_i) | i=1,\cdots,n\}\\), where \\(\boldsymbol{x}\\) dentoes an 
 input vector (covariates) of dimension \\(D\\) and \\(y\\) denotes a scalar output or 
@@ -396,131 +406,9 @@ decay very rapidly and without this stabilization the Cholesky independent noise
 \\(\epsilon\\). From the context \\(\epsilon\\) can usually be chosen to have inconsequential effects 
 on the samples, while ensuring numerical stability.
 
-###
+### The Dirichlet Process
 
-Dirichlet processes are a class of Bayesian nonparametric models. Dirichlet processes are used for: 
-density estimation, semiparametric modelling, and sidestepping model selection/averaging.
-
-#### Function Estimation
-
-Parametric function estimation (regression, classification)
-
-Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y} = \{y_1, y_2, \cdots\}\\)
-
-Model: \\(y_i = f(x_i | w) + \mathcal{N}(0, \sigma^2)\\)
-
-prior over parameters \\(p(w)\\)
-
-posterior over parameters \\(p(w | \boldsymbol{x}, \boldsymbol{y}) = \frac{p(w)p(\boldsymbol{y}|\boldsymbol{x}, w)}{p(\boldsymbol{y} | \boldsymbol{x})}\\)
-
-prediction with posteriors \\(p(y_\* | x_\*, \boldsymbol{x}, \boldsymbol{y}) = \int p(y_\* | x_\*, w)p(w | \boldsymbol{x}, \boldsymbol{y}) dw\\)
-
-Bayesian nonparametric function estimation with Gaussian processes
-
-Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y}=\{y_1,y_2,\cdots\}\\)
-
-Model: \\(y_i = f(x_i) + \mathcal{N}(0, \sigma^2)\\)
-
-Prior over functions \\(f \sim \mathcal{GP}(\mu, \Sigma)\\)
-
-Posterior over functions \\(p(f | \boldsymbol{x}, \boldsymbol{y}) = \frac{p(f)p(\boldsymbol{y}|\boldsymbol{x}, f)}{p(\boldsymbol{y}|\boldsymbol{x})}
-
-Prediction with posteriors \\(p(y_\*|x_\*,\boldsymbol{x},\boldsymbol{y}) = \int p(y_\*|x_\*, f)p(f|\boldsymbol{x},\boldsymbol{y}) df\\)
-
-#### Density Estimation
-
-Parametric density estimation (Gaussian, mixture models)
-
-Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
-
-Model: \\(x_i | w \sim F(\cdot | w)\\)
-
-Prior over parameters \\(p(w)\\)
-
-Posterior over parameters \\(p(w|\boldsymbol{x}) = \frac{p(w)p(\boldsymbol{x}|w)}{p(\boldsymbol{x})}\\)
-
-Prediction with posteriors \\(p(x_\* | \boldsymbol{x}) = \int p(x_\*|w)p(w|\boldsymbol{x}) dw\\)
-
-Bayesian nonparametric density estimation with Dirichlet processes
-
-Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
-
-Model: \\(x_i \sim F\\)
-
-Prior over distributions \\(F \sim \mathcal{DP}(\alpha, H)\\)
-
-Posterior over distributions \\(p(F|\boldsymbol{x})=\frac{p(F)p(\boldsymbol{x}|F)}{p(\boldsymbol{x})}\\)
-
-Prediction with posteriors \\(p(x_\*|\boldsymbol{x}) = \in p(x_\*|F)p(F|\boldsymbol{x}) dF = \int F'(x_\*)p(F|\boldsymbol{x}) dF\\)
-
-#### Semiparametric Modelling
-
-Linear regression model for inferring effectiveness of new medical treatments.
-
-$$
-y_{ij} = \beta^Tx_{ij} + b_i^Tz_{ij} + \epsilon_{ij}
-$$
-
-where \\(y_{ij}\\) is outcome of \\(i\\)th subject, \\(x_{ij}\\),\\(z_{ij}\\) are predictors, \\(\beta\\) are 
-fixed-effects coefficients, \\(b_i\\) are random-effects subject-specific coefficients, \\(\epsilon_{ij}\\) 
-are noise terms.
-
-Care about inferring \\(\beta\\). If \\(x_{ij}\\) is treatment, we want to determine \\(p(\beta > 0|\boldsymbol{x}, \boldsymbol{y})\\).
-
-Usually we assume Gaussian noise \\(\epsilon_{ij} \sim \mathcal{GP}(0, \sigma^2)\\). Is this a sensible prior? 
-Over-dispersion, skewness, etc. May be better to model 
-noise nonparametrically:
-
-$$
-\epsilon_{ij} \sim F
-$$
-
-$$
-F \sim \mathcal{DP}
-$$
-
-Also possible to model subject-specific random effects nonparametrically:
-
-$$
-b_i \sim G
-$$
-
-$$
-G \sim \mathcal{DP}
-$$
-
-#### Model Selection / Averaging
-
-Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
-
-Models: \\(p(\theta_k|M_k)\\), \\(p(\boldsymbol{x}|\theta_k, M_k)\\)
-
-Marginal likelihood \\(p(\boldsymbol{x}|M_k) = \int p(\boldsymbol{x}|\theta_k,M_k)p(\theta_k|M_k) d\theta_k\\)
-
-Model selection \\(M = \arg\max_{M_k} p(\boldsymbol{x}|M_k)\\)
-
-Model averaging \\(p(x_\*|\boldsymbol{x}) = \sum_{M_k} p(x_\*|M_k)p(M_k|\boldsymbol{x}) = \sum_{M_k}p(x_\*|M_k)\frac{p(\boldsymbol{x}|M_k)p(M_k)}{p(\boldsymbol{x})}\\)
-
-Marginal likelihood is usually extremely hard to compute
-
-$$
-p(\boldsymbol{x}|M_k) = \int p(\boldsymbol{x}|\theta_k,M_k)p(\theta_k|M_k) d\theta_k
-$$
-
-Model selection/averaging is to prevent underfitting and overfitting. Use a really large model \\(M_\infty\\) 
-instead, and let the data spreak for themselves.
-
-#### Gaussian Processes
-
-A Gaussian process is a distribution over functions \\(f: \mathbb{X} \mapsto \mathbb{R}\\)
-
-Denote \\(f \sim \mathcal{Gp}\\) if \\(f\\) is a \\(\mathcal{GP}\\)-distributed random function.
-
-For any finite set of input points \\(x_1, \cdots, x_n\\), we require \\((f(x_1), \cdots, f(x_n))\\) to be 
-a multivariate Gaussian. The \\(\mathcal{GP}\\) is parametrized by its mean \\(m(x)\\) and covariance 
-\\(c(x, y)\\) functions.
-
-#### Dirichlet Processes
+Dirichlet processes are a class of Bayesian nonparametric models.
 
 #### Dirichlet Distributions
 
@@ -583,12 +471,12 @@ A \\(\mathcal{DP}\\) has two parameters:
 
 We write: \\(G \sim \mathcal{DP}(\alpha, H)\\)
 
-if for any partition \\((A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\): \\(G(A_1), \cdots, G(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alhpa H(A_K))\\)
+if for any partition \\((A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\): \\(G(A_1), \cdots, G(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alpha H(A_K))\\)
 
 The first two ocumulants of the \\(\mathcal{DP}\\): 
 
 - Expectation: \\(\mathbb{E}[G(A)] = H(A)\\)
-- Variance: \\(\mathbb{V}[G(A)] = \frac{H(A)(1-H(A))}{\alhpa+1}\\)
+- Variance: \\(\mathbb{V}[G(A)] = \frac{H(A)(1-H(A))}{\alpha+1}\\)
 
 where \\(A\\) is any measurable subset of \\(\mathbb{X}\\).
 
@@ -628,7 +516,7 @@ $$
 
 where \\(\delta_i(z)=1\\) if \\(z\\) takes on value \\(i\\), \\(0\\) otherwise.
 
-Converse also true.
+The converse is also true.
 
 Fix a partition \\((A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\). Then 
 
@@ -706,11 +594,11 @@ G \sim \mathcal{DP}(\alpha,H) \Leftrightarrow \theta \sim H \\
 \theta|G \sim G \Leftrightarrow G|\theta \sim \mathcal{DP}(\alpha + 1, \frac{\alpha H + \delta_\theta}{\alpha + 1})
 $$
 
-Consider a partition \\((\theta, \mathbb{X}\\theta\\) of \\(\mathbb{X}\\). We have
+Consider a partition \\((\theta, \mathbb{X}\backslash\theta)\\) of \\(\mathbb{X}\\). We have
 
 $$
-\begin{aligh}
-(G(\theta), G(\mathbb{X}\\theta)) &\sim \text{Dirichlet}((\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1}(\theta), (\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1} (\mathbb{X}\\theta))\\
+\begin{align}
+(G(\theta), G(\mathbb{X}\backslash\theta)) &\sim \text{Dirichlet}((\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1}(\theta), (\alpha+1)\frac{\alpha H + \delta_\theta}{\alpha + 1} (\mathbb{X}\backslash\theta))\\
 &=\text{Dirichlet}(1, \alpha)
 \end{align}
 $$
@@ -722,24 +610,24 @@ point mass removed.
 Consider a further paritition \\((\theta, A_1, \cdots, A_K)\\) of \\(\mathbb{X}\\):
 
 $$
-(G(\theta), G(A_1), \cdots, G(A_K)) = (\beta, (1 - \beta)G'(A_1), \cdots, (1 - \beta)G'(A_K)) \sim \text{Dirichlect}(1, alpha H(A_1), \cdots, \alpha H(A_K))
+(G(\theta), G(A_1), \cdots, G(A_K)) = (\beta, (1 - \beta)G'(A_1), \cdots, (1 - \beta)G'(A_K)) \sim \text{Dirichlect}(1, \alpha H(A_1), \cdots, \alpha H(A_K))
 $$
 
 The agglomerative/decimative property of Dirichlet implies:
 
 $$
 (G'(A_1), \cdots, G'(A_K)) \sim \text{Dirichlet}(\alpha H(A_1), \cdots, \alpha H(A_K))\\
-G' \sim \mathcal{DP}(\alhpa, H)
+G' \sim \mathcal{DP}(\alpha, H)
 $$
 
 We have:
 
 $$
 G \sim \mathcal{DP}(\alpha,H)\\
-G=\beta_1\delta_{\theta_1^\*} + (1-\beta_1)G_1\\
-G=\beta_1\delta_{\theta_1^\*} + (1-\beta_1)(\beta_2\delta_{\theta_2^\*} + (1 - \beta_2)G_2)\\
+G=\beta_1\delta_{\theta_1^*} + (1-\beta_1)G_1\\
+G=\beta_1\delta_{\theta_1^*} + (1-\beta_1)(\beta_2\delta_{\theta_2^*} + (1 - \beta_2)G_2)\\
 \vdots\\
-G=\sum_{k=1}^\infty \pi_k\delta_{\theta_k^\*}
+G=\sum_{k=1}^\infty \pi_k\delta_{\theta_k^*}
 $$
 
 where \\(\pi_k = \beta_k\prod_{i=1}^{k-1}(1-\beta_1)\\), \\(\beta_k \sim \text{Beta}(1,\alpha)\\), 
@@ -747,9 +635,64 @@ where \\(\pi_k = \beta_k\prod_{i=1}^{k-1}(1-\beta_1)\\), \\(\beta_k \sim \text{B
 
 This is the stick-breaking construction.
 
-##### Density Estimation
+### Usages
 
-Recall the approach to density estimation with Dirichlet process:
+Nonparametric Bayesian models are used for: 
+density estimation, semiparametric modelling, and sidestepping model selection/averaging.
+
+#### Function Estimation
+    
+Parametric function estimation (regression, classification)
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y} = \{y_1, y_2, \cdots\}\\)
+
+Model: \\(y_i = f(x_i \| w) + \mathcal{N}(0, \sigma^2)\\)
+
+prior over parameters \\(p(w)\\)
+
+posterior over parameters \\(p(w \| \boldsymbol{x}, \boldsymbol{y}) = \frac{p(w)p(\boldsymbol{y}\|\boldsymbol{x}, w)}{p(\boldsymbol{y} \| \boldsymbol{x})}\\)
+
+prediction with posteriors \\(p(y_\* \| x_\*, \boldsymbol{x}, \boldsymbol{y}) = \int p(y_\* \| x_\*, w)p(w \| \boldsymbol{x}, \boldsymbol{y}) dw\\)
+
+Bayesian nonparametric function estimation with Gaussian processes
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\), \\(\boldsymbol{y}=\{y_1,y_2,\cdots\}\\)
+
+Model: \\(y_i = f(x_i) + \mathcal{N}(0, \sigma^2)\\)
+
+Prior over functions \\(f \sim \mathcal{GP}(\mu, \Sigma)\\)
+
+Posterior over functions \\(p(f \| \boldsymbol{x}, \boldsymbol{y}) = \frac{p(f)p(\boldsymbol{y}\|\boldsymbol{x}, f)}{p(\boldsymbol{y}\|\boldsymbol{x})}\\)
+
+Prediction with posteriors \\(p(y_\*\|x_\*,\boldsymbol{x},\boldsymbol{y}) = \int p(y_\*\|x_\*, f)p(f\|\boldsymbol{x},\boldsymbol{y}) df\\)
+
+#### Density Estimation
+
+Parametric density estimation (Gaussian, mixture models)
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Model: \\(x_i \| w \sim F(\cdot \| w)\\)
+
+Prior over parameters \\(p(w)\\)
+
+Posterior over parameters \\(p(w\|\boldsymbol{x}) = \frac{p(w)p(\boldsymbol{x}\|w)}{p(\boldsymbol{x})}\\)
+
+Prediction with posteriors \\(p(x_\* \| \boldsymbol{x}) = \int p(x_\*\|w)p(w\|\boldsymbol{x}) dw\\)
+
+Bayesian nonparametric density estimation with Dirichlet processes
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Model: \\(x_i \sim F\\)
+
+Prior over distributions \\(F \sim \mathcal{DP}(\alpha, H)\\)
+
+Posterior over distributions \\(p(F\|\boldsymbol{x})=\frac{p(F)p(\boldsymbol{x}\|F)}{p(\boldsymbol{x})}\\)
+
+Prediction with posteriors \\(p(x_\*\|\boldsymbol{x}) = \in p(x_\*\|F)p(F\|\boldsymbol{x}) dF = \int F'(x_\*)p(F\|\boldsymbol{x}) dF\\)
+
+There is some problem in the above process:
 
 $$
 G \sim \mathcal{DP}(\alpha, H)\\
@@ -760,19 +703,193 @@ The problem is that \\(G\\) is a discrete distribution; inparticular it has no d
 convole the \\(\mathcal{DP}\\) with a smooth distribution:
 
 $$
-G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^\*}\\
-F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^\*)\\
+G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^*}\\
+F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^*)\\
 x_i \sim F_x
 $$
 
 Usually, \\(F(\cdot|\mu,\Sigma)\\) is Gaussian with mean \\(\mu\\), covariance \\(\Sigma\\). \\(H(\mu, \Sigma)\\) 
 is Gaussian-inverse-Wishart conjugate prior.
 
-##### Clustering
+##### Python code for density estimation wity pymc3
+
+{% highlight python linenos=table%}
+from matplotlib import pyplot as plt
+import numpy as np
+import pymc3 as pm
+import scipy as sp
+import seaborn as sns
+from statsmodels.datasets import get_rdataset
+from theano import tensor as T
+
+np.random.seed(462233) # from random.org
+
+blue = sns.color_palette()[0]
+x_plot = np.linspace(0, 100, 2000)
+
+old_faithful_df = get_rdataset('faithful', cache=True).data[['waiting']]
+old_faithful_df['std_waiting'] = old_faithful_df.waiting # (old_faithful_df.waiting - old_faithful_df.waiting.mean()) / old_faithful_df.waiting.std()
+old_faithful_df.head()
+
+dmin = old_faithful_df.waiting.min()
+dmax= old_faithful_df.waiting.max()
+dmean = old_faithful_df.waiting.mean()
+dstd = old_faithful_df.waiting.std()
+
+fig, [[ax1, ax2], [ax3, ax4]] = plt.subplots(ncols=2, nrows=2, figsize=(14, 6))
+
+n_bins = 20
+ax1.hist(old_faithful_df.std_waiting, bins=n_bins, color=blue, lw=0, alpha=0.5)
+
+ax1.set_xlabel('Standardized waiting time between eruptions')
+ax1.set_ylabel('Number of eruptions')
+
+N = old_faithful_df.shape[0]
+
+K = 30
+
+with pm.Model() as model:
+    alpha = pm.Gamma('alpha', 1., 1.)
+    beta = pm.Beta('beta', 1., alpha, shape=K)
+    w = pm.Deterministic('w', beta * T.concatenate([[1], T.extra_ops.cumprod(1 - beta)[:-1]]))
+    component = pm.Categorical('component', w, shape=N)
+
+    tau = pm.Gamma('tau', 1., 1., shape=K)
+    lambda_ = pm.Uniform('lambda', 0, 5 * dstd, shape=K)
+    xi = pm.Uniform('xi', dmin, dmax, shape=K)
+    mu = pm.Normal('mu', xi, tau * lambda_, shape=K)
+    obs = pm.Normal('obs', mu[component], lambda_[component] * tau[component],
+                    observed=old_faithful_df.std_waiting.values)
+
+with model:
+    step1 = pm.Metropolis(vars=[alpha, beta, w, lambda_, xi, tau, mu, obs])
+    step2 = pm.ElemwiseCategorical([component], np.arange(K))
+#    start = pm.find_MAP()
+#    trace1 = pm.sample(1000, [step1, step2])
+#    step3 = pm.NUTS(scaling=trace1[-1])
+#    step4 = pm.ElemwiseCategorical([component], np.arange(K))
+#    trace_ = pm.sample(500, [step3, step4], tune=1500, start=trace1[-1])
+    trace_ = pm.sample(2000, [step1, step2])
+
+trace = trace_[1000::10]
+
+# pm.traceplot(trace, varnames=['component'])
+
+# pm.traceplot(trace, varnames=['w'])
+
+n_components_used = np.apply_along_axis(lambda x: np.unique(x).size, 1, trace['component'])
+
+print(n_components_used)
+
+bins = np.arange(n_components_used.min(), n_components_used.max() + 1)
+ax2.hist(n_components_used + 1, bins=bins, normed=True, lw=0, alpha=0.75)
+
+ax2.set_xticks(bins + 0.5)
+ax2.set_xticklabels(bins)
+ax2.set_xlim(bins.min(), bins.max() + 1)
+ax2.set_xlabel('Number of mixture components used')
+
+ax2.set_ylabel('Posterior probability')
+
+post_pdf_contribs = sp.stats.norm.pdf(np.atleast_3d(x_plot), trace['mu'][:, np.newaxis, :], (trace['lambda'] * trace['tau'])[:, np.newaxis, :])
+post_pdfs = (trace['w'][:, np.newaxis, :] * post_pdf_contribs).sum(axis=-1)
+
+post_pdf_low, post_pdf_high = np.percentile(post_pdfs, [2.5, 97.5], axis=0)
+
+n_bins = 20
+ax3.hist(old_faithful_df.std_waiting.values, bins=n_bins, normed=True, color=blue, lw=0, alpha=0.5)
+
+ax3.fill_between(x_plot, post_pdf_low, post_pdf_high, color='gray', alpha=0.45)
+ax3.plot(x_plot, post_pdfs[0], c='gray', label='Posterior sample densities')
+ax3.plot(x_plot, post_pdfs[::100].T, c='gray')
+ax3.plot(x_plot, post_pdfs.mean(axis=0), c='k', label='Posterior expected density')
+
+ax3.set_xlabel('Standardized waiting time between eruptions')
+
+ax3.set_yticklabels([])
+ax3.set_ylabel('Density')
+
+ax3.legend(loc=2)
+
+n_bins = 20
+ax4.hist(old_faithful_df.std_waiting.values, bins=n_bins, normed=True, color=blue, lw=0, alpha=0.5)
+
+ax4.plot(x_plot, post_pdfs.mean(axis=0), c='k', label='Posterior expected density')
+ax4.plot(x_plot, (trace['w'][:, np.newaxis, :] * post_pdf_contribs).mean(axis=0)[:, 0], '--', c='k', label='Posterior expected mixture\ncomponents\n(weighted)')
+ax4.plot(x_plot, (trace['w'][:, np.newaxis, :] * post_pdf_contribs).mean(axis=0), '--', c='k')
+
+ax4.set_xlabel('Standardized waiting time between eruptions')
+
+ax4.set_yticklabels([])
+ax4.set_ylabel('Density')
+
+ax4.legend(loc=2)
+
+plt.show()
+{% endhighlight %}
+
+#### Semiparametric Modelling
+
+Linear regression model for inferring effectiveness of new medical treatments.
 
 $$
-G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^\*}\\
-F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^\*)\\
+y_{ij} = \beta^Tx_{ij} + b_i^Tz_{ij} + \epsilon_{ij}
+$$
+
+where \\(y_{ij}\\) is outcome of \\(i\\)th subject, \\(x_{ij}\\),\\(z_{ij}\\) are predictors, \\(\beta\\) are 
+fixed-effects coefficients, \\(b_i\\) are random-effects subject-specific coefficients, \\(\epsilon_{ij}\\) 
+are noise terms.
+
+Care about inferring \\(\beta\\). If \\(x_{ij}\\) is treatment, we want to determine \\(p(\beta > 0\|\boldsymbol{x}, \boldsymbol{y})\\).
+
+Usually we assume Gaussian noise \\(\epsilon_{ij} \sim \mathcal{GP}(0, \sigma^2)\\). Is this a sensible prior? 
+Over-dispersion, skewness, etc. May be better to model 
+noise nonparametrically:
+
+$$
+\epsilon_{ij} \sim F
+$$
+
+$$
+F \sim \mathcal{DP}
+$$
+
+Also possible to model subject-specific random effects nonparametrically:
+
+$$
+b_i \sim G
+$$
+
+$$
+G \sim \mathcal{DP}
+$$
+
+#### Model Selection / Averaging
+
+Data: \\(\boldsymbol{x} = \{x_1, x_2, \cdots\}\\)
+
+Models: \\(p(\theta_k\|M_k)\\), \\(p(\boldsymbol{x}\|\theta_k, M_k)\\)
+
+Marginal likelihood \\(p(\boldsymbol{x}\|M_k) = \int p(\boldsymbol{x}\|\theta_k,M_k)p(\theta_k\|M_k) d\theta_k\\)
+
+Model selection \\(M = \arg\max_{M_k} p(\boldsymbol{x}\|M_k)\\)
+
+Model averaging \\(p(x_\*\|\boldsymbol{x}) = \sum_{M_k} p(x_\*\|M_k)p(M_k\|\boldsymbol{x}) = \sum_{M_k}p(x_\*\|M_k)\frac{p(\boldsymbol{x}\|M_k)p(M_k)}{p(\boldsymbol{x})}\\)
+
+Marginal likelihood is usually extremely hard to compute
+
+$$
+p(\boldsymbol{x}|M_k) = \int p(\boldsymbol{x}\|\theta_k,M_k)p(\theta_k\|M_k) d\theta_k
+$$
+
+Model selection/averaging is to prevent underfitting and overfitting. Use a really large model \\(M_\infty\\) 
+instead, and let the data spreak for themselves.
+
+#### Clustering
+
+$$
+G=\sum_{k=1}^\infty \pi_k \delta_{\theta_k^*}\\
+F_x(\cdot) = \sum_{k=1}^\infty \pi_k F(\cdot|\theta_k^*)\\
 x_i \sim F_x
 $$
 
@@ -780,14 +897,14 @@ is equivalent to
 
 $$
 z_i \sim \text{Discrete}(\pi)\\
-\theta_i = \theta_{z_i}^\*\\
-x_i|z_i \sim F(\cdot|\theta_i) = F(\cdot|\theta_{z_i}^\*)
+\theta_i = \theta_{z_i}^*\\
+x_i|z_i \sim F(\cdot|\theta_i) = F(\cdot|\theta_{z_i}^*)
 $$
 
 This is simply a mixture model with an infinite number of components. This is called a \\(\mathcal{DP}\\) 
 mixture model.
 
-##### Exponential Families
+#### Exponential Families
 
 An exponential family of distributions is parametrized as:
 
@@ -796,7 +913,7 @@ $$
 p(\boldsymbol{x}|\theta) &= \exp (t(\theta)^Ts(\boldsymbol{x}) - \phi(\boldsymbol{x}) - \psi(\theta)) \\
 s(\boldsymbol{x}) &= \text{ sufficient statistics vector}\\
 t(\theta) &= \text{ natural parameter vector}\\
-\psi(\theta) = \log \sum_{x'} \exp (t(\theta)^Ts(x') - \phi(x')) \text{ (log normalization)}
+\psi(\theta) &= \log \sum_{x'} \exp (t(\theta)^Ts(x') - \phi(x')) \text{ (log normalization)}
 \end{align}
 $$
 
