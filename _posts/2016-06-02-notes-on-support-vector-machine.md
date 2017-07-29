@@ -371,7 +371,7 @@ $$
 \alpha_i y^{(i)} = - \sum_{\substack{j = 1\\j \neq i}}^m\alpha_j y^{(j)}
 $$
 
-\\(\alpha_i\\) is determined by fixing other \\(alpha_j\\)'s. Thus the smo chooses to update two 
+\\(\alpha_i\\) is determined by fixing other \\(\alpha_j\\)'s. Thus the smo chooses to update two 
 \\(\alpha_i\\)'s in each step, such that the constraints will not be violated. Now we have
 
 $$
@@ -387,7 +387,7 @@ $$
 And the objective function turns out to be
 
 $$
-F(\boldsymbol{\alpha}) = F(\alpha_1, \dots, (\zeta - alpha_j y^{(j)})y^{(i)}, \dots, \alpha_j, \dots, \alpha_m)
+F(\boldsymbol{\alpha}) = F(\alpha_1, \dots, (\zeta - \alpha_j y^{(j)})y^{(i)}, \dots, \alpha_j, \dots, \alpha_m)
 $$
 
 And \\(\alpha_j\\) is updated with
@@ -397,7 +397,7 @@ $$
 $$
 
 After finding the new value of \\(\alpha_j\\), we can then get the new value of \\(\alpha_i\\) with 
-equation \\(\alpha_i = (\zeta - alpha_j y^{(j)})y^{(i)}\\).
+equation \\(\alpha_i = (\zeta - \alpha_j y^{(j)})y^{(i)}\\).
 
 ### Recent method for Hard Margin Linear SVM
 
