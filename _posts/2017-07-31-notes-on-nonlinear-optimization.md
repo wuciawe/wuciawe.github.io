@@ -708,6 +708,306 @@ Important features of conjugate gradients:
 - \\([\boldsymbol{g}^{(j)}]^T\boldsymbol{g}^{(i+1)}=0\\) for \\(j=0,\cdots,i\\)
 - \\(\alpha^{(i)}=\arg\max_{\alpha>0} q(\boldsymbol{s}^{(i)}+\alpha\boldsymbol{d}^{(i)})\\)
 
+- Crucial Property of CG
 
+If \\([\boldsymbol{d}^{(i)}]^TB\boldsymbol{d}^{(i)}>0\\) for \\(0\leq i \leq k\\), then the iterates 
+\\(\boldsymbol{s}^{(j)}\\) grow in \\(2\\)-norm
 
+$$
+||\boldsymbol{s}^{(j)}||_2 < ||\boldsymbol{s}^{(j+1)}||_2, (0 \leq j \leq k-1)
+$$
+
+- Truncated CG to Minimize \\(q(\boldsymbol{s})\\)
+
+Apply CG steps in the previous algorithm, but terminate at iteration \\(i\\) if either of the following 
+occurs, 
+
+- \\([\boldsymbol{d}^{(i)}]^TB\boldsymbol{d}^{(i)}\leq 0\\) (in this case the line search \\(\min_{\alpha>0} q(\boldsymbol{s}^{(i)}+\alpha\boldsymbol{d}^{(i)})\\) is unbounded below)
+- \\(\|\|\boldsymbol{s}^{(i)}+\alpha^{(i)}\boldsymbol{d}^{(i)}\|\|_2>\Delta\\) (in this case the solution lies on 
+the TR boundary)
+
+In both cases, stop with \\(\boldsymbol{s}^\*=\boldsymbol{s}^{(i)}+\alpha^B\boldsymbol{d}^{(i)}\\), where 
+\\(\alpha^B\\) is chosen as the positive root of \\(\|\|\boldsymbol{s}^{(i)}+\alpha^B\boldsymbol{d}^{(i)}\|\|_2=\Delta\\)
+
+Since the first step of the previous algorithm takes us to the Cauchy point \\(\boldsymbol{s}^{(1)}=\boldsymbol{s}^c\\), 
+and all further steps are descent steps, we have
+
+$$
+q(\boldsymbol{s}^*)\leq q(\boldsymbol{s}^c) \text{ and } ||\boldsymbol{s}^*||_2 \leq \Delta
+$$
+
+Therefore, our convergence theory applies and the TR algorithm with truncated CG solves converges to a 
+first-order stationary point.
+
+When \\(q\\) is convex, the algorithm is very good.
+
+Let \\(B\\) be positive definite and let the previous algorithm be applied to the minimisation of 
+\\(q(\boldsymbol{s})\\). Let \\(\boldsymbol{s}^\*\\) be the computed solution, and let 
+\\(\boldsymbol{s}^M\\) be the exact solution of the TRS, then
+
+$$
+q(\boldsymbol{s}^\*)\leq\frac{1}{2}q(\boldsymbol{s}^m)
+$$
+
+Note that \\(q(0)=0\\), so that \\(q(\boldsymbol{s}^M)\leq 0\\) and \\(\|q(\boldsymbol{s}^M)\|\\) is 
+the achievable model decrease. This theorem says that at least half the achievable model decrease 
+is realised.
+
+In the non-convex case the previous algorithm may yield a poor solution with respect to the achievable 
+model decrease. For example, if \\(\boldsymbol{g}=0\\) and \\(B\\) is indefinite, the \\(q(\boldsymbol{s}^\*)=0\\). 
+In this case use Lanczos' method to move around trust-region boundary - effective in practice.
+
+### Interior Point methods for Inequality constrained optimisation
+
+#### Merit Functions
+
+Constrained optimisation addresses two conflicting goals
+
+- minimize the objective function \\(f(\boldsymbol{x})\\)
+- satisfy the constraints
+
+To overcome this obstacle, we minimise a composite merit function \\(\phi(\boldsymbol{x}, \boldsymbol{p})\\)
+
+- \\(\boldsymbol{p}\\) are parameters
+- (some) minimizers of \\(\phi(\boldsymbol{x}, \boldsymbol{p})\\) with respect to \\(\boldsymbol{x}\\) 
+approach those of \\(f(\boldsymbol{x})\\) subject to the constraints as \\(\boldsymbol{p}\\) approaches 
+a certain set \\(\mathscr{P}\\)
+- we only use unconstrained minimization methods to minimise \\(\phi\\)
+
+for example, the equality constrained problem 
+\\(\min_{\boldsymbol{x}\in\mathbb{R}^n}f(\boldsymbol{x}) \text{ s.t. } c(\bodlsymbol{x})=0\\) 
+can be solved using the quadratic penalty function
+\\(\phi(\boldsymbol{x}, \mu)=f(\boldsymbol{x})+\frac{1}{2\mu}\|\|c(\boldsymbol{x})\|\|_2^2\\)
+as a merit function.
+
+- If \\(\boldsymbol{x}(\mu)\\) minimises \\(\phi(\boldsymbol{x}, \mu)\\), follow \\(\boldsymbol{x}(\mu)\\) as \\(\mu \rightarrow 0^+\\)
+- Convergence to spurious stationary points may occur, unless safeguards are used
+
+The log barrier function for inequality constraints
+
+for the inequality constrained problem
+
+$$
+\min_{\boldsymbol{x}\in\mathbb{R}^n}f(\boldsymbol{x}) \text{ s.t. } c(\boldsymbol{x})\geq 0
+$$
+
+where the constraint functions \\(c\\) are such that there exist points \\(\boldsymbol{x}\\) for which 
+\\(c(\boldsymbol{x})>0\\) (componentwise)
+
+We use the logarithmic barrier function
+
+$$
+\phi(\boldsymbol{x}, \mu)=f(\boldsymbol{x})-\mu\sum_{i=1}^m\log c_i(\boldsymbol{x})
+$$
+
+as merit function
+
+- If \\(\boldsymbol{x}(\mu)\\) minimises \\(\phi(\boldsymbol{x},\mu)\\), follow \\(\boldsymbol{x}(\mu)\\) as 
+\\(\mu\rightarrow 0^+\\)
+- Convergence to spurious stationary points may occur, unless safeguards are used
+- All \\(\boldsymbol{x}(\mu)\\) are interior, i.e., \\(c(\boldsymbol{x}(\mu))>0\\)
+
+- Basic Barrier Function Algorithm
+
+1. Choose \\(\mu_0>0\\), set \\(k=0\\)
+2. Until convergence, repeat
+  1. find \\(\boldsymbol{x}_{\text{start}}^k\\) for which \\(c(\boldsymbol{x}_{\text{start}}^k)>0\\)
+  2. starting from \\(\boldsymbol{x}_{\text{start}}^k\\) use an unconstrained minimization algorithm to find 
+  an approximate minimizer \\(\boldsymbol{x}^k\\) of \\(\phi(\boldsymbol{x}, \mu_k)\\)
+  3. choose \\(\mu_{k+1}\in(0, \mu_k)\\)
+  4. increment \\(k\\) by \\(1\\)
+
+Remarks
+
+- The sequence \\((\mu_k)_{\mathbb{N}}\\) has to be chosen so that \\(\mu_k\rightarrow 0\\). often one 
+chooses \\(\mu_{k+1}=0.1\mu_k\\), or even \\(\mu_{k+1}=\mu_k^2\\)
+- One might choose \\(\boldsymbol{x}_{\text{start}}^k=\boldsymbol{x}^{k-1}\\), but this is often a poor choice
+
+recall the notion of active set
+
+$$
+\mathscr{A}(\boldsymbol{x})=\{i: c_i(\boldsymbol{x})=0\}
+$$
+
+correspondingly, the inactive set is defined as 
+
+$$
+\mathscr{I}(\boldsymbol{x})=\{i: c_i(\boldsymbol{x})>0\}
+$$
+
+recall that the LICQ holds at \\(\boldsymbol{x}\\) if \\(\{\alpha_i(\boldsymbol{x}): i\in\mathscr{A}(\boldsymbol{x})\}\\) 
+is linearly independent.
+
+- Main convergence result
+
+Let \\(f, c \in C^2\\), if the method for computing the sequences \\((\mu_k)_{\mathbb{N}}\\) and \\((\boldsymbol{x}^k)_{\mathbb{N}}\\) 
+in the previous algorithm are such that \\(\Nabla_x\phi(\boldsymbol{x}^k, \mu_k)\rightarrow 0\\) and 
+\\(\boldsymbol{x}^k\rightarrow\boldsymbol{x}^\*\\), and if the LICQ holds at \\(\boldsymbol{x}^\*\\), then
+
+1. there exists a vector of Lagrange multipliers \\(\boldsymbol{y}^\*\\) such that \\((\boldsymbol{x}^\*, \boldsymbol{y}^\*)\\) 
+satisfies the first order optimality conditions for problem
+
+$$
+\min_{\boldsymbol{x}\in\mathbb{R}^n}f(\boldsymbol{x}) \text{ s.t. } c(\boldsymbol{x})\geq 0
+$$
+
+2. setting \\(\boldsymbol{y}_i^k:=\frac{\mu_k}{c_i(\boldsymbol{x}^k)}\\), we have \\(\boldsymbol{y}^k \rightarrow \boldsymbol{y}^\*\\)
+
+Algorithms to minimise \\(\phi(\boldsymbol{x},\mu)\\):
+
+can use 
+
+- linesearch methods
+  - should use specialized linesearch to cope with singularity of log
+- trust-region methods
+  - need to reject points for which \\(c(\boldsymbol{x}_k+\boldsymbol{s}_k)\not\gt 0\\)
+  - (ideally) need to shape trust region to cope with contours of the singularity
+
+- Generic Barrier Newton System
+
+The Newton correction \\(\boldsymbol{s}\\) from \\(\boldsymbol{x}\\) in the minimisation of \\(\phi\\) is 
+
+$$
+(H(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x}))+\mu A^T(\boldsymbol{x})C^{-2}(\boldsymbol{x})A(\boldsymbol{x}))\boldsymbol{s}=-g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x}, \mu))
+$$
+
+where
+
+- \\(C(\boldsymbol{x})=\text{Diag}(c_1(\boldsymbol{x}),\codts,c_m(\boldsymbol{x}))\\)
+- \\(\boldsymbol{y}(\boldsymbol{x},\mu)=\mu C^{-1}(\boldsymbol{x})\boldsymbol{e}\\) with \\(\boldsymbol{e}=[1\cdots 1]^T\\), 
+(\\(\boldsymbol{y}(\boldsymbol{x},\mu)\\) are the estimates of Lagrange multipliers)
+- \\(g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))=g(\boldsymbol{x})-A^T(\boldsymbol{x})\boldsymbol{y}(\boldsymbol{x},\mu)\\) 
+(gradient of the Lagrangian)
+- \\(H(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x}))=H(\boldsymbol{x})-\sum_{i=1}^m\boldsymbol{y}_i(\boldsymbol{x},\mu)H_i(\boldsymbol{x})\\)
+
+we also write
+
+$$
+(H(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))+A^T(\boldsymbol{x})C^{-1}(\boldsymbol{x})Y(\boldsymbol{x},\mu)A(\boldsymbol{x}))\boldsymbol{s}=-g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))
+$$
+
+where \\(Y(\boldsymbol{x},\mu)=\text{Diag}(y_1(\boldsymbol{x},\mu),\cdots,y_m(\boldsymbol{x},\mu))\\), and we cal these the 
+primal Newton equations.
+
+- Perturbed Optimality conditions
+
+Recall that the first order optimality conditions for 
+
+$$
+\min_{\boldsymbol{x}\in\mathbb{R}^n} f(\boldsymbol{x}) \text{ s.t. } c(\boldsymbol{x})\geq 0
+$$
+
+are the following
+
+$$
+g(\boldsymbol{x})-A^T(\boldsymbol{x})\boldsymbol{y}=0, \text{ dual feasibility}\\
+C(\boldsymbol{x})\boldsymbol{y}=0, \text{ complementary slackness}\\
+c(\boldsymbol{x}\geq 0 \text{ and } \boldsymbol{y}\geq 0
+$$
+
+For \\(\mu>0\\), let us now consider the perturbed equations
+
+$$
+g(\boldsymbol{x})-A^T(\boldsymbol{x})\boldsymbol{y}=0\\
+C(\boldsymbol{x})\boldsymbol{y}=\mu\boldsymbol{e}\\
+c(\boldsymbol{x})\geq 0 \text{ and } \boldsymbol{y}\geq 0
+$$
+
+- Primal Dual Path Following
+
+Primal dual path following is based on the idea of tracking the roots of the system of equations
+
+$$
+g(\boldsymbol{x}-A^T(\boldsymbol{x})\boldsymbol{y}=0\\
+C(\boldsymbol{x})\boldsymbol{y}=\mu\boldsymbol{e}
+$$
+
+whilst maintaining \\(c(\boldsymbol{x})>0\\) and \\(\boldsymbol{y}>0\\) through explicit control over the variables.
+
+Using Newton's method to solve this nonlinear system, the correction \\((\boldsymbol{s},\boldsymbol{w})\\) to 
+\\((\boldsymbol{x},\boldsymbol{y})\\) satisfies
+
+$$
+\begin{matrix}
+H(\boldsymbol{x},\boldsymbol{y}) & -A^T(\boldsymbol{x})\\
+YA(\boldsymbol{x}) & C(\boldsymbol{x})
+\end{matrix}\begin{matrix}
+\boldsymbol{s}\\
+\boldsymbol{w}
+\end{matrix}=-\begin{matrix}
+g(\boldsymbol{x})-A^T(\boldsymbol{x})\boldsymbol{y}\\
+C(\boldsymbol{x})\boldsymbol{y}-\mu\boldsymbol{e}
+\end{matrix}
+$$
+
+where
+
+$$
+(H(\boldsymbol{x},\boldsymbol{y})+A^T(\boldsymbol{x})C^{-1}(\boldsymbol{x})YA(\boldsymbol{x}))\boldsymbol{s}=-(g(\boldsymbol{x})-\mu A^T(\boldsymbol{x})C(\boldsymbol{x})^{-1}\boldsymbol{e})
+$$
+
+There are called the primal-dual Newton equations.
+
+Comparing the primal-dual Newton equations with the primal ones (obtained for the minimisation of the barrier function 
+\\(\phi(\boldsymbol{x},\mu)\\), the picture is as follows: 
+
+$$
+(H(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))+A^T(\boldsymbol{x})C^{-1}(\boldsymbol{x})Y(\boldsymbol{x},\mu)A(\boldsymbol{x}))\boldsymbol{s}_p = -g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu)) \text{ (primal)}\\
+(H(\boldsymbol{x},\boldsymbol{y})+A^T(\boldsymbol{x})C^{-1}(\boldsymbol{x})YA(\boldsymbol{x}))\boldsymbol{s}_{pd}=-g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu)) \text{ (primal-dual)}
+$$
+
+where 
+
+$$
+\boldsymbol{y}(\boldsymbol{x},\mu) = \mu C^{-1}(\boldsymbol{x})\boldsymbol{e}
+$$
+
+The difference is that in the primal-dual equations we are free to choose the \\(\boldsymbol{y}\\) in the left-hand 
+side, whereas in the primal case these are dependent variables. This difference matters.
+
+- Primal-Dual Barrier Methods
+
+Choose a search direction \\(\boldsymbol{s}\\) for \\(\phi(\boldsymbol{x},\mu_k)\\) by (approximately) solving the problem
+
+$$
+\min_{\boldsymbol{s}\in\mathbb{R}^n}g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))^T\boldsymbol{s}+\frac{1}{2}\boldsymbol{s}^T(H(\boldsymbol{x},\boldsymbol{y})+A^T(\boldsymbol{x})C^{-1}(\boldsymbol{x})YA(\boldsymbol{x}))\boldsymbol{s}
+$$
+
+possibly subject to a trust region constraint, where \\(\boldsymbol{y}(\boldsymbol{x},\mu)=\muC^{-1}(\boldsymbol{x})\boldsymbol{e}\\), 
+so that \\(g(\boldsymbol{x},\boldsymbol{y}(\boldsymbol{x},\mu))=\Nabla_x\phi(\boldsymbol{x},\mu)\\)
+
+Various possibilities for the choice of \\(\boldsymbol{y}\\)
+
+- \\(\boldsymbol{y}=\boldsymbol{y}(\boldsymbol{x},\mu)\Rightarrow\text{ primal Newton method}\\)
+- occasionally \\(\boldsymbol{y}=\frac{\mu_{k-1}}{\mu_k}\boldsymbol{y}(\boldsymbol{x},\mu_k)\Rightarrow\text{ good starting point}\\)
+- \\(\boldsymbol{y}=\boldsymbol{y}_{\text{old}}+\boldsymbol{w}\\) (where \\(\boldsymbol{w}\\) is the correction to 
+\\(\boldsymbol{y}_{\text{old}}\\) from the primal-dual Newton system) \\(\Rightarrow\\) primal-dual Newton method
+- \\(\max\{\boldsymbol{y}_{\text{old}}+\boldsymbol{w}, \epsilon(\mu_k)\boldsymbol{e}\}\\) for small \\(\epsilon(\mu_k)>0\\) 
+(e.g., \\(\epsilon(\mu_k)=\mu_k^{1.5}\\)) \\(\Rightarrow\\) practical primal-dual method
+
+- Practical PD method
+
+1. Choose \\(\mu_0>0\\) and a feasible \\((\boldsymbol{x}_{\text{start}}^0,\boldsymbol{y}_{\text{start}}^0)\\), and set \\(k=0\\)
+2. Until convergence, repeat
+  1. starting from \\((\boldsymbol{x}_{\text{start}}^k,\boldsymbol{y}_{\text{start}}^k)\\), use unconstrained minimisation to 
+  find \\((\boldsymbol{x}^k,\boldsymbol{y}^k)\\) such that \\(\|\|C(\boldsymbol{x}^k)\boldsymbol{y}^k-\mu_k\boldsymbol{e}\|\|\leq\mu_k\\) and \\(\|\|g(\boldsymbol{x}^k)-A^T(\boldsymbol{x}^k)\boldsymbol{y}^k\|\|\leq\mu_k^{1.00005}\\)
+  2. set \\(\mu_{k+1}=\min\{0.1\mu_k, \mu_k^{1.9999}\}\\)
+  3. find \\((\boldsymbol{x}_{\text{start}}^{k+1},\boldsymbol{y}_{\text{start}}^{k+1})\\) by applying a primal-dual Newton step from 
+  \\((\boldsymbol{x}^k,\boldsymbol{y}^k)\\)
+  4. if \\((\boldsymbol{x}_{\text{start}}^{k+1},\boldsymbol{y}_{\text{start}}^{k+1})\\) is infeasible, reset 
+  \\((\boldsymbol{x}_{\text{start}}^{k+1},\boldsymbol{y}_{\text{start}}^{k+1})\\) to \\(\boldsymbol{x}_k,\boldsymbol{y}_k)\\)
+  5. increment \\(k\\) by \\(1\\)
+
+- Fast Asymptotic Convergence of previous algorithm
+
+Let \\(f, c \in C^2\\), if a subsequence \\(\{(\boldsymbol{x}^k,\boldsymbol{y}^k):k\in\mathbb{K}\}\\) of the iterates produced 
+by the previous algorithm converges to a point \\((\boldsymbol{x}^\*,\boldsymbol{y}^\*)\\) that satisfies the second-order 
+sufficient optimality conditions, where \\(A_{\mathscr{A}}(\boldsymbol{x}^\*)\\) is a full-rank matrix, and where 
+\\((\boldsymbol{y}^\*)_{\mathscr{A}}>0\\), then
+
+1. for all \\(k\in\mathbb{N}\\) large enough the point \\((\boldsymbol{x}_{\text{start}}^k,\boldsymbol{y}_{\text{start}}^k)\\) 
+satisfies the termination criterion of step 2.i, so that the inner minimisation loop becomes unnecessary (the algorithm 
+stays on track)
+2. the entire sequence \\((\boldsymbol{x}^k,\boldsymbol{y}^k))_{\mathbb{N}}\\) converges to \\((\boldsymbol{x}^\*,\boldsymbol{y}^\*)\\)
+3. convergence occurs at a superlinear rate (Q-factor \\(1.9998\\))
 
