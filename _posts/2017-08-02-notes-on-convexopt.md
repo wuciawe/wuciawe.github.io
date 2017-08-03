@@ -114,4 +114,230 @@ where \\(g:\mathbb{R}^n\rightarrow\mathbb{R}^k,h:\mathbb{R}^k\rightarrow\mathbb{
 - \\(f\\) in concave if \\(h\\) is concave and nondecreasing in each argument, \\(g\\) is concave
 - \\(f\\) in concave if \\(h\\) is concave and nonincreasing in each argument, \\(g\\) is convex
 
+### Gradient Descent
 
+Gradient Descent belongs to a group of first-order method, basically, algortihms that update \\(\boldsymbol{x}^{(k)}\\) 
+in the following linear space
+
+$$
+\boldsymbol{x}^{(0)}+\text{span}\{\Nabla f(\boldsymbol{x}^{(0)}),\ldots,\Nabla f(\boldsymbol{x}^{(k-1)})\}
+$$
+
+The algorithm has \\(O(\frac{1}{\epsilon})\\) rate over problem class of convex, differentiable functions 
+with Lipschitz continuous gradients.
+
+Gradient descent is an iterative algorithm producing a minimizing sequence of points 
+\\(\boldsymbol{x}^{(0)},\boldsymbol{x}^{(1)},\ldots\\) such that \\(f(\boldsymbol{x}^{(k)})\rightarrow f(\boldsymbol{x}^\*)\\) 
+as \\(k\rightarrow\infty\\) by repeating \\(\boldsymbol{x}^{(k)}=\boldsymbol{x}^^{(k-1)}-t_k\Nabla f(\boldsymbol{x}^{(k-1)})\\), 
+where \\(k=1,2,\ldots\\) is iterative number, \\(t_k\\) is step size at iteration \\(k\\), initial \\(\boldsymbol{x}_0\in\mathbb{R}^n\\) 
+is usually given.
+
+strategies to select appropriate step sizes
+
+backtracking line search
+exact line search
+
+### Subgradients
+
+Subgradients are counterpart of gradients for non-differentiable functions. They are closely related 
+to the concept of convexity. Recall that a differentiable function \\(f\\) is said to be convex iff: 
+
+$$
+f(\boldsymbol{y})\geq f(\boldsymbol{x})+\Nabla f(\boldsymbol{x})^T(\boldsymbol{y}-\boldsymbol{x}) \forall \boldsymbol{x},\boldsymbol{y}\in\mathbb{R}^n
+$$
+
+In other words, a linear approximation always underestimates \\(f\\). Subgradients are defined in a 
+similar manner.
+
+A subgradient of a convex function \\(f\\) at a point \\(\boldsymbol{x}\\) is any \\(\boldsymbol{g}\in\mathbb{R}^n\\) 
+such that
+
+$$
+f(\boldsymbol{y})\geq f(\boldsymbol{x})+\boldsymbol{g}^T(\boldsymbol{y}-\boldsymbol{x}) \forall \boldsymbol{y}
+$$
+
+While gradients may not exist/be undefined for non-differentiable function, subgradients always exist. If the 
+function \\(f\\) is differentiable at the point \\(\boldsymbol{x}\\), then the subgradient \\(\boldsymbol{g}\\) 
+is unique and \\(\boldsymbol{g}=\Nabla f(\boldsymbol{x})\\). This definition works for non-convex functions 
+also. However, subgradients sometimes may not exist for non-convex functions.
+
+The subdifferential of a convex function \\(f:\mathbb{R}^n\rightarrow\mathbb{R}\\) at some point 
+\\(\boldsymbol{x}\\) is the set of all subgradients of \\(f\\) at \\(\boldsymbol{x}\\): 
+
+$$
+\partial f(\boldsymbol{x})=\{\boldsymbol{g}:\boldsymbol{g} \text{ is a subgradient of } f \text{ at } \boldsymbol{x}\}
+$$
+
+The subdifferential forms a closed and convex set. This holds even for non-convex functions.
+
+The optimality condition relates the minimizer of a function with the subgradient at the point. For any 
+\\(f\\) (convex or not), 
+
+$$
+f(\boldsymbol{x}^*) = \min_x f(\boldsymbol{x}) \Leftrightarrow 0 \in \partial f(\boldsymbol{x})
+$$
+
+Like in gradient descent, in the subgradient method we start at an initial point \\(\boldsymbol{x}^{(0)}\in\mathbb{R}^n\\) 
+and we iteratively update the current solution \\(\boldsymbol{x}^{(k)}\\) by taking small steps. However, in the subgradient 
+method, rather than using the gradient of the function \\(f\\) we are minimizing, we can use any subgradient of \\(f\\) 
+at the value of \\(\boldsymbol{x}^{(k)}\\). The rule for picking the next iterate in the subgradient method is 
+given by: 
+
+$$
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\cdot \boldsymbol{g}^{(k-1)}, \text{ where } \boldsymbol{g}^{(k-1)}\in\partial f(\boldsymbol{x}^{(k-1)})
+$$
+
+Because moving in the direction of some subgradients can make our solution worse for a given iteration, the 
+subgradient method is not necessarily a descent method. Thus, the best solution among all of the iterations 
+is used as the final solution: 
+
+$$
+f(\boldsymbol{x}_{\text{best}}^{(k)}) = \min_{i=0,\ldots,k} f(\boldsymbol{x}^{(i)})
+$$
+
+#### Stochastic subgradient method
+
+Stochastic methods are useful when optimizing the sum of functions instead of a single function. This happends 
+almost every time we are doing emperical risk minimization over a number of samples.
+
+Consider minimizing the sum of \\(m\\) functions \\(\min\sum_{i=1}^m f_i (\boldsymbol{x})\\). Recall that 
+
+\\(\partial \sum_{i=1}^mf_i(\boldsymbol{x})=\sum_{i=1}^m\partial f_i(\boldsymbol{x})\\), and subgradient 
+method would repeat
+
+$$
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\codt\sum_{i=1}^m\boldsymbol{g}_i^{(k-1)}, k=1,2,3,\ldots
+$$
+
+where \\(\boldsymbol{g}_i^{(k-1)}\in\partial f_i(\boldsymbol{x}^{(k-1)})\\), while stochastic subgradient 
+method (or incremental subgradient) repeats
+
+$$
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\codt \boldsymbol{g}_{i_k}^{(k-1)}, k=1,2,3,\ldots
+$$
+
+where \\(i_k\in\{1,\ldots,m\}\\) is some chosen index at iteration \\(k\\). In other words, rather 
+than computing the full subgradient, only the subgradient \\(\boldsymbol{g}_i\\) corresponding to ome 
+of the functions \\(f_i\\) is used.
+
+As a special case in which \\(f_i\\), \\(i=1,2,3,\ldots\\) are differentiable, then 
+\\(\boldsymbol{g}_i^{(k-1)}=\Nabla f_i(\boldsymbol{x}^{(k-1)})\\). This is called stochastic gradient descent.
+
+The convergence rate of usual (batch) is \\(\mathscr{O}(\grac{G^2_{\text{batch}}}{\epsilon^2})\\), whicl cyclic 
+and randomized stochasitc subgradient methods have convergence rates of \\(\mathscr{O}(\frac{m(mG)^2}{\epsilon^2})\\) 
+and \\(\mathscr{O}(\frac{mG^2}{\epsilon^2})\\) respectively. This implies that for non-smooth functions 
+subgradient method achieves a lower bound of \\(\mathscr{O}(\frac{1}{\epsilon^2})\\) which is very slow.
+
+### Proximal Gradient Descent
+
+Consider a function \\(f\\) that can be decomposed into two functions as \\(f(\boldsymbol{x})=g(\boldsymbol{x})+h(\boldsymbol{x})\\) 
+where \\(g\\) is convex, differentiable and \\(\text{dom}(g)=\mathbb{R}^n\\), \\(h\\) is convex and not necessarily 
+differentiable, but is simple.
+
+For a differentiable function \\(f\\), the gradient udpate \\(\boldsymbol{x}^+=\boldsymbol{x}-t\Nabla f(\boldsymbol{x})\\) 
+is derived using quadratic approximation (replace \\(\Nabla^2f(\boldsymbol{x})\\) by \\(\frac{1}{t}I\\)): 
+
+$$
+\boldsymbol{x}^+=\arg\min_z \tilde{f}_t(\boldsymbol{z}) = \arg\min_z f(\boldsymbol{x})+\Nabla f(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2
+$$
+
+For a decomposable function \\(f(\boldsymbol{x})=g(\boldsymbol{x})+h(\boldsymbol{x})\\), let us use this quadratic approximation 
+for the differentiable function \\(g\\). Then, 
+
+$$
+\begin{align*}
+\boldsymbol{x}^+ &= \arg\min_z \tilde{g}_t(\boldsymbol{z})+h(\boldsymbol{z})\\
+&=\arg\min_z g(\boldsymbol{x})+\Nabla g(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2 + h(\boldsymbol{z})\\
+&= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))||_2^2+h(\boldsymbol{z})
+\end{align*}
+$$
+
+The first term here signifies staying close to the gradient update for \\(g\\) while at the same time, making the 
+value of \\(h\\) small using the second term.
+
+#### Proximal Mapping and Proximal Gradient Descent
+
+Define proximal mapping as a function of \\(h\\) and \\(t\\) as follows: 
+
+$$
+\text{prox}_{h,t}(\boldsymbol{x})=\arg\min_z \frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2+h(\boldsymbol{z})
+$$
+
+Then we have: 
+
+$$
+\begin{align*}
+\boldsymbol{x}^+ &= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))||_2^2 + h(\boldsymbol{z})\\
+&= \text{prox}_{h,t}(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))
+\end{align*}
+$$
+
+For simplicity, we write proximal map as a function of \\(t\\) alone. Therefore, proximal gradient 
+descent can be defined as follows: Choose inital \\(\boldsymbol{x}^{(0)}\\) and then repeat: 
+
+$$
+\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{x}^{(k-1)}-t_k\Nabla g(\boldsymbol{x}^{(k-1)})), k=1,2,3,\ldots
+$$
+
+This can be further expressed in a more familiar form: 
+
+$$
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\cdot G_{t_k}(\boldsymbol{x}^{(k-1)})
+$$
+
+where \\(G_t\\) is a generalized gradient of \\(f\\), 
+
+$$
+G_t(\boldsymbol{x})=\frac{\boldsymbol{x}-\text{prox}_t(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))}{t}
+$$
+
+Key points: 
+
+- Proximal mapping \\(\text{prox}_t(\cdot)\\) can be computed analytically for a log of important \\(h\\) functions
+- The mapping \\(\text{prox}_t(\cdot)\\) doesn't depend on \\(g\\) at all, only on h
+- \\(g\\) can be a complicated function; all we need to do is to compute its gradient
+- Each iteration of proximal gradient descent evaluates \\(\text{prox}_t(\cdot)\\) once which can be cheap 
+or expensive depending on \\(h\\)
+
+#### Special cases
+
+Proximal gradient descent is also called composite gradietn descent, or generalized gradient descent. The latter 
+is because we can see that special cases of proximal gradient descent give some familiar/interesting forms; 
+when minimizing \\(f=g+h\\)
+
+- \\(h=0\\) gives gradient descent
+- \\(h=I_C\\) gives projected gradient descent
+- \\(g=0\\) gives proximal minimization algorithm
+
+All of these have \\(\mathscr{O}(\frac{1}{\epsilon})\\) convergence rate.
+
+#### Accelerated Proximal Gradient Method
+
+Accelerted proximal gradient descent looks like regular proximal gradient descent, but we have 
+changed the argument passed to the prox operator and the step at which the gradient update is made 
+with respect to \\(g\\).
+
+As before, the problem is: \\(\min g(\boldsymbol{x})+h(\boldsymbol{x})\\), with \\(g\\) convex.
+
+In regular gradient descent, pass \\(\boldsymbol{x}^{(k-1)}-t_k\Nabla g(\boldsymbol{x}^{(k-1)})\\) 
+to the prox operator and move on.
+
+In accelerated proximal gradient descent, take the last iterate \\(\boldsymbol{x}^{(k-1)}\\) and add a 
+momentum term. Instead of just evaluating the prox at \\(\boldsymbol{x}^{(k-1)}\\), this allows for some 
+of the history to push us a little bit further.
+
+Choose initial point \\(\boldsymbol{x}^{(0)}=\boldsymbol{x}^{(-1)}\in\mathbb{R}^n\\) and repeat 
+\\(k=1,2,3,\ldots\\)
+
+$$
+\boldsymbol{v}=\boldsymbol{x}^{(k-1)}+\frac{k-2}{k+1}(\boldsymbol{x}^{k-1}-\boldsymbol{x}^{k-2})\\
+\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{v}-t_k\Nabla g(\boldsymbol{v}))
+$$
+
+The choice of constant \\(\frac{k-2}{k+1}\\) is very important for the converge of the algorithm. 
+Thus, this is taken as fixed constant (which has to/should be tuned). Although there are other 
+convergence strategies, this is provably convergent.
+
+More momentum is applied later on in the steps of the algorithm.
+
+The convergence rate is of \\(\mathscr{O}(\frac{1}{\epsilon})\\).
