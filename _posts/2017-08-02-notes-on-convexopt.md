@@ -1,3 +1,13 @@
+---
+layout: post
+category: [math]
+tags: [math]
+infotext: "Review on convex optimization."
+---
+{% include JB/setup %}
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
 ### Convex
 
 - Convex Set, A convex set is defined as \\(C\subseteq\mathbb{R}^n\\) such that 
@@ -5,12 +15,11 @@
 all \\(0 \leq t\leq 1\\). In other words, a line segment joining any two elements lies entirely in 
 the set.
 
-- Convex combination, A convex combination of \\(\boldsymbol{x}_1, \cdots, \boldsymbol{x}_k \in \mathbb{R}^n\\) 
+- Convex combination, A convex combination of \\(\boldsymbol{x}\_1, \cdots, \boldsymbol{x}\_k \in \mathbb{R}^n\\) 
 is any linear combination: 
 $$
-\sum_{i=1}^k\theta_i\boldsymbol{x}_i = \theta_1\boldsymbol{x}_1 + \codts + \theta_k\boldsymbol{x}_k
+\sum_{i=1}^k\theta_i\boldsymbol{x}_i = \theta_1\boldsymbol{x}_1 + \cdots + \theta_k\boldsymbol{x}_k
 $$
-
 with \\(\theta_i\geq 0, i = 1,\cdots,k\\) and \\(\sum_{i=1}^k\theta_i=1\\).
 
 - Convex hull, A convex hull of a set \\(C\\) is the set of all convex combination of its elements. 
@@ -35,12 +44,12 @@ because the equality \\(C\boldsymbol{x}=\boldsymbol{d}\\) can be made into two i
 \\(C\boldsymbol{x}\geq\boldsymbol{d}\\) and \\(C\boldsymbol{x}\leq\boldsymbol{d}\\).
 
 simplex: a special case of polyhedra, given by the convex hull of a set of affinely independent points 
-\\(\boldsymbol{x}_0, \cdots, \boldsymbol{x}_k\\) (i.e. \\(\text{conv}\{\boldsymbol{x}_0,\cdots,\boldsymbol{x}_k\}\\)). 
-Affinely independent means that \\(\boldsymbol{x}_1-\boldsymbol{x}_0, \codts, \boldsymbol{x}_k-\boldsymbol{x}_0\\) 
+\\(\boldsymbol{x}_0, \cdots, \boldsymbol{x}_k\\) (i.e. \\(\text{conv}\lbrace\boldsymbol{x}_0,\cdots,\boldsymbol{x}_k\rbrace\\)). 
+Affinely independent means that \\(\boldsymbol{x}_1-\boldsymbol{x}_0, \cdots, \boldsymbol{x}_k-\boldsymbol{x}_0\\) 
 are linearly independent. A canonical example is the probability simplex
 
 $$
-\text{conv}\{\boldsymbol{e}_1,\cdots,\boldsymbol{e}_n\=\{\boldsymbol{w}:\boldsymbol{w}\geq 0, \boldsymbol{1}^T\boldsymbol{w}=1\}}
+\text{conv}\lbrace\boldsymbol{e}_1,\cdots,\boldsymbol{e}_n\rbrace=\lbrace\boldsymbol{w}:\boldsymbol{w}\geq 0, \boldsymbol{1}^T\boldsymbol{w}=1\rbrace
 $$
 
 convex cones: A cone is \\(C\in\mathbb{R}^n\\) such that \\(\boldsymbol{x}\in C\Rightarrow t\boldsymbol{x}\in C \text{ for all } t\geq 0\\)
@@ -53,7 +62,7 @@ A conic combination of points \\(\boldsymbol{x}_1,\cdots,\boldsymbol{x}_k\in\mat
 A conic hull collects all conic combinations of \\(\boldsymbol{x}_1,\cdots,\boldsymbol{x}_k\\) (or a general set \\(C\\))
 
 $$
-\text{conic}(\{\boldsymbol{x}_1,\cdots,\boldsymbol{x}_k\})=\{\theta_1\boldsymbol{x}_1+\cdots+\theta_k\boldsymbol{x}_k, \theta_i\geq 0, i=1,\cdots, k\}
+\text{conic}(\lbrace\boldsymbol{x}_1,\cdots,\boldsymbol{x}_k\rbrace)=\lbrace\theta_1\boldsymbol{x}_1+\cdots+\theta_k\boldsymbol{x}_k, \theta_i\geq 0, i=1,\cdots, k\rbrace
 $$
 
 ### convex functions
@@ -69,50 +78,50 @@ $$
 
 - Nonnegative linear combination
 
-\\(f_1,\cdots,\f_m\\) convex implies \\(a_1f_1+\cdots+a_mf_m\\) convex for any \\(a_1,\cdots,a_m\geq 0\\)
+  \\(f_1,\cdots,f_m\\) convex implies \\(a_1f_1+\cdots+a_mf_m\\) convex for any \\(a_1,\cdots,a_m\geq 0\\)
 
 - Pointwise maximization
 
-if \\(f_s\\) is convex for any \\(s \in S\\), then \\(f(\boldsymbol{x})=\max_{s\in S}f_s(\boldsymbol{x})\\) 
-is convex. Note that the set \\(S\\) here (number of functions \\(f_s\\)) can be infinite.
+  if \\(f_s\\) is convex for any \\(s \in S\\), then \\(f(\boldsymbol{x})=\max_{s\in S}f_s(\boldsymbol{x})\\) 
+  is convex. Note that the set \\(S\\) here (number of functions \\(f_s\\)) can be infinite.
 
 - Partial minimization
 
-if \\(g(\boldsymbol{x},\boldsymbol{y})\\) is convex in \\(\boldsymbol{x},\boldsymbol{y}\\) and \\(C\\) 
-is convex, then \\(f(\boldsymbol{x})=\min_{\boldsymbol{y}\in C}g(\boldsymbol{x}, \boldsymbol{y})\\) is convex.
+  if \\(g(\boldsymbol{x},\boldsymbol{y})\\) is convex in \\(\boldsymbol{x},\boldsymbol{y}\\) and \\(C\\) 
+  is convex, then \\(f(\boldsymbol{x})=\min_{\boldsymbol{y}\in C}g(\boldsymbol{x}, \boldsymbol{y})\\) is convex.
 
 - Affine combination
 
-\\(f\\) convex implies \\(g(\boldsymbol{x}=f(A\boldsymbol{x}+b)\\) convex. This is really useful when you want 
-to prove some function convex, and you realize there is a affine transformation in there. Because affine 
-transformation mess up sometimes things like taking gradients or Hessians, making it more complicated. Just 
-do not bother with that, just do it for the case there is no affine transformation, and claim when affine 
-transformation is in there, we will still have convexity
+  \\(f\\) convex implies \\(g(\boldsymbol{x}=f(A\boldsymbol{x}+b)\\) convex. This is really useful when you want 
+  to prove some function convex, and you realize there is a affine transformation in there. Because affine 
+  transformation mess up sometimes things like taking gradients or Hessians, making it more complicated. Just 
+  do not bother with that, just do it for the case there is no affine transformation, and claim when affine 
+  transformation is in there, we will still have convexity
 
 - General composition
 
-Suppose \\(f=h\cdot g\\), i.e., \\(f(\boldsymbol{x})=h(g(\boldsymbol{x}))\\), where 
-\\(g: \mathbb{R}^n\rightarrow\mathbb{R}, h:\mathbb{R}^n\rightarrow\mathbb{R}\\). Then 
+  Suppose \\(f=h\cdot g\\), i.e., \\(f(\boldsymbol{x})=h(g(\boldsymbol{x}))\\), where 
+  \\(g: \mathbb{R}^n\rightarrow\mathbb{R}, h:\mathbb{R}^n\rightarrow\mathbb{R}\\). Then 
 
-- \\(f\\) in convex if \\(h\\) is convex and nondecreasing, \\(g\\) is convex
-- \\(f\\) in convex if \\(h\\) is convex and nonincreasing, \\(g\\) is concave
-- \\(f\\) in concave if \\(h\\) is concave and nondecreasing, \\(g\\) is concave
-- \\(f\\) in concave if \\(h\\) is concave and nonincreasing, \\(g\\) is convex
+  - \\(f\\) in convex if \\(h\\) is convex and nondecreasing, \\(g\\) is convex
+  - \\(f\\) in convex if \\(h\\) is convex and nonincreasing, \\(g\\) is concave
+  - \\(f\\) in concave if \\(h\\) is concave and nondecreasing, \\(g\\) is concave
+  - \\(f\\) in concave if \\(h\\) is concave and nonincreasing, \\(g\\) is convex
 
 - Vector composition
 
-Suppose that 
+  Suppose that 
 
-$$
-f(\boldsymbol{x}=h(g(\boldsymbol{x}))=h(g_1(\boldsymbol{x}),\codts,\g_k(\boldsymbol{x}))
-$$
+  $$
+  f(\boldsymbol{x}=h(g(\boldsymbol{x}))=h(g_1(\boldsymbol{x}),\cdots,g_k(\boldsymbol{x}))
+  $$
 
-where \\(g:\mathbb{R}^n\rightarrow\mathbb{R}^k,h:\mathbb{R}^k\rightarrow\mathbb{R},f:\mathbb{R}^n\rightarrow\mathbb{R}\\). Then 
+  where \\(g:\mathbb{R}^n\rightarrow\mathbb{R}^k,h:\mathbb{R}^k\rightarrow\mathbb{R},f:\mathbb{R}^n\rightarrow\mathbb{R}\\). Then 
 
-- \\(f\\) in convex if \\(h\\) is convex and nondecreasing in each argument, \\(g\\) is convex
-- \\(f\\) in convex if \\(h\\) is convex and nonincreasing in each argument, \\(g\\) is concave
-- \\(f\\) in concave if \\(h\\) is concave and nondecreasing in each argument, \\(g\\) is concave
-- \\(f\\) in concave if \\(h\\) is concave and nonincreasing in each argument, \\(g\\) is convex
+  - \\(f\\) in convex if \\(h\\) is convex and nondecreasing in each argument, \\(g\\) is convex
+  - \\(f\\) in convex if \\(h\\) is convex and nonincreasing in each argument, \\(g\\) is concave
+  - \\(f\\) in concave if \\(h\\) is concave and nondecreasing in each argument, \\(g\\) is concave
+  - \\(f\\) in concave if \\(h\\) is concave and nonincreasing in each argument, \\(g\\) is convex
 
 ### Gradient Descent
 
@@ -120,7 +129,7 @@ Gradient Descent belongs to a group of first-order method, basically, algortihms
 in the following linear space
 
 $$
-\boldsymbol{x}^{(0)}+\text{span}\{\Nabla f(\boldsymbol{x}^{(0)}),\ldots,\Nabla f(\boldsymbol{x}^{(k-1)})\}
+\boldsymbol{x}^{(0)}+\text{span}\{\nabla f(\boldsymbol{x}^{(0)}),\ldots,\nabla f(\boldsymbol{x}^{(k-1)})\}
 $$
 
 The algorithm has \\(O(\frac{1}{\epsilon})\\) rate over problem class of convex, differentiable functions 
@@ -128,14 +137,11 @@ with Lipschitz continuous gradients.
 
 Gradient descent is an iterative algorithm producing a minimizing sequence of points 
 \\(\boldsymbol{x}^{(0)},\boldsymbol{x}^{(1)},\ldots\\) such that \\(f(\boldsymbol{x}^{(k)})\rightarrow f(\boldsymbol{x}^\*)\\) 
-as \\(k\rightarrow\infty\\) by repeating \\(\boldsymbol{x}^{(k)}=\boldsymbol{x}^^{(k-1)}-t_k\Nabla f(\boldsymbol{x}^{(k-1)})\\), 
+as \\(k\rightarrow\infty\\) by repeating \\(\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\nabla f(\boldsymbol{x}^{(k-1)})\\), 
 where \\(k=1,2,\ldots\\) is iterative number, \\(t_k\\) is step size at iteration \\(k\\), initial \\(\boldsymbol{x}_0\in\mathbb{R}^n\\) 
 is usually given.
 
-strategies to select appropriate step sizes
-
-backtracking line search
-exact line search
+Strategies to select appropriate step sizes: backtracking line search, exact line search.
 
 ### Subgradients
 
@@ -143,7 +149,7 @@ Subgradients are counterpart of gradients for non-differentiable functions. They
 to the concept of convexity. Recall that a differentiable function \\(f\\) is said to be convex iff: 
 
 $$
-f(\boldsymbol{y})\geq f(\boldsymbol{x})+\Nabla f(\boldsymbol{x})^T(\boldsymbol{y}-\boldsymbol{x}) \forall \boldsymbol{x},\boldsymbol{y}\in\mathbb{R}^n
+f(\boldsymbol{y})\geq f(\boldsymbol{x})+\nabla f(\boldsymbol{x})^T(\boldsymbol{y}-\boldsymbol{x}) \quad\forall \boldsymbol{x},\boldsymbol{y}\in\mathbb{R}^n
 $$
 
 In other words, a linear approximation always underestimates \\(f\\). Subgradients are defined in a 
@@ -153,12 +159,12 @@ A subgradient of a convex function \\(f\\) at a point \\(\boldsymbol{x}\\) is an
 such that
 
 $$
-f(\boldsymbol{y})\geq f(\boldsymbol{x})+\boldsymbol{g}^T(\boldsymbol{y}-\boldsymbol{x}) \forall \boldsymbol{y}
+f(\boldsymbol{y})\geq f(\boldsymbol{x})+\boldsymbol{g}^T(\boldsymbol{y}-\boldsymbol{x}) \quad\forall \boldsymbol{y}
 $$
 
 While gradients may not exist/be undefined for non-differentiable function, subgradients always exist. If the 
 function \\(f\\) is differentiable at the point \\(\boldsymbol{x}\\), then the subgradient \\(\boldsymbol{g}\\) 
-is unique and \\(\boldsymbol{g}=\Nabla f(\boldsymbol{x})\\). This definition works for non-convex functions 
+is unique and \\(\boldsymbol{g}=\nabla f(\boldsymbol{x})\\). This definition works for non-convex functions 
 also. However, subgradients sometimes may not exist for non-convex functions.
 
 The subdifferential of a convex function \\(f:\mathbb{R}^n\rightarrow\mathbb{R}\\) at some point 
@@ -206,14 +212,14 @@ Consider minimizing the sum of \\(m\\) functions \\(\min\sum_{i=1}^m f_i (\bolds
 method would repeat
 
 $$
-\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\codt\sum_{i=1}^m\boldsymbol{g}_i^{(k-1)}, k=1,2,3,\ldots
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\cdot\sum_{i=1}^m\boldsymbol{g}_i^{(k-1)}, k=1,2,3,\ldots
 $$
 
 where \\(\boldsymbol{g}_i^{(k-1)}\in\partial f_i(\boldsymbol{x}^{(k-1)})\\), while stochastic subgradient 
 method (or incremental subgradient) repeats
 
 $$
-\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\codt \boldsymbol{g}_{i_k}^{(k-1)}, k=1,2,3,\ldots
+\boldsymbol{x}^{(k)}=\boldsymbol{x}^{(k-1)}-t_k\cdot \boldsymbol{g}_{i_k}^{(k-1)}, k=1,2,3,\ldots
 $$
 
 where \\(i_k\in\{1,\ldots,m\}\\) is some chosen index at iteration \\(k\\). In other words, rather 
@@ -221,9 +227,9 @@ than computing the full subgradient, only the subgradient \\(\boldsymbol{g}_i\\)
 of the functions \\(f_i\\) is used.
 
 As a special case in which \\(f_i\\), \\(i=1,2,3,\ldots\\) are differentiable, then 
-\\(\boldsymbol{g}_i^{(k-1)}=\Nabla f_i(\boldsymbol{x}^{(k-1)})\\). This is called stochastic gradient descent.
+\\(\boldsymbol{g}_i^{(k-1)}=\nabla f_i(\boldsymbol{x}^{(k-1)})\\). This is called stochastic gradient descent.
 
-The convergence rate of usual (batch) is \\(\mathscr{O}(\grac{G^2_{\text{batch}}}{\epsilon^2})\\), whicl cyclic 
+The convergence rate of usual (batch) is \\(\mathscr{O}(\frac{G^2_{\text{batch}}}{\epsilon^2})\\), while cyclic 
 and randomized stochasitc subgradient methods have convergence rates of \\(\mathscr{O}(\frac{m(mG)^2}{\epsilon^2})\\) 
 and \\(\mathscr{O}(\frac{mG^2}{\epsilon^2})\\) respectively. This implies that for non-smooth functions 
 subgradient method achieves a lower bound of \\(\mathscr{O}(\frac{1}{\epsilon^2})\\) which is very slow.
@@ -234,11 +240,11 @@ Consider a function \\(f\\) that can be decomposed into two functions as \\(f(\b
 where \\(g\\) is convex, differentiable and \\(\text{dom}(g)=\mathbb{R}^n\\), \\(h\\) is convex and not necessarily 
 differentiable, but is simple.
 
-For a differentiable function \\(f\\), the gradient udpate \\(\boldsymbol{x}^+=\boldsymbol{x}-t\Nabla f(\boldsymbol{x})\\) 
-is derived using quadratic approximation (replace \\(\Nabla^2f(\boldsymbol{x})\\) by \\(\frac{1}{t}I\\)): 
+For a differentiable function \\(f\\), the gradient udpate \\(\boldsymbol{x}^+=\boldsymbol{x}-t\nabla f(\boldsymbol{x})\\) 
+is derived using quadratic approximation (replace \\(\nabla^2f(\boldsymbol{x})\\) by \\(\frac{1}{t}I\\)): 
 
 $$
-\boldsymbol{x}^+=\arg\min_z \tilde{f}_t(\boldsymbol{z}) = \arg\min_z f(\boldsymbol{x})+\Nabla f(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2
+\boldsymbol{x}^+=\arg\min_z \tilde{f}_t(\boldsymbol{z}) = \arg\min_z f(\boldsymbol{x})+\nabla f(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2
 $$
 
 For a decomposable function \\(f(\boldsymbol{x})=g(\boldsymbol{x})+h(\boldsymbol{x})\\), let us use this quadratic approximation 
@@ -247,8 +253,8 @@ for the differentiable function \\(g\\). Then,
 $$
 \begin{align*}
 \boldsymbol{x}^+ &= \arg\min_z \tilde{g}_t(\boldsymbol{z})+h(\boldsymbol{z})\\
-&=\arg\min_z g(\boldsymbol{x})+\Nabla g(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2 + h(\boldsymbol{z})\\
-&= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))||_2^2+h(\boldsymbol{z})
+&=\arg\min_z g(\boldsymbol{x})+\nabla g(\boldsymbol{x})^T(\boldsymbol{z}-\boldsymbol{x})+\frac{1}{2t}||\boldsymbol{z}-\boldsymbol{x}||_2^2 + h(\boldsymbol{z})\\
+&= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\nabla g(\boldsymbol{x}))||_2^2+h(\boldsymbol{z})
 \end{align*}
 $$
 
@@ -267,8 +273,8 @@ Then we have:
 
 $$
 \begin{align*}
-\boldsymbol{x}^+ &= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))||_2^2 + h(\boldsymbol{z})\\
-&= \text{prox}_{h,t}(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))
+\boldsymbol{x}^+ &= \arg\min_z \frac{1}{2t}||\boldsymbol{z}-(\boldsymbol{x}-t\nabla g(\boldsymbol{x}))||_2^2 + h(\boldsymbol{z})\\
+&= \text{prox}_{h,t}(\boldsymbol{x}-t\nabla g(\boldsymbol{x}))
 \end{align*}
 $$
 
@@ -276,7 +282,7 @@ For simplicity, we write proximal map as a function of \\(t\\) alone. Therefore,
 descent can be defined as follows: Choose inital \\(\boldsymbol{x}^{(0)}\\) and then repeat: 
 
 $$
-\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{x}^{(k-1)}-t_k\Nabla g(\boldsymbol{x}^{(k-1)})), k=1,2,3,\ldots
+\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{x}^{(k-1)}-t_k\nabla g(\boldsymbol{x}^{(k-1)})), k=1,2,3,\ldots
 $$
 
 This can be further expressed in a more familiar form: 
@@ -288,7 +294,7 @@ $$
 where \\(G_t\\) is a generalized gradient of \\(f\\), 
 
 $$
-G_t(\boldsymbol{x})=\frac{\boldsymbol{x}-\text{prox}_t(\boldsymbol{x}-t\Nabla g(\boldsymbol{x}))}{t}
+G_t(\boldsymbol{x})=\frac{\boldsymbol{x}-\text{prox}_t(\boldsymbol{x}-t\nabla g(\boldsymbol{x}))}{t}
 $$
 
 Key points: 
@@ -319,7 +325,7 @@ with respect to \\(g\\).
 
 As before, the problem is: \\(\min g(\boldsymbol{x})+h(\boldsymbol{x})\\), with \\(g\\) convex.
 
-In regular gradient descent, pass \\(\boldsymbol{x}^{(k-1)}-t_k\Nabla g(\boldsymbol{x}^{(k-1)})\\) 
+In regular gradient descent, pass \\(\boldsymbol{x}^{(k-1)}-t_k\nabla g(\boldsymbol{x}^{(k-1)})\\) 
 to the prox operator and move on.
 
 In accelerated proximal gradient descent, take the last iterate \\(\boldsymbol{x}^{(k-1)}\\) and add a 
@@ -331,7 +337,7 @@ Choose initial point \\(\boldsymbol{x}^{(0)}=\boldsymbol{x}^{(-1)}\in\mathbb{R}^
 
 $$
 \boldsymbol{v}=\boldsymbol{x}^{(k-1)}+\frac{k-2}{k+1}(\boldsymbol{x}^{k-1}-\boldsymbol{x}^{k-2})\\
-\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{v}-t_k\Nabla g(\boldsymbol{v}))
+\boldsymbol{x}^{(k)}=\text{prox}_{t_k}(\boldsymbol{v}-t_k\nabla g(\boldsymbol{v}))
 $$
 
 The choice of constant \\(\frac{k-2}{k+1}\\) is very important for the converge of the algorithm. 
