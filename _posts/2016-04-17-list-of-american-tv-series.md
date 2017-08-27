@@ -94,3 +94,21 @@ List of Films:
 - Gangster Squad 2013 x
 - No Good Deed 2014
 - Assault on Wall Street 2013
+- Airline Disaster 2010
+- Starship Troopers: Invasion 2012
+- Turbulence 2: Fear of Flying 1999
+- Smokin' Aces 2006
+- Big Nothing 2006
+- X-Men 2000
+- X-Men 2 2003
+- War 2007
+- Dark Planet 2009
+- Dark Planet: Rebellion 2009
+- Death Sentence 2007
+- Shooter 2007
+- How I Live Now 2013
+- Universal Soldier 1992
+- The Beach 2000
+- Faster 2010
+- Blade 1998
+- Blade II 2002
