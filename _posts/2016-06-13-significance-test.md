@@ -29,7 +29,7 @@ terms of the null hypothesis. We either "reject \\(H_0\\) in favor of
 
 If we conclude "do not reject \\(H_0\\)", this does not necessarily mean 
 that the null hypothesis is true, it only suggests that there is not 
-sufficient evidence against H0 in favor of \\(H_a\\); rejecting the null 
+sufficient evidence against \\(H_0\\) in favor of \\(H_a\\); rejecting the null 
 hypothesis \\(H_0\\) suggests that the alternative hypothesis \\(H_a\\) may 
 be true.
 

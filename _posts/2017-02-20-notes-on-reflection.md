@@ -28,7 +28,7 @@ Besides that, Class literals are another way to specify a class object staticall
 any class name followed by `.class` evalutes to a class object. For example, `int[].class` gives 
 the class object of array of ints.
 
-The `Class` also privides a static method `forName` to obtain the class object. For arrays, the 
+The `Class` also provides a static method `forName` to obtain the class object. For arrays, the 
 name is coded as: `[B` as `byte` array, `[C` as `char` array, `[D` as `double` array, `[F` as 
 `float` array, `[I` as `int` array, `[J` as long array, `[L<type>;` for reference `type` array, 
 `[S` as `short` array, and `[Z` as `boolean` array.

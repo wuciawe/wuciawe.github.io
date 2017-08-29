@@ -46,7 +46,7 @@ First, we define a almost-factorial function as:
 
 As we can see, the type of `almost-factorial` is `(Int => Int) => Int => Int`. Our 
 aim is to define a Y such that `(Y almost-factorial)` is the factorial function 
-with type `Int => Int` and the factorial function is the fix-point-of `almost-factorial 
+with type `Int => Int` and the factorial function is the fix-point-of `almost-factorial` 
 which means:
 
 {% highlight scheme linenos=table %}

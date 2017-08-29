@@ -170,8 +170,8 @@ $$
 
 where \\(\bar{Y}\_i\\) is the sample mean in the \\(i\_{\mathrm{th}}\\) group, \\(n_i\\) is the 
 number of observations in the \\(i\_{\mathrm{th}}\\) group, \\(\bar{Y}\\) denotes the overall mean 
-of the data, and \\(K\\) denotes the number of groups. And \\(Y_{ij}\\) is the \(j\_{\mathrm{th}}\\) 
-observation in the \(i\_{\mathrm{th}}\\) out of \\(K\\) groups and \\(N\\) is the overall sample 
+of the data, and \\(K\\) denotes the number of groups. And \\(Y_{ij}\\) is the \\(j\_{\mathrm{th}}\\) 
+observation in the \\(i\_{\mathrm{th}}\\) out of \\(K\\) groups and \\(N\\) is the overall sample 
 size. This F-statistic follows the F-distribution with\\((K - 1, N - K)\\) degrees of freedom under 
 the null hypothesis. The statistic will be large if the between-group variability is large relative 
 to the within-group variability, which is unlikely to happen if the population means of the groups 
@@ -197,7 +197,7 @@ multiplied by \\(n - 1\\)
 the residuals
 - Similar as \\(s^2\\) is unbiased for \\(\delta^2\\), the \\(\text{MSE}\\) is unbiased for 
 \\(\delta^2\\) for multiple regression models
-- Mean of Squares Total: \\(\text{MST} = \frac{\text{SST}}{\text{DFT}}, sample variance of the 
+- Mean of Squares Total: \\(\text{MST} = \frac{\text{SST}}{\text{DFT}}\\), sample variance of the 
 y-variable
 
 #### Overall F-test for regression
