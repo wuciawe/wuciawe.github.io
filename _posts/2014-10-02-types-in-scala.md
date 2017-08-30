@@ -39,17 +39,15 @@ has the same access rights as its related class.
 ## Trait and Type Linearization
 
 The `trait` is something like the `interface` in Java, but has differences. The `trait` in Scala can have something like `field` in 
-Java which is not allowed in Java for `interface`. Since the functions in Scala are first class citizens as well as values, 
-then it will be common for `trait` to contain both functions and values.(??? oops, maybe this is a mistake, methods are 
-different from functions, and there are also something like function literals and function values, there will be some post 
-about these.)
+Java which is not allowed in Java for `interface`. So `trait` can contain both members and methods, just like normal `class` does. 
+Unlike `class`, the `trait` can not have constructors, see blow for details.
 
 Like that in Java, you can extends only one base class but with multiple traits in Scala. Thanks to the `type linearization`, you 
-will meet the `diamond problem` in Scala. The `diamond problem` is the problem that we are not sure what we want to refer to in 
+will not meet the `diamond problem` in Scala. The `diamond problem` is the problem that we are not sure what we want to refer to in 
 multiple inheritance, for example:
 
-If type A defines a method commonMethod(), and type B and type C both inherit type A and override the commonMethod(), and then 
-type D extends both B and C, which version of commonMethod() will super.commonMethod() really call?
+If type A defines a method `commonMethod()`, and type B and type C both inherit type A and override the `commonMethod()`, and then 
+type D extends both B and C, which version of `commonMethod()` will `super.commonMethod()` really call?
 
 With `type linearization`, there will be no such kind of ambiguity. It works as follows:
 
@@ -75,6 +73,7 @@ new D common == "C"
 class E extends C with B
 new E common == "B"
 // Any with AnyRef with A with C with B with E
+
 {% endhighlight %}
 
 Simply thinking, the right wins providing the implementation and the left one decides the super call along the linearization.
@@ -104,7 +103,7 @@ def using[T <: { def close():Unit }, S](obj: T)(operation: T => S) = {
 }
 {% endhighlight %}
 
-In the above example, the upper bound of type T is a refined type, which refines type Any with a method close(). It is a 
+In the above example, the upper bound of type T is a `refined type`, which refines type `Any` with a method `close()`. It is a 
 structural type as well, as it has no name.
 
 Another thing should be noticed is that `structural subtyping` may cause negative impacts at runtime performance, since it 
@@ -137,11 +136,12 @@ new B{
     val a = 2.0
     val b = 2
 } // this will throw runtime exception
+
 {% endhighlight %}
 
-Because trait can not take parameters in the process of initialization, new B{...} is actually a refinement. It first 
-instantiates the trait B, then refine it with concrete definitions of a and b, which is actually a new type which is 
-anonymous and is the subtype of trait B. This is common, the super class should be instantiated first then be the subclass.
+Because trait can not take parameters in the process of initialization, `new B{...}` is actually a refinement. It first 
+instantiates the trait `B`, then refine it with concrete definitions of a and b, which is actually a new type which is 
+anonymous and is the subtype of trait `B`. This is common, the super class should be instantiated first then be the subclass.
 
 In order to make the refinements available in the instantiation of the trait, one way is to use the early initialization, 
 the other way is to use `lazy val`s.
@@ -168,6 +168,7 @@ new {
     val b = 2
 } with B
 // Any with AnyRef with anno with B
+
 {% endhighlight %}
 
 Sure, the resulted type is different. (The anno denotes the anonymous type.)
