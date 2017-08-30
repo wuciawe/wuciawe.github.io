@@ -17,7 +17,7 @@ collector. While in different JVMs, the algorithms and strategies of garbage col
 ![Oracle Hotspotd JVM](/files/2014-09-10-specific-java-garbage-collector/OracleHotspotJVM.png)
 
 This is a very famous and widely used JVM. It is also a representative of generational garbage collector. As shown in 
-in the picture, the young generation is divided into an eden space and two survivor spaces. Before the major garbage 
+the picture, the young generation is divided into an eden space and two survivor spaces. Before the major garbage 
 collection moving objects into the tenured space, the garbage collector will perform minor garbage collection by using 
 copy collection to move objects into survivor 1 space then survivor 2 space from the eden space. As the procedure of 
  copy costs much, so the eden space should be large enough to ensure that most objects will be unreferenced in their 
