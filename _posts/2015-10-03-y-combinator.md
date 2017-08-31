@@ -130,7 +130,7 @@ self call reference to obtain the fix-point-of `f`, where `f` is of the type `(A
 `(lambda (g) (f (g g)))` to `(lambda (h) (h h))`, we finally get the fix-point-function with type `A => B`. 
 We can also notice that the return type of `(g g)` should be `A => B` because of `(f (g g))` and the fact 
 that the type of the input argument of `f` is `A => B` meanwhile the return type of `f` is `A => B` as well. 
-And we will aplly this anonymous function to `(lambda (h) (h h))`, so the type of `g` is also `X => A => B`.
+And we will apply this anonymous function to `(lambda (h) (h h))`, so the type of `g` is also `X => A => B`.
 
 Well, this is a definition of Y Combinator. With the respect to the type within the definition, you will find 
 an infinite type recursion, fortunately the Scheme is a dynamical type language, so that it will not be a 
