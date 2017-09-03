@@ -112,3 +112,8 @@ List of Films:
 - Faster 2010
 - Blade 1998
 - Blade II 2002
+- After Earth 2013
+- Miss Congeniality 2000
+- Forced to Fight 2011
+- Miss Congeniality 2: Armed and Fabulous 2005
+- Event Horizon 1997
