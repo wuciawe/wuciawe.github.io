@@ -11,7 +11,7 @@ infotext: 'A short summary of Creational Pattern. In this post, it includes Clas
 > are created, composed, and represented. A `class creational pattern` uses inheritance to vary the class that’s 
 > instantiated, whereas an `object creational pattern` will delegate instantiation to another object.
 
-In this post, I'll talk about both `class creational pattern`( [Factory Method](factory-method) ) and `object creational pattern`( 
+In this post, I'll talk about both `class creational pattern`( [Factory Method](#factory-method) ) and `object creational pattern`( 
 [Abstract Factory](#abstract-factory), [Builder](#builder), [Prototype](#prototype), [Singleton](#singleton) ).
 
 <!-- more -->

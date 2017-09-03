@@ -9,7 +9,7 @@ infotext: 'A short summary of Behavioral Pattern. In this post, it includes Obje
 
 > Behavioral patterns are concerned with algorithms and the assignment of responsibilities between objects. Behavioral 
 > patterns describe not just patterns of objects or classes but also the patterns of communication between them. These 
-> patterns characterize complex control flow that’s different to follow at run-time. They shift your focus away form 
+> patterns characterize complex control flow that’s different to follow at run-time. They shift your focus away from 
 > flow of control to let you concentrate just on the way objects are interconnected.
 
 In this post, I’ll talk about `Object Behavioral`( [Chain of Responsibility](#chain-of-responsibility), 
@@ -141,7 +141,7 @@ successor.
 
 #### Intent
 
-Encapsulate a request as an object, thereby letting you parametrize clients with different requests, queue or log 
+Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log 
 requests, and support undoable operations.
 
 #### Examples
