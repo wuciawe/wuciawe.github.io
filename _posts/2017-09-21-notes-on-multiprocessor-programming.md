@@ -46,4 +46,23 @@ that events are never simultaneous: distinct events occur at distinct times.
 A critical section is a block of code that can be executed by only one thread at a 
 time. And this is the property mutual exclusion.
 
+Mutual Exclusion: Critical sections of different threads do not overlap.
+
+Freedom from Deadlock: If some thread attempts to acquire the lock, then some thread will 
+succeed in acquiring the lock.
+
+Freedom from Starvation: Every thread that attempts to acquire the lock eventually succeeds.
+
+The starvation freedom implies deadlock freedom.
+
+The mutual exclusion is a safety property. The deadlock-freedom property implies that the 
+system never freezes. Individual threads may be stuck forever (called starvation), but some 
+thread makes progress. The deadlock-freedom is a liveness property. A program can still 
+deadlock even if each of the locks it uses satisfies the deadlock-freedom property. For 
+example, consider threads A and B that share locks l0 and l1. First, A acquires l0 and B 
+acquires l1. Next, A tries to acquire l1 and B tries to acquire l0. The threads deadlock 
+because each one waits for the other to release its lock. The starvation-freedom property 
+is the least compelling of the three. It is also weak in the sense that there is no 
+guarantee for how long a thread waits before it enters the critical section.
+
 
