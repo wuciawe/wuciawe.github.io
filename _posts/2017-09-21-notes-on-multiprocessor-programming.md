@@ -170,3 +170,26 @@ The obstruction-free algorithm rules out the use of locks but does not guarantee
 when multiple threads execute concurrently. It seems to defy the fair approach of most 
 operating system schedulers by guaranteeing progress only when one thread is unfairly 
 scheduled ahead of the others.
+
+The foundations of sequential computing were established in the 1930s by Alan Turing 
+and Alonzo Church, who independently formulated what has come to be known as the 
+Church-Turing Thesis: anything that can be computed, can be computed by a Turing 
+Machine (or, equivalently, by Church's Lambda Calculus). Any problem that cannot be 
+solved by a Turing Machine (such as deciding whether a program halts on any input) is 
+universally considered to be unsolvable by any kind of practical computing device. 
+The Turing Thesis is a thesis, not a theorem, because the notion of "what is computable" 
+can never be defined in a precise, mathematically rigorous way. Nevertheless, just about 
+everyone believes it.
+
+If one thinks of primitive synchronization instructions as objects whose exported methods 
+are the instructions themselves (in the literature these objects are often referred to 
+as synchronization primitives), one can show that there is an infinite hierarchy of 
+synchronization primitives, such that no primitive at one level can be used for a wait-free 
+or lock-free implementation of any primitives at higher levels. The basic idea is simple: 
+each class in the hierarchy has an associated consensus number, which is the maximum 
+number of threads for which objects of the class can solve an elementary synchronization 
+problem called consensus. In a system of n or more concurrent threads, it is impossible 
+to construct a wait-free or lock-free implementation of an object with consensus number 
+n from an object with a lower consensus number.
+
+
