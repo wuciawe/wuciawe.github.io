@@ -296,4 +296,25 @@ This notion of local spinning, where threads repeatedly reread cached values ins
 of repeatedly using the bus, is an important principle critical to the design of 
 efficient spin locks.
 
+We can summarize the problems with conventional synchronization primitives as follows
+
+- Locks are hard to manage effectively, especially in large systems.
+- Atomic primitives such as compareAndSet() operate on only one word at a time, 
+resulting in complex algorithms.
+- It is difficult to compose multiple calls to multiple objects into atomic units.
+
+A transaction is a sequence of steps executed by a single thread. Transactions must 
+be serializable, meaning that they appear to execute sequentially, in a one-at-a-time 
+order. Serializability is a kind of coarse-grained version of linearizability. 
+Linearizability defined atomicity of individual objects by requiring that each 
+method call of a given object appear to take effect instantaneously between its 
+invocation and response, Serializability, on the other hand, defines atomicity for 
+entire transactions, that is, blocks of code that may include calls to multiple objects. 
+It ensures that a transaction appears to take effect between the invocation of its 
+first call and the response to its last call. Some definitions of serializability in 
+the literature do not require transactions to be serialized in an order compatible 
+with their real-time precedence order. Properly implemented, transactions do not 
+deadlock or livelock.
+
+
 
