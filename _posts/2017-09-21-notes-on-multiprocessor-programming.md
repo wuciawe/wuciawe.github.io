@@ -192,4 +192,108 @@ problem called consensus. In a system of n or more concurrent threads, it is imp
 to construct a wait-free or lock-free implementation of an object with consensus number 
 n from an object with a lower consensus number.
 
+Atomic registers have consensus number 1. It is impossible to construct a wait-free 
+implementation of any object with consensus number greater than 1 using atomic registers.
+
+Many, if not all, of the classical synchronization operations provided by multiprocessros 
+in hardware can be expressed as read-modify-wirte (RMW) operations, or, as they are called 
+in their object form, read-modify-write registers. A method is an RMW for the function set 
+F if it atomically replaces the current register value v with f(v), for some f \in F, and 
+returns the original value v. An RMW method is nontrivial if its set of functions includes 
+at least one function that is not the identity function.
+
+Any nontrivial RMW register has consensus number at least 2.
+
+A set of functions F belongs to Common2 if for all values v and all fi and fj in F, either:
+
+- fi and fj commute: fi(fj(v)) = fj(fi(v)), or
+- one function overwrites the other: fi(fj(v)) = fi(v) or fj(fi(v)) = fj(v)
+
+A RMW register belongs to Common2 if its set of functions F belongs to Common2. Any RMW 
+register in Common2 has consensus number (exactly) 2.
+
+A register providing compareAndSet() and get() methods has an infinite consensus number.
+
+A class is universal in a system of n threads if, and only if it has a consensus number 
+greater than or equal to n.
+
+A class C is universal if one can construct a wait-free implementation of any object from 
+some number of objects of C and some number of read-write registers.
+
+Any mutual exclusion protocol poses the question: what do you do if you cannot acquire the 
+lock? There are two alternatives. If you keep trying, the lock is called a spin lock, and 
+repeatedly testing the lock is called spinning, or busywaiting. The alternative is to suspend 
+yourself and ask the operating system's cheduler to schedule another thread on your processor, 
+which is sometimes called blocking.
+
+We consider a typical multiprocessor architecture in which processors communicate by a shared 
+broadcast emdium called a bus (like a tiny Ethernet). Both the processors and the memory 
+controller can broadcast on the bus, but only one processor (or memory) can broadcast on the 
+bus at a time. All processors (and memory) can listen. Today, bus-based architectures are 
+common because they are easy to build, although they scale poorly to large numbers of 
+processors.
+
+Each processor has a cache, a small high-speed memory where the processor keeps data likely 
+to be of interest. A memory access typically requires orders of magnitude more machine 
+cycles than a cache access.
+
+When a processor reads from an address in memory, it first checks whether that address and 
+its contents are present in its cache. If so, then the processor has a cache hit, and can 
+load the value immediately. If not, then the processor has a cache miss, and must find the 
+data either in the memory, or in another processor's cache. The processor then broadcasts the 
+address on the bus. The other processors snoop on the bus. If one processor has that addrress 
+in its cache, then it responds by broadcasting the adddress and value. If no processor has 
+that address, then the memory itself responds with the value at that address.
+
+public class TASLock implements Lock {
+  AtomicBoolean state = new AtomicBoolean(false);
+  public void lock() {
+    while(state.getAndSet(true)) {}
+  }
+  public void unlock() {
+    state.set(false);
+  }
+}
+
+public class TTASLock implements Lock {
+  AtomicBoolean state = new AtomicBoolean(false);
+  public void lock() {
+    while(true) {
+      while(state.get()) {};
+      if(!state.getAndSet(true))
+        return;
+    }
+  }
+  public void unlock() {
+    state.set(false);
+  }
+}
+
+Each getAndSet() call is broadcast on the bus. Becauseall threads must use 
+the bus to communicate with memory, these getAndSet() calls delay all threads, 
+even those not waiting for the lock. Even worse, the getAndSet() call forces 
+other processors to discard their own cached copies of the lock, so every spinning 
+thread encounters a cache miss almost every time, and must use the bus to fetch 
+the new, but unchanged value. Adding insult to injury, when the thread holding 
+the lock tries to release it, it may be delayed because the bus is monopolized 
+by the spinners.
+
+Now consider the behaviour of the TTASLock algorithm while the lock is held by a 
+thread A. The first time thread B reads the lock it takes a cache miss, forcing 
+B to block while the value is loaded into B's cache. As long as A holds the lock, 
+B repeatedly rereads the value, but hits in the cache every time. B thus produces 
+no bus traffic, and does not slow down other threads' memory accesses. Moreover, 
+a thread that releases a lock is not delayed by threads spinning on that lock.
+
+The situation deteriorates, however, when the lock is released. The lock holder releases 
+the lock by writing false to the lock variable, which immediately invalidates the 
+spinners' cached copies. Each one takes a cache miss, rereads the new value, and 
+they all (more-or-less simultaneously) call getAndSet() to acquire the lock. The first 
+to succeed invalidates the others, who must then reread the value, cauing a storm 
+of bus traffic. Eventually, the threads settle down once again to local spinning.
+
+This notion of local spinning, where threads repeatedly reread cached values instead 
+of repeatedly using the bus, is an important principle critical to the design of 
+efficient spin locks.
+
 
