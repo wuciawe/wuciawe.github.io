@@ -79,7 +79,9 @@ similarity.
 ### Tanimoto metric
 
 The __Tanimoto metric__ is a specialised form of a similarity coefficient with a similar algebraic form 
-with the __Cosine similarity__:
+with the __Cosine similarity__. It gives the similarity ratio over bitmaps, where each bit of a fixed-size 
+array represents the presence or absence of a characteristic in the plant being modelled. The definition 
+of the ratio is the number of common bits, divided by the number of bits set (i.e. nonzero) in either sample:
 
 $$
 T(A, B) = \frac{\sum_i(A_i \bigwedge B_i)}{\sum_i(A_i \bigvee B_i)} = \frac{A\cdot B}{||A||^2 + ||B||^2  - A \cdot B}
