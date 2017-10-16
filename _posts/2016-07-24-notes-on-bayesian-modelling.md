@@ -125,7 +125,7 @@ The notion of the full conditional density for individual parameters (or paramet
 \\(\theta_j\\), is
 
 $$
-p(\theta_j | \theta_{[j]}), y) = \frac{p(\boldsymbol{\theta} | y)}{p(\theta_{[j]} | y)}
+p(\theta_j | \theta_{[j]}, y) = \frac{p(\boldsymbol{\theta} | y)}{p(\theta_{[j]} | y)}
 $$
 
 , where \\(\theta_{[j]} = (\theta_1, \dots, \theta_{j-1}, \theta_{j+1}, \dots, \theta_p)\\) denotes 
@@ -165,7 +165,7 @@ $$
 p(y_i | y_{[i]}) = \int p(y_i | \boldsymbol{\theta})\pi(\boldsymbol{\theta}|y_{[i]})\pi(\boldsymbol{\theta})d\boldsymbol{\theta}
 $$
 
-, namely the probability of yi given the rest of the data. This is known as the conditional 
+, namely the probability of \\(y_i\\) given the rest of the data. This is known as the conditional 
 predictive ordinate (CPO) and is equivalent to the leave-one-out posterior predictive distribution 
 
 $$
@@ -261,7 +261,7 @@ modification of random walk Metropolis for constrained (e.g. positive or probabi
 involves reflexive random walks. For example, suppose \\(\theta\\) is a probability and a value 
 \\(\theta' = \theta^{(t)} + u^{(t)}\\), where \\(u^{(t)} \sim \mathrm{U}(-\kappa, \kappa)\\), is 
 sampled. Then if \\(-1 \lt \theta' \lt 0\\), one sets \\(\theta' = |\theta'|\\), and if 
-\\(|\theta'| \gt 1\\)|, one sets \\(\theta' = 1\\). Truncated normal sampling can also be used, 
+\\(|\theta'| \gt 1\\), one sets \\(\theta' = 1\\). Truncated normal sampling can also be used, 
 as in
 
 $$
