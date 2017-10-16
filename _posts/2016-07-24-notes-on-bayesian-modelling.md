@@ -269,7 +269,7 @@ $$
 $$
 
 Evaluating the ratio of \\(\frac{p(\boldsymbol{\theta}'|y)}{p(\boldsymbol{\theta}^{(t)} | y)}\\) in 
-practice involves a comparison of the unstandardised posterior densityt. In practice also the 
+practice involves a comparison of the unstandardised posterior density. In practice also the 
 parameters are updated individually or in sub-blocks of the overall parameter set. In fact, for 
 updating a particular parameter, with proposed value \\(\theta'\_j\\) from a proposal density 
 specific to \\(\theta_j\\), all other parameters than the jth can be regarded as fixed. So all 
