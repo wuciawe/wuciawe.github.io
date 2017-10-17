@@ -70,7 +70,7 @@ we get that a variation of \\(\Delta\\) in \\(a\\) will cause a variation of
 
 Similarly, a variation of \\(\Delta\\) in \\(b\\) will cause a variation of 
 \\((\frac{\partial{e}}{\partial{c}}\frac{\partial{c}}{\partial{b}} + \frac{\partial{e}}{\partial{d}}\frac{\partial{d}}{\partial{b}})\Delta\\) 
-in \\(c\\).
+in \\(e\\).
 
 In summary, in the computational graph, the derivative of a variable \\(v_1\\) with respect to another variable \\(v_2\\) equals the 
 sum of the products of all the possible paths from \\(v_2\\) to \\(v_1\\).
