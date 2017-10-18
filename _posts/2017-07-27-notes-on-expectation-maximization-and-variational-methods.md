@@ -76,7 +76,7 @@ $$
 \mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta}) = \int q(\boldsymbol{x})\log\frac{p(\boldsymbol{x}, \boldsymbol{y}|\boldsymbol{\theta})}{q(\boldsymbol{x})} d \boldsymbol{x} = \int q(\boldsymbol{x})\log p(\boldsymbol{x}, \boldsymbol{y}|\boldsymbol{\theta}) d \boldsymbol{x} + \mathcal{H}(q(\boldsymbol{x}))
 $$
 
-where \\(\boldsymbol{H}(q(\boldsymbol{x})) = \int q(\boldsymbol{x})\log q(\boldsymbol{x})d\boldsymbol{x}\\) is the entropy of \\(q(\boldsymbol{x})\\).
+where \\(\mathcal{H}(q(\boldsymbol{x})) = -\int q(\boldsymbol{x})\log q(\boldsymbol{x})d\boldsymbol{x}\\) is the entropy of \\(q(\boldsymbol{x})\\).
 
 - __E step__: maximize \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) w.r.t. distribution over hidden variables given the parameters:
 
