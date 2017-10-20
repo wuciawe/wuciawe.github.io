@@ -22,6 +22,8 @@ List of TV series:
 - 12 Monkeys 2015 s1-s3
 - Feud 2017 s1
 - Black Mirror 2011 s1-s3
+- The X-Files 1993 s1-s10
+- The Lone Gunmen 2001 s1
 
 List of Films:
 
@@ -117,3 +119,11 @@ List of Films:
 - Forced to Fight 2011
 - Miss Congeniality 2: Armed and Fabulous 2005
 - Event Horizon 1997
+- Battle: Los Angeles 2011
+- The Other Guys 2010
+- Centurion 2010
+- Dawn of the Dead 2004
+- Sherlock Holmes 2010
+- Android Apocalypse 2006
+- The X-Files: Fight the Future 1998
+- The X-Files: I Want to Believe 2008
