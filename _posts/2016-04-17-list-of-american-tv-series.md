@@ -125,5 +125,7 @@ List of Films:
 - Dawn of the Dead 2004
 - Sherlock Holmes 2010
 - Android Apocalypse 2006
+- Escape from L.A. 1996
+- Boy s tenyu 2005
 - The X-Files: Fight the Future 1998
 - The X-Files: I Want to Believe 2008
