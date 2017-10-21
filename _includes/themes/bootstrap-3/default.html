@@ -138,28 +138,41 @@
 
 <footer data-ng-controller="footerController">
 <div class="container">
-    <div id="contacts">
+    <!--<div id="contacts">-->
         <!--<ul style="padding-top: 20px;" data-ng-show="isMiddle()">-->
             <!--<li><img src="{{BASE_PATH}}/files/about/ava.jpg" class="img-circle" style="width: 100px"></li>-->
         <!--</ul>-->
-        <ul style="padding-top: 35px;" data-ng-show="isMiddle()">
-            <li>Hi! I'm <span lang="cn">嘉偉</span></li>
-            <li><small>Currently a student at SJTU</small></li>
-            <li><small>Major on Machine Learning and Data Mining</small></li>
-        </ul>
-        <ul id="details">
-            <li><span>Email: </span><a href="mailto:{{site.author.email}}">{{site.author.email}}</a>
-            </li>
-            <li><span>Linkedin: </span><a target="blank" href="http://lnkd.in/{{site.author.linkedin}}">{{site.author.linkedin}}</a></li>
-            <li><span>Github: </span><a target="blank" href="https://github.com/{{site.author.github}}">{{site.author.github}}</a></li>
+        <!--<ul style="padding-top: 35px;" data-ng-show="isMiddle()">-->
+            <!--<li>Hi! I'm <span lang="cn">嘉偉</span></li>-->
+            <!--<li><small>Currently a student at SJTU</small></li>-->
+            <!--<li><small>Major on Machine Learning and Data Mining</small></li>-->
+        <!--</ul>-->
+        <!--<ul id="details">-->
+            <!--<li><span>Email: </span><a href="mailto:{{site.author.email}}">{{site.author.email}}</a>-->
+            <!--</li>-->
+            <!--<li><span>Linkedin: </span><a target="blank" href="http://lnkd.in/{{site.author.linkedin}}">{{site.author.linkedin}}</a></li>-->
+            <!--<li><span>Github: </span><a target="blank" href="https://github.com/{{site.author.github}}">{{site.author.github}}</a></li>-->
             <!--<li><span>Stack Overflow: </span><a target="blank" href="http://stackoverflow.com/users/{{site.author.stackoverflow}}">{{site.author.stackoverflow}}</a></li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<p class="pull-right copyright" data-ng-show="isMiddle()"><i class="fa fa-copyright"></i> 2014-{{ site.time | date: '%Y' }}, {{ site.author.name }}-->
+        <!--powered with-->
+        <!--<a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>-->
+        <!--and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>-->
+    <!--</p>-->
+    <div data-ng-if="isMiddle()">
+        <p class="pull-right copyright" style="margin-top:10px;">
+            <i class="fa fa-copyright"></i>
+            2014-{{site.time|date:'%Y'}}, {{site.author.name}}
+            (<a style="color:#fff;" href="mailto:{{site.author.email}}">{{site.author.email}}</a>)
+        </p>
+    </div>
+    <div data-ng-if="!isMiddle()" style="margin:0 auto;display:inline-block;">
+        <ul style="margin:0;padding:10px 0 0 0;">
+            <li><i class="fa fa-copyright"></i>2014-{{site.time|date:'%Y'}}, {{site.author.name}}</li>
+            <li><a href="mailto:{{site.author.email}}">{{site.author.email}}</a></li>
         </ul>
     </div>
-    <p class="pull-right copyright" data-ng-show="isMiddle()"><i class="fa fa-copyright"></i> 2014-{{ site.time | date: '%Y' }}, {{ site.author.name }}
-        powered with
-        <a href="http://jekyllbootstrap.com" target="_blank">Jekyll Bootstrap</a>
-        and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-    </p>
 </div>
 
 
