@@ -322,7 +322,7 @@ deadlock which means threads waiting for results from each other.
 
 #### Livelock
 
-A livelock occurs when two tasks in the system chaing their states due to the actions of the other. 
+A livelock occurs when two tasks in the system changing their states due to the actions of the other. 
 Consequently, they are in a loop of state changing and unable to continue. That says, the thread keeps 
 retrying an operation that is always fail, and it makes no progress.
 
