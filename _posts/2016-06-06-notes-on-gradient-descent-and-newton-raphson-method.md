@@ -113,13 +113,13 @@ The x-intercept of this line is used as the next approximation to the root, \\(x
 words, setting \\(y\\) to \\(0\\) and \\(x\\) to \\(x\_{n+1}\\) gives
 
 $$
-y = f'(x_n)(x_{n+1} - x_n) + f(x_n)
+0 = f'(x_n)(x_{n+1} - x_n) + f(x_n)
 $$
 
 Then we have
 
 $$
-x_{n + 1} = x_n - \frac{f(x_n)}{f(x_{n + 1})}
+x_{n + 1} = x_n - \frac{f(x_n)}{f'(x_n)}
 $$
 
 In the case where to find the local minimum or maximum of the objective function 

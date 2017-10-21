@@ -168,7 +168,7 @@ A [Composite]({% post_url 2014-08-20-design-pattern-part-2 %}#composite) is what
 ### Prototype
 
 > A `prototype` is a template of any object before the actual object is constructed. Prototype design pattern is used in 
-> scenarios where application needs to create a number of instances of a class, which has almost same state or differs 
+> scenarios where application needs to create a number of instances of a class, which has almost the same state or differs 
 > very little.
 
 #### Intent
@@ -263,19 +263,19 @@ Ensure a class only has one instance, and provide a global point of access to it
 
 {% highlight java linenos=table %}
 //double checked
-public class EagerSingleton {
-    private static volatile EagerSingleton instance = null;
+public class DoubleCheckedSingleton {
+    private static volatile DoubleCheckedSingleton instance = null;
 
     // private constructor
-    private EagerSingleton() {
+    private DoubleCheckedSingleton() {
     }
 
-    public static EagerSingleton getInstance() {
+    public static DoubleCheckedSingleton getInstance() {
         if (instance == null) {
-            synchronized (EagerSingleton.class) {
+            synchronized (DoubleCheckedSingleton.class) {
                 // Double check
                 if (instance == null) {
-                    instance = new EagerSingleton();
+                    instance = new DoubleCheckedSingleton();
                 }
             }
         }
@@ -283,7 +283,7 @@ public class EagerSingleton {
     }
 }
 
-//static block initialization
+//static block initialization, eager
 public class StaticBlockSingleton {
     private static final StaticBlockSingleton INSTANCE;
 

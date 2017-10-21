@@ -322,7 +322,7 @@ instead.
 
 Often the component-parent link is used for a [Chain of Responsibility]({% post_url 2014-08-21-design-pattern-part-4 %}#chain-of-responsibility).
 
-[Decorator](#decorator) is often used with Composite. When decorators and composites are sued together, they will usually have a 
+[Decorator](#decorator) is often used with Composite. When decorators and composites are used together, they will usually have a 
 common parent class. So decorators will have to support the Component interface with operations like Add, Remove, and 
 GetChild.
 

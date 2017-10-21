@@ -12,7 +12,7 @@ infotext: 'Of cause, these two random processes are not so much closely related.
 
 A Gaussian process is a distribution over functions \\(f: \mathbb{X} \mapsto \mathbb{R}\\)
 
-Denote \\(f \sim \mathcal{Gp}\\) if \\(f\\) is a \\(\mathcal{GP}\\)-distributed random function.
+Denote \\(f \sim \mathcal{GP}\\) if \\(f\\) is a \\(\mathcal{GP}\\)-distributed random function.
 
 For any finite set of input points \\(x_1, \cdots, x_n\\), we require \\((f(x_1), \cdots, f(x_n))\\) to be 
 a multivariate Gaussian. The \\(\mathcal{GP}\\) is parametrized by its mean \\(m(x)\\) and covariance 
@@ -21,9 +21,9 @@ a multivariate Gaussian. The \\(\mathcal{GP}\\) is parametrized by its mean \\(m
 #### Gaussian Process for Regression
 
 We have a training set \\(\mathbb{D}\\) of \\(n\\) obeservations, 
-\\(\mathbb{D}=\{(\boldsymbol{x}_i,y_i) | i=1,\cdots,n\}\\), where \\(\boldsymbol{x}\\) dentoes an 
+\\(\mathbb{D}=\\{(\boldsymbol{x}_i,y_i) | i=1,\cdots,n\\}\\), where \\(\boldsymbol{x}\\) dentoes an 
 input vector (covariates) of dimension \\(D\\) and \\(y\\) denotes a scalar output or 
-target (dependent variable); the columnm vector inputs for all \\(n\\) cases are aggreated in the 
+target (dependent variable); the column vector inputs for all \\(n\\) cases are aggregated in the 
 \\(D \times n\\) design matrix \\(X\\), and the targets are collected in the vector \\(\boldsymbol{y}\\), 
 so we can write \\(\mathbb{D}=(X,y)\\). In the regression setting the targets are real values. We 
 are interested in making inferences about the relationship between inputs and targets, i.e. the 
@@ -43,7 +43,7 @@ $$
 where \\(\boldsymbol{x}\\) is the input vector, \\(\boldsymbol{w}\\) is a vector of weights of the 
 linear model, \\(f\\) is the function value and \\(y\\) is the observed target value. We have assumed 
 that the observed values \\(y\\) differs from the function values \\(f(\boldsymbol{x})\\) by additive 
-noise, and we further assume that this noise follows an independent, identically distributioned 
+noise, and we further assume that this noise follows an independent, identically distributed 
 Gaussian distribution with zero mean and variance \\(\sigma_n^2\\)
 
 $$
@@ -184,7 +184,7 @@ are invariably of the form \\(\phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}'
 \\(k(\boldsymbol{x},\boldsymbol{x}') = \phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\). We 
 call \\(k(\cdot,\cdot)\\) a covariance function or kernel. Notice that \\(\phi(\boldsymbol{x})^T\Sigma_p\phi(\boldsymbol{x}')\\) 
 is an inner product with respect to \\(\Sigma_p\\). As \\(\Sigma_p\\) is positive definite we can define 
-\\(\Sigma_p^{1/2}\\) so that \\((\Sigma_p^{1/2})^2 = \Sigma_p\\); for example if the SVD of \\(Sigma_p = UDU^T\\), 
+\\(\Sigma_p^{1/2}\\) so that \\((\Sigma_p^{1/2})^2 = \Sigma_p\\); for example if the SVD of \\(\Sigma_p = UDU^T\\), 
 where \\(D\\) is diagonal, then one form for \\(\Sigma_p^{1/2}\\) is \\(UD^{1/2}U^T\\). Then defining 
 \\(\psi(\boldsymbol{x}) = \Sigma_p^{1/2}\phi(\boldsymbol{x})\\) we obtain a simple dot product 
 representation \\(k(\boldsymbol{x},\boldsymbol{x}') = \psi(\boldsymbol{x})\cdot\psi(\boldsymbol{x}')\\).
@@ -209,7 +209,7 @@ m(\boldsymbol{x}) = \mathbb{E}[f(\boldsymbol{x})]
 $$
 
 $$
-k(\boldsymbol{x},\boldsymbol{x}') = \mathbb{E}[(f(\boldsymbol{x}) - m(\boldsymbol{x}))(f(\boldsymbol{x})') - m(\boldsymbol{x}'))]
+k(\boldsymbol{x},\boldsymbol{x}') = \mathbb{E}[(f(\boldsymbol{x}) - m(\boldsymbol{x}))(f(\boldsymbol{x})' - m(\boldsymbol{x}'))]
 $$
 
 and will write the Gaussian process as

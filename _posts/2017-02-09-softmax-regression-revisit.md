@@ -58,7 +58,7 @@ In order to optimize the model, we want to maximize the likelihood of the model,
 minimizing the negative log-likelihood.
 
 $$
--\log\mathbb{L}(\mathbb{\omega}|\vec y, vec x) \propto -\log\prod_{i = 1}^m\hat{y}_i^{y_i} = -\sum_{i = 1}^m y_i \log \hat{y}_i
+-\log\mathbb{L}(\mathbb{\omega}|\vec y, \vec x) \propto -\log\prod_{i = 1}^m\hat{y}_i^{y_i} = -\sum_{i = 1}^m y_i \log \hat{y}_i
 $$
 
 We note that this is the cross entropy error function of the model, which means maximizing the likelihood of 
