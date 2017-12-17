@@ -130,3 +130,21 @@ List of Films:
 - The X-Files: Fight the Future 1998
 - The X-Files: I Want to Believe 2008
 - Young Sherlock Holmes 1985
+- Serenity 2005
+- Hidden Camera 2007
+- Red 2010
+- Blue Streak 1999
+- Dark Island 2009
+- Closed Circuit 2013
+- The Minion 1998
+- The Fan 1996
+- Maximum Risk 1996
+- Kandidaten 2008
+- Sahara 2005
+- Battleship 2012
+- Training Day 2001
+- Angels & Demons 2009
+- The Chronicles of Narnia: The Voyage of the Dawn Treader 2010
+- The Cassandra Crossing 1976
+- No Way Back 1995
+- Hot Fuzz 2007
