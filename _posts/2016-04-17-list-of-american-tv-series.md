@@ -148,3 +148,21 @@ List of Films:
 - The Cassandra Crossing 1976
 - No Way Back 1995
 - Hot Fuzz 2007
+- The Red Phone: Manhunt 2001
+- Lies & Illusions 2009
+- Phone Booth 2002
+- Savage 1996
+- Mercenary 1996
+- Hard to Kill 1990
+- Man with a Million 1954
+- Total Recall 2012
+- Braveheart 1995
+- Brick Mansions 2014
+- Tactical Force 2011
+- The Escapist 2008
+- Premium Rush 2012
+- A Lonely Place to Die 2011
+- 16 Blocks 2006
+- Unstoppable 2004
+- Le coup du parapluie 1980
+- The Pacifier 2005
