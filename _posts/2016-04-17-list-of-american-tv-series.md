@@ -166,3 +166,7 @@ List of Films:
 - Unstoppable 2004
 - Le coup du parapluie 1980
 - The Pacifier 2005
+- Basic 2003
+- Troy 2004
+- Le grand restaurant 1966
+- Pour la peau d'un flic 1981
