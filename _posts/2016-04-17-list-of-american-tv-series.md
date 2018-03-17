@@ -21,7 +21,7 @@ List of TV series:
 - How To Get Away With Murder 2014 s1-s3
 - 12 Monkeys 2015 s1-s3
 - Feud 2017 s1
-- Black Mirror 2011 s1-s3
+- Black Mirror 2011 s1-s4
 - The X-Files 1993 s1-s10
 - The Lone Gunmen 2001 s1
 
@@ -170,3 +170,4 @@ List of Films:
 - Troy 2004
 - Le grand restaurant 1966
 - Pour la peau d'un flic 1981
+- Darkman 1990
