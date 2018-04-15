@@ -140,7 +140,7 @@ with distance from the center. A more robust distribution is the
 Student t distribution. Its pdf is as follows:
 
 $$
-\mathcal{T}(x|\mu,\sigma^2,\nu) \approx \left[1+\frac{1}{\nu}\left(\frac{x-\mu}{\sigma}\right)^2\right]^{-(\frac{\nu+1}{2})}
+\mathcal{T}(x|\mu,\sigma^2,\nu) \propto \left[1+\frac{1}{\nu}\left(\frac{x-\mu}{\sigma}\right)^2\right]^{-(\frac{\nu+1}{2})}
 $$
 
 where \\(\mu\\) is the mean, \\(\sigma^2 > 0\\) is the scale parameter, 
@@ -513,6 +513,8 @@ corresponds to drawing a ball from an urn with \\(K\\) colors of ball,
 recording its color, and then replacing it. By contrast, the DCM model 
 corresponds to drawing a ball, recording its color, and then replacing 
 it with one additional copy; this is called the Polya urn.
+
+The rich get richer. Also related with the Bose-Einstein condensate.
 
 ### Credible interval and Confidence interval
 
