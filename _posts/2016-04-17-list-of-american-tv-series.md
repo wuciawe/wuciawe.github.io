@@ -171,3 +171,17 @@ List of Films:
 - Le grand restaurant 1966
 - Pour la peau d'un flic 1981
 - Darkman 1990
+- Hodejegerne 2011
+- Prince of Persia: The Sands of Time 2010
+- Goodfellas 1990
+- Ghost Machine 2009
+- Meeting Evil 2012
+- Minority Report 2002
+- Daybreakers 2009
+- Cube 1997
+- Northmen - A Viking Saga 2014
+- Dangerous Minds 1995
+- Contract Killers 2008
+- Source Code 2011
+- Training Day 2001
+- Loaded Weapon 1 1993
