@@ -347,3 +347,121 @@ $$
 $$
 
 The E step remains unchanged.
+
+Now, let's show that EM monotonically increases the observed data log 
+likelihood until it reaches a local maximum (or saddle point, although 
+such points are usually unstable).
+
+Consider an arbitrary distribution \\(q(z_i)\\) over the hidden variables. 
+The observed data log likelihood can be written as follows:
+
+$$
+\mathcal{l}(\theta) \triangleq \sum_{i=1}^N \log [\sum_{zi} p(x_i, z_i|\theta)]=\sum_{i=1}^N \log [\sum_{z_i} q(z_i)\frac{p(x_i,z_i|\theta)}{q(z_i)}]
+$$
+
+Now \\(\log(u)\\) is a concave function, so from Jensen's inequality we 
+have the following lower bound:
+
+$$
+\mathcal{l}(\theta) \geq \sum_i\sum_{z_i} q_i(z_i) \log \frac{p(x_i,z_i|\theta)}{q_i(z_i)}
+$$
+
+Let us denote this lower bound as follows:
+
+$$
+Q(\theta, q) \triangleq \sum_i\mathbb{E}_{q_i}[\log p(x_i, z_i|\theta)] + \mathbb{H}(q_i)
+$$
+
+where \\(\mathcal{H}(q_i)\\) is the entropy of \\(q_i\\).
+
+The above argument holds for any positive distribution \\(q\\). 
+Intuitively we should pick the \\(q\\) that yields the tightest 
+lower bound. The lower bound is a sum over \\(i\\) of terms of 
+the following form:
+
+$$
+\begin{array}
+\mathcal{L}(\theta, q_i) &= \sum_{z_i}q_i(z_i)\log\frac{p(x_i,z_i|\theta)}{q_i(z_i)}\\
+&= \sum_{z_i}q_i(z_i)\log\frac{p(z_i|x_i,\theta)p(x_i|\theta)}{q_i(z_i)}\\
+&= \sum_{z_i}q_i(z_i)\log\frac{p(z_i,x_i|\theta)}{q_i(z_i)}+\sum_{z_i}q_i(z_i)\log p(x_i|\theta)\\
+&= -\mathbb{KL}(q_i(z_i)||p(z_i|x_i,\theta))+\log p(x_i|\theta)
+\end{array}
+$$
+
+The \\(p(x_i|\theta)\\) term is independent of \\(q_i\\), so we 
+can maximize the lower bound by setting 
+\\(q_i(z_i)=p(z_i|x_i,\theta)\\). Of course, \\(\theta\\) is 
+unknown, so instead we use \\(q_i^t(z_i)=p(z_i|x_i,\theta^t)\\), 
+where \\(\theta^t\\) is our estimate of the parameters at 
+iteration \\(t\\). This is the output of the E step.
+
+Plugging this in to the lower bound we get
+
+$$
+Q(\theta, q^t)=\sum_i \mathbb{E}_{q_i^t}[\log p(x_i,z_i|\theta)] + \mathbb{H}(q_i^t)
+$$
+
+we recognize the first term as the expected complete data log 
+likelihood. The second term is a constant wrt \\(\theta\\). So 
+the M step becomes
+
+$$
+\theta^{t+1}=\arg\max_{\theta}Q(\theta,\theta^t)=\arg\max_{\theta}\sum_i \mathbb{E}_{q_i^t}[\log p(x_i, z_i|\theta)]
+$$
+
+as usual.
+
+Now comes the punchline. Since we used \\(q_i^t(z_i)=p(z_i|x_i,\theta^t)\\), 
+the KL divergence becomes zero, so \\(\mathcal{L}(\theta^t,q_i)=\log p(x_i|\theta^t)\\), 
+and hence
+
+$$
+Q(\theta^t,\theta^t)=\sum_i\log p(x_i|\theta^t)=\mathcal{l}(\theta^t)
+$$
+
+We see that the lower bound is tight after the E step. Since 
+the lower bound "touches" the function, maximizing the lower 
+bound will also "push up" on the function itself. That is, 
+the M step is guaranteed to modify the parameters so as to 
+increase the likelihood of the observed data (unless it is 
+already at a local maximum).
+
+We now prove that EM monotonically increases the observed data 
+log likelihood until it reaches a local optimum. We have
+
+$$
+\mathcal{l}(\theta^{t+1})\geq Q(\theta^{t+1},\theta^t)\geq Q(\theta^t, \theta^t)=\mathcal{l}(\theta^t)
+$$
+
+where the first inequality follows since \\(Q(\theta, \cdot)\\) 
+is a lower bound on \\(\mathcal{l}(\theta)\\); the second 
+inequality follows since, by definition, 
+\\(Q(\theta^{t+1},\theta^t)=\max_{\theta}Q(\theta,\theta^t)\geq Q(\theta^t, \theta^t)\\).
+
+As a consequence of this result, if you do not observe 
+monotonic increase of the observed data log likelihood, 
+you must have an error in your math and/or code. (If you 
+are performing MAP estimation, you must add on the log 
+prior term to the objective.) This is a surprisingly 
+powerful debugging tool.
+
+In the above, we show that the optimal thing to do in the 
+E step is to make \\(q_i\\) be the exact posterior over 
+the latent variables, \\(q_i^t(z_i)=p(z_i|x_i,\theta^t)\\). 
+In this case, the lower bound on the log likelihood will 
+be tight, so the M step will "push up" on the log-likelihood 
+itself. However, sometimes it is computationally intractable 
+to perform exact inference in the E step, but we may be 
+able to perform approximate inference. If we can ensure that 
+the E step is performing inference based on a lower bound 
+to the likelihood, then the M step can be seen as monotonically 
+increasing this lower bound. This is called variational EM.
+
+Sometimes we can perform the E step exactly, but we cannot 
+perform the M step exactly. However, we can still monotonically 
+increase the log likelihood by performing a "partial" M step, 
+in which we merely increase the expected complete data log 
+likelihood, rather than maximizing it. For example, we might 
+follow a few gradient steps. This is called the generalized EM 
+or GEM algorithm. (This is an unfortunate term, since there 
+are many ways to generalize EM.)
