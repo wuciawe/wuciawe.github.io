@@ -126,7 +126,7 @@ $$
 \theta_{k+1}=\text{proj}_\Theta(\theta_k - \eta_k g_k)
 $$
 
-where \\(\text{proj}_\mathcal{V}(v) = \arg\min_{w \in V}||w-v||_2\\) 
+where \\(\text{proj}\_\mathcal{V}(v) = \arg\min\_{w \in \mathcal{V}}||w-v||_2\\) 
 is the projection of vector \\(v\\) onto space \\(\mathcal{V}\\), 
 \\(g_k=\nabla f(\theta_k,z_k)\\) is the gradient, and \\(\eta_k\\) is 
 the step size.
@@ -269,7 +269,7 @@ $$
 
 where \\(\eta\\) is a function that maps the parameters \\(\theta\\) 
 to canonical parameters \\(\eta=\eta(\theta)\\). If 
-\\(\text{dim}(\theta) < \text{dim}(\eta(\theta)\\), it is called a 
+\\(\text{dim}(\theta) < \text{dim}(\eta(\theta))\\), it is called a 
 curved exponential family, which means we have more sufficient 
 statistics than parameters. If \\(\eta(\theta)=\theta\\), the model 
 is said to be in canonical form.
