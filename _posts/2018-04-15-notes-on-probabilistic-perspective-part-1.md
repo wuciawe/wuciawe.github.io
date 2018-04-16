@@ -299,6 +299,52 @@ $$
 \text{var}=\frac{m^2k}{(k-1)^2(k-2)} \text{if } k > 2
 $$
 
+### Non-Gaussian distributions
+
+- Super-Gaussian distributions
+
+These are distributions which have a big spike at the mean, and 
+hence (in order to ensure unit variance) have heavy tails. The 
+Laplace distribution is a classic example. Formally, we say a 
+distribution is super-Gaussian or lepokurtic ("lepto" coming 
+from the Greek for "thin") if \\(\text{kurt}(z)>0\\), where 
+\\(\text{kurt}(z)\\) is the kurtosis of the distribution, defined 
+by
+
+$$
+\text{kurt}(z)\triangleq\frac{\mu_4}{\sigma^4}-3
+$$
+
+where \\(\sigma\\) is the standard deviation, and \\(\mu_k\\) is 
+the \\(k\\)'th central moment, or moment about the mean:
+
+$$
+\mu_k\triangleq\mathbb{E}[(X-\mathbb{E}[X])^k]
+$$
+
+(so \\(\mu_1=\mu\\)) is the mean, and \\(\mu_2=\sigma^2\\) is the 
+variance.) It is conventional to subtract \\(3\\) in the definition 
+of kurtosis to make the kurtosis of a Gaussian variable equal to 
+zero.
+
+- Sub-Gaussian distributions
+
+A sub-Gaussian or platykurtic ("platy" coming from the Greek for 
+"broad") distribution has negative kurtosis. These are distributions 
+which are much flatter than a Gaussian. The uniform distribution is 
+a classic example.
+
+- Skewed distributions
+
+Another way to "be non-Gaussian" is to be asymmetric. One measure of 
+this is skewness, defined by
+
+$$
+\text{skew}(z)\triangleq\frac{\mu_3}{\sigma^3}
+$$
+
+An example of a (right) skewed distribution is the gamma distribution.
+
 ### Correlation and covariance
 
 If \\(x\\) is a \\(d\\)-dimensional random vector, its covariance 
