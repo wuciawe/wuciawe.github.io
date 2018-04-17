@@ -465,3 +465,87 @@ likelihood, rather than maximizing it. For example, we might
 follow a few gradient steps. This is called the generalized EM 
 or GEM algorithm. (This is an unfortunate term, since there 
 are many ways to generalize EM.)
+
+Consider latent variable models of the form 
+\\(z_i \rightarrow x_i \leftarrow \theta\\). This includes mixtures 
+models, PCA, HMMs, etc. There are now two kinds of unknowns: 
+parameters \\(\theta\\), and latent variables, \\(z_i\\). 
+It is common to fit such models using EM, where in the E 
+step we infer the posterior over the latent variables, 
+\\(p(z_i|x_i,\theta)\\), and in the M step, we compute 
+a point estimate of the parameters, \\(\theta\\). The 
+justification for this is two-fold. First, it results in 
+simple algorithms. Second, the posterior uncertainty in 
+\\(\theta\\) is usually less than in \\(z_i\\), since the 
+\\(\theta\\) are informed by all \\(N\\) data cases, whereas 
+\\(z_i\\) is only informed by \\(x_i\\); this makes a MAP 
+estimate of \\(\theta\\) more reasonable than a MAP estimate 
+of \\(z_i\\).
+
+However, VB provides a way to be "more Bayesian", by 
+modeling uncertainty in the parameters \\(\theta\\) as 
+well in the latent variables \\(z_i\\), at a computational 
+cost that is essentially the same as EM. This method is 
+known as variational Bayes EM or VBEM. The basic idea is to 
+use mean field, where the approximate posterior has the 
+form
+
+$$
+p(\theta,z_{1:N}|D) \approx q(\theta)q(z) = q(\theta)\prod_i q(z_i)
+$$
+
+The first factorization, between \\(\theta\\) and \\(z\\), is a 
+crucial assumption to make the algorithm tractable. The 
+second factorization follows from the model, since the 
+latent variables are iid conditional on \\(\theta\\).
+
+In VBEM, we alternate between updating \\(q(z_i|D)\\) (the 
+variational E step) and updating \\(q(\theta|D)\\) (the 
+variational M step). We can recover standart EM from VBEM 
+by approximating the parameter posterior using a delta 
+function, \\(q(\theta|D)\approx\delta_{\hat{\theta}}(\theta)\\).
+
+The variational E step is simialr to a standart E step, 
+except instead of plugging in a MAP estimate of the parameters 
+and computing \\(p(z_i|D,\hat{\theta})\\), we need to average 
+over the paramters. Roughly speaking, this can be computed by 
+plugging in the posterior mean of the parameters instead 
+of the MAP estimate, and then computing \\(p(z_i|D,\bar{\theta})\\) 
+using standard algorithms, such as forwards-backwards. 
+Unfortunately, things are not quite this simple, but this is 
+the basic idea. The details depend on the from of the models.
+
+The variational M step is similar to a standard M step, except 
+instead of computing a point estimate of the parameters, we 
+update the hyper-parameters, using the expected sufficient 
+statistics. This process is usually very similar to MAP 
+estimation in regular EM. Again, the details on how to do 
+this depend on the form of the model.
+
+The principle advantage of VBEM over regular EM is that by 
+marginalizing out the parameters, we can compute a lower 
+bound on the marginal likelihood, which can be used for 
+model selection. VBEM is also "egalitarian", since it 
+treats parameters as "first class citizens", just like any 
+other unknown quantity, whereas EM makes an artificial 
+distinction between parameters and latent variables.
+
+The mean field methods, at least of the fully-factorized 
+variety, are all very similar: just compute each node's 
+full conditional, and average out the neighbors. This is 
+very similar to Gibbs sampling, except the derivation of 
+the equations is usually a bit more work. Fortunately it 
+is possible to derive a general purpose set of udpate 
+equations that work for any DGM for which all CPDs are in 
+the exponential family, and for which all parent nodes 
+have conjugate distributions. One can then sweep over the 
+graph, updating nodes one at a time, in a manner similar 
+to Gibbs sampling. This is known as variational message 
+passing or VMP, and has been implemented in the open-source 
+program VIBES. This is a VB analog to BUGS, which is a 
+popular generic program for Gibbs sampling.
+
+VMP/mean field is best-suited to inference where one or 
+more of the hidden nodes are continuous. For models where 
+all the hidden nodes are discrete, more accurate 
+approximate inference algorithms can be used.
