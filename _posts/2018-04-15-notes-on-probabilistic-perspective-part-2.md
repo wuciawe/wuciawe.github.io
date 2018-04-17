@@ -2,7 +2,7 @@
 layout: post
 category: [math]
 tags: [math]
-infotext: "reading note/report of Machine learning a probabilistic perspective & The elements of statistical learning Data mining, inference, and prediction"
+infotext: "reading note/report of Machine learning a probabilistic perspective"
 ---
 {% include JB/setup %}
 
@@ -356,7 +356,7 @@ Consider an arbitrary distribution \\(q(z_i)\\) over the hidden variables.
 The observed data log likelihood can be written as follows:
 
 $$
-\mathcal{l}(\theta) \triangleq \sum_{i=1}^N \log [\sum_{zi} p(x_i, z_i|\theta)]=\sum_{i=1}^N \log [\sum_{z_i} q(z_i)\frac{p(x_i,z_i|\theta)}{q(z_i)}]
+\mathcal{l}(\theta) \triangleq \sum_{i=1}^N \log [\sum_{z_i} p(x_i, z_i|\theta)]=\sum_{i=1}^N \log [\sum_{z_i} q(z_i)\frac{p(x_i,z_i|\theta)}{q(z_i)}]
 $$
 
 Now \\(\log(u)\\) is a concave function, so from Jensen's inequality we 
@@ -372,7 +372,7 @@ $$
 Q(\theta, q) \triangleq \sum_i\mathbb{E}_{q_i}[\log p(x_i, z_i|\theta)] + \mathbb{H}(q_i)
 $$
 
-where \\(\mathcal{H}(q_i)\\) is the entropy of \\(q_i\\).
+where \\(\mathbb{H}(q_i)\\) is the entropy of \\(q_i\\).
 
 The above argument holds for any positive distribution \\(q\\). 
 Intuitively we should pick the \\(q\\) that yields the tightest 
@@ -510,7 +510,7 @@ except instead of plugging in a MAP estimate of the parameters
 and computing \\(p(z_i|D,\hat{\theta})\\), we need to average 
 over the paramters. Roughly speaking, this can be computed by 
 plugging in the posterior mean of the parameters instead 
-of the MAP estimate, and then computing \\(p(z_i|D,\bar{\theta})\\) 
+of the MAP estimate, and then computing \\(p(z_i|D,\hat{\theta})\\) 
 using standard algorithms, such as forwards-backwards. 
 Unfortunately, things are not quite this simple, but this is 
 the basic idea. The details depend on the from of the models.

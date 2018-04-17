@@ -2,7 +2,7 @@
 layout: post
 category: [math]
 tags: [math]
-infotext: "reading note/report of Machine learning a probabilistic perspective & The elements of statistical learning Data mining, inference, and prediction"
+infotext: "reading note/report of Machine learning a probabilistic perspective"
 ---
 {% include JB/setup %}
 
@@ -294,9 +294,9 @@ some constants \\(a\\) and \\(c\\). This is known as a power law. This
 distribution has the following properties:
 
 $$
-\text{mean}=\frac{km}{k-1} \text{if } k > 1\\
+\text{mean}=\frac{km}{k-1} \quad\text{if}\quad k > 1\\
 \text{mode}=m\\
-\text{var}=\frac{m^2k}{(k-1)^2(k-2)} \text{if } k > 2
+\text{var}=\frac{m^2k}{(k-1)^2(k-2)} \quad\text{if}\quad k > 2
 $$
 
 ### Non-Gaussian distributions

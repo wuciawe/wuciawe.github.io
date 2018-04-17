@@ -2,7 +2,7 @@
 layout: post
 category: [math]
 tags: [math]
-infotext: "reading note/report of Machine learning a probabilistic perspective & The elements of statistical learning Data mining, inference, and prediction"
+infotext: "reading note/report of Machine learning a probabilistic perspective"
 ---
 {% include JB/setup %}
 
@@ -213,7 +213,7 @@ mistakes linearly. Furthermore, it means that we will be able to
 extract probabilities from the final learned function, using
 
 $$
-p(y=1|x)=\frac{e^{f(x)}}{e^{-f(x)+e^{f(x)}}}=\frac{1}{1+e^{-2f(x)}}
+p(y=1|x)=\frac{e^{f(x)}}{e^{-f(x)}+e^{f(x)}}=\frac{1}{1+e^{-2f(x)}}
 $$
 
 The goal is to minimize the expected log-loss, given by
@@ -488,11 +488,11 @@ is \\(((\frac{1}{K})^N)^{-\frac{1}{N}}=K\\). If some
 symbols are more likely than others, and the model 
 correctly relects this, its perplexity will be lower 
 than \\(K\\). Of course, 
-\\(\mathbb{H}(p,p)=\mathbb{H}(p)\leq\mathbb{p,q)\\), so 
+\\(\mathbb{H}(p,p)=\mathbb{H}(p)\leq\mathbb{H}(p,q)\\), so 
 we can never reduce the perplexity below the entropy 
 of the underlying stochastic process.
 
-### Some words
+### Some other words
 
 One prevalent problem in social network analysis is 
 missing data. If \\(R_{ij}=0\\), it may be due to the 
