@@ -412,3 +412,92 @@ The belief propagation (BP) or the sum-product algorithm is the
 generalization of the forwards-backwards algorithm from chains to 
 trees.
 
+### Histogram comparison
+
+The Bhattacharya distance can be used to compare histograms.
+
+### Perplexity
+
+The perplexity of language model \\(q\\) given a stochastic 
+process \\(p\\) is defined as
+
+$$
+\text{perplexity}(p,q)\triangleq2^{\mathbb{H}(p,q)}
+$$
+
+where \\(\mathbb{H}(p,q)\\) is the cross-entropy of the two 
+stochastic processes, defined as 
+
+$$
+\mathbb{H}(p,q)\triangleq\lim_{N\rightarrow\infty}-\frac{1}{N}\sum_{y_{1:N}}p(y_{1:N})\log q(y_{1:N})
+$$
+
+The cross entropy (and hence perplexity) is minimized if 
+\\(q=p\\); in this case, the model can predict as well as 
+the "true" distribution.
+
+We can approximate the stochastic process by using a single 
+long test sequence (composed of multiple documents and 
+multiple sentences, complete with end-of-sentence markers), 
+call it \\(y_{1:N}^*\\). (This approximation becomes more 
+and more accurate as the sequence gets longer, provided 
+the process is stationary and ergodic.) Define the empirical 
+distribution (an approximation to the stochastic process) as 
+
+$$
+p_{\text{emp}}(y_{1:N})=\delta_{y_{1:N}^*}(y_{1:N})
+$$
+
+In this case, the cross-entropy becomes
+
+$$
+\mathbb{H}(p_{\text{emp}}, q) = -\frac{1}{N}\log q(y_{1:N}^*)
+$$
+
+and the perplexity becomes
+
+$$
+\text{perplexity}(p_{\text{emp}}, q) = 2^{\mathbb{H}(p_{\text{emp}}, q)}=q(y_{1:N}^*)^{-\frac{1}{N}}=\sqrt[N]{\prod_{i=1}^N\frac{1}{q(y_i^*|y_{1:i-1}^*)}}
+$$
+
+We see that this is the geometric mean of the inverse 
+predictive probabilities, which is the usual definition 
+of perplexity.
+
+In the case of unigram models, the cross entropy term 
+is given by
+
+$$
+\mathbb{H}=-\frac{1}{N}\sum_{i=1}^N\frac{1}{L_i}\sum_{l=1}^{L_i}\log q(y_{il})
+$$
+
+where \\(N\\) is the number of documents and \\(L_i\\) 
+is the number of words in document \\(i\\). Hence the 
+perplexity of model \\(q\\) is given by
+
+$$
+\text{perplexity}(p_{\text{emp}}, p) = \exp \left(-\frac{1}{N}\sum_{i=1}^N\frac{1}{L_i}\sum_{l=1}^{L_i}\log q(y_{il})\right)
+$$
+
+Intuitively, perplexity measures the weighted average 
+branching factor of the model's predictive distribution. 
+Suppose the model predicts that each sysmbol (letter, 
+word, whatever) is equally likely, so 
+\\(p(y_i|y_{1:i-1})=\frac{1}{K}\\). Then the preplexity 
+is \\(((\frac{1}{K})^N)^{-\frac{1}{N}}=K\\). If some 
+symbols are more likely than others, and the model 
+correctly relects this, its perplexity will be lower 
+than \\(K\\). Of course, 
+\\(\mathbb{H}(p,p)=\mathbb{H}(p)\leq\mathbb{p,q)\\), so 
+we can never reduce the perplexity below the entropy 
+of the underlying stochastic process.
+
+### Some words
+
+One prevalent problem in social network analysis is 
+missing data. If \\(R_{ij}=0\\), it may be due to the 
+fact that person \\(i\\) and \\(j\\) have not had an 
+opportunity to interact, or that data is not available 
+for that interaction, as opposed to the fact that 
+these people don't want to interact. In other words, 
+absence of evidence is not evidence of absence.
