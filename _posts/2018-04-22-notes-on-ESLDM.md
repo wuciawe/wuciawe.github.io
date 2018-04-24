@@ -8,7 +8,7 @@ infotext: "reading note/report of The elements of statistical learning Data mini
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-### 
+### Linear regression and KNN
 
 Let's consider a case of a quantitative output, and place ourselves 
 in the world of random variables and probability spaces. Let 
@@ -25,6 +25,7 @@ $$
 \begin{array}
 \text{EPE}(f)&=\mathbb{E}(Y-f(X))^2 \\
 &= \int (y-f(x))^2\text{Pr}(d, dy)
+\end{array}
 $$
 
 the expected (squared) prediction error. By conditioning on \\(X\\), 
@@ -234,8 +235,8 @@ $$
 $$
 
 Here \\(h(x_0)=X(X^TX)^{-1}x_0\\), the N-vector of linear weights 
-that produce the fit \\(\hat{f}_p(x_0)=x_0^T(X^TX)^{-1}X^Ty\\), and 
-hence \\(\text{Var}[\hat{f}_p(x_0)]=||h(x_0)||^2\sigma_\epsilon^2\\). 
+that produce the fit \\(\hat{f}\_p(x_0)=x_0^T(X^TX)^{-1}X^Ty\\), and 
+hence \\(\text{Var}[\hat{f}\_p(x_0)]=||h(x_0)||^2\sigma_\epsilon^2\\). 
 While this variance changes with \\(x_0\\), its average (with 
 \\(x_0\\) taken to be each of the sample values \\(x_i\\)) is 
 \\(\frac{p}{N}\sigma_\epsilon^2\\), and hence 
