@@ -221,3 +221,72 @@ small \\(k\\), the estimate \\(\hat{f}_k(x)\\) can potentially
 squared difference between \\(f(x_0)\\) and the average of \\(f(x)\\) 
 at the k-nearest neighbors will typically increase, while the 
 variance decreases.
+
+For a linear model fit \\(\hat{f}_p(x)=\hat{\beta}^Tx\\), where 
+the parameter vector \\(\beta\\) with \\(p\\) components is fit by 
+least squares, we have 
+
+$$
+\begin{array}
+\text{Err}(x_0) &= \mathbb{E}[(Y-\hat{f}_p(x_0))^2|X=x_0]\\
+&= \sigma_\epsilon^2 + [f(x_0)-\mathbb{E}\hat{f}_p(x_0)]^2 + ||h(x_0)||^2\sigma\epsilon^2
+\end{array}
+$$
+
+Here \\(h(x_0)=X(X^TX)^{-1}x_0\\), the N-vector of linear weights 
+that produce the fit \\(\hat{f}_p(x_0)=x_0^T(X^TX)^{-1}X^Ty\\), and 
+hence \\(\text{Var}[\hat{f}_p(x_0)]=||h(x_0)||^2\sigma_\epsilon^2\\). 
+While this variance changes with \\(x_0\\), its average (with 
+\\(x_0\\) taken to be each of the sample values \\(x_i\\)) is 
+\\(\frac{p}{N}\sigma_\epsilon^2\\), and hence 
+
+$$
+\frac{1}{N}\sum_{i=1}^N\text{Err}(x_i) = \sigma_\epsilon^2 + \frac{1}{N}\sum_{i=1}^N[f(x_i) - \mathbb{E}\hat{f}(x_i)]^2 + \frac{p}{N}\sigma_\epsilon^2
+$$
+
+the in-sample error. Here model complexity is directly related to 
+the number of parameters \\(p\\).
+
+The test error \\(\text{Err}(x_0)\\) for a ridge regression fit 
+\\(\hat{f}_\alpha(x_0)\\) is identical in form to that for least 
+squares, except the linear weights in the variance term are 
+different: \\(h(x_0)=X(X^TX+\alpha I)^Tx_0\\). The bias term will 
+also be different.
+
+For a linear model family such as ridge regression, we can break down 
+the bias more finely. Let \\(\beta_*\\) denote the parameters of 
+the best-fitting linear approximation to \\(f\\): 
+
+$$
+\beta_* = \arg\min_\beta \mathbb{E}(f(X)-\beta^TX)^2
+$$
+
+Here the expectation is taken with respect to the distribution of the 
+input variables \\(X\\). Then we can write the average squared bias as 
+
+$$
+\begin{array}
+\mathbb{E}_{x_0} [f(x_0)-\mathbb{E}\hat{f}_\alpha(x_0)]^2 &= \mathbb{E}_{x_0}[f(x_0)-\beta_*^T x_0]^2 + \mathbb{E}_{x_0}[\beta_*^T x_0 - \mathbb{E}\hat{\beta}_\alpha^T x_0]^2\\
+&= \text{Ave}[\text{Model Bias}]^2 + \text{Ave}[\text{Estimation Bias}]^2
+\end{array}
+$$
+
+The first term on the right-hand side is the average squared model 
+bias, the error between the best-fitting linear approximation and the 
+treu function. The second term is the average squared estimation bias, 
+the error between the average estimate \\(\mathbb{E}(\hat{\beta}^Tx_0)\\) 
+and the best-fitting linear approximation.
+
+For linear models fit by ordinary least squares, the estimation bias 
+is zero. For restricted fits, such as ridge regression, it is 
+positive, and we trade it off with the benifits of a reduced 
+variance. The model bias can only be reduced by enlarging the class 
+of linear models to a richer collection of models, by including 
+interactions and transformations of the variables in the model.
+
+### Tagent distance
+
+The tangent distance can be computed by estimating the direction 
+vector from small rotations of the image, or by more sophisticated 
+spatial smoothing methods. It approximates the invariance manifold 
+of the image by its tangent at the original image.
