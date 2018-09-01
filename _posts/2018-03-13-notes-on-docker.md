@@ -102,11 +102,11 @@ separate namespace and its access is limited to that namespace.
 
 Docker Engine uses namespaces such as the following on Linux:
 
-- The pid namespace: Process isolation (PID: Process ID).
-- The net namespace: Managing network interfaces (NET: Networking).
-- The ipc namespace: Managing access to IPC resources (IPC: InterProcess Communication).
-- The mnt namespace: Managing filesystem mount points (MNT: Mount).
-- The uts namespace: Isolating kernel and version identifiers. (UTS: Unix Timesharing System).
+- The __pid__ namespace: Process isolation (PID: Process ID).
+- The __net__ namespace: Managing network interfaces (NET: Networking).
+- The __ipc__ namespace: Managing access to IPC resources (IPC: InterProcess Communication).
+- The __mnt__ namespace: Managing filesystem mount points (MNT: Mount).
+- The __uts__ namespace: Isolating kernel and version identifiers. (UTS: Unix Timesharing System).
 
 ### Control groups
 
@@ -135,75 +135,79 @@ Docker has three kinds of parameters: string, list, and bool.
 The most common used parameters are:
 
 - Storage related
-  - -g, --graph="": specify the work directory
-  - -s, --storage-driver="": specify the storage driver, can be devicemapper/overlay/btrfs/aufs etc
-  - --storage-opt=[]: specify the parameter of the storage driver
+  - __-g__, __--graph=""__: specify the work directory
+  - __-s__, __--storage-driver=""__: specify the storage driver, can be `devicemapperoverlay`, `btrfs`, `aufs` etc
+  - __--storage-opt=[]__: specify the parameter of the storage driver
 - Network related
-  - -b, --bridge="": specify the bridge, default is `docker0`
-  - --dns="": specify dns
+  - __-b__, __--bridge=""__: specify the bridge, default is `docker0`
+  - __--dns=""__: specify dns
 - Registry related
-  - --registry-mirror=://: specify the official registry mirror
+  - __--registry-mirror=://__: specify the official registry mirror
 - other
-  - -D, --debug=true|false: specify the log level of the docker service, default is false
-  - --selinux-enabled=true|false: enable selinux, default is true
+  - __-D__, __--debug=`true`\|`false`__: specify the log level of the docker service, default is `false`
+  - __--selinux-enabled=`true`\|`false`__: enable selinux, default is true
 
 ## Docker commands
 
 - State query
-  - list local images: docker images [registry_host/repo[:tag]]
-  - list containers: docker ps [args]
-    - -a, --all: list all undeleted containers
-    - -q, --quiet: show only the container id
-    - -n=m: list the m latest used containers
-  - show docker system information: docker info
-  - show docker version: docker version
+  - list local images: __docker images [registry_host/repo[:tag]]__
+  - list containers: __docker ps [args]__
+    - __-a__, __--all__: list all undeleted containers
+    - __-q__, __--quiet__: show only the container id
+    - __-n=`m`__: list the m latest used containers
+  - show docker system information: __docker info__
+  - show docker version: __docker version__
 - Container operation
-  - run command in an image: docker run [args] <image> [command]
-    - -i/-t, --interactive/--tty, -it: used for foreground running container, 
+  - run command in an image: __docker run [args] <image> [command]__
+    - __-i__ / __-t__, __--interactive__ / __--tty__, __-it__: used for foreground running container, 
     redirect the std in/out to the current terminal
-    - -d: run container in background mode, return the container id
-    - -v, --volume host_path:container_path: mount host path to container, can be repeated
-    - --net: specify the network mode of the container, can be none/bridge/host
-    - -p, --publish host_port:container_port: specify the port mapping under bridge mode, 
+    - __-d__: run container in background mode, return the container id
+    - __-v__, __--volume `host_path:container_path`__: mount host path to container, can be repeated
+    - __--net__: specify the network mode of the container, can be `none`, `bridge`, `host`
+    - __-p__, __--publish `host_port:container_port`__: specify the port mapping under bridge mode, 
     can be repeated
-    - -e, --env: add environment variable to the container, can be repeated
-    - --rm: delete the container right after exit
-    - --name: specify the name of the container
-    - --dns: add dns, can be repeated
-    - --privileged: allow the container modify the host, use with caution
-    - --cpu-shares/--cpu-quota/--cpuset-cpus/--memory/--memory-swap: specify the 
+    - __-e__, __--env__: add environment variable to the container, can be repeated
+    - __--rm__: delete the container right after exit
+    - __--name__: specify the name of the container
+    - __--dns__: add dns, can be repeated
+    - __--privileged__: allow the container modify the host, use with caution
+    - __--cpu-shares__ / __--cpu-quota__ / __--cpuset-cpus__ / __--memory__ / __--memory-swap__: specify the 
     resources the container can use
-  - show container/image information: docker inspect <image>|<container>
-  - show std out of container: docker logs [args] <container>
-    - -f, --follow: dynamic output
-    - --since: show logs after specified time
-    - -t, --timestamp: show time
-  - use `SIGTERM` to terminate the container, use `SIGKILL` after timeout: docker stop [args] <container>
-    - -t, --time: specify the timeout in seconds, default is 10 seconds
-  -  use `SIGKILL` or specified signal to terminate the container: docker kill [args] <container>
-    - -s, --signal: specify the signal, default is `KILL`
-  - run command in specified container: docker exec [args] <container> <command>, docker-exec is 
-  similar to docker-run, docker-run starts a new container with specified image, while docker-exec 
+  - show container/image information: __docker inspect <image>|<container>__
+  - show std out of container: __docker logs [args] <container>__
+    - __-f__, __--follow__: dynamic output
+    - __--since__: show logs after specified time
+    - __-t__, __--timestamp__: show time
+  - use `SIGTERM` to terminate the container, use `SIGKILL` after timeout: __docker stop [args] <container>__
+    - __-t__, __--time__: specify the timeout in seconds, default is `10 seconds`
+  -  use `SIGKILL` or specified signal to terminate the container: __docker kill [args] <container>__
+    - __-s__, __--signal__: specify the signal, default is `KILL`
+  - run command in specified container: __docker exec [args] <container> <command>__, docker-exec is 
+  similar to __docker-run__, docker-run starts a new container with specified image, while docker-exec 
   run command in an existing container. For example, use `docker exec -it <container> /bin/bash` 
   to run shell in <container>
-  - delete specified container: docker rm <containerID>
-  - commit a container to a new image: docker commit <containerID> <image>
-  - show all file system changes made in specified container: docker diff <containerID>
+  - copy file from container to local host: _docker cp <containerID>:<path_to_file> <local_path>__
+  - copy file from local host to container: _docker cp <local_path> <containerID>:<path_to_file>__
+  - delete specified container: __docker rm <containerID>__
+  - commit a container to a new image: __docker commit <containerID> <image>__
+  - show all file system changes made in specified container: __docker diff <containerID>__
 
 ## Image commands
 
 - Image operation
-  - build image with specified dockerfile: docker build [args] <PATH>
-    - -t, --tag, specify the name of the image, including image name and tag
-    - -f, --file: specify the dockerfile, default is `./Dockerfile`
-    - --no-cache: do not use cache
-  - delete image (link): docker rmi <image>
-  - add tag to image, duplicate the image: docker tag <image> <image>
+  - build image with specified dockerfile: __docker build [args] <PATH>__
+    - __-t__, __--tag__: specify the name of the image, including image name and tag
+    - __-f__, __--file__: specify the dockerfile, default is `./Dockerfile`
+    - __--no-cache__: do not use cache
+    - __--squash__: build image in one go
+  - delete image (link): __docker rmi <image>__
+  - add tag to image, duplicate the image: __docker tag <image> <image>__
+  - to squash layers of image (might be supported in the future): __docker squash ???__
 - Image upload and publish
-  - login registry: docker login <registry>
-  - logout registry: docker logout <registry>
-  - pull image from registry to local: docker pull <image>
-  - push local image to registry: docker push <image>
+  - login registry: __docker login <registry>__
+  - logout registry: __docker logout <registry>__
+  - pull image from registry to local: __docker pull <image>__
+  - push local image to registry: __docker push <image>__
 
 ## Dockerfile
 
