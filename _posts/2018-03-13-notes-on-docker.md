@@ -158,7 +158,7 @@ The most common used parameters are:
   - show docker system information: __docker info__
   - show docker version: __docker version__
 - Container operation
-  - run command in an image: __docker run [args] <image> [command]__
+  - run command in an image: __docker run [args] \<image\> [command]__
     - __-i__ / __-t__, __--interactive__ / __--tty__, __-it__: used for foreground running container, 
     redirect the std in/out to the current terminal
     - __-d__: run container in background mode, return the container id
@@ -173,41 +173,41 @@ The most common used parameters are:
     - __--privileged__: allow the container modify the host, use with caution
     - __--cpu-shares__ / __--cpu-quota__ / __--cpuset-cpus__ / __--memory__ / __--memory-swap__: specify the 
     resources the container can use
-  - show container/image information: __docker inspect <image>|<container>__
-  - show std out of container: __docker logs [args] <container>__
+  - show container/image information: __docker inspect \<image\>\|\<container\>__
+  - show std out of container: __docker logs [args] \<container\>__
     - __-f__, __--follow__: dynamic output
     - __--since__: show logs after specified time
     - __-t__, __--timestamp__: show time
-  - use `SIGTERM` to terminate the container, use `SIGKILL` after timeout: __docker stop [args] <container>__
+  - use `SIGTERM` to terminate the container, use `SIGKILL` after timeout: __docker stop [args] \<container\>__
     - __-t__, __--time__: specify the timeout in seconds, default is `10 seconds`
-  -  use `SIGKILL` or specified signal to terminate the container: __docker kill [args] <container>__
+  -  use `SIGKILL` or specified signal to terminate the container: __docker kill [args] \<container\>__
     - __-s__, __--signal__: specify the signal, default is `KILL`
-  - run command in specified container: __docker exec [args] <container> <command>__, docker-exec is 
+  - run command in specified container: __docker exec [args] \<container\> \<command\>__, __docker-exec__ is 
   similar to __docker-run__, docker-run starts a new container with specified image, while docker-exec 
-  run command in an existing container. For example, use `docker exec -it <container> /bin/bash` 
-  to run shell in <container>
-  - copy file from container to local host: _docker cp <containerID>:<path_to_file> <local_path>__
-  - copy file from local host to container: _docker cp <local_path> <containerID>:<path_to_file>__
-  - delete specified container: __docker rm <containerID>__
-  - commit a container to a new image: __docker commit <containerID> <image>__
-  - show all file system changes made in specified container: __docker diff <containerID>__
+  run command in an existing container. For example, use `docker exec -it \<container\> /bin/bash` 
+  to run shell in \<container\>
+  - copy file from container to local host: _docker cp \<containerID\>:\<path_to_file\> \<local_path\>__
+  - copy file from local host to container: _docker cp \<local_path\> \<containerID\>:\<path_to_file\>__
+  - delete specified container: __docker rm \<containerID\>__
+  - commit a container to a new image: __docker commit \<containerID\> \<image\>__
+  - show all file system changes made in specified container: __docker diff \<containerID\>__
 
 ## Image commands
 
 - Image operation
-  - build image with specified dockerfile: __docker build [args] <PATH>__
+  - build image with specified dockerfile: __docker build [args] \<PATH\>__
     - __-t__, __--tag__: specify the name of the image, including image name and tag
     - __-f__, __--file__: specify the dockerfile, default is `./Dockerfile`
     - __--no-cache__: do not use cache
     - __--squash__: build image in one go
-  - delete image (link): __docker rmi <image>__
-  - add tag to image, duplicate the image: __docker tag <image> <image>__
+  - delete image (link): __docker rmi \<image\>__
+  - add tag to image, duplicate the image: __docker tag \<image\> \<image\>__
   - to squash layers of image (might be supported in the future): __docker squash ???__
 - Image upload and publish
-  - login registry: __docker login <registry>__
-  - logout registry: __docker logout <registry>__
-  - pull image from registry to local: __docker pull <image>__
-  - push local image to registry: __docker push <image>__
+  - login registry: __docker login \<registry\>__
+  - logout registry: __docker logout \<registry\>__
+  - pull image from registry to local: __docker pull \<image\>__
+  - push local image to registry: __docker push \<image\>__
 
 ## Dockerfile
 
