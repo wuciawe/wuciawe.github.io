@@ -184,10 +184,10 @@ The most common used parameters are:
     - __-s__, __--signal__: specify the signal, default is `KILL`
   - run command in specified container: __docker exec [args] \<container\> \<command\>__, __docker-exec__ is 
   similar to __docker-run__, docker-run starts a new container with specified image, while docker-exec 
-  run command in an existing container. For example, use `docker exec -it \<container\> /bin/bash` 
+  run command in an existing container. For example, use `docker exec -it <container> /bin/bash` 
   to run shell in \<container\>
-  - copy file from container to local host: _docker cp \<containerID\>:\<path_to_file\> \<local_path\>__
-  - copy file from local host to container: _docker cp \<local_path\> \<containerID\>:\<path_to_file\>__
+  - copy file from container to local host: __docker cp \<containerID\>:\<path_to_file\> \<local_path\>__
+  - copy file from local host to container: __docker cp \<local_path\> \<containerID\>:\<path_to_file\>__
   - delete specified container: __docker rm \<containerID\>__
   - commit a container to a new image: __docker commit \<containerID\> \<image\>__
   - show all file system changes made in specified container: __docker diff \<containerID\>__
