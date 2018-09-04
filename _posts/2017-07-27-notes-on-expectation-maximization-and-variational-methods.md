@@ -97,10 +97,10 @@ where \\(\mathcal{H}(q(\boldsymbol{x})) = -\int q(\boldsymbol{x})\log q(\boldsym
   \end{align*}
   $$
   
-  The KL divergence is non-negative and zero if and only if \\(q(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})\\).
+  The KL divergence is non-negative and zero if and only if \\(q(\boldsymbol{x}) = p(\boldsymbol{x}\|\boldsymbol{y}, \boldsymbol{\theta})\\).
   
-  Thus, we achieve the maximum value of the lower bound \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) 
-  with \\(q(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})\\).
+  Thus, with fixed \\(\boldsymbol{\theta}^{(k-1)}\\), we achieve the maximum value of the lower bound \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) 
+  when \\(q^{(k)}(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta}^{(k-1)})\\).
 
 - __M step__: maximize \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) w.r.t. the parameters given the hidden distribution:
   
