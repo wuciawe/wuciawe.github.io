@@ -84,6 +84,24 @@ where \\(\mathcal{H}(q(\boldsymbol{x})) = -\int q(\boldsymbol{x})\log q(\boldsym
   q^{(k)}(\boldsymbol{x}) := \arg\max_{q(\boldsymbol{x})} \mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta}^{(k-1)})
   $$
 
+  where we have
+
+  $$
+  \begin{align*}
+  \mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta}) &= \int q(\boldsymbol{x})\log\frac{p(\boldsymbol{x}, \boldsymbol{y}|\boldsymbol{\theta})}{q(\boldsymbol{x})} d \boldsymbol{x} \\
+  &= \int q(\boldsymbol{x})\log\frac{p(\boldsymbol{y} | \boldsymbol{\theta}) p(\boldsymbol{x} | \boldsymbol{y}, \boldsymbol{\theta})}{q(\boldsymbol{x})} d \boldsymbol{x} \\
+  &= \int q(\boldsymbol{x})\log p(\boldsymbol{y} | \boldsymbol{\theta}) d \boldsymbol{x} + \int q(\boldsymbol{x})\log\frac{p(\boldsymbol{x} | \boldsymbol{y}, \boldsymbol{\theta})}{q(\boldsymbol{x})} d \boldsymbol{x} \\
+  &= \log p(\boldsymbol{y} | \boldsymbol{\theta}) \int q(\boldsymbol{x}) d \boldsymbol{x} - \left(-\int q(\boldsymbol{x})\log\frac{p(\boldsymbol{x} | \boldsymbol{y}, \boldsymbol{\theta})}{q(\boldsymbol{x})} d \boldsymbol{x}\right) \\
+  &= \log p(\boldsymbol{y} | \boldsymbol{\theta}) - \text{KL}(q(\boldsymbol{x}), p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})) \\
+  &= \mathcal{L}(\boldsymbol{\theta}) - \text{KL}(q(\boldsymbol{x}), p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta}))
+  \end{align*}
+  $$
+  
+  The KL divergence is non-negative and zero if and only if \\(q(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})\\).
+  
+  Thus, we achieve the maximum value of the lower bound \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) 
+  with \\(q(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})\\).
+
 - __M step__: maximize \\(\mathcal{F}(q(\boldsymbol{x}), \boldsymbol{\theta})\\) w.r.t. the parameters given the hidden distribution:
   
   $$
@@ -104,9 +122,7 @@ $$
 \end{align*}
 $$
 
-The KL divergence is non-negative and zero if and only if \\(q(\boldsymbol{x}) = p(\boldsymbol{x}|\boldsymbol{y}, \boldsymbol{\theta})\\) 
-(thus is the E step). Although we are working with a bound on the likelihood, the likelihood is non-decreasing 
-in every iteration:
+Although we are working with a bound on the likelihood, the likelihood is non-decreasing in every iteration:
 
 $$
 \mathcal{L}(\boldsymbol{\theta}^{(k-1)}) \underset{\text{E step}}{=} \mathcal{F}(q^{(k)}(\boldsymbol{x}), \boldsymbol{\theta}^{(k-1)}) \underset{\text{M step}}{\leq} \mathcal{F}(q^{(k)}(\boldsymbol{x}), \boldsymbol{\theta}^{(k)}) \underset{\text{Jensen}}{\leq} \mathcal{L}(\boldsymbol{\theta}^{(k)})
