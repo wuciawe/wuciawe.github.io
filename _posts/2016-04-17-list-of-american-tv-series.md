@@ -190,3 +190,7 @@ List of Films:
 - Murder on the Orient Express 2017
 - Once Upon a Time in America 1984
 - Forrest Gump 1994
+- Apocalypse Now 1979
+- Det sjunde inseglet 1957
+- Roman Holiday 1953
+- La vita è bella 1997
