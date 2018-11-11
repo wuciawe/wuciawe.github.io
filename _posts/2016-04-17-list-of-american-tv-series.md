@@ -194,3 +194,4 @@ List of Films:
 - Det sjunde inseglet 1957
 - Roman Holiday 1953
 - La vita è bella 1997
+- The Boy in the Striped Pajamas 2008
