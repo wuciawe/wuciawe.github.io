@@ -423,3 +423,166 @@ The value function of an undiscounted, ergodic MDP can be
 expressed in terms of average reward. \\(\tilde{v}_\pi(s)\\) 
 is the extra reward due to starting from state \\(s\\), 
 \\(\tilde{v}_\pi(s) = E_\pi [\sum_{k=1}^\inf (R_{t+k} - \rho^\pi) \| S_t = s]\\).
+
+### Dynamic programming
+
+Dynamic programming is used for planning in an MDP, it 
+assumes full knowledge of the MDP.
+
+#### Policy evaluation
+
+To evaluate a given policy \\(\pi\\), iteratively apply the 
+Bellman expectation backup. For synchronous backups, it 
+follows:
+
+- at each iteration \\(k + 1\\)
+- for all states \\(s \in S\\)
+- update \\(v_{k+1}(s)\\) from \\(v_k(s')\\)
+- where \\(s'\\) is a successor state of \\(s\\)
+
+#### Policy iteration
+
+Given a policy \\(\pi\\)
+
+- evaluate the policy \\(\pi\\), \\(v_\pi(s) = E[R_{t+1} + \gamma R_{t+2} + \cdots \| S_t = s]\\)
+- improve the policy by acting greedily with respect to \\(v_\pi\\), \\(\pi ' = \text{greedy}(v_\pi)\\)
+
+For a deterministic policy, \\(a = \pi(s)\\), we can 
+improve the policy by acting greedily \\(\pi ' (s) = \arg\max_{a \in A} q_\pi(s, a)\\). 
+This improves the value from any state \\(s\\) over 
+one step, 
+
+$$
+q_\pi (s, \pi '(s)) = \max_{a \in A} q_\pi (s, a) \geq q_\pi (s, \pi(s)) = v_\pi(s)
+$$
+
+It therefore improves the value function, \\(v_{\pi '}(s) \geq v_\pi(s)\\), 
+
+$$
+\begin{array}
+v_\pi(s) &\leq& q_\pi(s, \pi ' (s)) = E_{\pi '}[R_{t+1} + \gamma v_\pi (S_{t+1}) | S_t = s] \\
+&\leq& E_{\pi '}[R_{t+1} + \gamma q_\pi(S_{t+1}, \pi ' (S_{T+1})) | S_t = s] \\
+&\leq& E_{\pi '}[R_{t+1} + \gamma R_{t+2} + \gamma^2 q_\pi (S_{t+2}, \pi ' (S_{t+2})) | S_t = s] \\
+&\leq& E_{\pi '}[R_{t+1} + \gamma R_{t+2} + \cdots | S_t = s] = v_{\pi '}(s)
+\end{array}
+$$
+
+If improvements stop, \\(q_\pi (s, \pi ' (s)) = \max_{a \in A} q_\pi (s, a) = q_\pi (s, \pi(s)) = v_\pi(s)\\), 
+then the Bellman optimality equation has been satisfied \\(v_\pi(s) = \max_{a \in A} q_\pi(s, a)\\).
+
+#### Value iteration
+
+Any optimal policy can be subdivided into two components, 
+an optimal first action \\(A_\*\\), and followed by an 
+optimal policy from successor state \\(S'\\).
+
+If we know the solution to subproblems \\(v_\*(s')\\), 
+then solution \\(v_\*(s)\\) can be found by one-step 
+lookahead
+
+$$
+v_\*(s) \leftarray \max_{a \in A} R_s^a + \gamma \sum_{s' \in S} P_{ss'}^a v_\*(s')
+$$
+
+The idea of value iteration is to apply these updates 
+iteratively starting with final rewards and working 
+backwards.
+
+### Monte-Carlo learning
+
+MC methods are model-free (no knowledge of MDP transitions/rewards) 
+and learn directly from complete episodes (no bootstrapping). 
+It uses the simplest possible idea: value = mean return. The 
+caveat is MC methods require all episodes must terminate.
+
+#### Incremental Monte-Carlo updates
+
+To update \\(V(s)\\) incrementally after episode \\(S_1, A_1, R_2, \cdots, S_T\\), 
+for each state \\(S_t\\) with return \\(G_t\\)
+
+- \\(N(S_t) \leftarrow N(S_t) + 1\\)
+- \\(V(S_t) \leftarrow V(S_t) + \frac{1}{N(S_t)}(G_t - V(S_t))\\)
+
+In non-stationary problems, it can be useful to track 
+a running mean, i.e. forget old episodes
+
+$$
+V(S_t) \leftarrow V(S_t) + \alpha(G_t - V(S_t))
+$$
+
+### Temporal-Difference learning
+
+TD methods are model-free and learn directly from incomplete 
+episodes by bootstrapping. 
+
+The simplest TD learning algorithm TD(0) updates value 
+\\(V(S_t)\\) toward estimated return \\(R_{t+1} + \gamma V(S_{t+1})\\)
+
+$$
+V(S_t) \leftarrow V(S_t) + \alpha (R_{t+1} + \gamma V(S_{t+1}) - V(S_t))
+$$
+
+where \\(R_{t+1} + \gamma V(S_{t+1})\\) is called the TD target, 
+\\(\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)\\) is called 
+the TD error.
+
+#### Certainty equivalence
+
+MC converges to solution with minimum mean-squared error, 
+it gives the best fit to the observed returns
+
+$$
+\sum_{k = 1}^K \sum_{t = 1}^{T_k} (G_t^k - V(s_t^k))^2
+$$
+
+TD(0) converges to solution of max likelihood Markov model. 
+Solution to the MDP \\(<S, A, \tilde{P}, \tilde{R}, \gamma>\\) 
+that best fits the data
+
+$$
+\tilde{P}\_{s,s'}^a = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k, s_{t+1}^k = s, a , s') \\
+\tilde{R}\_s^a  = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k = s, a) r_t^k
+$$
+
+TD exploits Markov property, thus usually more efficient 
+in Markov environments; MC does not exploit Markov property, 
+thus usually more effective in non-Markov environments.
+
+#### \\(TD(\lambda)\\)
+
+The \\(\lambda\text{-return} G_t^\lambda\\) combines all 
+n-step return \\(G_t^{(n)}\\), using weight \\((1 - \lambda)\lambda^{n - 1}\\), 
+\\(G_t^\lambda = (1 - \lambda)\sum_{n = 1}^\inf \lambda^{n - 1}G_t^{(n)}\\).
+
+Forward-view \\(TD(\lambda)\\) updates \\(V(S_t) \leftarrow V(S_t) + \alpha(G_t^\lambda - V(S_t))\\).
+
+Backward-view \\(TD(\lambda)\\) keeps an eligibility trace 
+for every state \\(s\\), updates value \\(V(s)\\) for every 
+state \\(s\\) in proportion to TD-error \\(\delta_t\\) and 
+eligibility trace \\(E_t(s)\\)
+
+$$
+\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t) \\
+V(s) \leftarrow V(s) + \alpha\delta_t E_t (s)
+$$
+
+When \\(\lambda = 0\\), only the current state is updated, 
+it is equivalent to TD(0). When \\(\lambda = 1\\), credit 
+is deferred until end of episode, it is the same as total 
+update for MC. The difference is that in TD(1) the error 
+is accumulated online, step-by-step.
+
+#### Offline and online updates
+
+Offline updates are accumulated within episode but 
+applied in batch at the end of episode.
+
+Online updates are applied online at each step 
+within episode.
+
+
+
+
+
+
+
