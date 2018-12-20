@@ -580,7 +580,194 @@ applied in batch at the end of episode.
 Online updates are applied online at each step 
 within episode.
 
+### Model-free control
 
+On-policy learning learns about policy \\(\pi\\) 
+from experience sampled from \\(\pi\\). Off-policy 
+learning learns about policy \\(\pi\\) from 
+experience sampled from \\(\mu\\).
+
+#### On-policy Monte-Carlo control
+
+Greedy policy improvement over \\(V(s)\\) requires 
+model of MDP
+
+$$
+\pi ' (s) = \arg\max_{a \in A} R_s^a + P_{ss'}^a V(s')
+$$
+
+Greedy policy improvement over \\(Q(s, a)\\) is 
+model-free
+
+$$
+\pi ' (s) = \arg\max_{a \in A} Q(s, a)
+$$
+
+\\(\epsilon\text{-Greedy}\\) exploration with 
+probability \\(1 - \epsilon\\) choose the greedy 
+action; with probability \\(\epsilon\\) choose 
+an action at random
+
+$$
+\pi(a|s) = 
+\begin{cases}
+\frac{\epsilon}{m} + 1 - \epsilon \text{ if } a^* = \arg\max_{a \in A} Q(s, a) \\
+\frac{\epsilon}{m} \text{ otherwise}
+\end{cases}
+$$
+
+For any \\(\epsilon\text{-Greedy}\\) policy \\(\pi\\), 
+the \\(\epsilon\text{-Greedy}\\) policy \\(\pi '\\) 
+with respect to \\(q_\pi\\) is an improvement, 
+\\(v_{\pi '}(s) \geq v_\pi(s)\\)
+
+$$
+\begin{array}
+q_\pi(s, \pi '(s)) &=& \sum_{a \in A} \pi ' (a|s) q_\pi (s, a) \\
+&=& \frac{\epsilon}{m} \sum_{a \in A} q_\pi(s, a) + (1 - \epsilon) \max_{a \in A} q_\pi (s, a) \\
+&\geq& \frac{\epsilon}{m} \sum_{a \in A} q_\pi (s, a) + (1 - \epsilon) \sum_{a \in A} \frac{\pi(a|s) - \frac{\epsilon}{m}}{1 - \epsilon} q_\pi (s, a) \\
+&=& \sum_{a \in A} \pi(a|s)q_{\pi}(s, a) = v_\pi (s)
+\end{array}
+$$
+
+Therefore from policy improvement theorem, \\(v_{\pi '}(s) \geq v_\pi(s)\\).
+
+#### Greedy in the limit with infinite exploration
+
+All state-action pairs are explored infinitely many 
+times \\(\lim_{k \rightarrow \inf} N_k(s, a) = \inf\\). 
+The policy converges on a greedy policy, 
+\\(\lim_{k \rightarrow \inf} \pi_k(a\|s) = 1(a = \arg\max_{a' \in A} Q_k(s, a'))\\).
+
+Sample k-th episode using \\(\pi\\): \\(\\{S_1, A_1, R_2, \cdots, S_t\\} \sim \pi\\), 
+for each state \\(S_t\\) and action \\(A_t\\) in the episode, 
+
+$$
+N(S_t, A_t) \leftarrow N(S_t, A_t) + 1 \\
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \frac{1}{N(S_t, A_t)}(G_t - Q(S_t, A_t))
+$$
+
+Improve policy based on new action-state function
+
+$$
+\epsilon \leftarrow \frac{1}{k} \\
+\pi \leftarrow \epsilon\text{-greedy}(Q)
+$$
+
+#### On-policy temporal-difference learning
+
+Use TD instead of MC in the control loop, s.t. 
+apply TD to \\(Q(S, A)\\) and use \\(epsilon\text{-greedy}\\) 
+policy improvement and update every time step.
+
+$$
+Q(S, A) \leftarrow Q(S, A) + \alpha(R + \gamma Q(S', A') - Q(S, A))
+$$
+
+Similr to TD, there also exits \\(SARSA(\lambda)\\).
+
+#### Off-policy learning
+
+Off-policy learning evaluate target policy \\(\pi(a \| s)\\) 
+to compute \\(v_\pi(s)\\) or \\(q_\pi(s, a)\\) while 
+following behaviour policy \\(\mu(a \| s)\\)
+
+$$
+\{S_1, A_1, R_2, \cdots, S_t\} \sim \mu
+$$
+
+To use importance sampling for off-policy Monte-Carlo, 
+use returns generated from \\(\mu\\) to evaluate \\(\pi\\), 
+weight return \\(G_t\\) according to similarity between 
+policies, multiply importance sampling corrections 
+along whole episode and update value towards corrected 
+return. Cannot use if \\(\mu\\) is zero when \\(\pi\\) 
+is non-zero. Importance sampling can dramatically 
+increase variance.
+
+#### Q-learning
+
+We now consider off-policy learning of action-values 
+\\(Q(s, a)\\), no importance sampling is required. 
+With importance sampling, next action is chosen using 
+behaviour policy \\(A_{t+1} \sim \mu(\cdot \| S_t)\\). 
+But we consider alternative successor action 
+\\(A' \sim \pi(\cdot \| S_t)\\) and update 
+\\(Q(S_t, A_t)\\) towards value of alternative action 
+
+$$
+Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha(R_{t+1} + \gamma Q(S_{t+1}, A') - Q(S_t, A_t))
+$$
+
+We now allow both behaviour and target policies to 
+improve. The target policy \\(\pi\\) is greedy w.r.t. 
+\\(Q(s, a)\\)
+
+$$
+\pi(S_{t+1}) = \arg\max_{a'} Q(S_{t+1}, a')
+$$
+
+The behaviour policy \\(\mu\\) is e.g. \\(\epsilon\text{-greedy}\\) 
+w.r.t. \\(Q(s, a)\\), the Q-learning target then simplifies 
+
+$$
+\begin{array}
+R_{t+1} + \gamma Q(S_{t+1}, A') &=& R_{t+1} + \gamma Q(S_{t+1}, \arg\max_{a'} Q(S_{t+1}, a')) \\
+&=& R_{t+1} + \max_{a'} \gamma Q(S_{t+1}, a')
+\end{array}
+$$
+
+The update is
+
+$$
+Q(S, A) \leftarrow Q(S, A) + \alpha (R + \gamma \max_{a'} Q(S', a') - Q(S, A))
+$$
+
+### Relationship between DP and TD
+
+Note: in below equations, \\(x \overset{\alpha}\leftarrow y \equiv x \leftarrow x + \alpha(y - x)\\)
+
+$$
+\begin{cases}
+\text{Iterative Policy Evaluation } V(s) \leftarrow E[R + \gamma V(S') | s] \\
+\text{TD learning } V(s) \overset{\alpha}{\leftarrow} R + \gamma V(s')
+\end{cases}
+$$
+
+$$
+\begin{cases}
+\text{Q-Policy Iteration } Q(s, a) \leftarrow E[R + \gamma Q(S', A') \| s, a] \\
+\text{SARSA } Q(S, A) \overset{\alpha}{\leftarrow} R + \gamma Q(S', A')
+\end{cases}
+$$
+
+$$
+\text{Q-Value Iteration } Q(s, a) \leftarrow E[R + \gamma \max_{a' \in A} Q(S', a') \| s, a] \\
+\text{Q-Learning } Q(S, A) \overset{\alpha}{\leftarrow} R + \gamma \max_{a' \in A} Q(S', A')
+$$
+
+### Value function approximation
+
+For large MDPs, there are too many states and/or actions 
+to store in memory. It is slow to learn the value of each 
+state individually. So we estimate value function with 
+function approximation
+
+$$
+\hat{v}(s, w) \approx v_\pi (s) \\
+\text{or } \hat{q}(s, a, w) \approx q_\pi(s, a)
+$$
+
+and generalise from seen states to unseen states, and 
+update parameter \\(w\\) using MC or TD learning.
+
+In RL, there is no supervisor, only rewards, thus we 
+don't have true value function \\(v_\pi (s)\\). In 
+practice, we substitute a target for \\(v_\pi(s)\\), 
+
+- For MC, the target is the return \\(G_t\\)
+- For TD(0), the target is the TD target \\(R_{t+1} + \gamma \hat{v} (S_{t+1} + w)\\)
+- For \\(TD(\lambda)\\), the target is the \\(\lambda\text{-return} G_t^\lambda\\)
 
 
 
