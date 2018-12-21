@@ -1034,5 +1034,9 @@ agent selects an actioin \\(a_t \in A\\), and the
 environment generates a reward \\(r_t \sim R^{a_t}\\). 
 The goal is to maximise cumulative reward \\(\sum_{\tau=1}^t r_\tau\\).
 
-
-
+The action-value is the mean reward for action \\(a\\), 
+\\(Q(a) = E[r \| a]\\). The optimal value \\(V^*\\) is 
+\\(V^* = Q(a^*) = \max_{a \in A} Q(a)\\). The regret is 
+the opportunity loss for one step \\(l_t = E[V^* - Q(a_t)]\\). 
+The total regret is the total opportunity loss 
+\\(L_t = E[\sum_{\tau = 1}^t V^* - Q(a_\tau)]\\).
