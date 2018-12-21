@@ -201,7 +201,7 @@ A Markov reward process is a tuple \\(<S, P, R, \gamma>\\)
 The return \\(G_t\\) is the total discounted reward from time-step \\(t\\)
 
 $$
-G_t = R_{t+1} + \gamma R_{t+2} + \cdots = \sum_{k=0}^\inf \gamma^k R_{t+k+1}
+G_t = R_{t+1} + \gamma R_{t+2} + \cdots = \sum_{k=0}^\infty \gamma^k R_{t+k+1}
 $$
 
 The discount \\(\gamma \in [0, 1]\\) is the present value of future rewards. 
@@ -416,13 +416,13 @@ average reward per time-step \\(\rho^\pi\\) that is
 independent of start state.
 
 $$
-\rho^\pi = \limit_{T \rightarrow \inf} \frac{1}{T} E[\sum_{t=1}^T R_t]
+\rho^\pi = \limit_{T \rightarrow \infty} \frac{1}{T} E[\sum_{t=1}^T R_t]
 $$
 
 The value function of an undiscounted, ergodic MDP can be 
 expressed in terms of average reward. \\(\tilde{v}_\pi(s)\\) 
 is the extra reward due to starting from state \\(s\\), 
-\\(\tilde{v}_\pi(s) = E_\pi [\sum_{k=1}^\inf (R_{t+k} - \rho^\pi) \| S_t = s]\\).
+\\(\tilde{v}_\pi(s) = E_\pi [\sum_{k=1}^\infty (R_{t+k} - \rho^\pi) \| S_t = s]\\).
 
 ### Dynamic programming
 
@@ -552,7 +552,7 @@ thus usually more effective in non-Markov environments.
 
 The \\(\lambda\text{-return} G_t^\lambda\\) combines all 
 n-step return \\(G_t^{(n)}\\), using weight \\((1 - \lambda)\lambda^{n - 1}\\), 
-\\(G_t^\lambda = (1 - \lambda)\sum_{n = 1}^\inf \lambda^{n - 1}G_t^{(n)}\\).
+\\(G_t^\lambda = (1 - \lambda)\sum_{n = 1}^\infty \lambda^{n - 1}G_t^{(n)}\\).
 
 Forward-view \\(TD(\lambda)\\) updates \\(V(S_t) \leftarrow V(S_t) + \alpha(G_t^\lambda - V(S_t))\\).
 
@@ -635,9 +635,9 @@ Therefore from policy improvement theorem, \\(v_{\pi '}(s) \geq v_\pi(s)\\).
 #### Greedy in the limit with infinite exploration
 
 All state-action pairs are explored infinitely many 
-times \\(\lim_{k \rightarrow \inf} N_k(s, a) = \inf\\). 
+times \\(\lim_{k \rightarrow \infty} N_k(s, a) = \infty\\). 
 The policy converges on a greedy policy, 
-\\(\lim_{k \rightarrow \inf} \pi_k(a\|s) = 1(a = \arg\max_{a' \in A} Q_k(s, a'))\\).
+\\(\lim_{k \rightarrow \infty} \pi_k(a\|s) = 1(a = \arg\max_{a' \in A} Q_k(s, a'))\\).
 
 Sample k-th episode using \\(\pi\\): \\(\\{S_1, A_1, R_2, \cdots, S_t\\} \sim \pi\\), 
 for each state \\(S_t\\) and action \\(A_t\\) in the episode, 
@@ -769,7 +769,270 @@ practice, we substitute a target for \\(v_\pi(s)\\),
 - For TD(0), the target is the TD target \\(R_{t+1} + \gamma \hat{v} (S_{t+1} + w)\\)
 - For \\(TD(\lambda)\\), the target is the \\(\lambda\text{-return} G_t^\lambda\\)
 
+We can also approximate the action-value function
 
+$$
+\hat{q}(S, A, w) \approx q_\pi(S, A)
+$$
+
+#### Deep Q-networks
+
+Gradient descent is simple and appealing but it is not 
+sample efficient. Batch methods seek to find the best 
+fitting value function given the agent's experience 
+(training data).
+
+Given value function approximation \\(\hat{v}(s, w) \approx v_\pi (s)\\), 
+and experience \\(D\\) consisting of <state, value> pairs
+
+$$
+D = \{<s_1, v_1^\pi>, <s_2, v_2^\pi>, \cdots, <s_T, v_T^\pi>\}
+$$
+
+Least squares algorithms find parameter vector \\(w\\) 
+minimising sum-squared error between \\(\hat{v}(s_t, w)\\) 
+and target values \\(v_t^\pi\\), 
+
+$$
+\begin{array}
+LS(w) &=& \sum_{t=1}^T(v_t^\pi - \hat{v}(s_t, w))^2 \\
+&=& E_D[(v^\pi - \hat{v}(s, w))^2]
+\end{array}
+$$
+
+DQN uses experience replay and fixed Q-targets 
+
+- take action \\(a_t\\) according to \\(\epsilon\text{-greedy}\\) policy
+- store transition \\((s_t, a_t, r_{t+1}, s_{t+1})\\) in 
+replay memory \\(D\\)
+- sample random mini-batch of transitions \\((s, a, r, s')\\) 
+from \\(D\\)
+- compute Q-learning targets w.r.t. old, fixed parameters \\(w^-\\)
+- optimise MSE between Q-network and Q-learning targets, 
+\\(L_i(w_i) = E_{s, a, r, s' \sim D_i} [(r + \gamma \max_{a'} Q(s', a'; w_i^-) - Q(s, a; w_i))^2]\\)
+- using variant of stochastic gradient descent
+
+### Model-free policy gradient
+
+Policy-based RLs have better convergence properties, are 
+effective in high-dimensional or continuous action spaces. 
+And it is possible to learn stochastic policies. The 
+disadvantages of policy-based RLs are that they typically 
+converge to a local rather than global optimum and 
+evaluating a policy is typically inefficient and high 
+variance.
+
+#### Score function
+
+To compute the policy gradient analytically, assume 
+policy \\(\pi_\theta\\) is differentiable whenever 
+it is non-zero and we know the gradient \\(\nabla_\theta\pi_\theta(s,a)\\), 
+the likelihood ratios exploit the following identity 
+
+$$
+\begin{array}
+\nabla_\theta\pi_\theta(s, a) &=& \pi_\theta(s, a)\frac{\nabla_\theta\pi_\theta(s, a)}{\pi_\theta(s, a)} \\
+&=& \pi_\theta(s, a)\nabla_\theta\log\pi_\theta(s, a)
+\end{array}
+$$
+
+The score function is \\(\nabla_\theta\log\pi_\theta(s, a)\\).
+
+#### Monte-Carlo policy gradient
+
+Using parameters by stochastic gradient ascent, using policy 
+gradient theorem, using return \\(v_t\\) as an unbiased sample 
+of \\(Q^{\pi_\theta}(s_t, a_t)\\)
+
+$$
+\Delta\theta_t = \alpha\nabla_\theta\log\pi_\theta(s_t,a_t)v_t
+$$
+
+#### Actor-critic policy gradient
+
+Monte-Carlo policy gradient still has high variance, we 
+use a critic to estimate the action-value function, 
+\\(Q_w(s, a) \approx Q^{\pi_\theta}(s,a)\\). Actor-critic 
+algorithms maintain two sets of parameters
+
+- critic: updates action-value function parameters \\(w\\)
+- actor: updates policy parameters \\(\theta\\), in direction 
+suggested by critic
+
+Actor-critic algorithms follow an approximate policy gradient 
+
+$$
+\nabla_\theta J(\theta) \approx E_{\pi_\theta}[\nabla_\theta\log\pi_\theta(s, a)Q_w(s, a)] \\
+\Delta\theta = \alpha\nabla_\theta\log\pi_\theta(s, a)Q_w(s, a)
+$$
+
+#### Summary of policy gradient algorithms
+
+$$
+\begin{array}
+\nabla_\theta J(\theta) &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) v_t] &\text{ reinforce} \\
+&=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) Q^w(s, a)] &\text{ Q actor-critic} \\
+&=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) A^w(s, a)] &\text{ Advantage actor-critic} \\
+&=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) \delta] &\text{ TD actor-critic} \\
+&=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) \delta e] &\text{ TD(}\lambda\text{) actor-critic} \\
+G_\theta^{-1}\nabla_\theta J(\theta) &=& w &\text{ Natural actor-critic}
+\end{array}
+$$
+
+### Model-based reinforcement learning
+
+A model \\(M\\) is a representation of an MDP \\(<S, A, P, R>\\), 
+parameterized by \\(\eta\\). Assuming state space \\(S\\) and 
+action space \\(A\\) are known, a model \\(M=<P_\eta, R_\eta>\\) 
+represents state transitions \\(P_n \approx P\\) and rewards 
+\\(R_\eta \approx R\\)
+
+$$
+S_{t+1} \sim P_\eta(S_{t+1} | S_t, A_t) \\
+R_{t+1} = R_\eta(R_{t+1} | S_t, A_t)
+$$
+
+Typically we assume conditional independence between 
+state transitions and rewards 
+\\(P[S_{t+1}, R_{t+1} \| S_t, A_t] = P[S_{t+1} \| S_t, A_t]P[R_{t+1} \| S_t, A_t]\\).
+
+Model learning is to estimate model \\(M_\eta\\) from experience 
+\\(\\{S_1, A_1, R_2, \cdots, S_T\\}\\), which is a supervised 
+learning problem, \\(S_t, A_t \rightarrow R_{t+1}, S_{t+1}\\). 
+Learning \\(s, a \rightarrow r\\) is a regression problem. 
+Learning \\(s, a \rightarrow s'\\) is a density estimation 
+problem.
+
+Planning with a model is to solve the MDP \\(<S, A, P_\eta, R_\eta>\\) 
+given a model \\(M_\eta = <P_\eta, R_\eta>\\) by using 
+planning algorithms: value iteration, policy iteration, 
+tree search, etc.
+
+Sample-based planning is to use the model only to generate 
+samples, sample experience from model 
+
+$$
+S_{t+1} \sim P_\eta (S_{t+1} | S_t, A_t) \\
+R_{t+1} = R_\eta(R_{t+1} | S_t, A_t)
+$$
+
+and apply model-free RL to samples, e.g. Monto-Carlo 
+control, SARSA, Q-learning. Sample-based planning 
+methods are often more efficient.
+
+### Dyna
+
+Consider two sources of experience, real experience which 
+is sampled from environment (true MDP) with 
+\\(S' \sim P_{ss'}^a\\) and \\(R = R_s^a\\); simulated 
+experience which is sampled from model (approximate 
+MDP) with \\(S' \sim P_\eta(S' \| S, A)\\) and 
+\\(R = R_\eta(R \| S, A)\\).
+
+Model-free RL has no model and learns value function 
+(and/or policy) from real experience. Model-based RL 
+(using sample-based planning) learns a model from real 
+experience and plan value function (and/or policy) from 
+simulated experience. Dyna learns a model from real 
+experience and learns and plans value function (and/or 
+policy) from real and simulated experience.
+
+### Simulation-based search
+
+Forward search algorithms select the best action by 
+lookahead. They build a search tree with the current 
+state \\(s_t\\) at the root, and use a model of the 
+MDP to look ahead. Forward search paradigm using 
+sample-based planning, simulate episodes of 
+experience from now with the model, and apply 
+model-free RL to simulated episodes.
+
+Given a model \\(M_v\\), Monte-Carlo tree search 
+simulate \\(K\\) episodes from current state \\(s_t\\) 
+using current simulation policy \\(\pi\\)
+
+$$
+\{s_t, A_t^k, R_{t+1}^k, R_{t+1}^k, S_{t+1}^k, \cdots, S_T^k\}_{k = 1}^K \sim M_{v,\pi}
+$$
+
+and build a search tree containing visited states and 
+actions. MCTS evaluate states \\(Q(s, a)\\) by mean return 
+of episodes from \\(s, a\\)
+
+$$
+Q(s, a) = \frac{1}{N(s, a)}\sum_{k=1}^K\sum_{u=t}^T 1(S_u, A_u = s, a)G_u \overset{P}{\rightarrow} q_\pi(s, a)
+$$
+
+After search is finished, select current (real) action with 
+maximum value in search tree \\(a_t = \arg\max_{a \in A} Q(s_t, a)\\).
+
+In MCTS, the simulation policy \\(\pi\\) improves. In each 
+simulation, there consist of two phases (in-tree, out-of-tree)
+
+- tree policy (improves): pick actions to maximise \\(Q(S, A)\\)
+- default policy (fixed): pick actions randomly
+
+In each repeat (each simulation)
+
+- evaluate states \\(Q(S, A)\\) by Monte-Carlo evalution
+- improve tree policy, e.e. by \\(\epsilon\text{-greedy}(Q)\\)
+
+And MCTS applies Monte-Carlo control to simulated experience. 
+It converges on the optimal search tree, \\(Q(S, A) \rightarrow q_\*(S, A)\\).
+
+The advantages of MC tree search are listed as follows:
+
+- highly selective best-first search
+- evaluates states dynamically (unlike DP)
+- uses sampling to break curse of dimensionality
+- works for black-box models (only requires samples)
+- computationally efficient, anytime, parallelisable
+
+Temporal-difference search uses TD instead of MC 
+(bootstrapping). TD search applies SARSA to sub-MDP 
+from now, while MC tree search applies MC control 
+to sub-MDP from now.
+
+TD search simulates episodes from current (real) 
+state \\(s_t\\). It estimates action-value function 
+\\(Q(s, a)\\). For each step of simulation, update 
+action-values by SARSA
+
+$$
+\Delta Q(S, A) = \alpha (R + \gamma Q(S', A') - Q(S, A))
+$$
+
+TD search selects actions baed on action-value 
+\\(Q(s, a)\\), e.g. \\(\epsilon\text{-greedy}\\), it 
+may also use function approximation for \\(Q\\).
+
+In Dyna-2, the agent stores two sets of feature weights, 
+long-term memory and short-term (working) memory. Long-term 
+memoy is updated from real experience using TD learning, 
+general domain knowledge that applies to any episode. 
+Short-term memory is updated from simulated experience 
+using TD search, specific local knowledge about the 
+current situation. Over value function is a sum of 
+long-term and short-term memories.
+
+### Exploration and exploitation
+
+Online decision-making involves a fundamental choice: 
+exploitation, make the best decision given current 
+information; exploration, gather more information. 
+The best long-term strategy may involve short-term 
+sacrifices. Gather enough information to make the 
+best overall decisions.
+
+#### Multi-armed bandit
+
+A multi-armed bandit is a tuple \\(<A, R>\\), where 
+\\(A\\) is a known set of \\(m\\) actions and 
+\\(R^a(r) = P[r\|a]\\) is an unknown probability 
+distribution over rewards. At each step \\(t\\) the 
+agent selects an actioin \\(a_t \in A\\), and the 
+environment generates a reward \\(r_t \sim R^{a_t}\\). 
+The goal is to maximise cumulative reward \\(\sum_{\tau=1}^t r_\tau\\).
 
 
 
