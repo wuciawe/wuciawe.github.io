@@ -12,7 +12,7 @@ infotext: 'notes on reinforcement learning'
 
 Reinforcement learning sits at the intersection of many different fields of science.
 
-[!] faces of reinforcement learning
+![faces of reinforcement learning](/files/2018-12-19-notes-on-reinforcement-learning/faces_of_rl.jpg){: style="margin:0 auto;display:block;"}
 
 Reinforcement learning differentiates from other machine learning paradigms in 
 following ways: there is no supervior, only a reward signal; feedback is delayed, 
@@ -262,7 +262,7 @@ A Markov decision process is a tuple \\(<S, A, P, R, \gamma>\\)
 
 - \\(S\\) is a finite set of states
 - \\(A\\) is a finite set of actions
-- \\(P\\) is a state transition probability matrix, \\(P_{ss'}^a = P[S_{t+1} = s' | S_t = s, A_t = a]\\)
+- \\(P\\) is a state transition probability matrix, \\(P_{ss'}^a = P[S_{t+1} = s' \| S_t = s, A_t = a]\\)
 - \\(R\\) is a reward function, \\(R_s^a = E[R_{t+1} \| S_t = s, A_t = a]\\)
 - \\(\gamma\\) is a discount factor \\(\gamma \in [0, 1]\\)
 
@@ -274,7 +274,7 @@ the behaviour of an agent. MDP policies depend on the current state
 (not the history), i.e., policies are stationary (time-independent), 
 \\(A_t \sim \pi(\cdot \| S_t), \forall t > 0\\).
 
-Given an MDP \\(M = <S, A, P, R, \gamma>\) and a policy \\(\pi\\), 
+Given an MDP \\(M = <S, A, P, R, \gamma>\\) and a policy \\(\pi\\), 
 the state sequence \\(S_1, S_2, \cdots\\) is a Markov process 
 \\(<S, P^\pi>\\) and the state and reward sequence 
 \\(S_1, R_2, S_2, \cdots\\) is a Markov reward process 
@@ -319,11 +319,11 @@ $$
 
 #### Optimal value function
 
-The optimal state-value function \\(v_*(s)\\) is the maximum value function 
-over all policies \\(v_*(s) = \max_\pi v_\pi(s)\\).
+The optimal state-value function \\(v_\*(s)\\) is the maximum value function 
+over all policies \\(v_\*(s) = \max_\pi v_\pi(s)\\).
 
-The optimal action-value function \\(q_*(s, a)\\) is the maximum action-value 
-function over all policies \\(q_*(s, a) = \max_\pi q_\pi(s, a)\\).
+The optimal action-value function \\(q_\*(s, a)\\) is the maximum action-value 
+function over all policies \\(q_\*(s, a) = \max_\pi q_\pi(s, a)\\).
 
 The optimal value function specifies the best possible performance 
 in the MDP.
@@ -333,11 +333,11 @@ in the MDP.
 Define a partial ordering over policies \\(\pi \geq \pi ' \text{ if } v_\pi(s) \geq v_{\pi '}(s), \forall s\\)
 
 For any Markov decision process, there exists an optimal policy 
-\\(\pi_*\\) that is better than or equal to all otehr policies, 
-\\(\pi_* \geq \pi, \forall \pi\\). All optimal policies achieve 
-the optimal value function, \\(v_{\pi_*}(s) = v_*(s)\\). All 
+\\(\pi_\*\\) that is better than or equal to all other policies, 
+\\(\pi_\* \geq \pi, \forall \pi\\). All optimal policies achieve 
+the optimal value function, \\(v_{\pi_\*}(s) = v_\*(s)\\). All 
 optimal policies achieve the optimal action-value function, 
-\\(q_{\pi_*}(s, a) = q_*(s, a)\\).
+\\(q_{\pi_\*}(s, a) = q_\*(s, a)\\).
 
 An optimal policy can be found by maximising over \\(q_*(s, a)\\), 
 
@@ -416,13 +416,13 @@ average reward per time-step \\(\rho^\pi\\) that is
 independent of start state.
 
 $$
-\rho^\pi = \limit_{T \rightarrow \infty} \frac{1}{T} E[\sum_{t=1}^T R_t]
+\rho^\pi = \lim_{T \rightarrow \infty} \frac{1}{T} E[\sum_{t=1}^T R_t]
 $$
 
 The value function of an undiscounted, ergodic MDP can be 
-expressed in terms of average reward. \\(\tilde{v}_\pi(s)\\) 
+expressed in terms of average reward. \\(\tilde{v}\_\pi(s)\\) 
 is the extra reward due to starting from state \\(s\\), 
-\\(\tilde{v}_\pi(s) = E_\pi [\sum_{k=1}^\infty (R_{t+k} - \rho^\pi) \| S_t = s]\\).
+\\(\tilde{v}\_\pi(s) = E_\pi [\sum_{k=1}^\infty (R_{t+k} - \rho^\pi) \| S_t = s]\\).
 
 ### Dynamic programming
 
@@ -481,7 +481,7 @@ then solution \\(v_\*(s)\\) can be found by one-step
 lookahead
 
 $$
-v_\*(s) \leftarray \max_{a \in A} R_s^a + \gamma \sum_{s' \in S} P_{ss'}^a v_\*(s')
+v_*(s) \leftarrow \max_{a \in A} R_s^a + \gamma \sum_{s' \in S} P_{ss'}^a v_*(s')
 $$
 
 The idea of value iteration is to apply these updates 
@@ -712,7 +712,7 @@ w.r.t. \\(Q(s, a)\\), the Q-learning target then simplifies
 
 $$
 \begin{array}
-R_{t+1} + \gamma Q(S_{t+1}, A') &=& R_{t+1} + \gamma Q(S_{t+1}, \arg\max_{a'} Q(S_{t+1}, a')) \\
+{}R_{t+1} + \gamma Q(S_{t+1}, A') &=& R_{t+1} + \gamma Q(S_{t+1}, \arg\max_{a'} Q(S_{t+1}, a')) \\
 &=& R_{t+1} + \max_{a'} \gamma Q(S_{t+1}, a')
 \end{array}
 $$
@@ -742,8 +742,10 @@ $$
 $$
 
 $$
+\begin{cases}
 \text{Q-Value Iteration } Q(s, a) \leftarrow E[R + \gamma \max_{a' \in A} Q(S', a') \| s, a] \\
 \text{Q-Learning } Q(S, A) \overset{\alpha}{\leftarrow} R + \gamma \max_{a' \in A} Q(S', A')
+\end{cases}
 $$
 
 ### Value function approximation
@@ -1035,8 +1037,8 @@ environment generates a reward \\(r_t \sim R^{a_t}\\).
 The goal is to maximise cumulative reward \\(\sum_{\tau=1}^t r_\tau\\).
 
 The action-value is the mean reward for action \\(a\\), 
-\\(Q(a) = E[r \| a]\\). The optimal value \\(V^*\\) is 
-\\(V^* = Q(a^*) = \max_{a \in A} Q(a)\\). The regret is 
-the opportunity loss for one step \\(l_t = E[V^* - Q(a_t)]\\). 
+\\(Q(a) = E[r \| a]\\). The optimal value \\(V^\*\\) is 
+\\(V^\* = Q(a^\*) = \max_{a \in A} Q(a)\\). The regret is 
+the opportunity loss for one step \\(l_t = E[V^\* - Q(a_t)]\\). 
 The total regret is the total opportunity loss 
-\\(L_t = E[\sum_{\tau = 1}^t V^* - Q(a_\tau)]\\).
+\\(L_t = E[\sum_{\tau = 1}^t V^\* - Q(a_\tau)]\\).
