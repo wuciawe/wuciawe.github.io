@@ -195,3 +195,6 @@ List of Films:
 - Roman Holiday 1953
 - La vita è bella 1997
 - The Boy in the Striped Pajamas 2008
+- Chappie 2015
+- Zodiac 2007
+- Feng Menglong's Legend 2017
