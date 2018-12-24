@@ -198,3 +198,5 @@ List of Films:
 - Chappie 2015
 - Zodiac 2007
 - Feng Menglong's Legend 2017
+- Cube 2: Hypercube 2002
+- Cube Zero 2004
