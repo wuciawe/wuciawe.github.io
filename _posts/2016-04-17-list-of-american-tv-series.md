@@ -200,3 +200,14 @@ List of Films:
 - Feng Menglong's Legend 2017
 - Cube 2: Hypercube 2002
 - Cube Zero 2004
+- The Titan 2018
+- The Martian 2015
+- O Brother, Where Art Thou? 2000
+- Skyscraper 2018
+- Who Am I - Kein System ist sicher 2014
+- Red Dragon 2002
+- The Silence of the Lambs 1991
+- Hannibal Rising 2007
+- Hannibal 2001
+- Solace 2015
+- Manhunter 1986
