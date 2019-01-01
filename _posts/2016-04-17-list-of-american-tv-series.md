@@ -24,6 +24,7 @@ List of TV series:
 - Black Mirror 2011 s1-s4
 - The X-Files 1993 s1-s10
 - The Lone Gunmen 2001 s1
+- Hannibal 2013 s1-s3
 
 List of Films:
 
