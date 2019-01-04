@@ -603,6 +603,172 @@ and the value function are optimal.
 Monte Carlo methods don't require a model and are conceptually simple, but 
 are not well suited for step-by-step incremental computation.
 
+Monte Carlo methods are ways of solving the reinforcement learning problem 
+based on averaging sample returns. To ensure that well-defined returns are 
+available, here we define Monte Carlo methods only for episodic tasks.
+
+Monte Carlo methods sample and average returns for each state–action pair much 
+like the bandit methods sample and average rewards for each action. The main 
+difference is that now there are multiple states, each acting like a different 
+bandit problem (like an associative-search or contextual bandit) and the different 
+bandit problems are interrelated. That is, the return after taking an action 
+in one state depends on the actions taken in later states in the same episode. 
+Because all the action selections are undergoing learning, the problem becomes 
+nonstationary from the point of view of the earlier state.
+
+To handle the nonstationarity, we adapt the idea of general policy iteration (GPI) 
+developed for DP. Whereas there we computed value functions from knowledge of the 
+MDP, here we learn value functions from sample returns with the MDP. The value 
+functions and corresponding policies still interact to attain optimality in 
+essentially the same way (GPI).
+
+#### Monte Carlo prediction
+
+Suppose we wish to estimate \\(v_\pi(s)\\), the value of a state \\(s\\) under 
+policy \\(\pi\\), given a set of episodes obtained by following \\(\pi\\) and 
+passing through \\(s\\). Each occurrence of state \\(s\\) in an episode is 
+called a visit to \\(s\\). Of course, \\(s\\) may be visited multiple times in 
+the same episode; let us call the first time it is visited in an episode the 
+first visit to \\(s\\). The first-visit MC method estimates \\(v_\pi(s)\\) 
+as the average of the returns following first visits to \\(s\\), whereas the 
+every-visit MC method averages the returns following all visits to \\(s\\).
+
+First-visit MC prediction is
+
+$$
+\begin{align}
+&\text{Initialize:} \\
+&\quad \pi \leftarrow \text{ policy to be evaluted} \\
+&\quad V \leftarrow \text{ an arbitrary state-value function} \\
+&\quad Returns(s) \leftarrow \text{ an empty list, for all } s \in \mathcal{S} \\
+&\text{Repeat forever:} \\
+&\quad \text{Generate an episode using } \pi \\
+&\quad \text{For each state } s \text{ appearing in the episode:} \\
+&\qquad G \leftarrow \text{ the return that follows the first occurrence of } s \\
+&\qquad \text{Append } G \text{ to } Returns(s) \\
+&\qquad V(s) \leftarrow \text{average}(Returns(s))
+\end{align}
+$$
+
+If a model is not available, then it is particularly useful to estimate 
+action values rather than state values. With a model, state values alone 
+are sufficient to determine a policy; one simply looks ahead one step 
+and chooses whichever action leads to the best combination of reward and 
+next state. Without a model, however, state values alone are not sufficient. 
+One must explicitly estimate the value of each action in order for the 
+values to be useful in suggesting a policy. Thus, one of our primary goals 
+for Monte Carlo methods is to estimate \\(q_\∗\\). It is essentially the 
+same as for state values, except now we use visits to a state-action 
+pair rather than to a state.
+
+The only complication is that many state–action pairs may never be visited. 
+To compare alternatives we need to estimate the value of all the actions 
+from each state. This is the general problem of maintaining exploration. 
+One way to assure continual exploration is by specifying that the episodes 
+start in a state–action pair, and that every pair has a nonzero probability 
+of being selected as the start. This guarantees that all state–action 
+pairs will be visited an infinite number of times in the limit of an infinite 
+number of episodes. We call this the assumption of exploring starts.
+
+#### Monte Carlo control
+
+Let's consider how Monte Carlo estimation can be used in control, that is, 
+to aproximate optimal policies. In Monte Carlo version of classical 
+policy iteration, we perform alternating complete steps of policy 
+evaluation and policy improvement. Policy evaluation is done by Monte 
+Carlo estimation. Many episodes are experienced, with the approximate 
+action-value function approaching the true function asymptotically. 
+Policy improvement is done by making the policy greedy with respect 
+to the current value functioin.
+
+In order to easily obtain the guarantee of convergence for the Monte 
+Carlo method, we make two unlikely assumptions. One is that the 
+episodes have exploring starts, and the other is that policy 
+evaluation is done with an infinite number of episodes.
+
+Complete Monte Carlo with Exploring Starts is
+
+$$
+\begin{align}
+&\text{Initialize, for all } s \in \mathcal{S}, a \in \mathcal{A}(s): \\
+&\quad Q(s, a) \leftarrow \text{ arbitrary} \\
+&\quad \pi(s) \leftarrow \text{ arbitrary} \\
+&\quad Return(s, a) \leftarrow \text{ empty list} \\
+&\text{Repeat forever:} \\
+&\quad \text{Choose } S_0 \in \mathcal{S} \text{ and } A_0 \in \mathcal{A}(S_0) \text{ s.t. all pairs have probability } \gt 0 \\
+&\quad \text{Generate an episode starting from } S_0, A_0, \text{ following } \pi \\
+&\quad \text{For each pair } s, a \text{ appearing in the episode:} \\
+&\qquad G \leftarrow \text{ the return that follows the first occurrence of } s, a \\
+&\qquad \text{Append } G \text{ to } Returns(s, a) \\
+&\qquad Q(s, a) \leftarrow \text{average}(Returns(s, a)) \\
+&\quad \text{For each } s \text{ in the episode:} \\
+&\qquad \pi(s) \leftarrow \arg\max_a Q(s, a)
+\end{align}
+$$
+
+#### On-policy Monte Carlo control without exploring
+
+To avoid the unlikely assumption of exploring starts, the only general way 
+to ensure that all actions are selected infinitely often is for the agent 
+to continue to select them. There are two approaches to ensuring this, 
+resulting in on-policy methods and off-policy methods. On-policy methods 
+attempt to evaluate or improve the policy that is used to make decisions, 
+whereas off-policy methods evaluate or improve a policy different from 
+that used to generate the data. The Monte Carlo ES method shown above is 
+an example of an on-policy method.
+
+In on-policy control methods the policy is generally soft, meaning that 
+\\(\pi(a\|s) \gt 0\\) for all \\(s \in \mathcal{S}\\) and all 
+\\(a \in \mathcal{A}(s)\\), but gradually shifted closer to a 
+deterministic optimal policy.
+
+The overall idea of on-policy Monte Carlo control (\\(\epsilon\text{-soft}\\) policies) 
+is still that of GPI. As in Monte Carlo ES, we use first-visit MC methods 
+to estimate the action-value function for the current policy. Without the 
+assumption of exploring starts, however, we cannot simply improve the policy 
+by making it greedy with respect to the current value function, because 
+that would prevent further exploration of nongreedy actions. Fortunately, 
+GPI does not require that the policy be taken all the way to a greedy 
+policy, only that it be moved toward a greedy policy.
+
+$$
+\begin{align}
+&\text{Initialize, for all } s \in \mathcal{S}, a \in \mathcal{A}(s): \\
+&\quad Q(s, a) \leftarrow \text{ arbitrary} \\
+&\quad Returns(s, a) \leftarrow \text{ empty list} \\
+&\quad \pi(a|s) \leftarrow \text{ an arbitrary } \epsilon\text{-soft policy} \\
+&\text{Repeat forever:} \\
+&\quad \text{(a) Generate an episode using } \pi \\
+&\quad \text{(b) For each pair } s, a \text{ appearing in the episode:} \\
+&\qquad G \leftarrow \text{ the return that follows the first occurrence of } s, a \\
+&\qquad \text{Append } G \text{ to } Returns(s, a) \\
+&\qquad Q(s, a) \leftarrow \text{average}(Returns(s, a)) \\
+&\quad \text{(c) For each } s \text{ in the episode: } \\
+&\qquad A^* \leftarrow \arg\max_a Q(s, a) \text{ (with ties broken arbitrarily)}\\
+&\qquad \text{For all } a \in \mathcal{A}(s): \\
+&\qquad\quad \pi(a|s) \leftarrow 
+\begin{cases}
+1 - \epsilon + \frac{\epsilon}{|\mathcal{A}(s)|} &\text{ if } a = A^* \\
+\frac{\epsilon}{|\mathcal{A}(s)|} &\text{ if } a \neq A^*
+\end{cases}
+\end{align}
+$$
+
+#### Off-policy prediction via importance sampling
+
+All learning control methods face a dilemma: They seek to learn action 
+values conditional on subsequent optimal behaviour, but they need to 
+behave non-optimally in order to explore all actions. The on-policy 
+approach learns action values not for the optimal policy, but for a 
+near-optimal policy that still explores. The off-policy learning 
+uses two policies, one that is learned about and that becomes the 
+optimal policy, and one that is more exploratory and is used to 
+generate behaviour. The policy being learned about is called the 
+target policy, and the policy used to generate behaviour is called 
+the behaviour policy.
+
+
+
 ### Temporal-difference learning
 
 Temporal-difference methods require no model and are fully incremental, but 
@@ -611,3 +777,5 @@ are more complex to analyze.
 ### Eligibility traces
 
 ### 
+
+https://datascience.stackexchange.com/questions/26938/what-exactly-is-bootstrapping-in-reinforcement-learning
