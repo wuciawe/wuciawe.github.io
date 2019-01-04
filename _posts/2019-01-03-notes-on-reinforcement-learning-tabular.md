@@ -581,7 +581,22 @@ of policy evaluation and one sweep of policy improvement.
 
 #### Generalized policy iteration
 
-
+We use the term generalized policy iteration (GPI) to refer to the general 
+idea of letting policy evaluation and policy improvement processes interact, 
+independent of the granularity and other details of the two processes. 
+Almost all reinforcement learning methods are well described as GPI. That 
+is, all have identifiable policies and value functions, with the policy always 
+being improved with respect to the value function and the value function 
+always being driven toward the value function for the policy, as suggested 
+by the diagram to the right. It is easy to see that if both the evaluation 
+process and the improvement process stabilize, that is, no longer produce 
+changes, then the value function and policy must be optimal. The value 
+function stabilizes only when it is consistent with the current policy, and 
+the policy stabilizes only when it is greedy with respect to the current value 
+function. Thus, both processes stabilize only when a policy has been found 
+that is greedy with respect to its own evaluation function. This implies 
+that the Bellman optimality equation holds, and thus that the policy 
+and the value function are optimal.
 
 ### Monte Carlo methods
 
