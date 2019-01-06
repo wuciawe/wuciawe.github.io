@@ -212,3 +212,6 @@ List of Films:
 - Hannibal 2001
 - Solace 2015
 - Manhunter 1986
+- Celda 211 2009
+- L'immortel 2010
+- King of New York 1990
