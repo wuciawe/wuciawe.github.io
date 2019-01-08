@@ -281,6 +281,125 @@ the background is the model-learning process. As new information is gained, the 
 updated to better match reality. As the model changes, the ongoing planning process will 
 gradually compute a different way of behaving to match the new model.
 
+#### Expected vs sample updates
 
+For one-step value-function updates, they vary primarily along three binary dimensions. The 
+first two dimensions are whether they update state values or action values and whether 
+they estimate the value for the optimal policy or for an arbitrary given policy. These two 
+dimensions give rise to four classes fo updates for approximating the four value functions, 
+$$q_*$$, $$v_*$$, $$q_\pi$$, and $$v_\pi$$. The other binary dimension is whether the 
+updates are expected updates, considering all possible events that might happen, or sample 
+updates, considering a single sample of what might happen. These three binary dimensioins given 
+rise to eight cases, seven of which correspond to specific algorithms.
 
-https://datascience.stackexchange.com/questions/26938/what-exactly-is-bootstrapping-in-reinforcement-learning
+$$
+\begin{align}
+&\text{Value estimated}& &\text{Expected updates (DP)}& &\text{Sample updates (one-step TD)} \\
+&v_\pi(s)& &\text{policy evaluation}& &TD(0) \\
+&v_*(s)& &\text{value iteration}& &\text{-} \\
+&q_\pi(s, a)& &\text{q-policy evaluation}& &\text{SARSA} \\
+&q_*(s, a)& &\text{q-value iteration}& &\text{q-learning}
+\end{align}
+$$
+
+The DYNA-Q agents use $$q_*$$ sample udpates, but they could just as well use $$q_*$$ 
+expected updates, or either expected or sample $$q_\pi$$ updates. The DYNA-AC system uses 
+$$v_\pi$$ sample updates together with a learning policy structure. For stochastic problems, 
+prioritized sweeping is always done using one of the expected udpates.
+
+In the absence of a distribution model, expected updates are not possible, but sample updates 
+can be done using sample transitions from the environment or a sample model. Expected updates 
+certainly yield a better estimate because they are uncorrupted by sampling error, but they also 
+require more computation, and computation is often the limiting resource in planning.
+
+#### Heuristic search
+
+The classical state-space planning methods in artificial intelligence are decision-time planning 
+methods collectively known as heuristic search. In heuristic search, for each state encountered, 
+a large tree of possible continuations is considered. The approximate value function is applied to 
+the leaf nodes and then backed up toward the current state at the root. The backing up within the 
+search tree is just the same as in the expected updates with maxes (those for $$v_∗$$ and $$q_∗$$). 
+The backing up stops at the state–action nodes for the current state. Once the backed-up values of 
+these nodes are computed, the best of them is chosen as the current action, and then all backed-up 
+values are discarded.
+
+We may save the backed-up values to change the approximate value function. In fact, the value function 
+is generally designed by people and never changed as a result of search. However, it is natural to 
+consider allowing the value function to be improved over time, using either the backed-up values computed 
+during heuristic search or greedy, $$\epsilon\text{-greedy}$$, and UCB action-selection methods.
+
+The point of searching deeper than one step is to obtain better action selections. If one has a 
+perfect model and an imperfect action-value function, then in fact deeper search will usually yield 
+better policies. On the other hand, the deeper the search, the more computation is required, usually 
+resulting in a slower response time. A good example is provided by Tesauro’s grandmaster-level backgammon
+player, TD-Gammon.
+
+We should not overlook the most obvious way in which heuristic search focuses updates: on the current 
+state. Much of the effectiveness of heuristic search is due to its search tree being tightly focused 
+on the states and actions that might immediately follow the current state.
+
+The distribution of updates can be altered in similar ways to focus on the current state and its 
+likely successors. As a limiting case we might use exactly the methods of heuristic search to construct 
+a search tree, and then perform the individual, one-step updates from bottom up. The performance 
+improvement observed with deeper searches is not due to the use of multistep updates as such. Instead, 
+it is due to the focus and concentration of updates on states and actions immediately downstream from 
+the current state.
+
+#### Monte Carlo tree search
+
+Monte Carlo Tree Search (MCTS) is a recent and strikingly successful example of decision-time planning. 
+At is base, MCTS is a rollout algorithm, but enhanced by the addition of a means for accumulating value 
+estimates obtained from the Monte Carlo simulations in order to successively direct simulations toward 
+more highly-rewarding trajectories.
+
+MCTS is executed after encountering each new state to select the agent’s action for that state; it is 
+executed again to select the action for the next state, and so on. As in a rollout algorithm, each 
+execution is an iterative process that simulates many trajectories starting from the current state and 
+running to a terminal state (or until discounting makes any further reward negligible as a contribution 
+to the return). The core idea of MCTS is to successively focus multiple simulations starting at the 
+current state by extending the initial portions of trajectories that have received high evaluations from 
+earlier simulations. MCTS does not have to retain approximate value functions or policies from one 
+action selection to the next, though in many implementations it retains selected action values likely to 
+be useful for its next execution.
+
+For the most part, the actions in the simulated trajectories are generated using a simple policy, usually 
+called a rollout policy as it is for simpler rollout algorithms. As in any tabular Monte Carlo method, the 
+value of a state–action pair is estimated as the average of the (simulated) returns from that pair. Monte 
+Carlo value estimates are maintained only for the subset of state–action pairs that are most likely to be 
+reached in a few steps, which form a tree rooted at the current state. MCTS incrementally extends the tree 
+by adding nodes representing states that look promising based on the results of the simulated trajectories. 
+Any simulated trajectory will pass through the tree and then exit it at some leaf node. Outside the tree 
+and at the leaf nodes the rollout policy is used for action selections, but at the states inside the tree 
+something better is possible. For these states we have value estimates for of at least some of the actions, 
+so we can pick among them using an informed policy, called the tree policy, that balances exploration
+and exploitation.
+
+In each iteration of a basic version of MCTS
+
+1. Selection. Starting at the root node, a tree policy based on the action values attached to the edges of 
+the tree traverses the tree to select a leaf node.
+
+2. Expansion. On some iterations (depending on details of the application), the tree is expanded from the 
+selected leaf node by adding one or more child nodes reached from the selected node via unexplored actions.
+
+3. Simulation. From the selected node, or from one of its newly-added child nodes (if any), simulation of 
+a complete episode is run with actions selected by the rollout policy. The result is a Monte Carlo trial 
+with actions selected first by the tree policy and beyond the tree by the rollout policy.
+
+4. Backup. The return generated by the simulated episode is backed up to update, or to initialize, the 
+action values attached to the edges of the tree traversed by the tree policy in this iteration of MCTS. 
+No values are saved for the states and actions visited by the rollout policy beyond the tree.
+
+MCTS continues executing these four steps, starting each time at the tree’s root node, until no more time 
+is left, or some other computational resource is exhausted. Then, finally, an action from the root node 
+(which still represents the current state of the environment) is selected according to some mechanism that 
+depends on the accumulated statistics in the tree; for example, it may be an action having the largest 
+action value of all the actions available from the root state, or perhaps the action with the largest visit 
+count to avoid selecting outliers. After the environment transitions to a new state, MCTS is run again, 
+sometimes starting with a tree of a single root node representing the new state, but often starting with 
+a tree containing any descendants of this node left over from the tree constructed by the previous execution 
+of MCTS; all the remaining nodes are discarded, along with the action values associated with them.
+
+### Reference
+
+[Bootstrapping in RL](https://datascience.stackexchange.com/questions/26938/what-exactly-is-bootstrapping-in-reinforcement-learning){:target='_blank'}
