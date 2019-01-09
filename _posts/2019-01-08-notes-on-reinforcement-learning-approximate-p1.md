@@ -117,4 +117,137 @@ $$
 \end{align}
 $$
 
-#### ANN
+#### Tips on artificial neural networks
+
+The backpropagation algorithm can produce good results for shallow networks having $$1$$ or $$2$$ 
+hidden layers, but it may not work well for deeper ANNs.  Explaining results like these is not 
+easy, but several factors are important. First, the large number of weights in a typical deep 
+ANN makes it difficult to avoid the problem of overfitting, that is, the problem of failing to 
+generalize correctly to cases on which the network has not been trained. Second, backpropagation 
+does not work well for deep ANNs because the partial derivatives computed by its backward passes 
+either decay rapidly toward the input side of the network, making learning by deep layers extremely 
+slow, or the partial derivatives grow rapidly toward the input side of the network, making learning 
+unstable.
+
+A particularly effective method for reducing overfitting by deep ANNs is the dropout method. During 
+training, units are randomly removed from the network (dropped out) along with their connections. 
+This can be thought of as training a large number of "thinned" networks. Combining the results of 
+these thinned networks at test time is a way to improve generalization performance. The dropout method 
+efficiently approximates this combination by multiplying each outgoing weight of a unit by the 
+probability that that unit was retained during training. The dropout method significantly improves 
+generalization performance. It encourages individual hidden units to learn features that work well with 
+random collections of other features. This increases the versatility of the features formed by the 
+hidden units so that the network does not overly specialize to rarely-occurring cases.
+
+Another method is to train the deepest layers one at a time using an unsupervised learning 
+algorithm. Without relying on the overall objective function, unsupervised learning can extract 
+features that capture statistical regularities of the input stream. The deepest layer is trained 
+first, then with input provided by this trained layer, the next deepest layer is trained, and so on, 
+until the weights in all, or many, of the network’s layers are set to values that now act as initial values 
+for supervised learning. The network is then fine-tuned by backpropagation with respect to the overall 
+objective function. Studies show that this approach generally works much better than backpropagation 
+with weights initialized with random values. The better performance of networks trained with weights 
+initialized this way could be due to many factors, but one idea is that this method places the network 
+in a region of weight space from which a gradient-based algorithm can make good progress.
+
+Batch normalization is another technique that makes it easier to train deep ANNs. It has long been known 
+that ANN learning is easier if the network input is normalized, for example, by adjusting each input 
+variable to have zero mean and unit variance. Batch normalization for training deep ANNs normalizes the 
+output of deep layers before they feed into the following layer. This method used statistics from subsets, 
+or "mini-batches" of training examples to normalize these between-layer signals to improve the learning rate 
+of deep ANNs.
+
+Another technique useful for training deep ANNs is deep residual learning. Sometimes it is easier to learn 
+how a function differs from the identity function than to learn the function itself. Then adding this 
+difference, or residual function, to the input produces the desired function. In deep ANNs, a block of layers 
+can be made to learn a residual function simply by adding shortcut, or skip, connections around the block. 
+These connections add the input to the block to its output, and no additional weights are needed.
+
+### On-policy control with approximation
+
+#### Episodic semi-gradient control
+
+The approximate action-value function $$\hat{q} \approx q_\pi$$ is represented as a parameterized functional 
+form with weight vector $$\boldsymbol{w}$$. Consider the random training examples of the form $$S_t, A_t \mapsto U_t$$, 
+the update target $$U_t$$ can be any approximation of $$q_\pi(S_t,  A_t)$$, including the usual backed-up 
+values such as the full Monte Carlo return, $$G_t$$, or any of the n-step SARSA returns. The general 
+gradient-descent update for action-value prediction is
+
+$$
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha [U_t - \hat{q}(S_t, A_t, \boldsymbol{w}_t)]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t)
+$$
+
+For example, the update for the one-step SARSA method is 
+
+$$
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha [R_{t+1} + \gamma\hat{q}(S_{t+1}, A_{t+1}, \boldsymbol{w}_t) - \hat{q}(S_t, A_t, \boldsymbol{w}_t)]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t)
+$$
+
+We call this method episodic semi-gradient one-step SARSA.
+
+To form control methods, we need to couple such actioin-value prediction methods with techniques for 
+policy improvement and action selection.
+
+$$
+\begin{align}
+&\text{Input: a differentiable functioin } \hat{q}: \mathcal{S} \times \mathcal{A} \times \mathbb{R}^d \rightarrow \mathbb{R} \\
+&\text{Initialize value-function weights } \boldsymbol{w} \in \mathbb{R}^d \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Repeat (for each episode):} \\
+&\quad S, A \leftarrow \text{ initial state and action of episode (e.g., } \epsilon\text{-greedy)} \\
+&\quad \text{Repeat (for each step of episode):} \\
+&\qquad \text{Take action } A\text{, observe } R, S' \\
+&\qquad \text{If } S' \text{ is terminal:} \\
+&\qquad\quad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha [R - \hat{q}(S, A, \boldsymbol{w})]\nabla\hat{q}(S, A, \boldsymbol{w}) \\
+&\qquad\quad \text{Go to next episode} \\
+&\qquad \text{Choose } A' \text{ as a function of } \hat{q}(S', \cdot, \boldsymbol{w}) \text{(e.g., }\epsilon\text{-greedy)} \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha [R + \gamma\hat{q}(S', A', \boldsymbol{w}) - \hat{q}(S, A, \boldsymbol{w})]\nabla\hat{q}(S, A, \boldsymbol{w}) \\
+&\qquad S \leftarrow S' \\
+&\qquad A \leftarrow A'
+\end{align}
+$$
+
+#### n-step semi-gradient SARSA
+
+We can obtain an n-step version of episodic semi-gradient SARSA by using an n-step return as the update 
+target in the semi-gradient SARSA update equation. The n-step return immediately generalizes from its 
+tabular form to a function approximation form:
+
+$$
+G_{t:t+n} \doteq R_{t+1}+\gamma R_{t+2} + \cdots + \gamma^{n-1}R_{t+n} + \gamma^n\hat{q}(S_{t+n}, A_{t+n}, \boldsymbol{w}_{t+n-1}), n \geq 1, 0 \leq t \lt T - n
+$$
+
+with $$G_{t:t+n} \doteq G_t$$ if $$t + n \geq T$$, as usual. The n-step update equation is
+
+$$
+\boldsymbol{w}_{t+n} \doteq \boldsymbol{w}_{t+n-1} + \alpha [G_{t:t+n} - \hat{q}(S_t, A_t, \boldsymbol{w}_{t + n - 1})]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_{t+n-1}), 0 \leq t \lt T
+$$
+
+$$
+\begin{align}
+&\text{Input: a differentiable functioin } \hat{q}: \mathcal{S} \times \mathcal{A} \times \mathbb{R}^d \rightarrow \mathbb{R} \text{, possibly } \pi \\
+&\text{Initialize value-function weight vector } \boldsymbol{w} \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Parameters: step size } \alpha \gt 0 \text{, small } \epsilon \gt 0 \text{, a positive integer } n \\
+&\text{All store and access operations (} S_t, A_t \text{, and } R_t \text{) can take their index mod } n \\
+&\text{Repeat (for each episode):} \\
+&\quad \text{Initialize and store } S_0 \neq terminal \\
+&\quad \text{Select and store an action } A_0 \sim \pi(\cdot|S_0) \text{ or } \epsilon\text{-greedy w.r.t. } \hat{q}(S_0, \cdot, \boldsymbol{w}) \\
+&\quad T \leftarrow \infty \\
+&\quad \text{For } t = 0, 1, 2, \cdots : \\
+&\qquad \text{If } t \lt T \text{, then:} \\
+&\qquad\quad \text{Take action } A_t \\
+&\qquad\quad \text{Observe and store the next reward as } R_{t+1} \text{ and the next state as } S_{t+1} \\
+&\qquad\quad \text{If } S_{t+1} \text{ is terminal, then:} \\
+&\qquad\qquad T \leftarrow t + 1 \\
+&\qquad\quad \text{else:} \\
+&\qquad\qquad \text{Select and store } A_{t+1} \sim \pi(\cdot | S_{t+1}) \text{ or } \epsilon\text{-greedy w.r.t. } \hat{q}(S_{t+1}, \cdot, \boldsymbol{w}) \\
+&\qquad \tau \leftarrow t - n + 1 \text{(} \tau \text{ is the time whose estimate is being updated)} \\
+&\qquad \text{If } \tau \geq 0 : \\
+&\qquad\quad G \leftarrow \sum_{i = \tau + 1}^{\min (\tau + n, T)} \gamma^{i - \tau - 1}R_i \\
+&\qquad\quad \text{If } \tau + n \lt T \text{, then } G \leftarrow G + \gamma^n\hat{q}(S_{\tau+n}, A_{\tau+n}, \boldsymbol{w}) \\
+&\qquad\quad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha [G - \hat{q}(S_\tau, A_\tau, \boldsymbol{w})]\nabla\hat{q}(S_\tau, S_\tau, \boldsymbol{w}) \\
+&\quad \text{until } \tau = T - 1
+\end{align}
+$$
+
+
+
