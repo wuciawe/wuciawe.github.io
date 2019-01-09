@@ -249,5 +249,179 @@ $$
 \end{align}
 $$
 
+#### n-step differential semi-gradient SARSA
+
+In order to generalize to n-step bootstrapping, we need an n-step version of the TD error.
+
+$$
+\begin{align}
+&\text{Input: a differentiable functioin } \hat{q}: \mathcal{S} \times \mathcal{A} \times \mathbb{R}^d \rightarrow \mathbb{R} \text{, a policy } \pi \\
+&\text{Initialize value-function weights } \boldsymbol{w} \in \mathbb{R}^m \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Initialize average-reward estimate } \bar{R} \in \mathbb{R} \text{ arbitrarily (e.g., } \bar{R} = 0 \text{)} \\
+&\text{Parameters: step size } \alpha, \beta \gt 0 \text{, small } \epsilon \gt 0 \text{, a positive integer } n \\
+&\text{All store and access operations (} S_t, A_t \text{, and } R_t \text{) can take their index mod } n \\
+&\text{Initialize and store } S_0 \text{ and } A_0 \\
+&\text{For } t = 0, 1, 2, \cdots : \\
+&\quad \text{Take action } A_t \\
+&\quad \text{Observe and store the next reward as } R_{t+1} \text{ and the next state as } S_{t+1} \\
+&\quad \text{Select and store an action } A_{t+1} \sim \pi(\cdot | S_{t+1}) \text{ or } \epsilon\text{-greedy w.r.t. } \hat{q}(S_{t+1}, \cdot, \boldsymbol{w}) \\
+&\quad \tau \leftarrow t - n + 1 \text{(} \tau \text{ is the time whose estimate is being updated)} \\
+&\quad \tau \geq 0: \\
+&\qquad \delta \leftarrow \sum_{i = \tau + 1}^{\tau + n} (R_i - \bar{R}) + \hat{q}(S_{\tau + n}, A_{\tau + n}, \boldsymbol{w}) - \hat{q}(S_\tau, A_\tau, \boldsymbol{w}) \\
+&\qquad \bar{R} \leftarrow \bar{R} + \beta\delta \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha\delta\nabla\hat{q}(S_\tau, A_\tau, \boldsymbol{w})
+\end{align}
+$$
+
+### Off-policy methods with approximation
+
+#### Semi-gradient methods
+
+The one-step state-value algorithm is semi-gradient off-policy TD(0), which is just like the corresponding 
+on-policy algorithm except for the addition of $$\rho_t$$:
+
+$$
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha\rho_t\delta_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)
+$$
+
+where $$\rho \doteq \rho_{t:t} = \frac{\pi(A_t|S_t)}{b(A_t|S_t)}$$ is the per-step importance sampling ratio 
+and $$\delta_t$$ is defined appropriately depending on whether the problem is episodic and discounted, or 
+continuing and undiscounted using average reward:
+
+$$
+\begin{align}
+\delta_t &\doteq R_{t+1} + \gamma\hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t) \text{, or} \\
+\delta_t &\doteq R_{t+1} - \bar{R}_t + \hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t)
+\end{align}
+$$
+
+For action-values, the one-step algorithm is semi-gradient expected SARSA:
+
+$$
+\begin{align}
+&\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha\delta_t\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t) \text{, with} \\
+&\delta_t \doteq R_{t+1} + \gamma\sum_a \pi(a|S_{t+1})\hat{q}(S_{t+1}, a, \boldsymbol{w}_t) - \hat{q}(S_t, A_t, \boldsymbol{w}_t) \text{, or} \\
+&\delta_t \doteq R_{t+1} - \bar{R} + \sum_a \pi(a|S_{t+1})\hat{q}(S_{t+1}, a, \boldsymbol{w}_t) - \hat{q}(S_t, A_t, \boldsymbol{w}_t)
+\end{align}
+$$
+
+Note that this algorithm does not use importance sampling. In the tabular case it is clear that this is 
+appropriate because the only sample action is $$A_t$$ , and in learning its value we do not have to consider 
+any other actions. With function approximation it is less clear because we might want to weight different 
+state–action pairs differently once they all contribute to the same overall approximation.
+
+In the multi-step generalizations of these algorithms, both the state-value and action-value algorithms 
+involve importance sampling. For example, the n-step version of semi-gradient expected SARSA is
+
+$$
+\begin{align}
+&\boldsymbol{w}_{t+n} \doteq \boldsymbol{w}_{t+n-1} + \alpha\rho_{t+1} \cdots \rho_{t+n-1}[G_{t:t+n} - \hat{q}(S_t, A_t, \boldsymbol{w}_{t+n-1})]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_{t+n-1}) \text{ with}\\
+&G_{t:t+n} \doteq R_{t+1} + \cdots + \gamma^{n-1}R_{t+n} + \gamma^n\hat{q}(S_{t+n}, A_{t+n}, \boldsymbol{w}_{t+n-1}) \text{, or} \\
+&G_{t:t+n} \doteq R_{t+1} - \bar{R}_t + \cdots + R_{t+n} - \bar{R}_{t+n-1} + \hat{q}(S_{t+n}, A_{t+n}, \boldsymbol{w}_{t + n - 1})
+\end{align}
+$$
+
+The semi-gradient version of the n-step tree-backup algorithm which does not involve importance sampling is 
+
+$$
+\begin{align}
+&\boldsymbol{w}_{t+n} \doteq \boldsymbol{w}_{t+n-1} + \alpha[G_{t:t+n} - \hat{q}(S_t, A_t, \boldsymbol{w}_{t+n-1})]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_{t+n-1}) \text{, with } \\
+&G_{t:t+n} \doteq \hat{q}(S_t, A_t, \boldsymbol{w}_{t-1}) + \sum_{k=t}^{t+n-1}\delta_k\prod_{i=t+1}^k\gamma\pi(A_i|S_i)
+\end{align}
+$$
+
+#### The deadly triad
+
+The danger of instability and divergence arises whenever we combine all of the following three elements, 
+making up what we call the deadly triad:
+
+- Function approximation: A powerful, scalable way of generalizing from a state space much larger than 
+the memory and computational resources
+
+- Bootstrapping: Update targets that include existing estimates (as in dynamic programming or TD methods) 
+rather than relying exclusively on actual rewards and complete returns (as in MC methods)
+
+- Off-policy training: Training on a distribution of transitions other than that produced by the target 
+policy. Sweeping through the state space and updating all states uniformly, as in dynamic programming, 
+does not respect the target policy and is an example of off-policy training
+
+In particular, note that the danger is not due to control, or to generalized policy iteration. Those cases 
+are more complex to analyze, but the instability arises in the simpler prediction case whenever it includes 
+all three elements of the deadly triad. The danger is also not due to learning or to uncertainties about 
+the environment, because it occurs just as strongly in planning methods, such as dynamic programming, in 
+which the environment is completely known.
+
+If any two elements of the deadly triad are present, but not all three, then instability can be avoided. 
+It is natural, then, to go through the three and see if there is any one that can be given up.
+
+Of the three, function approximation most clearly cannot be given up. We need methods that scale to 
+large problems and to great expressive power.
+
+Doing without bootstrapping is possible, at the cost of computational and data efficiency. Perhaps 
+most important are the losses in computational efficiency. The losses in data efficiency by giving 
+up bootstrapping are also significant. Bootstrapping often results in faster learning because it 
+allows learning to take advantage of the state property, the ability to recognize a state upon 
+returning to it. On the other hand, bootstrapping can impair learning on problems where the state 
+representation is poor and causes poor generalization.
+
+Finally, there is off-policy learning. On-policy methods are often adequate. For model-free reinforcement 
+learning, one can simply use SARSA rather than q-learning.  Off-policy methods free behavior from 
+the target policy. This could be considered an appealing convenience but not a necessity. However, 
+off-policy learning is essential to other anticipated use cases. In these use cases, the agent learns 
+not just a single value function and single policy, but large numbers of them in parallel.
+
+#### Bellman error
+
+The Bellman equation for value function $$v_\pi$$ is
+
+$$
+v_\pi(s) = \sum_a \pi(a|s)\sum_{s', r} p(s', r | s, a)[r + \gamma v_\pi(s')] \text{, for all } s \in \mathcal{S}
+$$
+
+$$v_\pi$$ is the only value function that solves this equation exactly. If an approximate value function 
+$$v_\boldsymbol{w}$$ were substituted for $$v_\pi$$, the difference between the right and left sides of 
+the modified equation could be used as a measure of how far off $$v_\boldsymbol{w}$$ is from $$v_\pi$$. 
+We call this the Bellman error at state $$s$$
+
+$$
+\begin{align}
+\bar{delta}_\boldsymbol{w}(s) &\doteq \left(\sum_a\pi(a|s)\sum_{s', r}p(s', r | s, a)[r + \gamma v_\boldsymbol{w}(s')]\right) - v_\boldsymbol{w}(s) \\
+&= \mathbb{E}[R_{t+1} + \gamma v_\boldsymbol{w}(S_{t+1}) - v_\boldsymbol{w}(S_t) | S_t = s, A_t \sim \pi]
+\end{align}
+$$
+
+We can see that the Bellman error is the expectation of the TD error $$\delta_t &\doteq R_{t+1} + \gamma\hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t)$$.
+
+The vector of all the Bellman errors, at all states, $$\bar{\delta}_\boldsymbol{w} \in \mathbb{R}^{\mathcal{S}}$$, 
+is called the Bellman error vector. The overall size of this vector, in the norm, is an overall 
+measure of the error in the value function, called the Mean Squared Bellman Error:
+
+$$
+bar{BE}(\boldsymbol{w}) = ||\bar{\delta}_\boldsymbol{w}||^2
+$$
+
+The Bellman operator $$\mathrm{B}_\pi:\mathbb{R}^{\mathcal{S}} \rightarrow \mathbb{R}^{\mathcal{S}}$$ is defined by
+
+$$
+(\mathrm{B}_\pi v)(s) \doteq \sum_a \pi(s|s)\sum_{s', r} p(s', r | s, a)[r + \gamma v(s')]
+$$
+
+for all $$s \in \mathcal{S}$$ and $$v: \mathcal{S} \rightarrow \mathbb{R}$$. The Bellman error vector 
+for $$v$$ can be written $$\bar{\delta}_\boldsymbol{w} = \mathrm{B}_\pi v_\boldsymbol{w} - v_\boldsymbol{w}$$.
+
+If the Bellman operator is applied to a value function in the representable subspace, then, in general, 
+it will produce a new value function that is outside the subspace.  In dynamic programming (without 
+function approximation), this operator is applied repeatedly to the points outside the representable space. 
+Eventually that process converges to the true value function $$v_\pi$$, the only fixed point for the 
+Bellman operator, the only value function for which
+
+$$
+v_\pi = \mathrm{B}_\pi v_\pi
+$$
+
+which is just another way of writing the Bellman equation for $$\pi$$.
+
+
+
 
 
