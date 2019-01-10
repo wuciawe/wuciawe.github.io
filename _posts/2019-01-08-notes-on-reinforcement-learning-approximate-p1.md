@@ -421,7 +421,14 @@ $$
 
 which is just another way of writing the Bellman equation for $$\pi$$.
 
+#### Attempts to avoid instability in deadly triad
 
-
-
-
+The most popular has been to seek to perform true stochastic gradient descent in the Bellman error. However 
+this is not an appealing goal in many cases, and that anyway it is impossible to achieve with a learning 
+algorithm -- the gradient of the $$\bar{BE}$$ is not learnable from experience that reveals only feature 
+vectors and not underlying states. Another approach, gradient-TD methods, performs SGD in the projected 
+Bellman error. The gradient of the $$\bar{PBE}$$ is learnable with $$O(d)$$ complexity, but at the cost of 
+a second parameter vector with a second step size. The newest family of methods, emphatic-TD methods, refine 
+an old idea for reweighting updates, emphasizing some and de-emphasizing others. In this way they restore 
+the special properties that make on-policy learning stable with computationally simple semi-gradient 
+methods.
