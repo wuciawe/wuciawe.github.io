@@ -175,5 +175,213 @@ $$
 \boldsymbol{z}_t \doteq \gamma\lambda\boldsymbol{z}_{t-1} + (1-\alpha\gamma\lambda\boldsymbol{z}_{t-1}^T\boldsymbol{x}_t)\boldsymbol{x}_t
 $$
 
+This algorithm has been proven to produce exactly the same sequence of weight vectors, 
+$$\boldsymbol{w}_t, 0 \leq t \leq T$$, as the on-line $$\lambda$$-return algorithm.
 
+$$
+\begin{align}
+&\text{Input: the policy } \pi \text{ to be evaluated} \\
+&\text{Initialize value-function weights } \boldsymbol{w} \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Repeat (for each episode):} \\
+&\quad \text{Initialize state and obtain initial feature vector } \boldsymbol{x} \\
+&\quad \boldsymbol{z} \leftarrow 0 \\
+&\quad V_{old} \leftarrow 0 \\
+&\quad \text{Repeat (for each step of episode):} \\
+&\qquad \text{Choose } A \sim \pi \\
+&\qquad \text{Take action } A\text{, observe } R, \boldsymbol{x}' \text{ (feature vector of the next state)} \\
+&\qquad V \leftarrow \boldsymbol{w}^T\boldsymbol{x} \\
+&\qquad V' \leftarrow \boldsymbol{w}^T\boldsymbol{x}' \\
+&\qquad \delta \leftarrow R + \gamma V' - V \\
+&\qquad \boldsymbol{z} \leftarrow \gamma\lambda\boldsymbol{z} + (1 - \alpha\gamma\lambda\boldsymbol{z}^T\boldsymbol{x})\boldsymbol{x} \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha(\delta + V - V_{old})\boldsymbol{z} - \alpha(V - V_{old})\boldsymbol{x} \\
+&\qquad V_{old} \leftarrow V' \\
+&\qquad \boldsymbol{x} \leftarrow \boldsymbol{x}' \\
+&\quad \boldsymbol{x}' = 0 \text{ (signaling arrival at a terminal state)}
+\end{align}
+$$
+
+The eligibility trace used in true online $$TD(\lambda)$$ is called a dutch trace to distinguish it from the 
+trace used in $$TD(\lambda)$$, which is called an accumulating trace. Earlier work often used a third kind of 
+trace called the replacing trace which is deprecated now.
+
+#### $$SARSA(\lambda)$$
+
+Very few changes are required in order to extend eligibility traces to action-value methods. To learn 
+approximate action values, $$\hat{q}(s,a,\boldsymbol{w})$$, rather than approximate state values, 
+$$\hat{v}(s,\boldsymbol{w})$$, we need to use the action-value form of the n-step return
+
+$$
+G_{t:t+n} \doteq R_{t+1} + \cdots + \gamma^{n-1}R_{t+n} + \gamma^n\hat{q}(S_{t+n}, A_{t+n}, \boldsymbol{w}_{t+n-1})
+$$
+
+for all $$n$$ and $$t$$ such that $$n \geq 1$$ and $$0 \leq t \lt T - n$$. The action-value form of the off-line 
+$$\lambda$$-return algorithm simply uses $\hat{q}$$ rather than $$\hat{v}$$:
+
+$$
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha[G_t^\lambda - \hat{q}(S_t, A_t\boldsymbol{w}_t)]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t), t = 0, \cdots, T - 1
+$$
+
+where $$G_t^\lambda \doteq G_{t:\infty}^\lambda$$.
+
+The temporal-difference method for action values, known as $$SARSA(\lambda)$$, approximates this forward view. 
+It has the same update rule as given for $$TD(\lambda)$$
+
+$$
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha\delta_t\boldsymbol{z}_t
+$$
+
+except using the action-value form of the TD error
+
+$$
+\delta_t \doteq R_{t+1} + \gamma \hat{q}(S_{t+1}, A_{t+1}, \boldsymbol{w}_t) - \hat{q}(S_t, A_t, \boldsymbol{w}_t)
+$$
+
+and the action-value form of the eligibility trace
+
+$$
+\begin{align}
+&\boldsymbol{z}_{-1} \doteq 0, \\
+&\boldsymbol{z}_t \doteq \gamma\lambda\boldsymbol{z}_{t-1} + \nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t), 0 \leq t \leq T
+\end{align}
+$$
+
+The procedure for $$SARSA(\lambda)$$ with binary features and linear function approximation is 
+
+$$
+\begin{align}
+&\text{Input: a function } \mathcal{F}(s, a) \text{ returning the set of (indicies of) active features for } s, a \\
+&\text{Input: a policy } \pi \text{ to be evaluated, if any} \\
+&\text{Initialize parameter vector } \boldsymbol{w} = (w_1, \cdots, w_n) \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Loop for each episode:} \\
+&\quad \text{Initialize } S \\
+&\quad \text{Choose } A \sim \pi(\cdot | S) \text{ or } \epsilon\text{-greedy according to } \hat{q}(S, \cdot, \boldsymbol{w}) \\
+&\quad \boldsymbol{z} \leftarrow 0 \\
+&\quad \text{Loop for each step of episode:} \\
+&\qquad \text{Take action } A \text{, observe } R, S' \\
+&\qquad \delta \leftarrow R \\
+&\qquad \text{Loop for } i \text{ in } \mathcal{F}(S, A): \\
+&\qquad\quad \delta \leftarrow \delta - w_i \\
+&\qquad\quad z_i \leftarrow z_i + 1 \text{ (accumulating traces)} \\
+&\qquad\quad \text{or } z_i \leftarrow 1 \text{ (replacing traces)} \\
+&\qquad \text{If } S' \text{ is terminal then:} \\
+&\qquad\quad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha\delta\boldsymbol{z} \\
+&\qquad\quad \text{Go to next episode} \\
+&\qquad \text{Choose } A' \sim \pi(\cdot| S') \text{ or near greedily } \sim \hat{q}(S', \cdot, \boldsymbol{w}) \\
+&\qquad \text{Loop for } i \text{ in } \mathcal{F}(S', A'): \delta \leftarrow \delta + \gamma w_i \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha\delta\boldsymbol{z} \\
+&\qquad \boldsymbol{z} \leftarrow \gamma\lambda\boldsymbol{z} \\
+&\qquad S \leftarrow S'; A \leftarrow A'
+\end{align}
+$$
+
+The procedure for true online $$SARSA(\lambda)$$ is
+
+$$
+\begin{align}
+&\text{Input: a feature function } \boldsymbol{x}: \mathcal{S}^+ \times \mathcal{A} \rightarrow \mathbb{R}^d \text{ s.t. } \boldsymbol{x}(terminal, \cdot) = 0 \\
+&\text{Input: the policy } \pi \text{ to be evaluated, if any} \\
+&\text{Initialize parameter } \boldsymbol{w} \text{ arbitrarily (e.g., } \boldsymbol{w} = 0 \text{)} \\
+&\text{Loop for each episode:} \\
+&\quad \text{Initialize } S \\
+&\quad \text{Choose } A \sim \pi(\cdot|S) \text{ or near greedily from } S \text{ using } \boldsymbol{w} \\
+&\quad \boldsymbol{x} \leftarrow \boldsymbol{x}(S, A) \\
+&\quad \boldsymbol{z} \leftarrow 0 \\
+&\quad Q_{old} \leftarrow 0 \\
+&\quad \text{Loop for each step of episode:} \\
+&\qquad \text{Take action } A\text{, observe } R, S' \\
+&\qquad \text{Choose } A' \sim \pi(\cdot|S') \text{ or near greedily from } S' \text{ using } \boldsymbol{w} \\
+&\qquad \boldsymbol{x}' \leftarrow \boldsymbol{x}(S', A') \\
+&\qquad Q \leftarrow \boldsymbol{w}^T\boldsymbol{x} \\
+&\qquad Q' \leftarrow \boldsymbol{w}^T\boldsymbol{x}' \\
+&\qquad \delta \leftarrow R + \gamma Q' - Q \\
+&\qquad \boldsymbol{z} \leftarrow \gamma\lambda\boldsymbol{z} + (1 - \alpha\gamma\lambda\boldsymbol{z}^T\boldsymbol{x})\boldsymbol{x} \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha(\delta + Q - Q_{old})\boldsymbol{z} - \alpha(Q - Q_{old})\boldsymbol{x} \\
+&\qquad Q_{old} \leftarrow Q' \\
+&\qquad \boldsymbol{x} \leftarrow \boldsymbol{x}' \\
+&\qquad A \leftarrow A' \\
+&\quad \text{until } S' \text{ is terminal}
+\end{align}
+$$
+
+#### Off-policy eligibility traces
+
+Unlike in the case of n-step methods, for full non-truncated $$\lambda$$-returns one does not have a 
+practical option in which the importance sampling is done outside the target return. Instead, we move 
+directly to the bootstrapping generalization of per-reward importance sampling. In the state case, our 
+final definition of the $$λ$$-return generalizes to
+
+$$
+G_{t}^{\lambda_s} \doteq \rho\left(R_{t+1} + \gamma_{t+1}((1-\lambda_{t+1})\hat{v}S(S_{t+1},\boldsymbol{w}_t) + \lambda_{t+1}G_{t+1}^{\lambda_s})\right) + (1 - \rho_t)\hat{v}(S_t, \boldsymbol{w}_t)
+$$
+
+where $$\rho = \frac{\pi(A_t|S_t)}{b(A_t|S_t)}$$ is the usual single-step importance sampling ratio. The 
+truncated version of this return can be approximated simply in terms of sums of the state-based TD error, 
+
+$$
+\delta_t^s = R_{t+1} + \gamma_{t+1}\hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t)
+$$
+
+as
+
+$$
+G_t^{\lambda_s} \approx \hat{v}(S_t, \boldsymbol{w}_t) + \rho_t \sum_{k=t}^\infty\delta_k^s\sum_{i=t+1}^k\gamma_i\lambda_i\rho_i
+$$
+
+with the approximation becoming exact if the approximate value function does not change.
+
+The above form of the $$\lambda$$-return is convenient to use in a forward-view update
+
+$$
+\begin{align}
+\boldsymbol{w}_{t+1} &= \boldsymbol{w}_t + \alpha(G_t^{\lambda_s} - \hat{v}(S_t, \boldsymbol{w}_t))\nabla\hat{v}(S_t, \boldsymbol{w}_t) \\
+&\approx \boldsymbol{w}_t + \alpha\rho_t\left(\sum_{k=t}^\infty\delta_k^s\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i\right)\nabla\hat{v}(S_t, \boldsymbol{w}_t)
+\end{align}
+$$
+
+which looks like an eligibility-based TD update -- the product is like an eligibility trace and it is multiplied 
+by TD errors. But this is just one time step of a forward view. The relationship that we are looking for is that 
+the forward-view update, summed over time, is approximately equal to a backward-view update, summed over time. 
+The sum of he forward-view update over time is
+
+$$
+\begin{align}
+\sum_{t=1}^\infty(\boldsymbol{w}_{t+1} - \boldsymbol{w}_t) &\approx \sum_{t=1}^\infty\sum_{k=t}^\infty\alpha\rho_t\delta_k^s\nabla\hat{v}(S_t, \boldsymbol{w}_t)\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i \\
+&= \sum_{k=1}^\infty\sum_{t=1}^k\alpha\rho_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)\delta_k^s\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i \\
+&= \sum_{k=1}^\infty\alpha\delta_k^s\sum_{t=1}^k\rho_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i
+\end{align}
+$$
+
+which would be in the form of the sum of a backward-view TD update if the entire expression from the second sum left 
+could be written and updated incrementally as an eligibility trace, which we now show can be done. That is, we show 
+that if this expression was the trace at time $$k$$, then we could update it from its value at time $$k − 1$$ by:
+
+$$
+\begin{align}
+\boldsymbol{z}_k &= \sum_{t=1}^k\rho_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i \\
+&= \sum_{t=1}^{k-1}\rho_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)\prod_{i=t+1}^k\gamma_i\lambda_i\rho_i + \rho_k\nabla\hat{v}(S_k, \boldsymbol{w}_k) \\
+&= \gamma_k\lambda_k\rho_k\sum_{t=1}^{k-1}\rho_t\nabla\hat{v}(S_t, \boldsymbol{w}_t)\prod_{i=t+1}^{k-1}\gamma_i\lambda_i\rho_i + \rho_k\nabla\hat{v}(S_k, \boldsymbol{w}_k) \\
+&= \rho_k(\gamma_k\lambda_k\boldsymbol{z}_{k-1} + \nabla\hat{v}(S_k, \boldsymbol{w}_k))
+\end{align}
+$$
+
+which, changing the index from $$k$$ to $$t$$, is the general accumulating trace update for state values
+
+$$
+\boldsymbol{z}_t \doteq \rho_t(\gamma_t\lambda_t\boldsymbol{z}_{t-1} + \nabla\hat{v}(S_t, \boldsymbol{w}_t))
+$$
+
+A very similar series of steps can be followed to derive the off-policy eligibility traces for action-value methods 
+and corresponding general $$SARSA(\lambda)$$ algorithms.
+
+#### When to use eligibility traces
+
+Methods using eligibility traces require more computation than one-step methods, but in return they offer significantly 
+faster learning, particularly when rewards are delayed by many steps. Thus it often makes sense to use eligibility 
+traces when data are scare and cannot be repeatedly processed, as is often the case in on-line applications. On the 
+other hand, in off-line applications in which data can be generated cheaply, perhaps from an inexpensive simulation, 
+then it often does not pay to use eligibility traces. In these cases the objective is not to get more out of a limited 
+amount of data, but simply to process as much data as possible as quickly as possible. In these cases the speedup 
+per datum due to traces is typically not worth their computational cost, and one-step methods are favoured.
+
+### Policy gradient methods
 
