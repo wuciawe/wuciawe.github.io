@@ -385,3 +385,202 @@ per datum due to traces is typically not worth their computational cost, and one
 
 ### Policy gradient methods
 
+We consider methods that learn a parameterized policy that can select actions 
+without consulting a value function. A value function may still be used to learn 
+the policy parameter, but is not required for action selection. We use the 
+notation $$\boldsymbol{\theta} \in \mathbb{R}^{d'}$$ for the policy's parameter 
+vector. Thus we write $$\pi(a|s,\boldsymbol{\theta}) = \text{Pr}\{A_t=a|S_t=s,\boldsymbol{\theta}_t=\boldsymbol{\theta}\}$$ 
+for the probability that action $$a$$ is taken given that the environment is in 
+state $$s$$ at time $$t$$ with parameter $$\boldsymbol{\theta}$$. If a method 
+uses a learned value function as well, then the value function's weight vector 
+is denoted $$\boldsymbol{w} \in \mathbb{R}^d$$ as usual, as in $$\hat{v}(s, \boldsymbol{w})$$.
+
+Consider methods for learning the policy parameter based on the gradient of some 
+performance measure $$\mathcal{J}(\boldsymbol{\theta})$$ with respect to the 
+policy parameter. These methods seek to maximize performance, so their udpates 
+approximate gradient ascent in $$\mathcal{J}$$
+
+$$
+\boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t + \alpha\hat{\nabla\mathcal{J}(\boldsymbol{\theta})}
+$$
+
+where $$\hat{\nabla\mathcal{J}(\boldsymbol{\theta})}$$ is a stochastic estimate 
+whose expectation approximates the gradient of the performance measure with respect 
+to its argument $$\boldsymbol{\theta}_t$$ . All methods that follow this general 
+schema we call policy gradient methods, whether or not they also learn an approximate 
+value function. Methods that learn approximations to both policy and value functions 
+are often called actor–critic methods, where 'actor' is a reference to the learned 
+policy, and 'critic' refers to the learned value function, usually a state-value 
+function.
+
+#### Policy approximation
+
+In policy gradient methods, the policy can be parameterized in any way, as long 
+as $$\pi(a|s,\boldsymbol{\theta})$$ is differentiable with respect to its 
+parameters, that is, as long as $$\nabla_{\boldsymbol{\theta}}\pi(a|s,\boldsymbol{\theta})$$ 
+exists and is always finite. In practice, to ensure exploration we generally 
+require that the policy never becomes deterministic (i.e., that $$\pi(a|s,\boldsymbol{\theta}) \in (0, 1)$$) 
+for all $$s, a, \boldsymbol{\theta}$$.
+
+If the action space is discrete and not too large, then a natural kind of parameterization 
+is to form parameterized numerical preferences $$h(s,a,\boldsymbol{\theta}) \in \mathbb{R}$$ 
+for each state–action pair. The actions with the highest preferences in each state are given 
+the highest probabilities of being selected, for example, according to an exponential softmax distribution:
+
+$$
+\pi(a|s,\boldsymbol{\theta}) = \frac{\exp(h(s,a,\boldsymbol{\theta}))}{\sum_b\exp(h(s,b,\boldsymbol{\theta}))}
+$$
+
+The preferences themselves can be parameterized arbitrarily. For example, they might be computed 
+by a deep neural network, where $$\boldsymbol{\theta}$$ is the vector of all the connection 
+weights of the network.
+
+An immediate advantage of selecting actions according to the softmax in action preferences is 
+that the approximate policy can approach a deterministic policy, whereas with ε-greedy action 
+selection over action values there is always an $$\epsilon$$ probability of selecting a random 
+action. Of course, one could select according to a softmax over action values, but this alone 
+would not allow the policy to approach a deterministic policy. Instead, the action-value estimates 
+would converge to their corresponding true values, which would differ by a finite amount, 
+translating to specific probabilities other than 0 and 1. If the softmax included a temperature 
+parameter, then the temperature could be reduced over time to approach determinism, but in 
+practice it would be difficult to choose the reduction schedule, or even the initial temperature, 
+without more prior knowledge of the true action values than we would like to assume. Action 
+preferences are different because they do not approach specific values; instead they are driven 
+to produce the optimal stochastic policy. If the optimal policy is deterministic, then the 
+preferences of the optimal actions will be driven infinitely higher than all suboptimal actions 
+(if permited by the parameterization).
+
+In problems with significant function approximation, the best approximate policy may be stochastic. 
+Action-value methods have no natural way of finding stochastic optimal policies, whereas policy 
+approximating methods can. This is a second significant advantage of policy-based methods.
+
+Perhaps the simplest advantage that policy parameterization may have over action-value 
+parameterization is that the policy may be a simpler function to approximate. Problems vary in the 
+complexity of their policies and action-value functions. For some, the action-value function is 
+simpler and thus easier to approximate. For others, the policy is simpler.
+
+Finally, we note that the choice of policy parameterization is sometimes a good way of injecting prior 
+knowledge about the desired form of the policy into the reinforcement learning system. This is often 
+the most important reason for using a policy-based learning method.
+
+#### The policy gradient theorem
+
+In addition to the practical advantages of policy parameterization over ε-greedy action selection, 
+there is also an important theoretical advantage. With continuous policy parameterization the 
+action probabilities change smoothly as a function of the learned parameter, whereas in 
+$$\epsilon$$-greedy selection the action probabilities may change dramatically for an arbitrarily 
+small change in the estimated action values, if that change results in a different action having 
+the maximal value. Largely because of this stronger convergence guarantees are available for 
+policy-gradient methods than for action-value methods. In particular, it is the continuity of 
+the policy dependence on the parameters that enables policy-gradient methods to approximate 
+gradient ascent.
+
+The episodic and continuing cases define the performance measure, 
+$$\mathcal{J}(\boldsymbol{\theta})$$, differently and thus have to be treated separately to some 
+extent. In the episodic case we define performance as
+
+$$
+\mathcal{J}(\boldsymbol{\theta}) \doteq v_{\pi_{\boldsymbol{\theta}}}(s_0)$$
+$$
+
+where $$v_{\pi_{\boldsymbol{\theta}}}$$ is the true value function for 
+$$\pi_{\boldsymbol{\theta}}$$, the policy determined by $$\boldsymbol{\theta}$$.
+
+With function approximation, it may seem challenging to change the policy parameter in a way that 
+ensures improvement. The problem is that performance depends on both the action selections and the 
+distribution of states in which those selections are made, and that both of these are affected by 
+the policy parameter. Given a state, the effect of the policy parameter on the actions, and thus 
+on reward, can be computed in a relatively straightforward way from knowledge of the 
+parameterization. But the effect of the policy on the state distribution is a function of the 
+environment and is typically unknown.
+
+The policy gradient theorem provides us an analytic expression for the gradient of performance 
+with respect to the policy parameter that does not involve the derivative of the state 
+distribution. The policy gradient theorem establishes that
+
+$$
+\nabla\mathcal{J}(\boldsymbol{\theta}) \propto \sum_s \mu(s) \sum_a q_\pi(s, a) \nabla_{\boldsymbol{\theta}} \pi(a|s, \boldsymbol{\theta})
+$$
+
+where the gradients are column vectors of partial derivatives with respect to the components of 
+$$\boldsymbol{\theta}$$, and $$\pi$$ denotes the policy corresponding to parameter vector 
+$$\boldsymbol{\theta}$$.  In the episodic case, the constant of proportionality is the average 
+length of an episode, and in the continuing case it is 1, so that the relationship is actually 
+an equality. The distribution $$\mu$$ here is the on-policy distribution under $$\pi$$.
+
+#### REINFORCE: Monte Carlo policy gradient
+
+$$
+\begin{align}
+&\text{Input: a differentiable policy parameterization } \pi(a|s, \boldsymbol{\theta}) \\
+&\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \\
+&\text{Repeat forever:} \\
+&\quad \text{Generate an episode } S_0, A_0, R_1, \cdots, S_{T-1}, A_{T-1}, R_T, \text{ following } \pi(\cdot | \cdot, \boldsymbol{\theta}) \\
+&\quad \text{For each step of the episode } t = 0, \cdots, T-1: \\
+&\qquad G \leftarrow \text{ return from step } t \\
+&\qquad \boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \alpha\gamma^t G\nabla_{\boldsymbol{\theta}} \ln \pi(A_t|S_t, \boldsymbol{\theta})
+\end{align}
+$$
+
+Its update has an intuitive appeal. Each increment is proportional to the product of a 
+return $$G_t$$ and a vector, the gradient of the probability of taking the action actually 
+taken divided by the probability of taking that action. The vector is the direction in 
+parameter space that most increases the probability of repeating the action $$A_t$$ on future 
+visits to state $$S_t$$. The update increases the parameter vector in this direction 
+proportional to the return, and inversely proportional to the action probability. The former 
+makes sense because it causes the parameter to move most in the directions that favor actions 
+that yield the highest return. The latter makes sense because otherwise actions that are 
+selected frequently are at an advantage (the updates will be more often in their direction) 
+and might win out even if they do not yield the highest return.
+
+The vector $$\ln \pi(A_t|S_t, \boldsymbol{\theta}) = \frac{\nabla_{\boldsymbol{\theta}}\pi(A_t|S_t, \boldsymbol{\theta}_t)}{\pi(A_t|S_t, \boldsymbol{\theta}_t)}$$ in the REINFORCE update is 
+the only place the policy parameterization appears in the algorithm. This vector has been 
+given several names and notations in the literature; we will refer to it simply as the 
+eligibility vector.
+
+#### REINFORCE with baseline
+
+The policy gradient theorem can be generalized to include a comparison of the action value 
+to an arbitrary baseline $$b(s)$$:
+
+$$
+\nabla\mathcal{J}(\boldsymbol{\theta}) \propto \sum_s \mu(s) \sum_a \left(q_\pi(s,a) - b(s)\right)\nabla_{\boldsymbol{\theta}}\pi(a|s, \boldsymbol{\theta})
+$$
+
+The baseline can be any function, even a random variable, as long as it does not vary with 
+$$a$$. The policy gradient theorem with baseline can be used to derive an update rule using 
+similar steps. The update rule that we end up with is a new version of REINFORCE that 
+includes a general baseline:
+
+$$
+\boldsymbol{\theta}_{t+1} \doteq \boldsymbol{\theta}_t + \alpha\left(G_t - b(S_t)\right)\frac{\nabla_{\boldsymbol{\theta}}\pi(A_t|S_t,\boldsymbol{\theta}_t)}{\pi(A_t|S_t,\boldsymbol{\theta}_t)}
+$$
+
+For MDPs the baseline should vary with state. In some states all actions have high values 
+and we need a high baseline to differentiate the higher valued actions from the less highly 
+valued ones; in other states all actions will have low values and a low baseline is appropriate.
+
+One natural choice for the baseline is an estimate of the state value, 
+$$\hat{v}(S_t, \boldsymbol{w})$$, where $$\boldsymbol{w} \in \mathbb{R}^m$$ is a weight 
+vector learned by one of the methods presented in previous chapters. Because REINFORCE is 
+a Monte Carlo method for learning the policy parameter, $$\boldsymbol{\theta}$$, it seems 
+natural to also use a Monte Carlo method to learn the state-value weights, $$\boldsymbol{w}$$. 
+
+$$
+\begin{align}
+&\text{Input: a differentiable policy parameterization } \pi(a|s, \boldsymbol{\theta}) \\
+&\text{Input: a differentiable state-value parameterization } \hat{v}(s, \boldsymbol{w}) \\
+&\text{Parameters: step size } \alpha^{\boldsymbol{\theta}} \gt 0, \alpha^{\boldsymbol{w}} \gt 0 \\
+&\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \text{ and state-value weights } \boldsymbol{w} \in \mathbb{R}^d \\
+&\text{Repeat forever:} \\
+&\quad \text{Generate an episode } S_0, A_0, R_1, \cdots, S_{T-1}, A_{T-1}, R_T, \text{ following } \pi(\cdot|\cdot, \boldsymbol{\theta}) \\
+&\quad \text{For each step of the episode } t = 0, \cdots, T-1: \\
+&\qquad G_t \leftarrow \text{ return from step } t \\
+&\qquad \delta \leftarrow G_t - \hat{v}(S_t, \boldsymbol{w}) \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha^{\boldsymbol{w}}\gamma^t\delta\nabla_{\boldsymbol{w}}\hat{v}(S_t, \boldsymbol{w}) \\
+&\qquad \boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \alpha^{\boldsymbol{\theta}}\gamma^t\delta\nabla_{\boldsymbol{\theta}}\ln\pi(A_t|S_t, \boldsymbol{\theta})
+\end{align}
+$$
+
+#### Actor-Critic method
+
