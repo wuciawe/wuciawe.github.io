@@ -584,3 +584,168 @@ $$
 
 #### Actor-Critic method
 
+Although the REINFORCE-with-baseline method learns both a policy and a state-value function, 
+we do not consider it to be an actor–critic method because its state-value function is used 
+only as a baseline, not as a critic. That is, it is not used for bootstrapping (updating the 
+value estimate for a state from the estimated values of subsequent states), but only as a 
+baseline for the state whose estimate is being updated. This is a useful distinction, for only 
+through bootstrapping do we introduce bias and an asymptotic dependence on the quality of the 
+function approximation. The bias introduced through bootstrapping and reliance on the state 
+representation is often beneficial because it reduces variance and accelerates learning. REINFORCE 
+with baseline is unbiased and will converge asymptotically to a local minimum, but like all Monte 
+Carlo methods it tends to learn slowly (produce estimates of high variance) and to be inconvenient 
+to implement online or for continuing problems. With temporal-difference methods we can eliminate 
+these inconveniences, and through multi-step methods we can flexibly choose the degree of 
+bootstrapping. In order to gain these advantages in the case of policy gradient methods we use 
+actor–critic methods with a bootstrapping critic.
+
+The procedure of one-step actor-critic is
+
+$$
+\begin{align}
+&\text{Input: a differentiable policy parameterization } \pi(a|s, \boldsymbol{\theta}) \\
+&\text{Input: a differentiable state-value parameterization } \hat{v}(s, \boldsymbol{w}) \\
+&\text{Parameters: step sizes } \alpha^{\boldsymbol{\theta}} \gt 0, \alpha^{\boldsymbol{w}} \gt 0 \\
+&\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \text{ and state-value weights } \boldsymbol{w} \in \mathbb{R}^d \\
+&\text{Repeat forever:} \\
+&\quad \text{Initialize } S \text{ (first state of episode)} \\
+&\quad I \leftarrow 1 \\
+&\quad \text{While } S \text{ is not terminal:} \\
+&\qquad A \sim \pi(\cdot|S, \boldsymbol{\theta}) \\
+&\qquad \text{Take action} A\text{, observe } S', R \\
+&\qquad \delta \leftarrow R + \gamma\hat{v}(S', \boldsymbol{w}) - \hat{v}(S, \boldsymbol{w}) \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha^{\boldsymbol{w}}I\delta\nabla_{\boldsymbol{w}}\hat{v}(S,\boldsymbol{w}) \\
+&\qquad \boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \alpha^{\boldsymbol{\theta}}I\delta\nabla_{\boldsymbol{\theta}}\ln\pi(A|S,\boldsymbol{\theta}) \\
+&\qquad I \leftarrow \gamma I \\
+&\qquad S \leftarrow S'
+\end{align}
+$$
+
+The generalizations to the forward view of multi-step methods and then to a $$\lambda$$-return 
+algorithm are straightforward. The one-step return is merely replaced by $$G_{t:t+k}^\lambda$$ 
+and $$G_t^\lambda$$ respectively. The backward views are also straightforward, using separate 
+eligibility traces for the actor and critic.
+
+$$
+\begin{align}
+&\text{Input: a differentiable policy parameterization } \pi(a|s, \boldsymbol{\theta}) \\
+&\text{Input: a differentiable state-value parameterization } \hat{v}(s, \boldsymbol{w}) \\
+&\text{Parameters: trace-decay rates } \lambda^{\boldsymbol{\theta}} \in [0, 1], \lambda^{\boldsymbol{w}} \in [0, 1] \text{; step sizes } \alpha^{\boldsymbol{\theta}} \gt 0, \alpha^{\boldsymbol{w}} \gt 0 \\
+&\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \text{ and state-value weights } \boldsymbol{w} \in \mathbb{R}^d \\
+&\text{Repeat forever:} \\
+&\quad \text{Initialize } S \text{ (first state of episode)} \\
+&\quad \boldsymbol{z}^{\boldsymbol{\theta}} \leftarrow 0 \text{ (} d'\text{-component eligibility trace vector)} \\
+&\quad \boldsymbol{z}^{\boldsymbol{w}} \leftarrow 0 \text{ (} d\text{-component eligibility trace vector)} \\
+&\quad I \leftarrow 1 \\
+&\quad \text{While } S \text{ is not terminal (for each time step):} \\
+&\qquad A \sim \pi(\cdot|S, \boldsymbol{\theta}) \\
+&\qquad \text{Take action} A\text{, observe } S', R \\
+&\qquad \delta \leftarrow R + \gamma\hat{v}(S', \boldsymbol{w}) - \hat{v}(S, \boldsymbol{w}) \\
+&\qquad \boldsymbol{z}^{\boldsymbol{w}} \leftarrow \gamma\lambda^{\boldsymbol{w}}\boldsymbol{z}^{\boldsymbol{w}} + I\nabla_{\boldsymbol{w}}\hat{v}(S, \boldsymbol{w}) \\
+&\qquad \boldsymbol{z}^{\boldsymbol{\theta}} \leftarrow \gamma\lambda^{\boldsymbol{\theta}}\boldsymbol{z}^{\boldsymbol{\theta}} + I\nabla_{\boldsymbol{\theta}}\ln\pi(A|S,\boldsymbol{\theta}) \\
+&\qquad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha^{\boldsymbol{w}}\delta\boldsymbol{z}^{\boldsymbol{w}} \\
+&\qquad \boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \alpha^{\boldsymbol{\theta}}\delta\boldsymbol{z}^{\boldsymbol{\theta}} \\
+&\qquad I \leftarrow \gamma I \\
+&\qquad S \leftarrow S'
+\end{align}
+$$
+
+#### Policy gradient for continuing problems
+
+For continuing problems without episode boundaries we need to define performance in terms of 
+the average rate of reward per time step:
+
+$$
+\begin{align}
+\mathcal{J}(\boldsymbol{\theta}) \doteq r(\pi) &\doteq \lim_{h \rightarrow \infty} \frac{1}{h}\sum_{t=1}^h\mathbb{E}[R_t|A_{0:t-1} \sim \pi] \\
+&= \lim_{t \rightarrow \infty} \mathbb{E}[R_t|A_{0:t-1} \sim \pi] \\
+&= \sum_s\mu(s)\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)r
+\end{align}
+$$
+
+where $$\mu$$ is the steady-state distribution under $$\pi$$, 
+$$\mu(s)\doteq\lim_{t\rightarrow\infty}\text{Pr}\{S_t=s|A_{0:t}\sim\pi\}$$, which is assumed 
+to exist and to be independent of $$S_0$$ (an ergodicity assumption). This is the special 
+distribution under which, if you select actions according to $$\pi$$, you remain in the same 
+distribution:
+
+$$
+\sum_s\mu(s)\sum_a\pi(a|s, \boldsymbol{\theta})p(s'|s,a) = \mu(s')
+$$
+
+We also define values, $$v_\pi(s) \doteq \mathbb{E}_\pi[G_t|S_t = s]$$ and 
+$$q_\pi(s, a) \doteq \mathbb{E}_\pi[G_t|S_t=s,A_t=a]$$, with respect to the differential 
+return:
+
+$$
+G_t \doteq R_{t+1} - \eta(\pi) + R_{t+2} - \eta(\pi) + R_{t+3} - \eta(\pi) + \cdots
+$$
+
+With these alternate definitions, the policy gradient theorem as given for the episodic case 
+remains true for the continuing case. The forward and backward view equations also remain the 
+same.
+
+$$
+\begin{align}
+&\text{Input: a differentiable policy parameterization } \pi(a|s, \boldsymbol{\theta}) \\
+&\text{Input: a differentiable state-value parameterization } \hat{v}(s, \boldsymbol{w}) \\
+&\text{Parameters: trace-decay rates } \lambda^{\boldsymbol{\theta}} \in [0, 1], \lambda^{\boldsymbol{w}} \in [0, 1] \text{; step sizes } \alpha^{\boldsymbol{\theta}} \gt 0, \alpha^{\boldsymbol{w}} \gt 0, \eta \gt 0 \\
+&\boldsymbol{z}^{\boldsymbol{\theta}} \leftarrow 0 \text{ (} d'\text{-component eligibility trace vector)} \\
+&\boldsymbol{z}^{\boldsymbol{w}} \leftarrow 0 \text{ (} d\text{-component eligibility trace vector)} \\
+&\text{Initialize } \bar{R} \in \mathbb{R} \text{ (e.g., to } 0 \text{ })} \\
+&\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \text{ and state-value weights } \boldsymbol{w} \in \mathbb{R}^d \text{ (e.g., to } 0 \text{)} \\
+&\text{Initialize } S \in \mathcal{S} \text{ (e.g., to } s_0 \text{)} \\
+&\text{Repeat forever:} \\
+&\quad A \sim \pi(\cdot|S, \boldsymbol{\theta}) \\
+&\quad \text{Take action} A\text{, observe } S', R \\
+&\quad \delta \leftarrow R - \bar{R} + \hat{v}(S', \boldsymbol{w}) - \hat{v}(S, \boldsymbol{w}) \qquad \text{(if } S' \text{ is terminal, then } \hat{v}(S',\boldsymbol{w}) \doteq 0 \text{)} \\
+&\quad \bar{R} \leftarrow \bar{R} + \eta\delta \\
+&\quad \boldsymbol{z}^{\boldsymbol{w}} \leftarrow \lambda^{\boldsymbol{w}}\boldsymbol{z}^{\boldsymbol{w}} + \nabla_{\boldsymbol{w}}\hat{v}(S, \boldsymbol{w}) \\
+&\quad \boldsymbol{z}^{\boldsymbol{\theta}} \leftarrow \lambda^{\boldsymbol{\theta}}\boldsymbol{z}^{\boldsymbol{\theta}} + \nabla_{\boldsymbol{\theta}}\ln\pi(A|S,\boldsymbol{\theta}) \\
+&\quad \boldsymbol{w} \leftarrow \boldsymbol{w} + \alpha^{\boldsymbol{w}}\delta\boldsymbol{z}^{\boldsymbol{w}} \\
+&\quad \boldsymbol{\theta} \leftarrow \boldsymbol{\theta} + \alpha^{\boldsymbol{\theta}}\delta\boldsymbol{z}^{\boldsymbol{\theta}} \\
+&\quad S \leftarrow S'
+\end{align}
+$$
+
+#### Policy parameterization for continuous actions
+
+Policy-based methods offer practical ways of dealing with large actions spaces, even continuous 
+spaces with an infinite number of actions. Instead of computing learned probabilities for each 
+of the many actions, we instead learn statistics of the probability distribution. For example, 
+the action set might be the real numbers, with actions chosen from a normal distribution.
+
+The probability density function for the normal distribution is conventionally written
+
+$$
+p(x) \doteq \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\simga^2}\right)
+$$
+
+where $$\mu$$ and $$\sigma$$ are the mean and standard deviation of the normal distribution. 
+The value $$p(x)$$ is the density of the probability at $$x$$, not the probability.
+
+To produce a policy parameterization, the policy can be defined as the normal probability 
+density over a real-valued scalar action, with mean and standard deviation given by parametric 
+function approximators that depend on the state. That is,
+
+$$
+\pi(a|s,\boldsymbol{\theta}) \doteq \frac{1}{\sigma(s,\boldsymbol{\theta})\sqrt{2\pi}}\exp\left(-\frac{(a - \mu(s,\boldsymbol{\theta}))^2}{2\sigma(s,\boldsymbol{\theta})^2}\right)
+$$
+
+where $$\mu: \mathcal{S} \times \mathbb{R}^{d'} \rightarrow \mathbb{R}$$ and 
+$$\sigma: \mathcal{S} \times \mathbb{R}^{d'} \rightarrow \mathbb{R}^+$$ are two parameterized 
+function approximators.
+
+To complete the example we need only give a form for these approximators. For this we divide 
+the policy's parameter vector into two parts, $$\boldsymbol{\theta}=[\boldsymbol{\theta}_\mu, 
+\boldsymbol{\theta}_\sigma]^T$$, one part to be used for the approximation of the mean 
+and one part for the approximation of the standard deviation. The mean can be approximated as 
+a linear function. The standard deviation must always be positive and is better approximated 
+as the exponential of a linear function. Thus
+
+$$
+\mu(s,\boldsymbol{\theta})\doteq\boldsymbol{\theta}_\mu^T\boldsymbol{x}(s) \\
+\sigma(s,\boldsymbol{\theta}) \doteq \exp(\boldsymbol{\theta}_\sigma^T\boldsymbol{x}(s))
+$$
+
+where $$\boldsymbol{x}(s)$$  is a state feature vector.
