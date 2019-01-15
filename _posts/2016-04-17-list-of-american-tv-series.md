@@ -212,3 +212,20 @@ List of Films:
 - Hannibal 2001
 - Solace 2015
 - Manhunter 1986
+- Celda 211 2009
+- L'immortel 2010
+- King of New York 1990
+- John Carter 2012
+- Prometheus 2012
+- Alien: Covenant 2017
+- Alien 1979
+- Alien 2 - Sulla Terra 1980
+- Alien³ 1992
+- Alien: Resurrection 1997
+- AVP: Alien vs. Predator 2004
+- Aliens vs. Predator: Requiem 2007
+- Predator 1987
+- Predator 2 1990
+- Predators 2010
+- The Predator 2018
+- Un prophète 2009
