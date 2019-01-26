@@ -229,3 +229,18 @@ List of Films:
 - Predators 2010
 - The Predator 2018
 - Un prophète 2009
+- American Gangster 2007
+- Bitter Moon 1992
+- Liar Liar 1997
+- The Truman Show 1998
+- The Green Mile 1999
+- Outpost 2008
+- Three Billboards Outside Ebbing, Missouri 2017
+- The Devil's Advocate 1997
+- Scarface 1983
+- Get the Gringo 2012
+- Donnie Brasco 1997
+- Carlito's Way 1993
+- ...and justice for all. 1979
+- Scent of a Woman 1992
+- Bruce Almighty 2003
