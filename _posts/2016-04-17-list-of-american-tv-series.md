@@ -244,3 +244,31 @@ List of Films:
 - ...and justice for all. 1979
 - Scent of a Woman 1992
 - Bruce Almighty 2003
+- Kill Command 2016
+- Elite Squad: The Enemy Within 2010
+- 13 Hours 2016
+- Truth 2015
+- Geostorm 2017
+- Arrival 2016
+- Edge of Tomorrow 2014
+- Waterworld 1995
+- Elysium 2013
+- The Darkest Hour 2011
+- Arrowhead 2016
+- City of Ember 2008
+- The Core 2003
+- Black Sea 2014
+- Vier gegen die Bank 2016
+- Inglourious Basterds 2009
+- Four Brothers 2005
+- Django Unchained 2012
+- Catch Me If You Can 2002
+- The Intern 2015
+- The Deer Hunter 1978
+- The Life of David Gale 2003
+- K-PAX 2001
+- Enemy Mine 1985
+- Things to Do in Denver When You're Dead 1995
+- Mean Machine 2001
+- Crank 2006
+- The Condemned 2007
