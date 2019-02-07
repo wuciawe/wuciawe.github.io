@@ -272,3 +272,10 @@ List of Films:
 - Mean Machine 2001
 - Crank 2006
 - The Condemned 2007
+- Assassin's Creed 2016
+- The Hitman's Bodyguard 2017
+- Triple 9 2016
+- Deadpool 2016
+- Hellboy 2004
+- Hellboy II: The Golden Army 2008
+- The Shape of Water 2017
