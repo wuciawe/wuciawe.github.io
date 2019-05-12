@@ -279,3 +279,12 @@ List of Films:
 - Hellboy 2004
 - Hellboy II: The Golden Army 2008
 - The Shape of Water 2017
+- Hamilton: I nationens intresse 2012
+- Warrior 2011
+- Tension(s) 2014
+- Into the Blue 2: The Reef 2009
+- The Shallows 2016
+- The Terminal 2004
+- Felon 2008
+- Andhadhun 2018
+- Cast Away 2000

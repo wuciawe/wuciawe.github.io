@@ -296,9 +296,9 @@ reward plus discounted value of successor state,
 
 $$
 \begin{array}
-v_\pi(s) &=& E_\pi [R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t = s] \\
+{}v_\pi(s) &=& E_\pi [R_{t+1} + \gamma v_\pi(S_{t+1}) | S_t = s] \\
 &=& \sum_{a \in A} \pi(a | s) q_\pi(s, a) \\
-&=& \sum_{a \in A} \pi(a | s) \left(R_s^a + \gamma\sum_{s' in S} P_{ss'}^a v_\pi(s')\right)
+&=& \sum_{a \in A} \pi(a | s) \left(R_s^a + \gamma\sum_{s' \in S} P_{ss'}^a v_\pi(s')\right)
 \end{array}
 $$
 
@@ -311,9 +311,9 @@ The action-value function can be decomposed,
 
 $$
 \begin{array}
-q_\pi(s, a) &=& E_\pi [R_{t+1} + \gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = a] \\
-&=& R_s^a + \gamma \sum_{s' in S} P_{ss'}^a v_\pi(s') \\
-&=& R_s^a + \gamma \sum_{s' in S}P_{ss'}^a\sum_{a' in A}\pi(a'|s')q_\pi(s', a')
+{}q_\pi(s, a) &=& E_\pi [R_{t+1} + \gamma q_\pi(S_{t+1}, A_{t+1}) | S_t = s, A_t = a] \\
+&=& R_s^a + \gamma \sum_{s' \in S} P_{ss'}^a v_\pi(s') \\
+&=& R_s^a + \gamma \sum_{s' \in S}P_{ss'}^a\sum_{a' \in A}\pi(a'|s')q_\pi(s', a')
 \end{array}
 $$
 
@@ -460,7 +460,7 @@ It therefore improves the value function, \\(v_{\pi '}(s) \geq v_\pi(s)\\),
 
 $$
 \begin{array}
-v_\pi(s) &\leq& q_\pi(s, \pi ' (s)) = E_{\pi '}[R_{t+1} + \gamma v_\pi (S_{t+1}) | S_t = s] \\
+{}v_\pi(s) &\leq& q_\pi(s, \pi ' (s)) = E_{\pi '}[R_{t+1} + \gamma v_\pi (S_{t+1}) | S_t = s] \\
 &\leq& E_{\pi '}[R_{t+1} + \gamma q_\pi(S_{t+1}, \pi ' (S_{T+1})) | S_t = s] \\
 &\leq& E_{\pi '}[R_{t+1} + \gamma R_{t+2} + \gamma^2 q_\pi (S_{t+2}, \pi ' (S_{t+2})) | S_t = s] \\
 &\leq& E_{\pi '}[R_{t+1} + \gamma R_{t+2} + \cdots | S_t = s] = v_{\pi '}(s)
@@ -540,8 +540,8 @@ Solution to the MDP \\(<S, A, \tilde{P}, \tilde{R}, \gamma>\\)
 that best fits the data
 
 $$
-\tilde{P}\_{s,s'}^a = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k, s_{t+1}^k = s, a , s') \\
-\tilde{R}\_s^a  = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k = s, a) r_t^k
+\tilde{P}_{s,s'}^a = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k, s_{t+1}^k = s, a , s') \\
+\tilde{R}_s^a  = \frac{1}{N(s, a)} \sum_{k = 1}^K \sum_{t = 1}^{T_k} 1 (s_t^k, a_t^k = s, a) r_t^k
 $$
 
 TD exploits Markov property, thus usually more efficient 
@@ -623,7 +623,7 @@ with respect to \\(q_\pi\\) is an improvement,
 
 $$
 \begin{array}
-q_\pi(s, \pi '(s)) &=& \sum_{a \in A} \pi ' (a|s) q_\pi (s, a) \\
+{}q_\pi(s, \pi '(s)) &=& \sum_{a \in A} \pi ' (a|s) q_\pi (s, a) \\
 &=& \frac{\epsilon}{m} \sum_{a \in A} q_\pi(s, a) + (1 - \epsilon) \max_{a \in A} q_\pi (s, a) \\
 &\geq& \frac{\epsilon}{m} \sum_{a \in A} q_\pi (s, a) + (1 - \epsilon) \sum_{a \in A} \frac{\pi(a|s) - \frac{\epsilon}{m}}{1 - \epsilon} q_\pi (s, a) \\
 &=& \sum_{a \in A} \pi(a|s)q_{\pi}(s, a) = v_\pi (s)
@@ -657,7 +657,7 @@ $$
 #### On-policy temporal-difference learning
 
 Use TD instead of MC in the control loop, s.t. 
-apply TD to \\(Q(S, A)\\) and use \\(epsilon\text{-greedy}\\) 
+apply TD to \\(Q(S, A)\\) and use \\(\epsilon\text{-greedy}\\) 
 policy improvement and update every time step.
 
 $$
@@ -736,14 +736,14 @@ $$
 
 $$
 \begin{cases}
-\text{Q-Policy Iteration } Q(s, a) \leftarrow E[R + \gamma Q(S', A') \| s, a] \\
+\text{Q-Policy Iteration } Q(s, a) \leftarrow E[R + \gamma Q(S', A') | s, a] \\
 \text{SARSA } Q(S, A) \overset{\alpha}{\leftarrow} R + \gamma Q(S', A')
 \end{cases}
 $$
 
 $$
 \begin{cases}
-\text{Q-Value Iteration } Q(s, a) \leftarrow E[R + \gamma \max_{a' \in A} Q(S', a') \| s, a] \\
+\text{Q-Value Iteration } Q(s, a) \leftarrow E[R + \gamma \max_{a' \in A} Q(S', a') | s, a] \\
 \text{Q-Learning } Q(S, A) \overset{\alpha}{\leftarrow} R + \gamma \max_{a' \in A} Q(S', A')
 \end{cases}
 $$
@@ -768,7 +768,7 @@ don't have true value function \\(v_\pi (s)\\). In
 practice, we substitute a target for \\(v_\pi(s)\\), 
 
 - For MC, the target is the return \\(G_t\\)
-- For TD(0), the target is the TD target \\(R_{t+1} + \gamma \hat{v} (S_{t+1} + w)\\)
+- For TD(0), the target is the TD target \\(R_{t+1} + \gamma \hat{v} (S_{t+1}, w)\\)
 - For \\(TD(\lambda)\\), the target is the \\(\lambda\text{-return} G_t^\lambda\\)
 
 We can also approximate the action-value function
@@ -833,7 +833,7 @@ the likelihood ratios exploit the following identity
 
 $$
 \begin{array}
-\nabla_\theta\pi_\theta(s, a) &=& \pi_\theta(s, a)\frac{\nabla_\theta\pi_\theta(s, a)}{\pi_\theta(s, a)} \\
+{}\nabla_\theta\pi_\theta(s, a) &=& \pi_\theta(s, a)\frac{\nabla_\theta\pi_\theta(s, a)}{\pi_\theta(s, a)} \\
 &=& \pi_\theta(s, a)\nabla_\theta\log\pi_\theta(s, a)
 \end{array}
 $$
@@ -872,7 +872,7 @@ $$
 
 $$
 \begin{array}
-\nabla_\theta J(\theta) &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) v_t] &\text{ reinforce} \\
+{}\nabla_\theta J(\theta) &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) v_t] &\text{ reinforce} \\
 &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) Q^w(s, a)] &\text{ Q actor-critic} \\
 &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) A^w(s, a)] &\text{ Advantage actor-critic} \\
 &=& E_{\pi_\theta} [\nabla_\theta\log\pi_\theta(s, a) \delta] &\text{ TD actor-critic} \\
