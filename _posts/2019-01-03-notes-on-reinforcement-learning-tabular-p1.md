@@ -147,7 +147,7 @@ next actions, all next rewards, and so on for all 1000 steps. Given the
 assumptions, the rewards and probabilities of each possible chain of events 
 can be determined, and one need only pick the best. But the tree of possibilities 
 grows extremely rapidly; even if there were only two actions and two rewards, 
-the tree would have $$2^2000$$ leaves. It is generally not feasible to perform 
+the tree would have $$2^{2000}$$ leaves. It is generally not feasible to perform 
 this immense computation exactly, but perhaps it could be approximated efficiently. 
 This approach would effectively turn the bandit problem into an instance of the 
 full reinforcement learning problem. In the end, we may be able to use 
@@ -254,7 +254,7 @@ are defined with respect to particular ways of acting, called polices.
 
 A policy is a mapping from states to probabilities of selecting each 
 possible action. If the agent is following policy $$\pi$$ at time 
-$$t$$, then $$\pi(a\|s)$$ is the probability that $$A_t = a$$ if 
+$$t$$, then $$\pi(a|s)$$ is the probability that $$A_t = a$$ if 
 $$S_t = s$$.
 
 The value of a state $$s$$ under a policy $$\pi$$, denoted 
