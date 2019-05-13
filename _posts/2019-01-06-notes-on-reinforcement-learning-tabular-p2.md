@@ -182,7 +182,7 @@ taken over all actions.
 
 $$
 \begin{align}
-&\text{Initialize array } V \text{ arbitrarily (e.e., } V(s) = 0 \text{ for all } s \in \mathcal{S}^+ \text{)} \\
+&\text{Initialize array } V \text{ arbitrarily (e.g., } V(s) = 0 \text{ for all } s \in \mathcal{S}^+ \text{)} \\
 &\text{Repeat} \\
 &\quad \Delta \leftarrow 0 \\
 &\quad \text{For each } s \in \mathcal{S}: \\
@@ -312,7 +312,7 @@ $$
 &\text{Initialize, for all } s \in \mathcal{S}, a \in \mathcal{A}(s): \\
 &\quad Q(s, a) \leftarrow \text{ arbitrary} \\
 &\quad \pi(s) \leftarrow \text{ arbitrary} \\
-&\quad Return(s, a) \leftarrow \text{ empty list} \\
+&\quad Returns(s, a) \leftarrow \text{ empty list} \\
 &\text{Repeat forever:} \\
 &\quad \text{Choose } S_0 \in \mathcal{S} \text{ and } A_0 \in \mathcal{A}(S_0) \text{ s.t. all pairs have probability } \gt 0 \\
 &\quad \text{Generate an episode starting from } S_0, A_0, \text{ following } \pi \\
@@ -618,10 +618,10 @@ v_\pi(s) &\doteq \mathbb{E}_\pi [G_t | S_t = s] & \text{(eq 1)} \\
 \end{align}
 $$
 
-Roughly speaking, Monte Carlo methods use an estimate of $$text{(eq 1)}$$ 
+Roughly speaking, Monte Carlo methods use an estimate of $$\text{(eq 1)}$$ 
 as a target, whereas DP methods use an estimate of $$\text{(eq 3)}$$ as a 
 target. The Monte Carlo target is an estimate because the expected value 
-in $$text{(eq 1)}$$ is not known; a sample return is used in place of the 
+in $$\text{(eq 1)}$$ is not known; a sample return is used in place of the 
 real expected return. The DP target is an estimate not because of the 
 expected values, which are assumed to be completely provided by a model 
 of the environment, but because $$v_\pi(S_{t+1})$$ is not known and the 
@@ -725,7 +725,7 @@ action values, which is defined with a max, and in SARSA the policy is the
 $$\epsilon\text{-greedy}$$, which also involves a maximization operation. 
 In these algorithms, a maximization over estimated values is used implicitly 
 as an estimate of the maximum value, which can lead to a significant positive 
-bias. Consider a single state $$s$$ where there are many actions $$a$$$ whose 
+bias. Consider a single state $$s$$ where there are many actions $$a$$ whose 
 true values, $$q(s, a)$$, are all zero. The maximum of the true values is 
 zero, but the maximum of the estimates is positive, a positive bias. This 
 is called the maximization bias.
@@ -736,7 +736,7 @@ in two sets and use them to learn two independent estimates, call them
 $$Q_1(a)$$ and $$Q_2(a)$$, each an estimate of the true value $$q(a)$$, for 
 all $$a \in \mathcal{A}$$. We could then use one estimate, say $$Q_1(a)$$, to 
 determine the maximizing action $$A^* = \arg\max_a Q_1(a)$$, and the other, 
-$$Q_2$$, to provide the estimate of its value, $$Q_2(A^*) = Q_2(\arg\max_a Q_2(a))$$. 
+$$Q_2$$, to provide the estimate of its value, $$Q_2(A^*) = Q_2(\arg\max_a Q_1(a))$$. 
 This estimate will then be unbiased in the sense that $$\mathbb{E}[Q_2(A^*)] = q(Q^*)$$. 
 We can also repeat the process with the role of the two estimates reversed to 
 yield a second unbiased estimate $$Q_1(\arg\max_a Q_2(a))$$. This is the idea 

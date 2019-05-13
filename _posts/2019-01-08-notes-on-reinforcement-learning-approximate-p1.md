@@ -17,8 +17,8 @@ encounters with different states that are in some sense similar to the current o
 ### On-policy prediction with approximation
 
 To use function approximation in estimating the state-value function from on-policy data, we 
-approximate $$v_\pi$$ from value function is represented not a a table but as a parameterized 
-functional form with weigth vector $$\boldsymbol{w} \in \mathbb{R}^d$$. We will write 
+approximate $$v_\pi$$ from value function is represented not as a table but as a parameterized 
+functional form with weight vector $$\boldsymbol{w} \in \mathbb{R}^d$$. We will write 
 $$\hat{v}(s, \boldsymbol{w}) \approx v_\pi(s)$$ for the approximate value of state $$s$$ given 
 weight vector $$\boldsymbol{w}$$. Typically, the number of weights (the dimensionality of 
 $$\boldsymbol{w}$$) is much less than the number of states ($$d \ll |\mathcal{S}|$$), and 
@@ -134,7 +134,7 @@ training, units are randomly removed from the network (dropped out) along with t
 This can be thought of as training a large number of "thinned" networks. Combining the results of 
 these thinned networks at test time is a way to improve generalization performance. The dropout method 
 efficiently approximates this combination by multiplying each outgoing weight of a unit by the 
-probability that that unit was retained during training. The dropout method significantly improves 
+probability that unit was retained during training. The dropout method significantly improves 
 generalization performance. It encourages individual hidden units to learn features that work well with 
 random collections of other features. This increases the versatility of the features formed by the 
 hidden units so that the network does not overly specialize to rarely-occurring cases.
@@ -185,7 +185,7 @@ $$
 
 We call this method episodic semi-gradient one-step SARSA.
 
-To form control methods, we need to couple such actioin-value prediction methods with techniques for 
+To form control methods, we need to couple such action-value prediction methods with techniques for 
 policy improvement and action selection.
 
 $$
@@ -385,19 +385,20 @@ We call this the Bellman error at state $$s$$
 
 $$
 \begin{align}
-\bar{delta}_\boldsymbol{w}(s) &\doteq \left(\sum_a\pi(a|s)\sum_{s', r}p(s', r | s, a)[r + \gamma v_\boldsymbol{w}(s')]\right) - v_\boldsymbol{w}(s) \\
+\bar{\delta}_\boldsymbol{w}(s) &\doteq \left(\sum_a\pi(a|s)\sum_{s', r}p(s', r | s, a)[r + \gamma v_\boldsymbol{w}(s')]\right) - v_\boldsymbol{w}(s) \\
 &= \mathbb{E}[R_{t+1} + \gamma v_\boldsymbol{w}(S_{t+1}) - v_\boldsymbol{w}(S_t) | S_t = s, A_t \sim \pi]
 \end{align}
 $$
 
-We can see that the Bellman error is the expectation of the TD error $$\delta_t &\doteq R_{t+1} + \gamma\hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t)$$.
+We can see that the Bellman error is the expectation of the TD error 
+$$\delta_t \doteq R_{t+1} + \gamma\hat{v}(S_{t+1}, \boldsymbol{w}_t) - \hat{v}(S_t, \boldsymbol{w}_t)$$.
 
 The vector of all the Bellman errors, at all states, $$\bar{\delta}_\boldsymbol{w} \in \mathbb{R}^{\mathcal{S}}$$, 
 is called the Bellman error vector. The overall size of this vector, in the norm, is an overall 
 measure of the error in the value function, called the Mean Squared Bellman Error:
 
 $$
-bar{BE}(\boldsymbol{w}) = ||\bar{\delta}_\boldsymbol{w}||^2
+\bar{BE}(\boldsymbol{w}) = ||\bar{\delta}_\boldsymbol{w}||^2
 $$
 
 The Bellman operator $$\mathrm{B}_\pi:\mathbb{R}^{\mathcal{S}} \rightarrow \mathbb{R}^{\mathcal{S}}$$ is defined by

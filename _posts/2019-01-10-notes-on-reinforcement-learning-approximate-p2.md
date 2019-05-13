@@ -52,7 +52,7 @@ episode. At the end of the episode, a whole sequence of off-line updates are mad
 the usual semi-gradient rule, using the $$\lambda$$-return as the target
 
 $$
-\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha[G_t^\lambda - \hat{v](S_t, \boldsymbol{w}_t)]\nabla\hat{v}(S_t, \boldsymbol{w}), t = 0, \cdots, T - 1
+\boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha[G_t^\lambda - \hat{v}(S_t, \boldsymbol{w}_t)]\nabla\hat{v}(S_t, \boldsymbol{w}), t = 0, \cdots, T - 1
 $$
 
 In the forward view of a learning algorithm, for each state visited, we look forward in time to all the 
@@ -135,7 +135,7 @@ $$
 The truncated $$TD(\lambda)$$ is defined by
 
 $$
-\boldsymbol{w}_{t+n} \doteq \boldsymbol{w}_{t+n-1} + \alpha[G_{t:t+n}^\lambda - \hat{v}(S_t, \boldsymbol{w}_{t+n-1})]\nabla\hat{v}(S_t, \boldsymbol{t+n-1}), 0 \leq t \lt T
+\boldsymbol{w}_{t+n} \doteq \boldsymbol{w}_{t+n-1} + \alpha[G_{t:t+n}^\lambda - \hat{v}(S_t, \boldsymbol{w}_{t+n-1})]\nabla\hat{v}(S_t, \boldsymbol{w}_{t+n-1}), 0 \leq t \lt T
 $$
 
 Choosing the truncation parameter $$n$$ in Truncated $$TD(\lambda)$$ involves a tradeoff. $$n$$ should be large 
@@ -215,7 +215,7 @@ G_{t:t+n} \doteq R_{t+1} + \cdots + \gamma^{n-1}R_{t+n} + \gamma^n\hat{q}(S_{t+n
 $$
 
 for all $$n$$ and $$t$$ such that $$n \geq 1$$ and $$0 \leq t \lt T - n$$. The action-value form of the off-line 
-$$\lambda$$-return algorithm simply uses $\hat{q}$$ rather than $$\hat{v}$$:
+$$\lambda$$-return algorithm simply uses $$\hat{q}$$ rather than $$\hat{v}$$:
 
 $$
 \boldsymbol{w}_{t+1} \doteq \boldsymbol{w}_t + \alpha[G_t^\lambda - \hat{q}(S_t, A_t\boldsymbol{w}_t)]\nabla\hat{q}(S_t, A_t, \boldsymbol{w}_t), t = 0, \cdots, T - 1
@@ -436,7 +436,7 @@ by a deep neural network, where $$\boldsymbol{\theta}$$ is the vector of all the
 weights of the network.
 
 An immediate advantage of selecting actions according to the softmax in action preferences is 
-that the approximate policy can approach a deterministic policy, whereas with ε-greedy action 
+that the approximate policy can approach a deterministic policy, whereas with $$\epsilon$$-greedy action 
 selection over action values there is always an $$\epsilon$$ probability of selecting a random 
 action. Of course, one could select according to a softmax over action values, but this alone 
 would not allow the policy to approach a deterministic policy. Instead, the action-value estimates 
@@ -465,7 +465,7 @@ the most important reason for using a policy-based learning method.
 
 #### The policy gradient theorem
 
-In addition to the practical advantages of policy parameterization over ε-greedy action selection, 
+In addition to the practical advantages of policy parameterization over $$\epsilon$$-greedy action selection, 
 there is also an important theoretical advantage. With continuous policy parameterization the 
 action probabilities change smoothly as a function of the learned parameter, whereas in 
 $$\epsilon$$-greedy selection the action probabilities may change dramatically for an arbitrarily 
@@ -480,7 +480,7 @@ $$\mathcal{J}(\boldsymbol{\theta})$$, differently and thus have to be treated se
 extent. In the episodic case we define performance as
 
 $$
-\mathcal{J}(\boldsymbol{\theta}) \doteq v_{\pi_{\boldsymbol{\theta}}}(s_0)$$
+\mathcal{J}(\boldsymbol{\theta}) \doteq v_{\pi_{\boldsymbol{\theta}}}(s_0)
 $$
 
 where $$v_{\pi_{\boldsymbol{\theta}}}$$ is the true value function for 
@@ -692,7 +692,7 @@ $$
 &\text{Parameters: trace-decay rates } \lambda^{\boldsymbol{\theta}} \in [0, 1], \lambda^{\boldsymbol{w}} \in [0, 1] \text{; step sizes } \alpha^{\boldsymbol{\theta}} \gt 0, \alpha^{\boldsymbol{w}} \gt 0, \eta \gt 0 \\
 &\boldsymbol{z}^{\boldsymbol{\theta}} \leftarrow 0 \text{ (} d'\text{-component eligibility trace vector)} \\
 &\boldsymbol{z}^{\boldsymbol{w}} \leftarrow 0 \text{ (} d\text{-component eligibility trace vector)} \\
-&\text{Initialize } \bar{R} \in \mathbb{R} \text{ (e.g., to } 0 \text{ })} \\
+&\text{Initialize } \bar{R} \in \mathbb{R} \text{ (e.g., to } 0 \text{)} \\
 &\text{Initialize policy parameter } \boldsymbol{\theta} \in \mathbb{R}^{d'} \text{ and state-value weights } \boldsymbol{w} \in \mathbb{R}^d \text{ (e.g., to } 0 \text{)} \\
 &\text{Initialize } S \in \mathcal{S} \text{ (e.g., to } s_0 \text{)} \\
 &\text{Repeat forever:} \\
@@ -718,7 +718,7 @@ the action set might be the real numbers, with actions chosen from a normal dist
 The probability density function for the normal distribution is conventionally written
 
 $$
-p(x) \doteq \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\simga^2}\right)
+p(x) \doteq \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
 $$
 
 where $$\mu$$ and $$\sigma$$ are the mean and standard deviation of the normal distribution. 

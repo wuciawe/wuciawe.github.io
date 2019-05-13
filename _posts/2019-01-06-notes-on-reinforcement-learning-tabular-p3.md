@@ -286,7 +286,7 @@ gradually compute a different way of behaving to match the new model.
 For one-step value-function updates, they vary primarily along three binary dimensions. The 
 first two dimensions are whether they update state values or action values and whether 
 they estimate the value for the optimal policy or for an arbitrary given policy. These two 
-dimensions give rise to four classes fo updates for approximating the four value functions, 
+dimensions give rise to four classes of updates for approximating the four value functions, 
 $$q_*$$, $$v_*$$, $$q_\pi$$, and $$v_\pi$$. The other binary dimension is whether the 
 updates are expected updates, considering all possible events that might happen, or sample 
 updates, considering a single sample of what might happen. These three binary dimensioins given 
