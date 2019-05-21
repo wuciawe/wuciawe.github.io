@@ -288,3 +288,11 @@ List of Films:
 - Felon 2008
 - Andhadhun 2018
 - Cast Away 2000
+- Bleed for This 2016
+- Traffik 2018
+- Green Book 2018
+- Oceans Rising 2017
+- Geo-Disaster 2017
+- The Super 1991
+- Beyond the Sky 2018
+- Pitch Black 2000
