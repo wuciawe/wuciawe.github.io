@@ -296,3 +296,11 @@ List of Films:
 - The Super 1991
 - Beyond the Sky 2018
 - Pitch Black 2000
+- Transcendence 2014
+- There Will Be Blood 2007
+- Kalinka 2016
+- Criminal Activities 2015
+- The Disaster Artist 2017
+- White Squall 1996
+- Bohemian Rhapsody 2018
+- The Room 2003
