@@ -21,7 +21,7 @@ List of TV series:
 - How To Get Away With Murder 2014 s1-s3
 - 12 Monkeys 2015 s1-s3
 - Feud 2017 s1
-- Black Mirror 2011 s1-s4
+- Black Mirror 2011 s1-s5
 - The X-Files 1993 s1-s10
 - The Lone Gunmen 2001 s1
 - Hannibal 2013 s1-s3
@@ -304,3 +304,11 @@ List of Films:
 - White Squall 1996
 - Bohemian Rhapsody 2018
 - The Room 2003
+- Ready Player One 2018
+- Waiting for You 2017
+- Capharnaüm 2018
+- Caged in Paradiso 1990
+- Épouse-moi mon pote 2017
+- Dead Man Working 2016
+- The Thinning 2016
+- Mississippi Grind 2015
