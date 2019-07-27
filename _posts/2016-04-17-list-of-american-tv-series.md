@@ -312,3 +312,12 @@ List of Films:
 - Dead Man Working 2016
 - The Thinning 2016
 - Mississippi Grind 2015
+- Powder 1995
+- Saw 2004
+- Saw II 2005
+- Saw III 2006
+- Saw IV 2007
+- Saw V 2008
+- Saw VI 2009
+- Saw 3D 2010
+- Jigsaw 2017
