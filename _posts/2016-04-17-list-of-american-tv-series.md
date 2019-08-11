@@ -321,3 +321,7 @@ List of Films:
 - Saw VI 2009
 - Saw 3D 2010
 - Jigsaw 2017
+- I Am Sam 2001
+- Sicario 2015
+- Sicario: Day of the Soldado 2018
+- Can You Ever Forgive Me? 2018
