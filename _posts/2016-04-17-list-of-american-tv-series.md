@@ -21,7 +21,7 @@ List of TV series:
 - How To Get Away With Murder 2014 s1-s3
 - 12 Monkeys 2015 s1-s3
 - Feud 2017 s1
-- Black Mirror 2011 s1-s4
+- Black Mirror 2011 s1-s5
 - The X-Files 1993 s1-s10
 - The Lone Gunmen 2001 s1
 - Hannibal 2013 s1-s3
@@ -288,3 +288,36 @@ List of Films:
 - Felon 2008
 - Andhadhun 2018
 - Cast Away 2000
+- Bleed for This 2016
+- Traffik 2018
+- Green Book 2018
+- Oceans Rising 2017
+- Geo-Disaster 2017
+- The Super 1991
+- Beyond the Sky 2018
+- Pitch Black 2000
+- Transcendence 2014
+- There Will Be Blood 2007
+- Kalinka 2016
+- Criminal Activities 2015
+- The Disaster Artist 2017
+- White Squall 1996
+- Bohemian Rhapsody 2018
+- The Room 2003
+- Ready Player One 2018
+- Waiting for You 2017
+- Capharnaüm 2018
+- Caged in Paradiso 1990
+- Épouse-moi mon pote 2017
+- Dead Man Working 2016
+- The Thinning 2016
+- Mississippi Grind 2015
+- Powder 1995
+- Saw 2004
+- Saw II 2005
+- Saw III 2006
+- Saw IV 2007
+- Saw V 2008
+- Saw VI 2009
+- Saw 3D 2010
+- Jigsaw 2017
