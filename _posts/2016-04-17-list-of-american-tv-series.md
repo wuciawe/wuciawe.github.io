@@ -325,3 +325,6 @@ List of Films:
 - Sicario 2015
 - Sicario: Day of the Soldado 2018
 - Can You Ever Forgive Me? 2018
+- Hidden Figures 2016
+- Exodus: Gods and Kings 2014
+- Mutant Chronicles 2008
