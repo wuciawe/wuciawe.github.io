@@ -328,3 +328,35 @@ List of Films:
 - Hidden Figures 2016
 - Exodus: Gods and Kings 2014
 - Mutant Chronicles 2008
+- The Darkest Minds 2018
+- Kin 2018
+- Suburbicon 2017
+- Gifted 2017
+- The Wall 2017
+- Going in Style 2017
+- The Founder 2016
+- Darkest Hour 2017
+- Swiss Army Man 2016
+- Lion 2016
+- The Good Neighbor 2016
+- Concussion 2015
+- The Big Short 2015
+- Mr. Popper's Penguins 2011
+- Unknown 2011
+- The Purge 2013
+- The Family 2013
+- The Cabin in the Woods 2011
+- Rango 2011
+- The Conjuring 2013
+- The Raven 2012
+- Paul 2011
+- Detachment 2011
+- Her 2013
+- An Inconvenient Truth 2006
+- Ocean's Eleven 2001
+- Casino 1995
+- Edge of Darkness 2010
+- Constantine 2005
+- The Irishman 2019
+- The Mask 1994
+- The Accountant 2016
